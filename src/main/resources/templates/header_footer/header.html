@@ -1,0 +1,111 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<!--headerFragment 선언-->
+<div th:fragment="headerFragment">
+
+
+
+    <!doctype html>
+    <html lang="ko">
+
+    <head>
+        <!-- 구글 글씨체 적용-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: 'Noto Serif KR', serif;
+            }
+
+            .header {
+                background-color: #ffffff; /* 흰색 배경 */
+                color: #601599; /* 글씨 색상 */
+                padding: 20px;
+                display: flex;
+                justify-content: space-between; /* 가운데 정렬을 위한 스타일 */
+                align-items: center; /* 가운데 정렬을 위한 스타일 */
+            }
+
+            .header__logo {
+                font-size: 24px;
+                font-weight: bold;
+                margin: 0;
+            }
+
+            .header__navigation {
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center; /* 가운데 정렬을 위한 스타일 */
+                align-items: center; /* 가운데 정렬을 위한 스타일 */
+            }
+
+            .header__navigation li {
+                margin-right: 20px;
+            }
+
+            .header__navigation li:last-child {
+                margin-right: 0;
+            }
+
+            .header__navigation a {
+                color : #9C91B3;
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: bold;
+            }
+            .fs13{
+                font-size: 13px;
+            }
+        </style>
+
+        <title>TasteMate</title>
+    </head>
+
+    <body>
+
+
+
+
+    <header class="header">
+        <h1 class="header__logo">TasteMate</h1>
+        <ul class="header__navigation">
+            <li><a href="/store/list">맛집</a></li>
+            <th:block th:if="${session.vo != null }">
+                <li><a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a></li>
+            </th:block>
+            <th:block th:if="${session.vo == null}">
+                <li><a href="#" onclick="javascript:notLogined(); return false;">내강의장</a></li>
+            </th:block>
+            <li><a href="#">꿀팁</a></li>
+            <li><a href="#">관리자모드</a></li>
+            <li><a href="#">MY</a></li>
+            <div class="ml-auto">
+                <button class="btn btn-outline-dark ml-2" type="button">회원가입</button>
+                <button th:onclick="|location.href='@{/member/login}'|" class="btn btn-outline-dark ml-2" type="button">로그인</button>
+            </div>
+
+
+
+        </ul>
+    </header>
+
+    <script>
+
+        function notLogined() {
+            alert("로그인 후 이용 가능합니다.")
+        }
+    </script>

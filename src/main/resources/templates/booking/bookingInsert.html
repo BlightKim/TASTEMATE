@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+  <style>
+    body {
+      min-height: 100vh;
+      background-color: #E9DFED;
+      /*background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));*/
+      /*background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);*/
+      /*background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);*/
+      /*background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);*/
+      /*background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);*/
+    }
+
+    .input-form {
+      max-width: 680px;
+
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+    .purple2 {
+      color : #601599;
+    }
+
+    [type="radio"] {
+      vertical-align: middle;
+      appearance: none;
+      border: max(2px, 0.1em) solid gray;
+      border-radius: 50%;
+      width: 1.25em;
+      height: 1.25em;
+      transition: border 0.5s ease-in-out;
+    }
+    [type="radio"]:checked {
+      border: 0.4em solid #9C91B3;
+    }
+
+    [type="radio"]:focus-visible {
+      outline-offset: max(2px, 0.1em);
+      outline: max(2px, 0.1em) dotted #9C91B3;
+    }
+
+    [type="radio"]:hover {
+      box-shadow: 0 0 0 max(4px, 0.2em) lightgray;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!--userIdx(세션 연동)
+storeName,
+category1(옵션),
+storeAddress,
+storeLati,
+storeLongi,
+phoneNumber,
+oriFilename-->
+
+<div class="container">
+  <div class="input-form-backgroud row">
+    <div class="input-form col-md-12 mx-auto">
+      <h3 class="mb-3 mb-5 purple2 text-center">예약하기</h3>
+      <form th:action="@{/booking/bookingInsert}" method="post" enctype="multipart/form-data">
+        <div class="row">
+
+          <div class="col-md-8 mb-3">
+            <label for="storeName">맛집 이름</label>
+            <input type="text" class="form-control" id="storeName" name="storeName" th:value="${storeVO.storeName}" th:readonly="true">
+            <input type="hidden" class="form-control" id="storeIdx" name="storeIdx" th:value="${storeVO.storeIdx}" th:readonly="true">
+          </div>
+
+          <!-- userIdx 세션에서 넣어줘. 등록한 사람만 수정, 삭제할 수 있게 insert 해야함 -->
+          <div class="col-md-4 mb-3">
+            <label for="userIdx">예약자 성명</label>
+              <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" th:readonly>
+              <input type="hidden" class="form-control" id="userIdx" name="userIdx" th:value="${session.vo.getUserIdx()}">
+            <input type="hidden" class="form-control" id="userId" name="userId" th:value="${userId}">
+            <input type="hidden" class="form-control" id="storeIdx" name="storeIdx" th:value=2>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="selectDate">예약일자</label>
+            <div class="form-group">
+              <select class="form-control" id="selectDate" name="selectDate">
+                <option selected disabled>예약하실 일자를 선택해주세요</option>
+                <option id="date1" name="date1" value=""></option>
+                <option id="date2" name="date2" value=""></option>
+                <option id="date3" name="date3" value=""></option>
+                <option id="date4" name="date4" value=""></option>
+                <option id="date5" name="date5" value=""></option>
+              </select>
+<!--              <input type="datetime-local" id="date" name="date">-->
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="time">예약시간</label>
+            <div class="form-group">
+              <select class="form-control" id="time" name="time">
+                <option selected disabled>예약하실 시간을 선택해주세요</option>
+                <option id="time1" name="time1" value="12:30:00">12:30</option>
+                <option id="time2" name="time2" value="12:45:00">12:45</option>
+                <option id="time3" name="time3" value="13:00:00">13:00</option>
+                <option id="time4" name="time4" value="13:15:00">13:15</option>
+                <option id="time5" name="time5" value="13:30:00">13:30</option>
+                <option id="time6" name="time5" value="13:45:00">13:45</option>
+                <option id="time7" name="time5" value="14:00:00">14:00</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="category1">메뉴</label>
+          <div class="mb-3">
+            <div class="form-group">
+
+              <select class="form-control" id="category1" name="category1" >
+                <option selected disabled>메뉴를 선택해주세요</option>
+                <div th:each="menu : ${storeVO.menuVO}">
+                <option th:value="${menu.menuIdx} + '/' + ${menu.foodName} + '/' + ${menu.price}" th:text="${menu.foodName} + ', ' + ${menu.price}"></option>
+                </div>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="mb-3">
+          <label for="tableNo">테이블 번호</label>
+          <div class="mb-3">
+            <div class="form-group">
+              <select class="form-control" id="tableNo" name="tableNo">
+                <option selected disabled>번호를 선택해주세요</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+          <div class="mb-3">
+<!--              <label for="onsitePayment">현장결제</label>-->
+              <div class="mb-3">
+                  <div class="form-group">
+                    <p id="onsitePayment">현장결제로 결제하시겠습니까?</p>
+                    <label><input type="radio" name="onsitePayment" th:value="1"> 네 </label>
+                    <label><input type="radio" name="onsitePayment" th:value="0"> 아니요</label>
+<!--                      <select class="form-control" id="onsitePayment" name="onsitePayment">-->
+<!--                          <option selected disabled>현장결제로 결제하시겠습니까?</option>-->
+<!--                          <option value="0">네</option>-->
+<!--                          <option value="1">아니요</option>-->
+<!--                      </select>-->
+                  </div>
+              </div>
+          </div>
+
+        <div class="text-center mt-5 mb-3">
+        <button class="btn btn-primary" type="submit" style="background-color: #8E48C7; border: none; border-radius: 10%;">결제하기</button>
+        <a class="btn btn-success" th:href="@{/store/list}" style="background-color: #9C91B3; border: none; border-radius: 10%;">목록으로</a>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  function dateAdd(aDay) {
+    var pDay = 0; // 주말 추가일 계산용
+    var date = new Date(); // 오늘 대입
+    var nowWeek = date.getDay(); // 현재 요일 (0~6)
+
+    if (nowWeek == 6) {
+      date.setDate(date.getDate() + 1); // 오늘이 토요일이면 1일 추가
+    }
+    nowWeek = date.getDay(); // 변경 요일 확인
+    pDay = Math.floor((nowWeek + aDay -1 ) / 5 ) * 2; //주말 추가일 계산
+    date.setDate(date.getDate() + aDay + pDay); // 최종 날짜 확인용
+
+
+    // document.write("오늘 날짜 : " + (date.toString() + "<br>"));
+
+
+    var y1 = date.getFullYear();
+
+    var m1 = date.getMonth() + 1;
+    var d1 = date.getDate();
+
+    if (d1 < new Date().getDate()) {
+      m1 = m1 + 1;
+    }
+
+    if (m1 < 10) {
+      m1 = "0" + m1;
+    }
+
+    if (d1 < 10) {
+        d1 = "0" + d1;
+
+    }
+      return y1 + "-" + m1 + "-" + d1;
+
+  }
+  // document.write("오늘 날짜 : " + (new Date().toString() + "<br>"));
+  // document.write("평일 10일 이후 날짜 : " + (dateAdd(5) + "<br>"));
+  // document.date.date1.valueOf(dateAdd(1));
+
+  for(var i = 0; i < 5; i++) {
+    var dd = "date" + (i + 1);
+    document.write(dd);
+    document.getElementById(dd).innerHTML = dateAdd(i);
+    document.getElementById(dd).value = dateAdd(i);
+  }
+
+  // document.getElementById("date1").innerHTML = dateAdd(0);
+  // document.getElementById("date2").innerHTML = dateAdd(1);
+  // document.getElementById("date3").innerHTML = dateAdd(2);
+  // document.getElementById("date4").innerHTML = dateAdd(3);
+  // document.getElementById("date5").innerHTML = dateAdd(4);
+  // document.getElementById("date1").value = dateAdd(0);
+  // document.getElementById("date2").value = dateAdd(1);
+  // document.getElementById("date3").value = dateAdd(2);
+  // document.getElementById("date4").value = dateAdd(3);
+  // document.getElementById("date5").value = dateAdd(4);
+
+  // var out = document.getElementById("date5").valueOf();
+  //
+  // document.write(out);
+
+
+
+
+</script>
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>

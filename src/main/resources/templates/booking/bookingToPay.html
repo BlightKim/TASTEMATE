@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+  <meta charset="UTF-8">
+  <title>my bookmark</title>
+
+
+  <link rel="stylesheet" th:href="@{/css/store_css.css}">
+
+</head>
+<body>
+
+<p th:text="${bookingVO}"></p>
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

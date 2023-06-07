@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.BookingMapper">
+
+    <select id="bookingList" resultType="BookingVO">
+        SELECT * FROM BOOKING
+    </select>
+
+    <insert id="bookingInsert" parameterType="BookingVO">
+        INSERT INTO BOOKING (BOOKING_IDX, STORE_IDX, STORE_NAME, USER_IDX, USER_ID,
+            USER_NAME, ONSITE_PAYMENT, BOOKING_DATE, BOOKING_TIME, MENU_IDX,
+            FOOD_NAME, PRICE, TABLE_NO ) VALUES (Booking_seq.nextval, #{storeIdx}, #{storeName}, #{userIdx}, #{userId},
+            #{userName}, #{onsitePayment}, sysdate, TO_DATE(#{bookingTime},'YYYY-MM-DD HH24:MI:SS') , #{menuIdx},
+            #{foodName}, #{price}, #{tableNo})
+    </insert>
+
+</mapper>

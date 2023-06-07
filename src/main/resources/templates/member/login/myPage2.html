@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <title>list.jsp</title>
+
+    <!--  다음 주소 스크립트 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 제이쿼리 사용 -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- CSS only -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+            crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    <!-- 부트스트랩 아이콘 -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- 구글 글씨체 -->
+    <link rel="stylesheet" href="/css/header.css" type="text/css">
+
+
+</head>
+<body>
+
+<div class="container-fluid" style="height: 1080px;">
+    <div class="row" style="height: 70%;">
+        <div class="col">
+        </div>
+        <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">
+            <div class="input-group mb-3">
+                <label for="password" class="form-label"
+                       style="inline-size: -webkit-fill-available;">비밀번호</label>
+                <input type="text" class="form-control" placeholder="수정을 원하시면 버튼을 클릭하세요."
+                       id="password" disabled aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary active" type="button" id="password_update_btn"
+                        data-bs-toggle="modal" data-bs-target="#password_modal">수정
+                </button>
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="show_Cellphone" class="form-label"
+                       style="inline-size: -webkit-fill-available;">전화번호</label>
+                <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
+                       id="show_cellPhone"
+                       disabled
+                       aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary active" type="button" id="cellPhone_update_btn"
+                        data-bs-toggle="modal" data-bs-target="#cellPhone_modal">수정
+                </button>
+            </div>
+            <div class="input-group mb-3">
+                <label for="show_eMail" class="form-label"
+                       style="inline-size: -webkit-fill-available;">이메일</label>
+                <input type="text" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
+                       id="show_eMail" disabled aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary active" type="button" id="eMail_update_btn"
+                        data-bs-toggle="modal" data-bs-target="#eMail_modal">수정
+                </button>
+            </div>
+            <div class="input-group mb-3">
+<!--                <c:set var="show_introduction" value="${user.introduction == null ? '' : user.introduction}"/>-->
+                <label for="show_introduction" class="form-label"
+                       style="inline-size: -webkit-fill-available;">음식</label>
+                <input type="text" class="form-control" placeholder="Leave a comment here" id="show_introduction"
+                       aria-label="Recipient's username" style="height: 100px"
+                       th:placeholder="${session.vo.getUserLikeFood()}" disabled>
+                <button class="btn btn-outline-primary active" type="button" id="introduction_update_btn"
+                        data-bs-toggle="modal" data-bs-target="#introduction_modal">
+                    수정
+                </button>
+            </div>
+            <div class="input-group mb-3">
+                <div class="row" style="width: inherit;">
+                    <label for="address" class="form-label" style="inline-size: -webkit-fill-available;">주소</label>
+                    <!--          <c:set var="addressArr" value="${fn:split(user.address, '/')}"/>-->
+                    <!--          <c:forEach var="address" items="${addressArr}" begin="0" end="2" varStatus="st">-->
+                    <input type="text" class="form-control" th:placeholder="${session.vo.getUserAddress()}"
+                           id="address${st.index}" style="width: 100%;" disabled
+                           aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <!--          </c:forEach>-->
+                    <label for="address" class="form-label" style="inline-size: -webkit-fill-available;"></label>
+                    <button class="btn btn-outline-primary active" type="button" id="address_update_btn"
+                            data-bs-toggle="modal" data-bs-target="#address_modal">수정
+                    </button>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="row" style="width: inherit;">
+                        <label for="address" class="form-label" style="inline-size: -webkit-fill-available;"></label>
+                        <label for="address" class="form-label" style="inline-size: -webkit-fill-available;"></label>
+                        <button class="btn btn-outline btn-danger" type="button" id="withDrawl_update_btn"
+                                data-bs-toggle="modal" data-bs-target="#withDrawl_modal">탈퇴
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+
+
+<!--    여기서 부터는 modal 영역 -->
+
+
+    <!-- Modal_패스워드 -->
+    <div class="modal fade" id="password_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="password1" class="col-form-label">비밀번호</label>
+                            <input type="password" class="form-control" id="password1" name="password1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="password1_warning" class="col" style="text-align: center" hidden><span></span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="password2" class="col-form-label">비밀번호 확인</label>
+                            <input type="password" class="form-control" id="password2" name="password2"></input>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="password2_warning" class="col" style="text-align: center" hidden><span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="password_change_btn" type="button" class="btn btn-primary">비밀번호 변경</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal_전화번호 -->
+    <div class="modal fade" id="cellPhone_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cellPhoneModalLabel">전화번호 변경</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="cellPhone" class="col-form-label">전화번호</label>
+                            <input type="tel" class="form-control" id="cellPhone" name="cellPhone">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="cellPhone_warning" class="col" style="text-align: center" hidden><span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="cellPhone_change_btn" type="button" class="btn btn-primary">전화번호 변경</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal_이메일 -->
+    <div class="modal fade" id="eMail_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eMailModalLabel">이메일 변경</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="eMail" class="col-form-label">이메일</label>
+                            <input type="email" class="form-control" id="eMail" name="eMail">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="eMail_warning" class="col" style="text-align: center" hidden><span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="eMail_change_btn" type="button" class="btn btn-primary">이메일 변경</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal_우편주소 -->
+    <div class="modal fade" id="introduction_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="introductionModalLabel">자기소개 변경</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="introduction" class="col-form-label">자기소개</label>
+                            <input type="text" class="form-control" id="introduction" name="introduction">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="introduction_warning" class="col" style="text-align: center" hidden>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="introduction_change_btn" type="button" class="btn btn-primary">자기소개 변경
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 주소 -->
+    <div class="modal fade" id="address_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addressModalLabel">주소 변경</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="member_post" class="col-form-label">우편번호</label>
+                            <input type="text" class="form-control" id="member_post" name="address"
+                                   placeholder="우편번호" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="member_post" class="col-form-label">주소</label>
+                            <input type="text" class="form-control" id="member_addr" name="address"
+                                   placeholder="주소" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="detailed_address" class="col-form-label">상세주소</label>
+                            <input type="text" class="form-control" id="detailed_address" name="address"
+                                   placeholder="상세주소를 입력해주세요.">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="address_warning" class="col" style="text-align: center" hidden><span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    <button id="address_change_btn" type="button" class="btn btn-primary">주소 변경</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal_회원탈퇴 -->
+    <div class="modal fade" id="withDrawl_modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="withDrawlModalLabel">회원탈퇴</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="mb-3">
+                            <label for="eMail" class="col-form-label">정말 삭제하시겠습니까?</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                    <button id="withDrawl_change_btn" type="button" class="btn btn-danger bg-danger" onclick="">예</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="/static/js/updateInfo/update_password.js" type="text/javascript"></script>
+<script src="/static/js/updateInfo/update_cellPhone.js" type="text/javascript"></script>
+<script src="/static/js/updateInfo/update_eMail.js" type="text/javascript"></script>
+<script src="/static/js/updateInfo/update_introduction.js" type="text/javascript"></script>
+<script src="/static/js/updateInfo/update_withDrawl.js"></script>
+<script src="/static/js/updateInfo/update_address.js" type="text/javascript"></script>
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>
