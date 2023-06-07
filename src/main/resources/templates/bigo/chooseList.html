@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>store list</title>
+</head>
+<body>
+
+<div>
+  <h5 th:text="${chooseShopList}"></h5>
+</div>
+
+
+<div th:each="chooseShopVO : ${chooseShopList}">
+  <span th:text="${chooseShopVO.chooseIdx} + ' & ' + ${chooseShopVO.chooseTitle}"></span>
+</div>
+<div>
+  <form th:action="@{|/manage/chooseShop1|}" method="get">
+  <input type="submit" value="이동">
+  </form>
+</div>
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

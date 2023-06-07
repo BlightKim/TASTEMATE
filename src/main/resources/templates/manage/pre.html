@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지(관리자)</title>
+
+<link rel="stylesheet" th:href="@{/css/store_css.css}">
+<!--<style>-->
+<!--    body {-->
+<!--        min-height: 100vh;-->
+
+<!--        background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));-->
+<!--        background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);-->
+<!--        background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);-->
+<!--        background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);-->
+<!--        background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);-->
+<!--    }-->
+
+<!--    .input-form {-->
+<!--        /*max-width: 680px;*/-->
+
+<!--        margin-top: 80px;-->
+<!--        margin-bottom: 80px;-->
+<!--        padding: 32px;-->
+
+<!--        background: #fff;-->
+<!--        /*background: #E9DFED;*/-->
+<!--        -webkit-border-radius: 10px;-->
+<!--        -moz-border-radius: 10px;-->
+<!--        border-radius: 10px;-->
+<!--        -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);-->
+<!--        -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);-->
+<!--        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)-->
+<!--    }-->
+<!--</style>-->
+    <script>
+        // 알림 팝업을 띄우는 함수
+        function showNotification() {
+            let now = new Date();
+            let hour = now.getHours();
+            let minute = now.getMinutes();
+            let message = "";
+
+            // 시간에 따라 다른 알림 메시지 설정
+            if (hour === 11 && minute === 47) {
+                message = "입실 체크 해주세요!";
+            } else if (hour === 18 && minute === 20) {
+                message = "퇴실 체크 해주세요!";
+            } else {
+                return; // 설정한 시간이 아니면 함수 종료
+            }
+
+            alert(message);
+        }
+
+        // 특정 시간에 알림 팝업을 예약하는 함수
+        function scheduleNotification(hour, minute) {
+            let now = new Date(); // 현재 시간을 가져옴
+            let scheduledTime = new Date(); // 예약 시간을 설정할 변수
+            scheduledTime.setHours(hour);
+            scheduledTime.setMinutes(minute);
+
+            // 예약 시간이 현재 시간보다 앞이면 다음 날로 설정
+            if (scheduledTime <= now) {
+                scheduledTime.setDate(scheduledTime.getDate() + 1);
+            }
+
+            // 예약 시간과 현재 시간의 차이를 계산
+            let timeDiff = scheduledTime - now;
+
+            // 일정 시간마다 알림 팝업을 띄우기 위해 setInterval 사용
+            setInterval(function() {
+                showNotification();
+            }, timeDiff);
+        }
+
+        // 페이지가 로드될 때 실행되는 함수
+        function onPageLoad() {
+            // 9시 30분에 알림 팝업을 예약
+            scheduleNotification(11, 47);
+
+            // 18시 20분에 알림 팝업을 예약
+            scheduleNotification(18, 20);
+        }
+    </script>
+</head>
+
+<!-- 페이지 내용 -->
+<body onload="onPageLoad()">
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>
