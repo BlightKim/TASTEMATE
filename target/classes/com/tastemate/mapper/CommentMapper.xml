@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.CommentMapper">
+  <resultMap id="BaseResultMap" type="CommentVO">
+    <!--@Table BOARD_COMMENT-->
+    <id column="COMMENT_IDX" property="commentIdx" jdbcType="INTEGER"/>
+    <result column="COMMENT_LEVEL" property="commentLevel" jdbcType="INTEGER"/>
+    <result column="PARENT_COMMENT_IDX" property="parentCommentIdx" jdbcType="INTEGER"/>
+    <result column="COMMENT_CONTENT" property="commentContent" jdbcType="VARCHAR"/>
+    <result column="COMMENTER" property="commenter" jdbcType="VARCHAR"/>
+    <result column="REG_DATE" property="regDate" jdbcType="DATE"/>
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE"/>
+    <result column="COMMENT_STATUS" property="commentStatus" typeHandler="com.tastemate.handlers.CommentStatusHandler"/>
+    <result column="BOARD_IDX" property="boardIdx" jdbcType="INTEGER"/>
+  </resultMap>
+  <select id="selectAllComment" parameterType="integer" resultMap="BaseResultMap">
+    /* 댓글 보기 쿼리 (계층식)*/
+    SELECT BOARD_IDX
+         , LEVEL COMMENT_LEVEL
+         , COMMENT_CONTENT
+         , COMMENT_IDX
+         , PARENT_COMMENT_IDX
+         , CASE WHEN LEVEL = 1 THEN '' ELSE LPAD('└', LEVEL * 4, ' ') END ||
+           CASE WHEN COMMENT_STATUS = '삭제' THEN '***삭제된 댓글입니다***' ELSE COMMENT_CONTENT END AS COMMENT_CONTENT
+         , COMMENTER
+         , COMMENT_STATUS
+         , REG_DATE
+         , UPDATE_DATE
+         , DELETE_DATE
+    FROM (SELECT *
+          FROM BOARD_COMMENT
+          WHERE BOARD_IDX = #{boardIdx}
+         )
+
+    START WITH PARENT_COMMENT_IDX = 0
+    CONNECT BY PRIOR COMMENT_IDX = PARENT_COMMENT_IDX
+    ORDER SIBLINGS BY COMMENT_IDX
+  </select>
+
+  <select id="selectOneComment" parameterType="integer" resultMap="BaseResultMap">
+    select *
+    from BOARD_COMMENT
+    WHERE COMMENT_IDX = #{commentIdx}
+  </select>
+
+
+  <insert id="insertComment" parameterType="CommentVO">
+    insert INTO BOARD_COMMENT(COMMENT_IDX, PARENT_COMMENT_IDX, COMMENT_CONTENT, COMMENTER, REG_DATE,
+                        COMMENT_STATUS, BOARD_IDX, COMMENT_LEVEL)
+    VALUES (BOARD_COMMENT_SEQ.nextval, #{parentCommentIdx, jdbcType=INTEGER}, #{commentContent, jdbcType=VARCHAR}, #{memberVO.userId, jdbcType=VARCHAR},
+            SYSDATE, #{commentStatus,typeHandler=com.tastemate.handlers.CommentStatusHandler}, #{boardIdx, jdbcType=INTEGER}, #{commentLevel,jdbcType=INTEGER})
+
+    <selectKey keyProperty="commentIdx" resultType="int">
+      SELECT BOARD_COMMENT_SEQ.CURRVAL AS COMMENT_IDX FROM DUAL
+    </selectKey>
+  </insert>
+  <sql id="Join_Column_List">
+    <!--@mbg.generated-->
+    BOARD_COMMENT.COMMENT_IDX as BC_COMMENT_IDX,
+    BOARD_COMMENT.COMMENT_LEVEL as BC_COMMENT_LEVEL,
+    BOARD_COMMENT.PARENT_COMMENT_IDX as BC_PARENT_COMMENT_IDX,
+    BOARD_COMMENT.COMMENT_CONTENT as BC_COMMENT_CONTENT,
+    BOARD_COMMENT.COMMENTER as BC_COMMENTER,
+    BOARD_COMMENT.REG_DATE as BC_REG_DATE,
+    BOARD_COMMENT.UPDATE_DATE as BC_UPDATE_DATE,
+    BOARD_COMMENT.COMMENT_STATUS as BC_COMMENT_STATUS,
+    BOARD_COMMENT.BOARD_IDX as BC_BOARD_IDX
+  </sql>
+
+</mapper>
