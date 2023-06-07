@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.ChatDAO">
+
+    <select id="getChatListAdmin" resultType="ChatRoomVO">
+        SELECT ROOM_NAME, ROOM_IDX
+        FROM CHAT_ROOM
+    </select>
+
+    <select id="getList" parameterType="MemberVO" resultType="ChatRoomVO">
+        SELECT R.ROOM_NAME, R.ROOM_IDX
+        FROM CHAT_USER U
+                 INNER JOIN CHAT_ROOM R
+                            ON U.ROOM_IDX = R.ROOM_IDX
+        WHERE USER_IDX  = #{userIdx} AND R.ROOM_STATUS = 1 AND U.USER_STATUS = 1
+        ORDER BY R.ROOM_IDX
+    </select>
+
+    <!--YYYY-MM-DD-->
+    <select id="getMessage" parameterType="ChatRoomVO" resultType="ChatMessageVO">
+        SELECT CM.ROOM_IDX,
+               TO_CHAR(cm.TIME, 'HH24:MI') AS TIME,
+                CM.MESSAGE_CONTENT,
+         CM.MESSAGE_IDX, CM.USER_IDX,
+         M.USER_NAME,
+          M.USER_PROFILE
+        FROM CHAT_MESSAGE CM
+            JOIN CHAT_USER CU
+        ON CM.USER_IDX = CU.USER_IDX AND CM.ROOM_IDX = CU.ROOM_IDX
+            JOIN MEMBER M ON CU.USER_IDX = M.USER_IDX
+        WHERE CU.ROOM_IDX = #{roomIdx}
+        ORDER BY CM.TIME
+    </select>
+
+<!--    <select id="getSysMessage" parameterType="ChatRoomVO" resultType="ChatMessageVO">
+        SELECT *
+        FROM CHAT_MESSAGE
+        WHERE CHAT_IDX = #{chatIdx} AND USER_IDX = 0
+    </select>-->
+
+    <select id="getUser" parameterType="ChatUserVO" resultType="int">
+        SELECT USER_IDX
+        FROM CHAT_USER
+        WHERE ROOM_IDX = #{userIdx}
+    </select>
+
+    <insert id="insertMessage" parameterType="ChatMessageVO">
+        INSERT INTO CHAT_MESSAGE
+            (ROOM_IDX, TIME, MESSAGE_CONTENT, MESSAGE_IDX, USER_IDX)
+        VALUES (#{roomIdx}, SYSDATE, #{messageContent}, CHAT_MESSAGE_SEQ.NEXTVAL, #{userIdx})
+    </insert>
+
+    <select id="getRoom" parameterType="ChatRoomVO" resultType="ChatRoomVO">
+        SELECT ROOM_IDX, ROOM_NAME
+        FROM CHAT_ROOM
+        WHERE ROOM_IDX = #{roomIdx}
+    </select>
+
+    <delete id="updateUserStatus" parameterType="ChatUserVO">
+        UPDATE CHAT_USER
+        SET USER_STATUS = 0
+        WHERE USER_IDX = #{userIdx}
+          AND ROOM_IDX = #{roomIdx}
+    </delete>
+
+    <select id="getUserCount" parameterType="ChatUserVO" resultType="int">
+        SELECT COUNT(*)
+        FROM CHAT_USER
+        WHERE ROOM_IDX = 1 AND USER_STATUS = 1
+    </select>
+
+<!--    <delete id="deleteChatRoom" parameterType="ChatUserVO">
+        DELETE
+        FROM CHAT_ROOM
+        WHERE ROOM_IDX = #{roomIdx}
+    </delete>-->
+
+    <delete id="updateRoomStatus" parameterType="ChatUserVO">
+        UPDATE CHAT_ROOM
+        SET ROOM_STATUS = 0
+        WHERE ROOM_IDX = #{roomIdx}
+    </delete>
+
+    <select id="getChatUserInfo" parameterType="ChatRoomVO" resultType="MemberVO">
+        SELECT M.*
+        FROM CHAT_ROOM CR
+                 JOIN CHAT_USER CU ON CR.ROOM_IDX = CU.ROOM_IDX
+                 JOIN MEMBER M ON M.USER_IDX = CU.USER_IDX
+        WHERE CR.ROOM_IDX = #{roomIdx} AND CU.USER_STATUS = 1
+    </select>
+
+</mapper>

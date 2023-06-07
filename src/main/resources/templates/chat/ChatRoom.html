@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <title>Chating</title>
+    <style>
+        #chatRoom {
+            margin: 5px;
+            border: solid black 1px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            white-space: nowrap;
+        }
+
+
+        .senderName {
+            font-family: Nunito, sans-serif;
+            font-size: 20px;
+        }
+
+        .time {
+            font-size: 10px;
+        }
+
+        .messageContent {
+            display: inline-block;
+            max-width: 70%;
+            background-color: #E9DFED;
+            border-radius: 30px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .systemMessage {
+            display: inline-block;
+            max-width: 70%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #userInfoTable {
+            line-height: 0.5;
+            margin: 15px;
+        }
+
+        .chating p {
+            text-align: left;
+        }
+
+        input {
+            width: 330px;
+            height: 25px;
+        }
+
+
+        .img-message {
+            display: inline;
+            width: 50px;
+            height: 50px;
+        }
+
+
+        .head {
+            display: block;
+            width: 500px;
+            height: 70px;
+        }
+
+        h1 {
+            display: inline;
+            text-align: center;
+            padding: 10px;
+            color: #FFBB00;
+            margin-bottom: 5px;
+        }
+
+
+        .chating {
+            width: 500px;
+            height: 480px;
+            overflow: auto;
+            border: black solid 0.3px;
+        }
+
+        #foot {
+            display: block;
+            height: 60px;
+            width: 500px;
+
+            padding-bottom: 30px;
+            /*text-align: center;*/
+        }
+
+        .sendForm {
+            /*text-align: center;*/
+            display: block;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            /*margin-left: 20px;*/
+            border: solid black 0.5px;
+            border-radius: 30px 30px 30px 30px;
+        }
+
+        input[type="text"] {
+            border: none;
+            outline: none;
+        }
+
+        #openbtnContainer {
+            display: inline;
+            float: right;
+            width: auto;
+            height: 100%;
+        }
+
+        .openbtn {
+            /*font-size: 20px;*/
+            /*background-color: #111;*/
+            /* color: white;*/
+            /*padding: 10px 15px;*/
+            cursor: pointer;
+            border: none;
+            width: 30px;
+            height: 100%;
+        }
+
+        #message {
+            margin-left: 30px;
+        }
+
+        /*사이드바 내용물*/
+
+        .img {
+            width: 100px;
+            height: 100px;
+        }
+
+
+        .sidebarMain {
+            width: 500px;
+            /*display: flex;*/
+            display: block;
+            justify-content: center;
+            margin-top: 25px;
+            height: 80%;
+            /*justify-content: space-between;*/
+        }
+
+
+        .sidebarBtn {
+            background-color: transparent;
+            width: 100%;
+            height: auto;
+            display: inline;
+
+        }
+
+
+        #shareBtn, #exitBtn {
+            border: none;
+            background-color: transparent;
+            display: inline-block;
+        }
+
+        .btnImg {
+            width: 30px;
+            height: 30px;
+        }
+
+        /*사이드바*/
+        body {
+            font-family: "Lato", sans-serif;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: #E9DFED;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2); /*사이드바 그림자*/
+        }
+
+        .sidebar a {
+            padding: 8px 32px 8px 8px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: -20px;
+            left: -10px;
+            font-size: 36px;
+            margin-left: 20px;
+        }
+
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+        #main {
+            transition: margin-right .2s;
+            padding: 16px;
+        }
+
+        #sidebarFoot {
+            display: block;
+            margin-bottom: auto;
+            width: 100%;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+
+            .sidebar a {
+                font-size: 18px;
+            }
+        }
+
+        .sender {
+            margin-left: 5px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body onload=scFo()>
+<!--방 정보-->
+<div id="chatRoom">
+    <div class="head">
+        <h1 th:text="${room.roomName}">대화방 이름</h1>
+        <div id="openbtnContainer">
+
+            <img class="openbtn" id="sidebar-toggle" onclick="openNav()"
+                 src="img/openbtn.png" alt="openbtn">
+        </div>
+    </div>
+    <!--이전 대화 출력-->
+
+    <div id="chating" class="chating">
+        <div id="message" th:each="message : ${message}">
+            <div class="sender">
+                <img class="img-message" th:src="@{'/img/' + ${message.userProfile}}" alt="userProfile">
+                <span class="senderName" th:text="${message.userName}"></span>
+            </div>
+            <span class="messageContent" th:text="${message.messageContent}"></span>
+            <span class="time" th:text="' ' + ${message.time}"></span>
+        </div>
+    </div>
+    <!--메시지 입력 폼-->
+    <div id="foot">
+        <div class="sendForm">
+            <form id="insertMessage" onsubmit="event.preventDefault(); send();">
+                <input type="text" name="messageContent" id="chatting" placeholder="메세지 입력...">
+                <input type="hidden" name="roomIdx" id="roomIdx" th:value="${room.roomIdx}">
+                <input type="hidden" id="userIdx" name="userIdx" th:value="${session.user['userIdx']}">
+                <input type="hidden" id="userName" th:value="${session.user['userName']}">
+                <input type="hidden" id="userProfile" th:value="${session.user['userProfile']}">
+                <input type="submit" style="display: none" value="보내기">
+            </form>
+        </div>
+    </div>
+    <!--사이드바-->
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <div class="sidebar`Main`">
+            <table id="userInfoTable" th:each="user : ${info}">
+                <tbody>
+                <tr>
+                    <td rowspan="4">
+                        <img class="img" th:src="@{'/img/' + ${user.userProfile}}" alt="User Image">
+                    </td>
+                    <td>
+                        <p th:text="'이름 : ' + ${user.userName}">이름</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p th:text="'반 : ' + ${user.userClass}">1반</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p th:text="'선호 음식 : ' + ${user.userLikeFood}">음식</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p th:text="'MBTI : ' + ${user.userMbti}">엠비티아이</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="sidebarFoot">
+            <div class="sidebarBtn">
+                <form>
+                    <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
+                    <input type="hidden" name="userIdx" th:value="${session.user['userIdx']}">
+                    <button type="submit" id="shareBtn" onclick="share()" value="예약 공유">
+                        <span>예약 공유</span>
+                        <img src="img/share.jpg" alt="shareBtn" class="btnImg" type="submit">
+                    </button>
+                </form>
+                <form>
+                    <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
+                    <input type="hidden" name="userIdx" th:value="${session.user['userIdx']}">
+                    <input type="hidden" name="userName" th:value="${session.user['userName']}">
+                    <button type="submit" id="exitBtn" value="나가기">
+                        <span>방 나가기</span>
+                        <img src="img/exit.png" alt="exitBtn" class="btnImg" type="submit">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    let ws;
+    wsOpen();
+    let uN = $("#userName").val()
+
+    function wsOpen() {
+        ws = new WebSocket("ws://" + location.host + "/chating/" + $("#roomIdx").val());
+        wsEvt();
+    }
+
+    function wsEvt() {
+        ws.onopen = function () {
+            //소켓이 열리면 동작
+            ws.send('<div class="message"><span class="systemMessage" style="color: #0a58ca">' + uN + '님이 입장함' + '</span></div>');
+            scFo();
+        };
+        ws.onmessage = function (data) {
+            //메시지를 받으면 동작
+            var msg = data.data;
+            if (msg != null && msg.trim() != '') {
+                $("#chating").append(msg);
+                scFo();
+            }
+        }
+    }
+
+    function send() {
+        var profile = $("#userProfile").val().trim();
+        var msg = $("#chatting").val().trim();
+        var uN = $("#userName").val();
+        if (msg === '') {
+            alert("Please enter a message");
+            return;
+        }
+        $.ajax(/*"/insertMessage",*/ {
+            url:"/insertMessage",
+            type: 'POST',
+            data: $("#insertMessage").serialize(),
+            success: function () {
+                ws.send('<div class="sender">' +
+                    '<div id="messageContainer">' + '<img class="img-message" src="/img/' + profile + '" alt="chatProfile">' +
+                    '<span class="senderName">' + uN + '</span>' + '</div>' +
+                    '<span class="messageContent">' + msg + '</span>' +
+                    '<span class="time">' + getFormattedDate() + '</span></div>');
+                $("#chatting").val('');
+            },
+
+
+            error: function () {
+                alert("실패")
+            }
+        });
+    }
+
+    function scFo() {
+        var chatContainer = document.getElementById("chating");
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+        document.getElementById("chatting").focus();
+    }
+
+    function getFormattedDate() {
+        var today = new Date();
+        var hour = today.getHours();
+        var minute = today.getMinutes();
+        var formattedMinute = (minute < 10 ? "0" : "") + minute;
+        return hour + ':' + formattedMinute;
+    }
+
+    function share() {
+        alert('share');
+        event.preventDefault();
+    }
+
+    $("#exitBtn").click(function (event) {
+        event.preventDefault();
+        if (confirm("나가기?")) {
+            var roomIdx = $("#roomIdx").val();
+            var userIdx = $("#userIdx").val();
+            var userName = $("#userName").val();
+            ws.send('<div class="message"><span class="systemMessage" style="color: #0a58ca">' + uN + '님이 채팅방에서 나갔습니다.' + '</span></div>');
+            location.href = "/roomExit?roomIdx=" + roomIdx + '&userIdx=' + userIdx + '&userName=' + userName
+            window.close()
+        }
+    });
+
+    // 엔터키 이벤트를 처리하는 함수
+    function handleEnterKey(event) {
+        if (event.keyCode === 13) { // 엔터키를 눌렀을 때
+            event.preventDefault(); // 폼 제출을 막음
+            send(); // 원하는 함수 실행
+        }
+    }
+
+    // 엔터키 이벤트를 등록
+    document.getElementById("chatting").addEventListener("keydown", handleEnterKey);
+
+    function openNav() {
+        $.ajax({
+            url: "/getUserInfo",
+            type: 'POST',
+            data: jQuery("#roomIdx").val(),
+            success: function () {
+                alert("성공")
+            },
+            error: function () {
+                alert("실패")
+            }
+        });
+
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginRight = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginRight = "0";
+    }
+</script>
+</html>

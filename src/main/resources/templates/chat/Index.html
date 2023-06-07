@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+    <title>ChatRoom</title>
+</head>
+    <body>
+        <h1>index</h1>
+        <h2 th:text="'로그인 아이디 : ' + ${session.user.userIdx}" th:if="${session.user.userIdx} != null"></h2>
+        <h2 th:text="'로그인 아이디 : ' + ${session.user.userName}"></h2><hr>
+
+        <a href="http://localhost:8080/login?userIdx=1">userIdx= 1 로그인</a><br>
+        <a href="http://localhost:8080/login?userIdx=2">userIdx= 2 로그인</a><br>
+        <a href="http://localhost:8080/login?userIdx=3">userIdx= 3 로그인</a><br>
+        <a href="http://localhost:8080/login?userIdx=4">userIdx= 4 로그인</a><br>
+        <!--<a th:href="@{/getList(userIdx=${session.user.userIdx})}">내채팅방</a><br>-->
+        <form th:action="@{/getList}" method="post">
+            <input type="hidden" name="userIdx" th:value="${session.user.userIdx}" />
+            <button type="submit">내채팅방</button>
+        </form>
+
+        <!--<a href="http://localhost:8080/chatListAdmin">전체 채팅방 리스트</a><br>-->
+
+    </body>
+</html>
