@@ -4,18 +4,18 @@ let pwd2Chk = false;
 const pwdRegExp = RegExp(
     /([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
 
-$('#password1').change(checkPassword);
-$('#password1').keyup(checkPassword);
+$('#userPwd').change(checkPassword);
+$('#userPwd').keyup(checkPassword);
 
-$('#password2').change(checkPassword);
-$('#password2').keyup(checkPassword);
+$('#userPwd2').change(checkPassword);
+$('#userPwd2').keyup(checkPassword);
 
 $('#password_change_btn').click(() => {
   if (!(pwd1Chk === true && pwd2Chk === true)) {
     alert("비밀번호를 다시 한번 확인해주세요.");
   } else {
 
-    const password = $("#password1").val();
+    const password = $("#userPwd").val();
 
     $.ajax({
       type: 'POST',
@@ -43,13 +43,13 @@ $('#password_change_btn').click(() => {
 });
 
 function checkPassword() {
-  if ($('#password1').val() === '') {
+  if ($('#userPwd').val() === '') {
     $('#password1_warning').removeAttr('hidden', 'hidden');
     $('#password1_warning').html(
         '<b style="font-size: 14px; color:red">[비밀번호는 필수 정보입니다.]</b>');
     pwd1Chk = false;
-  } else if (!pwdRegExp.test($('#password1').val()) || $(
-      '#password1').val().length < 8) {
+  } else if (!pwdRegExp.test($('#userPwd').val()) || $(
+      '#userPwd').val().length < 8) {
     $('#password1_warning').removeAttr('hidden');
     $('#password1_warning').html(
         '<b style="font-size: 14px; color:red">[비밀번호는 특수문자 포함 8자 이상입니다.]</b>');
@@ -59,12 +59,12 @@ function checkPassword() {
     pwd1Chk = true;
   }
 
-  if ($('#password2').val() === '') {
+  if ($('#userPwd2').val() === '') {
     $('#password2_warning').removeAttr('hidden', 'hidden');
     $('#password2_warning').html(
         '<b style="font-size: 14px; color:red">[비밀번호는 필수 정보입니다.]</b>');
     pwd2Chk = false;
-  } else if ($('#password2').val() !== $('#password1').val()) {
+  } else if ($('#userPwd2').val() !== $('#userPwd').val()) {
     $('#password2_warning').removeAttr('hidden', 'hidden');
     $('#password2_warning').html(
         '<b style="font-size: 14px; color:red">[입력한 비밀번호가 일치하지 않습니다.]</b>');
