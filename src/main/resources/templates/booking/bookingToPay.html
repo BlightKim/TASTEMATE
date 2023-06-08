@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+  <meta charset="UTF-8">
+  <title>my bookmark</title>
+
+
+  <link rel="stylesheet" th:href="@{/css/store_css.css}">
+<style>
+
+  .img-wrapper {
+    position: relative;
+    width: 400px;
+    height: 400px;
+  }
+  .img-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+  }
+
+  .imgText {
+    width: 400px;
+  }
+
+  /* Additional spacing styles */
+  .mt-4 {
+    margin-top: 1.5rem !important;
+  }
+  .mb-4 {
+    margin-bottom: 1.5rem !important;
+  }
+  .pt-4 {
+    padding-top: 1.5rem !important;
+  }
+  .pb-4 {
+    padding-bottom: 1.5rem !important;
+  }
+
+</style>
+</head>
+<body>
+<!--<p th:text="${bookingIdx}"></p>-->
+<!--<p th:text="${bookingVO}"></p>-->
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Left Column: Photos -->
+      <div class="imgText">
+      <div class="img-wrapper">
+      <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
+      </div>
+      <h2 style="text-align: center" th:text="${storeVO.storeName}"></h2>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Right Column: Reservation Information -->
+      <h2>Reservation Information</h2>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
+        </li>
+        <li class="list-group-item">
+          <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
+        </li>
+        <li class="list-group-item">
+          <strong>예약일자:</strong> [[${bookingVO.bookingDate}]]
+        </li>
+        <li class="list-group-item">
+          <strong>예약한 시간:</strong> [[${bookingVO.bookingTime}]]
+        </li>
+        <li class="list-group-item">
+          <strong>결제 금액:</strong> [[${bookingVO.price}]]
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!--<div class="container">-->
+<!--  <div class="col-6">-->
+<!--    <div class="d-flex justify-content-center align-items-center mt-5">-->
+<!--      <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size" />-->
+<!--    </div>-->
+
+
+<!--  </div>-->
+
+<!--  <div class="col-6">-->
+<!--    <div class="row">-->
+<!--      <label for="userName">Product Name</label>-->
+<!--      <input type="text" class="form-control" id="userName" th:value="${bookingVO.userName}">-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--    <label for="bookingDate">Reservation Name</label>-->
+<!--    <input type="text" class="form-control" id="bookingDate" th:value="${bookingVO.bookingDate}">-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--    <label for="bookingTime">Reservation Name</label>-->
+<!--    <input type="text" class="form-control" id="bookingTime" th:value="${bookingVO.bookingTime}">-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--      <label for="reservation-time">Reservation Time</label>-->
+<!--      <input type="text" class="form-control" id="reservation-time" placeholder="Enter reservation time">-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--</div>-->
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>
