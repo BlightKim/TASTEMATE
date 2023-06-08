@@ -117,3 +117,9 @@
   background-color: green;
   color: white;
 }
+
+.comment-content.deleted {
+  /* 삭제된 댓글의 스타일 */
+  color: gray;  /* 예: 텍스트를 회색으로 변경 */
+  font-style: italic;  /* 예: 텍스트를 이탤릭체로 변경 */
+}

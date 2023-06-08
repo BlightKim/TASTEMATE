@@ -9,7 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface BoardMapper {
-  Integer insertLike(Integer boardIdx, Integer userIdx);
+  Integer insertLike(Map map);
+  Integer deleteLike(Map map);
 
   Integer deleteByPrimaryKey(Integer boardIdx);
 
@@ -39,4 +40,5 @@ public interface BoardMapper {
   Integer decreaseLike(Integer boardIdx);
 
   Integer deleteBoard(Integer boardIdx);
+  Integer decreaseCommentCount(Integer boardIdx);
 }

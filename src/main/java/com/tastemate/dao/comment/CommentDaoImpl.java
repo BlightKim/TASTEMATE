@@ -27,4 +27,9 @@ public class CommentDaoImpl implements CommentDao {
   public List<CommentVO> selectAllComment(Integer boardIdx) {
     return commentMapper.selectAllComment(boardIdx);
   }
+
+  @Override
+  public Integer deleteOneComment(Integer commentIdx) {
+    return commentMapper.deleteOneComment(commentIdx);
+  }
 }

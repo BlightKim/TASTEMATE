@@ -24,5 +24,8 @@ public interface BoardDao {
   Integer decreaseLike(Integer boardIdx);
   Integer deleteBoard(Integer boardIdx);
 
-  Integer insertLike(Integer boardIdx, Integer userIdx);
+  Integer insertLike(Map map);
+  Integer deleteLike(Map map);
+
+  Integer decreaseCommentCount(Integer boardIdx);
 }

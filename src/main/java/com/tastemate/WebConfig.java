@@ -21,21 +21,20 @@ public class WebConfig implements WebMvcConfigurer {
         .order(1)
         .addPathPatterns("/**")
         .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**");
-//
-//    registry.addInterceptor(new LoginCheckInterceptor())
-//        .order(2)
-//        .addPathPatterns("/**")
-//        .excludePathPatterns("/", "/board", "/login/**", "/login/logout",
-//            "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
-//            "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**");
 
+    registry.addInterceptor(new LoginCheckInterceptor())
+        .order(2)
+        .addPathPatterns("/**")
+        .excludePathPatterns("/", "/board", "/member/login**",
+            "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
+            "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**");
   }
   private String resourcePath = "/member/**";
   private String savePath = "file:///Users/bazzi/upload";
 
-/*  @Override
+  @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry){
     registry.addResourceHandler(resourcePath)
         .addResourceLocations(savePath);
-  }*/
+  }
 }

@@ -1,5 +1,6 @@
 package com.tastemate.controller;
 
+import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.board.BoardStatus;
 import com.tastemate.domain.board.BoardUpdateForm;
 import com.tastemate.domain.board.BoardVO;
@@ -16,6 +17,7 @@ import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
@@ -23,6 +25,7 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,14 +43,12 @@ public class BoardController {
   private final BoardService boardService;
   private final CommentService commentService;
   private final UploadFileStore fileStore;
-  private final MemberService memberService;
 
   public BoardController(BoardService boardService, CommentService commentService,
-      UploadFileStore fileStore, MemberService memberService) {
+      UploadFileStore fileStore) {
     this.boardService = boardService;
     this.commentService = commentService;
     this.fileStore = fileStore;
-    this.memberService = memberService;
   }
 
   @GetMapping
@@ -69,9 +70,8 @@ public class BoardController {
 
   @PostMapping({"/write"})
   public String write(@ModelAttribute(name = "form") BoardWriteForm writeForm,
-      Integer userIdx) throws IOException {
-    userIdx = 1;
-//    @SessionAttribute(name = "userIdx") Integer userIdx
+      @SessionAttribute(name = "vo") MemberVO memberVO) throws IOException {
+    Integer userIdx = memberVO.getUserIdx();
     BoardVO boardVO = writeFormToBoardVO(writeForm, userIdx);
     MultipartFile boardAttachedFile = writeForm.getMultipartFile();
     if (boardAttachedFile != null) {
@@ -85,9 +85,11 @@ public class BoardController {
   }
 
   @GetMapping({"/read/{boardIdx}"})
-  public String read(@PathVariable("boardIdx") Integer boardIdx, Model model, Integer userIdx) {
-    userIdx = 1;
-//     @SessionAttribute(name = "userIdx") Integer userIdx
+  public String read(@PathVariable("boardIdx") Integer boardIdx, Model model,
+      @SessionAttribute(name = "vo") MemberVO memberVO,
+      HttpServletRequest request,
+      HttpServletResponse response) {
+    Integer userIdx = memberVO.getUserIdx();
     boolean checkForLike = boardService.checkForLike(boardIdx, userIdx);
     BoardVO board = boardService.getOnePost(boardIdx);
     List<CommentVO> commentList = commentService.getCommentList(boardIdx);
@@ -99,18 +101,19 @@ public class BoardController {
 
   @PostMapping({"/unlike/{boardIdx}"})
   public String unlike(@PathVariable("boardIdx") Integer boardIdx,
-      @SessionAttribute(name = "userIdx") Integer userIdx) {
+      @SessionAttribute(name = "vo") MemberVO memberVO) {
+    Integer userIdx = memberVO.getUserIdx();
     log.info("unlike 호출");
-    boardService.unlike(boardIdx, userIdx);
+    boardService.decreaseLike(boardIdx, userIdx);
     return "redirect:/board/read/" + boardIdx;
   }
 
   @PostMapping({"/like/{boardIdx}"})
-  public String like(@PathVariable("boardIdx") Integer boardIdx, Integer userIdx) {
-    userIdx = 1;
-//    @SessionAttribute(name = "userIdx") Integer userIdx
+  public String like(@PathVariable("boardIdx") Integer boardIdx,
+      @SessionAttribute(name = "vo") MemberVO memberVO) {
+    Integer userIdx = memberVO.getUserIdx();
     log.info("like 호출");
-    boardService.like(boardIdx, userIdx);
+    boardService.increaseLike(boardIdx, userIdx);
     return "redirect:/board/read/" + boardIdx;
   }
 
@@ -120,9 +123,6 @@ public class BoardController {
     BoardVO boardVO = updateFormToBoardVO(boardIdx, updateForm);
 
     Integer integer = boardService.updateBoard(boardVO);
-
-//    boardVO.setBoardIdx(boardIdx);
-//    boardService.updateBoard(boardVO);
     return "redirect:/board/read/" + boardIdx;
   }
 

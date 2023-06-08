@@ -55,6 +55,11 @@
       SELECT BOARD_COMMENT_SEQ.CURRVAL AS COMMENT_IDX FROM DUAL
     </selectKey>
   </insert>
+  <update id="deleteOneComment">
+    UPDATE BOARD_COMMENT
+    SET COMMENT_STATUS = '삭제'
+    WHERE COMMENT_IDX = #{commentIdx}
+  </update>
   <sql id="Join_Column_List">
     <!--@mbg.generated-->
     BOARD_COMMENT.COMMENT_IDX as BC_COMMENT_IDX,

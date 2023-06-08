@@ -7,7 +7,6 @@
     <!--@Table BOARD-->
     <id column="BOARD_IDX" jdbcType="INTEGER" property="boardIdx"/>
     <result column="USER_IDX" jdbcType="INTEGER" property="userIdx"/>
-    <result column="BOARD_PASSWORD" jdbcType="VARCHAR" property="boardPassword"/>
     <result column="WRITER" jdbcType="VARCHAR" property="writer"/>
     <result column="TITLE" jdbcType="VARCHAR" property="title"/>
     <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
@@ -61,7 +60,6 @@
     <!--@mbg.generated-->
     B.BOARD_IDX,
     B.USER_IDX,
-    B.BOARD_PASSWORD,
     B.WRITER,
     B.TITLE,
     B.CONTENT,
@@ -179,9 +177,6 @@
       <if test="userIdx != null">
         USER_IDX,
       </if>
-      <if test="boardPassword != null">
-        BOARD_PASSWORD,
-      </if>
       <if test="writer != null">
         WRITER,
       </if>
@@ -246,9 +241,6 @@
       <if test="userIdx != null">
         USER_IDX,
       </if>
-      <if test="boardPassword != null">
-        BOARD_PASSWORD,
-      </if>
       <if test="writer != null">
         WRITER,
       </if>
@@ -308,12 +300,12 @@
       </if>
     </trim>
   </insert>
-  <insert id="insertLike">
+  <insert id="insertLike" parameterType="map">
     INSERT INTO board_likes (board_idx, user_idx)
     VALUES (#{boardIdx}, #{userIdx})
   </insert>
 
-  <delete id="deleteLike">
+  <delete id="deleteLike" parameterType="map">
     DELETE
     FROM board_likes
     WHERE board_idx = #{boardIdx}
@@ -333,7 +325,6 @@
     <!--@mbg.generated-->
     update BOARD
     set USER_IDX       = #{userIdx,jdbcType=INTEGER},
-        BOARD_PASSWORD = #{boardPassword,jdbcType=VARCHAR},
         WRITER         = #{writer,jdbcType=VARCHAR},
         TITLE          = #{title,jdbcType=VARCHAR},
         CONTENT        = #{content,jdbcType=VARCHAR},
@@ -346,8 +337,7 @@
   </update>
   <update id="updateBoard" parameterType="com.tastemate.domain.board.BoardVO">
     UPDATE BOARD
-    SET BOARD_PASSWORD = #{boardPassword, jdbcType=VARCHAR},
-        TITLE          = #{title, jdbcType=VARCHAR},
+    SET TITLE          = #{title, jdbcType=VARCHAR},
         CONTENT        = #{content, jdbcType=VARCHAR},
         UPDATE_DATE    = #{updateDate, jdbcType=DATE},
         ORI_NAME       = #{oriName, jdbcType=VARCHAR},
@@ -376,6 +366,11 @@
   <update id="decreaseLike">
     UPDATE BOARD
     SET BOARD_LIKE = BOARD_LIKE - 1
+    WHERE BOARD_IDX = #{boardIdx}
+  </update>
+  <update id="decreaseCommentCount">
+    UPDATE BOARD
+    SET COMMENT_COUNT = COMMENT_COUNT - 1
     WHERE BOARD_IDX = #{boardIdx}
   </update>
 </mapper>

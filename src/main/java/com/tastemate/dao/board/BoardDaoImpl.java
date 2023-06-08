@@ -17,8 +17,13 @@ public class BoardDaoImpl implements BoardDao{
   private final BoardMapper boardMapper;
 
   @Override
-  public Integer insertLike(Integer boardIdx, Integer userIdx) {
-    return boardMapper.insertLike(boardIdx, userIdx);
+  public Integer insertLike(Map map) {
+    return boardMapper.insertLike(map);
+  }
+
+  @Override
+  public Integer deleteLike(Map map) {
+    return boardMapper.deleteLike(map);
   }
 
   @Override
@@ -79,5 +84,10 @@ public class BoardDaoImpl implements BoardDao{
   @Override
   public Integer updateBoard(BoardVO board) {
     return boardMapper.updateBoard(board);
+  }
+
+  @Override
+  public Integer decreaseCommentCount(Integer boardIdx) {
+    return boardMapper.decreaseCommentCount(boardIdx);
   }
 }

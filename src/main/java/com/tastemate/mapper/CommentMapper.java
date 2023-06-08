@@ -16,4 +16,6 @@ public interface CommentMapper {
   Integer insertComment(CommentVO commentVO);
 
   CommentVO selectOneComment(Integer commentIdx);
+
+  Integer deleteOneComment(Integer commentIdx);
 }
