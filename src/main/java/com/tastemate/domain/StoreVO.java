@@ -1,110 +1,37 @@
 package com.tastemate.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Alias("StoreVO")
 public class StoreVO {
-    private int storeIdx;
-    private int userIdx;
-    private String storeName;
-    private String category1;
-    private String storeAddress;
-    private double storeLati;
-    private double storeLongi;
-    private String phoneNumber;
-    private int storeCount;
-    private String filename;
-    private String oriFilename;
 
-    public int getStoreIdx() {
-        return storeIdx;
-    }
+  private String storeIdx;
+  private String userIdx;
+  private String storeName;
+  private String category1;
+  private String storeAddress;
 
-    public void setStoreIdx(int storeIdx) {
-        this.storeIdx = storeIdx;
-    }
+  private double storeLati;
+  private double storeLongi;
+  private double distance;
 
-    public int getUserIdx() {
-        return userIdx;
-    }
+  private String phoneNumber;
+  private String storeCount;
 
-    public void setUserIdx(int userIdx) {
-        this.userIdx = userIdx;
-    }
+  private String filename;
+  private MultipartFile oriFilename;
 
-    public String getStoreName() {
-        return storeName;
-    }
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
+  // join
+  private List<MenuVO> menuVO;
 
-    public String getCategory1() {
-        return category1;
-    }
+  // join
+  private List<StarVO> starVO;
 
-    public void setCategory1(String category1) {
-        this.category1 = category1;
-    }
 
-    public String getStoreAddress() {
-        return storeAddress;
-    }
-
-    public void setStoreAddress(String storeAddress) {
-        this.storeAddress = storeAddress;
-    }
-
-    public double getStoreLati() {
-        return storeLati;
-    }
-
-    public void setStoreLati(double storeLati) {
-        this.storeLati = storeLati;
-    }
-
-    public double getStoreLongi() {
-        return storeLongi;
-    }
-
-    public void setStoreLongi(double storeLongi) {
-        this.storeLongi = storeLongi;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getStoreCount() {
-        return storeCount;
-    }
-
-    public void setStoreCount(int storeCount) {
-        this.storeCount = storeCount;
-    }
-
-    public String getFilename() {
-        return filename;
-    }
-
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
-    public String getOriFilename() {
-        return oriFilename;
-    }
-
-    public void setOriFilename(String oriFilename) {
-        this.oriFilename = oriFilename;
-    }
 }

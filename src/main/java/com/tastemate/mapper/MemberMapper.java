@@ -25,6 +25,9 @@ public interface MemberMapper {
 
         public MemberVO findId(String userEmail);
         public MemberVO findUserByUserIdx(Integer userIdx);
+        public List<MemberVO> member_getClassList(int userClass);
+
+        public List<MemberVO> user_getWithStar(int userClass);
 
 //        public Integer check(String userId, String userPwd);
     }
