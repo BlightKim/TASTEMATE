@@ -2,8 +2,8 @@
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/logout_layout :: layout(~{::title}, ~{::main}, ~{::link}, ~{::script})}"
 >
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -13,6 +13,7 @@
       href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css"
     />
     <link rel="stylesheet" href="/css/board/input.css" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" />
   </head>
   <body>
     <div
@@ -179,7 +180,7 @@
         </main>
       </div>
     </div>
-
+    <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
     <script type="text/javascript" src="/js/board/board_update.js"></script>
     <script type="text/javascript" src="/js/board/input.js"></script>
     <script
@@ -187,5 +188,14 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script>
+      $('#summernote').summernote({
+        placeholder: '본문을 입력해주세요.',
+        lang: 'ko-KR',
+        tabsize: 2,
+        height: 400
+      });
+    </script>
   </body>
 </html>
