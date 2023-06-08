@@ -5,6 +5,8 @@ import com.tastemate.mapper.MemberMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.relational.core.sql.In;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,14 +20,16 @@ import java.util.UUID;
 @Slf4j
 public class MemberService {
 
+    private final PasswordEncoder passwordEncoder;
     private MemberMapper mapper;
 
     @Value("${file.dir}")
     private String fileDir;
 
     @Autowired
-    public MemberService(MemberMapper mapper) {
+    public MemberService(MemberMapper mapper, PasswordEncoder passwordEncoder) {
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<MemberVO> user_get() {
@@ -71,10 +75,12 @@ public class MemberService {
 
         String userAddress = String.join("/", vo.getUserAddress());
         String userBirth = String.join("/", vo.getUserBirth());
+        String encodedPassword = passwordEncoder.encode(vo.getUserPwd());
 
 
         System.out.println("Id = " + vo.getUserId());
         System.out.println("pwd = " + vo.getUserPwd());
+        System.out.println("encodedPassword = " + encodedPassword);
         System.out.println(vo.getUserName());
         System.out.println(vo.getUserGender());
         System.out.println(vo.getUserPhone());
@@ -88,7 +94,7 @@ public class MemberService {
 
 
         vo1.setUserId(vo.getUserId());
-        vo1.setUserPwd(vo.getUserPwd());
+        vo1.setUserPwd(encodedPassword);
         vo1.setUserName(vo.getUserName());
         vo1.setUserGender(vo.getUserGender());
         vo1.setUserPhone(vo.getUserPhone());
@@ -106,6 +112,10 @@ public class MemberService {
     public Integer checkId(String userId) {
         return mapper.checkId(userId);
     }
+
+/*    public Integer check(String userId, String userPwd) {
+        return mapper.check(userId, userPwd);
+    }*/
 
     public MemberVO loginId(String userId) {
         MemberVO vo = mapper.loginId(userId);
@@ -192,10 +202,10 @@ public class MemberService {
 
     }
 
-    public String findId(String userEmail) {
+    public void findId(String userEmail, HttpServletRequest request, HttpSession session) {
+        userEmail = request.getParameter("userEmail");
         MemberVO vo = mapper.findId(userEmail);
-        String userId = vo.getUserId();
-        return userId;
+        session.setAttribute("userId", vo.getUserId());
     }
 
 }

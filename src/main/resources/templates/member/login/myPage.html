@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/html"
+      lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <th:block th:replace="header_footer/header :: headerFragment"></th:block>
 <head>
     <meta charset="UTF-8">
     <title>list.jsp</title>
+
 
     <!--  다음 주소 스크립트 -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -30,104 +34,140 @@
     <!-- 구글 글씨체 -->
     <link rel="stylesheet" href="/css/header.css" type="text/css">
 
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: #E9DFED;
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
 
 </head>
 <body>
-<form th:action="@{modify}" method="post" enctype="multipart/form-data">
-    <div class="container-fluid" style="height: 720px; margin-top: 100px;">
-        <div class="row" style="height: 70%; margin-left: 550px;">
-            <div style="margin-left: 550px;"></div>
-            <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">
-                <div class="row">
-                    <label for="userName" class="form-label">이름</label>
-                    <input type="text" class="form-control form-control" th:placeholder="${session.vo.getUserName()}"
-                           id="userName" name="userName">
-                </div>
-                <div class="row">
-                    <label for="userPhone" class="form-label">전화번호</label>
-                    <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
-                           id="userPhone" name="userPhone">
-                </div>
-                <div class="row">
-                    <label for="userEmail" class="form-label">이메일</label>
-                    <input type="text" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
-                           id="userEmail" name="userEmail">
-                </div>
-                <div class="row">
-                    <label for="userLikeFood" class="form-label">음식</label>
-                    <select class="form-control" id="userLikeFood" name="userLikeFood">
-                        <option th:selected="${session.vo.getUserLikeFood() == null}" value="" selected disabled>음식을
-                            선택해주세요
-                        </option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '한식'}" value="한식">한식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '중식'}" value="중식">중식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '일식'}" value="일식">일식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '양식'}" value="양식">양식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '퓨전'}" value="퓨전">퓨전</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '푸드코트'}" value="푸드코트">푸드코트</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <label for="userMbti" class="form-label">MBTI</label>
-                    <select class="form-control" id="userMbti" name="userMbti">
-                        <option th:selected="${session.vo.getUserMbti() == null}" value="" selected disabled>MBTI를
-                            선택해주세요
-                        </option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISFP'}" value="ISFP">ISFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISFJ'}" value="ISFJ">ISFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISTP'}" value="ISTP">ISTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISTJ'}" value="ISTJ">ISTJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INFP'}" value="INFP">INFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INFJ'}" value="INFJ">INFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INTP'}" value="INTP">INTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INTJ'}" value="INTJ">INTJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESFP'}" value="ESFP">ESFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESFJ'}" value="ESFJ">ESFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESTP'}" value="ESTP">ESTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESTJ'}" value="ESTJ">ESTJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENFP'}" value="ENFP">ENFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENFJ'}" value="ENFJ">ENFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENTP'}" value="ENTP">ENTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENTJ'}" value="ENTJ">ENTJ</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <label for="userPost">우편번호</label>
-                    <input id="userPost" name="userAddress1" class="form-control form-control" type="text"
-                           th:placeholder="${session.addressSplit[0]}"/>
-                </div>
-                <div class="row">
-                    <label for="userAddr">주소</label>
-                    <input id="userAddr" name="userAddress2" class="form-control form-control" type="text"
-                           th:placeholder="${session.addressSplit[1]}"/>
-                </div>
-                <div class="row" style="margin-bottom: 30px;">
-                    <label>상세주소<span class="text-muted"></span></label>
-                    <input id="userAddrDetail" class="form-control form-control" type="text" name="userAddress3"
-                           th:placeholder="${session.addressSplit[2]}"/>
-                </div>
-                <div class="row">
-                    <button class="btn btn-outline-primary active" type="submit" id="address_update_btn"
-                            onclick="modifyOk(this.form)">수정
-                    </button>
+<form method="post" enctype="multipart/form-data">
+
+    <div class="container-fluid" style="height: 950px; margin-top: 100px;">
+        <div class="col-md-12 mx-auto input-form">
+            <div class="row justify-content-center" style="height: 70%;">
+                <div style="margin-left: 550px;"></div>
+                <div class="col-12 d-grid gap-2" style="align-self: center; width: 45%;">
+                    <div class="row">
+                        <label for="userName" class="form-label">이름</label>
+                        <input type="text" class="form-control form-control"
+                               th:placeholder="${session.vo.getUserName()}"
+                               id="userName" name="userName">
+                    </div>
+                    <div class="row">
+                        <label for="userPhone" class="form-label">전화번호</label>
+                        <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
+                               id="userPhone" name="userPhone">
+                    </div>
+                    <div class="row">
+                        <label for="userEmail" class="form-label">이메일</label>
+                        <input type="text" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
+                               id="userEmail" name="userEmail">
+                    </div>
+                    <div class="row">
+                        <label for="userLikeFood" class="form-label">음식</label>
+                        <select class="form-control" id="userLikeFood" name="userLikeFood">
+                            <option th:selected="${session.vo.getUserLikeFood() == null}" value="" selected disabled>음식을
+                                선택해주세요
+                            </option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '한식'}" value="한식">한식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '중식'}" value="중식">중식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '일식'}" value="일식">일식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '양식'}" value="양식">양식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '퓨전'}" value="퓨전">퓨전</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '푸드코트'}" value="푸드코트">푸드코트</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label for="userMbti" class="form-label">MBTI</label>
+                        <select class="form-control" id="userMbti" name="userMbti">
+                            <option th:selected="${session.vo.getUserMbti() == null}" value="" selected disabled>MBTI를
+                                선택해주세요
+                            </option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISFP'}" value="ISFP">ISFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISFJ'}" value="ISFJ">ISFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISTP'}" value="ISTP">ISTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISTJ'}" value="ISTJ">ISTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INFP'}" value="INFP">INFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INFJ'}" value="INFJ">INFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INTP'}" value="INTP">INTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INTJ'}" value="INTJ">INTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESFP'}" value="ESFP">ESFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESFJ'}" value="ESFJ">ESFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESTP'}" value="ESTP">ESTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESTJ'}" value="ESTJ">ESTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENFP'}" value="ENFP">ENFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENFJ'}" value="ENFJ">ENFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENTP'}" value="ENTP">ENTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENTJ'}" value="ENTJ">ENTJ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label for="userPost">우편번호</label>
+                        <input id="userPost" name="userAddress1" class="form-control form-control" type="text"
+                               th:placeholder="${session.addressSplit[0]}"/>
+                    </div>
+                    <div class="row">
+                        <label for="userAddr">주소</label>
+                        <input id="userAddr" name="userAddress2" class="form-control form-control" type="text"
+                               th:placeholder="${session.addressSplit[1]}"/>
+                    </div>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <label>상세주소<span class="text-muted"></span></label>
+                        <input id="userAddrDetail" class="form-control form-control" type="text" name="userAddress3"
+                               th:placeholder="${session.addressSplit[2]}"/>
+                    </div>
+                    <div class="row" style="margin-bottom: 20px;">
+                        <button class="btn btn-outline-primary active" type="submit" id="address_update_btn"
+                                onclick="modifyOk(this.form)" th:formaction="|@{modify}|">수정
+                        </button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-outline btn-danger" type="submit" id="withDrawl_update_btn"
+                                onclick="deleteOk()" th:formaction="|@{status}|">
+                            탈퇴
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </form>
-<form th:action="@{status}" method="post">
-    <div class="row" style="height: 70%; margin-left: 550px; margin-bottom: 150px; padding: 12px;">
-        <div div style="margin-left: 550px;"></div>
-            <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">
-                <div class="row">
-                    <button class="btn btn-outline btn-danger" type="submit" id="withDrawl_update_btn" onclick="deleteOk()">
-                        탈퇴
-                    </button>
-                </div>
-            </div>
-    </div>
-</form>
-</div>
+<!--<form th:action="" method="post">-->
+<!--    <div class="row justify-content-center" style="margin-bottom: 150px; padding: 12px;">-->
+<!--        <div div style="margin-left: 550px;"></div>-->
+<!--        <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
+<!--</form>-->
+
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     $(document).ready(() => {
@@ -362,12 +402,6 @@
     </div>
 </div>
 </div>
-<script src="/static/js/updateInfo/update_password.js" type="text/javascript"></script>
-<script src="/static/js/updateInfo/update_cellPhone.js" type="text/javascript"></script>
-<script src="/static/js/updateInfo/update_eMail.js" type="text/javascript"></script>
-<script src="/static/js/updateInfo/update_introduction.js" type="text/javascript"></script>
-<script src="/static/js/updateInfo/update_withDrawl.js"></script>
-<script src="/static/js/updateInfo/update_address.js" type="text/javascript"></script>
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>
 </html>

@@ -1,0 +1,125 @@
+.row {
+  width: 100%;
+}
+
+.col-12,
+.p-4,
+.comment_btn,
+.comment-content {
+  width: 100%;
+  height: auto;
+  text-align: justify;
+  position: relative;
+}
+
+.p-4 {
+  padding: 16px;
+}
+
+.comment_btn {
+  width: 80%;
+  height: auto;
+  text-align: justify;
+  position: relative;
+}
+
+.comment_btn .row {
+  display: flex;
+  align-items: center;
+}
+
+.comment_btn .col-1 {
+  height: 30px;
+  margin-right: 10px;
+}
+
+.comment_btn .col-6 {
+  flex: 1;
+}
+
+.comment_btn #reg_date_area {
+  justify-content: flex-end;
+}
+
+.comment_btn .bi-clock {
+  margin-right: 5px;
+}
+
+.comment-content {
+  width: 100%;
+  height: auto;
+  text-align: justify;
+}
+
+.sub-comments {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  margin-left: 40px;
+}
+
+.sub-sub-comments {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  margin-left: 80px;
+}
+
+.sub-comments .comment_btn,
+.sub-comments .comment-content {
+  padding-top: 10px;
+}
+
+.reply_comment_btn {
+  margin-left: 10px;
+}
+
+.commentIdx {
+  display: none;
+}
+
+/* 추가 스타일 */
+.col-12 {
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.comment_btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.sub-comments {
+  background-color: #f2f2f2;
+  margin-bottom: 10px;
+}
+
+.row.no-border {
+  border: none;
+}
+
+.row.no-border .col-12 {
+  border: none;
+}
+.comment-header {
+  border: none;
+}
+
+/* 기존 CSS에 추가 */
+.attachment-area {
+  background-color: #fff;  /* 원하는 배경색으로 변경 */
+  border: none;  /* 필요에 따라 변경 */
+}
+
+.liked {
+  /* 추천 상태일 때의 스타일 */
+  /* 예: 배경색을 변경 */
+  background-color: green;
+  color: white;
+}
+
+.comment-content.deleted {
+  /* 삭제된 댓글의 스타일 */
+  color: gray;  /* 예: 텍스트를 회색으로 변경 */
+  font-style: italic;  /* 예: 텍스트를 이탤릭체로 변경 */
+}

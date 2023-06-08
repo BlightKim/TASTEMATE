@@ -25,7 +25,6 @@ public class MemberVO {
         private String userMbti;
         private String userEmail;
         private String userBirth;
-        private MemberMbti memberMbti;
 
         private StarVO starVO;
 }

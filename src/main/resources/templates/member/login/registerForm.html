@@ -18,11 +18,7 @@
     body {
       min-height: 100vh;
 
-      background: -webkit-gradient(linear, left bottom, right top, from(#92b5db), to(#1d466c));
-      background: -webkit-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -moz-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: -o-linear-gradient(bottom left, #92b5db 0%, #1d466c 100%);
-      background: linear-gradient(to top right, #92b5db 0%, #1d466c 100%);
+      background: #E9DFED;
     }
 
     .input-form {
@@ -57,7 +53,7 @@
             <input id="userId" name="userId" class="form-control form-control" type="text"/>
           </div>
           <div class="col-md-6 mb-3" style="align-self: self-end;">
-            <button id="idCheckBtn" class="btn btn-primary" type="button" value="N">중복확인</button>
+            <button id="idCheckBtn" class="btn" type="button" value="N" style="background: #8E48C7; color: white">중복확인</button>
           </div>
           <div class="col-md-6 mb-3" style="text-align: center"><span id="id_warning" hidden="hidden"></span></div>
 
@@ -263,7 +259,7 @@
           <label class="custom-control-label" for="gether_agree">개인정보 수집 및 이용에 동의합니다.</label>
         </div>
         <div class="mb-4"></div>
-        <button class="btn btn-primary btn-block btn-lg" type="submit" id="submit_btn">가입 완료
+        <button class="btn btn-block btn-lg" type="submit" id="submit_btn" style="background: #8E48C7; color: white">가입 완료
         </button>
       </form>
     </div>
@@ -371,19 +367,28 @@
       }
 
       $("#day").append("<option value=''>일</option>");
+
+      $("#month").change(() => {
+        $("#day").empty();
+
+        let dt = new Date();
+        let month = $("#month").val();
+        let year = $('#year').val();
+
+        let lastDate = new Date(year, month, 0).getDate();
+
+        for (let i = 1; i <= lastDate; i++) {
+          $("#day").append("<option value='" + i + "'>" + i + " 일" + "</option>");
+        }
+        console.log(lastDate);
+
+        lastDate = 0;
+
+        console.log(lastDate);
+      });
     }
 
-    $("#month").change(() => {
-      let dt = new Date();
-      let month = $("#month").val();
-      let year = $('#year').val();
 
-      let lastDate = new Date(year, month, 0).getDate();
-
-      for (let i = 1; i <= lastDate; i++) {
-        $("#day").append("<option value='" + i + "'>" + i + " 일" + "</option>");
-      }
-    });
 
     function check_id() {
       // if ($("#userId").val() === '') {
@@ -466,14 +471,12 @@
             console.log(data)
             if (data.check == 1) {
               console.log('중복')
-              alert("중복된 아이디입니다.");
               $('#id_warning').removeAttr('hidden');
               $('#id_warning').html('<b style="font-size: 14px; color: red">[아이디가 중복되었습니다.]</b>');
               idChk = false;
             } else if (data.check == 0) {
               $("#idChk").attr("value", "Y");
               $('#id_warning').html('<b style="font-size: 14px; color: blue">[사용 가능합니다.]</b>');
-              alert("사용 가능한 아이디입니다.");
               idChk = true;
             }
           }

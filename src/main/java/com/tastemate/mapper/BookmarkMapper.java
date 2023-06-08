@@ -3,7 +3,6 @@ package com.tastemate.mapper;
 import com.tastemate.domain.BookmarkVO;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.awt.print.Book;
 import java.util.List;
 
 @Mapper

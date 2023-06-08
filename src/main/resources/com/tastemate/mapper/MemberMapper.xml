@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tastemate.mapper.MemberMapper">
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-    <select id="member_getClassList" resultType="MemberVO" parameterType="int">
-        SELECT *
-        FROM MEMBER WHERE USER_CLASS = #{userClass}
-    </select>
+<mapper namespace="com.tastemate.mapper.MemberMapper">
 
     <resultMap id="userStarResultMap" type="com.tastemate.domain.MemberVO">
         <id column="USER_IDX" property="userIdx"/>
@@ -26,20 +22,25 @@
         </collection>
     </resultMap>
 
+    <select id="member_getClassList" resultType="com.tastemate.domain.MemberVO" parameterType="int">
+        SELECT *
+        FROM MEMBER WHERE USER_CLASS = #{userClass}
+    </select>
+
+
     <select id="user_getWithStar" resultMap="userStarResultMap" parameterType="int">
         SELECT s.USER_IDX, s.USER_ID, s.USER_NAME, s.USER_GENDER, s.USER_ADDRESS, s.USER_CLASS, s.USER_LIKE_FOOD, s.USER_MBTI,
-        avg_star.USER_STAR
+               avg_star.USER_STAR
         FROM MEMBER s
-        LEFT OUTER JOIN (
-        SELECT USER_IDX, ROUND(AVG(USER_STAR), 1) AS USER_STAR
-        FROM STAR
-        GROUP BY USER_IDX
+                 LEFT OUTER JOIN (
+            SELECT USER_IDX, ROUND(AVG(USER_STAR), 1) AS USER_STAR
+            FROM STAR
+            GROUP BY USER_IDX
         ) avg_star ON s.USER_IDX = avg_star.USER_IDX
         WHERE USER_CLASS = #{userClass}
         ORDER BY s.USER_IDX
 
     </select>
-
 
     <select id="member_getList" resultType="com.tastemate.domain.MemberVO">
         select * from member
@@ -64,6 +65,10 @@
     <select id="loginId" parameterType="String" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_ID = #{userId}
     </select>
+    
+    <select id="findUserByUserIdx" parameterType="integer" resultType="com.tastemate.domain.MemberVO">
+        SELECT * FROM MEMBER WHERE USER_IDX = #{userIdx, jdbcType=INTEGER}
+    </select>
 
     <!-- 개인정보 수정 -->
     <update id="userModify" parameterType="com.tastemate.domain.MemberVO">
@@ -84,8 +89,6 @@
     </update>
 
     <select id="findId" parameterType="String" resultType="com.tastemate.domain.MemberVO">
-        SELECT USER_ID FROM MEMBER WHERE USER_EMAIL = #{userEmail}
+        SELECT * FROM MEMBER WHERE USER_EMAIL = #{userEmail}
     </select>
-
-
 </mapper>
