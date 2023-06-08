@@ -1,18 +1,23 @@
 package com.tastemate.controller;
 
+
+import com.tastemate.domain.InicisRefundVO;
+import com.tastemate.domain.InicisVO;
 import com.tastemate.domain.KakaoCancelResponse;
 import com.tastemate.domain.KakaoPayReadyVO;
 import com.tastemate.service.KakaoPay;
+import com.tastemate.service.PaymentService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+
 
 @Controller
 @RequestMapping("/pay/*")
@@ -23,18 +28,15 @@ public class PayController {
     private KakaoPay kakaopay;
 
 
+   @Autowired
+    private PaymentService paymentService;
+
+
+
     @GetMapping("/kakaoPay")
     public void kakaoPayGet() {
         log.info("kakaoPay get............................................");
     }
-
-/*    @PostMapping("/kakaoPay")
-    public String kakaoPay() {
-        log.info("kakaoPay post............................................");
-
-        return "redirect:" + kakaopay.kakaoPayReady();
-
-    } */
 
     //카카오페이 결제 요청 (ajax)
     @GetMapping ("/kakaoPay123")
@@ -70,16 +72,81 @@ public class PayController {
     }
 
 
-    /**
-     * 환불
-     */
+    // 카카오페이
     @PostMapping("/refund")
-    public ResponseEntity refund() {
+    public String refund(Model model) {
 
         log.info("controller refund............................................");
 
         KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel();
 
-        return new ResponseEntity<>(kakaoCancelResponse, HttpStatus.OK);
+        log.info("kakaoCancelResponse : " + kakaoCancelResponse);
+
+        model.addAttribute("kakaoRefund", kakaoCancelResponse);
+
+        return "redirect:/pay/kakaoPayRefund";
     }
+
+    @GetMapping("/kakaoPayRefund")
+    public void kakaoPayRefund(){
+
+    }
+
+
+
+
+    /*===================== 이니시스 ============================*/
+    @PostMapping("/inicisComplete")
+    @ResponseBody
+    public int paymentComplete(@RequestBody InicisVO inicisVO) throws IOException, ParseException {
+
+        log.info("inicisComplete!!!!!!!!!!!!!!! : " + inicisVO);
+
+        String token = paymentService.getToken();
+        log.info("token : " + token);
+
+        //결제상태 iamport에 update
+        String iamportUpdate = paymentService.iamportUpdate(inicisVO, token);
+        log.info("iamportUpdate : " + iamportUpdate);
+
+
+
+
+    //이후 DB 작업해서 insert되면 1되게 하자
+/*        int res = paySV.insert_pay(pvo);
+        if(res == 1) {
+            Biz_memberVO bvo = memberSV.selectBizMember(pvo.getBiz_email());
+            bvo.setPay_coupon(bvo.getPay_coupon()+5);
+            System.out.println("paycoupon: " + bvo.getPay_coupon());
+            res = paySV.updateBiz_pay(bvo);
+            if(res == 1)
+                System.out.println("biz_member pay coupon insert complete");
+        }*/
+
+
+        return 1;
+    }
+
+    @PostMapping("/inicisCancel")
+    @ResponseBody
+    public void inicisCancel(@RequestBody InicisRefundVO inicisRefundVO) throws IOException {
+
+        log.info("inicisCancel!!!!!!!!!!!!!!! : " + inicisRefundVO);
+
+        //토큰 DB에서 가져오기
+        String token = "7571d3dc4676d31346344ce3a361a7809a7f7327";
+
+
+        paymentService.processRefund(inicisRefundVO, token);
+
+        log.info("환불 완료!!!");
+
+
+
+
+    }
+
+
+
+
 }

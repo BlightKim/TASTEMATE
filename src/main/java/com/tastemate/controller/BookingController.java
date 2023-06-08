@@ -95,13 +95,17 @@ public class BookingController {
     }
 
     @GetMapping("/bookingToPay")
-    public void bookingToPay(Model model, HttpServletRequest request, HttpSession session, @RequestParam int bookingIdx) {
+    public String bookingToPay(Model model, HttpServletRequest request, HttpSession session, @RequestParam int bookingIdx) {
         BookingVO bookingVO = bookingService.bookingToPayShow(bookingIdx);
         StoreVO storeVO = storeService.store_get(bookingVO.getStoreIdx());
         model.addAttribute("bookingIdx",bookingIdx);
         model.addAttribute("bookingVO",bookingVO);
         model.addAttribute("storeVO", storeVO);
-
+        if (bookingVO.getOnsitePayment() == 1) {
+            return "booking/bookingToPayOnsite";
+        } else {
+            return "booking/bookingToPay";
+        }
     }
 
 

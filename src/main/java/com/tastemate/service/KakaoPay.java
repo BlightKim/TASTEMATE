@@ -170,7 +170,7 @@ public class KakaoPay {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", "TC0ONETIME");
         //parameters.add("tid", "환불할 결제 고유 번호");
-        parameters.add("tid", "T47592500dc40ec901d3");
+        parameters.add("tid", "T48174cf62ea0bae2003");   //DB에서 가져와야함!!!
         parameters.add("cancel_amount", "54321");
         parameters.add("cancel_tax_free_amount", "100");
         parameters.add("cancel_vat_amount", "0");
