@@ -12,18 +12,18 @@
 
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
     <style>
-    .yellow {
-    color : #FFA500;
-    }
+        .yellow {
+            color : #FFA500;
+        }
 
-    .backgroundPurple {
-        background-color: #9C91B3;
-    }
+        .backgroundPurple {
+            background-color: #9C91B3;
+        }
 
-    .center {
-        text-align: center;
-        align-content: center;
-    }
+        .center {
+            text-align: center;
+            align-content: center;
+        }
 
     </style>
 </head>
@@ -84,15 +84,15 @@
 
             <div class="col-xl-2">
                 <div class="row">
-                <div class="justify-content-start">
-                <span style="display: inline-block; width: 40px" th:text="${memberVO.getUserMbti()}" class="mb-2"></span>
-                </div>
-                <div class="justify-content-end">
-                    <span style="display: inline-block; width: 5px"></span>
-                <th:block th:if="${memberVO.getUserIdx() != session.vo.getUserIdx()}" th:with="heartCount=${idxAndMatch.get(memberVO.getUserIdx())}">
-                    <span class="red" th:if="${heartCount != 0.0}" th:each="i: ${#numbers.sequence(1, heartCount)}">♥</span>
-                </th:block>
-                </div>
+                    <div class="justify-content-start">
+                        <span style="display: inline-block; width: 40px" th:text="${memberVO.getUserMbti()}" class="mb-2"></span>
+                    </div>
+                    <div class="justify-content-end">
+                        <span style="display: inline-block; width: 5px"></span>
+                        <th:block th:if="${memberVO.getUserIdx() != session.vo.getUserIdx()}" th:with="heartCount=${idxAndMatch.get(memberVO.getUserIdx())}">
+                            <span class="red" th:if="${heartCount != 0.0}" th:each="i: ${#numbers.sequence(1, heartCount)}">♥</span>
+                        </th:block>
+                    </div>
                 </div>
             </div>
 
