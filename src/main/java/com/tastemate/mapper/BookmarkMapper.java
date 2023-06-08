@@ -10,8 +10,12 @@ public interface BookmarkMapper {
 
     public List<BookmarkVO> bookmark_getList();
 
-    public List<BookmarkVO> bookmarkList();
+    public List<BookmarkVO> bookmarkList(int userIdx);
+
+    public int bookmark_delete(int bookmarkIdx);
 
 
+    public int bookmark_insert(BookmarkVO bookmarkVO);
 
+    public BookmarkVO bookmarkValidate(BookmarkVO bookmarkVO);
 }
