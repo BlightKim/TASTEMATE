@@ -7,6 +7,7 @@ import com.tastemate.domain.board.UploadFileStore;
 import com.tastemate.paging.SearchCondition;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -57,16 +58,26 @@ public class BoardService {
 
   @Transactional
   public Integer increaseLike(Integer boardIdx, Integer userIdx) {
-    boardDao.insertLike(boardIdx, userIdx);
+    Map<String, Object> map = new HashMap<>();
+    map.put("boardIdx", boardIdx);
+    map.put("userIdx", userIdx);
+    like(map);
     return boardDao.increaseLike(boardIdx);
   }
   @Transactional
-  public Integer unlike(Integer boardIdx, Integer userIdx) {
-    return boardDao.decreaseLike(boardIdx);
+  public Integer decreaseLike(Integer boardIdx, Integer userIdx) {
+    Map<String, Object> map = new HashMap<>();
+    map.put("boardIdx", boardIdx);
+    map.put("userIdx", userIdx);
+    unlike(map);
+    return boardDao.increaseLike(boardIdx);
+  }
+  private Integer unlike(Map map) {
+    return boardDao.deleteLike(map);
   }
 
-  public Integer like(Integer boardIdx, Integer userIdx) {
-    return boardDao.increaseLike(boardIdx);
+  private Integer like(Map map) {
+    return boardDao.insertLike(map);
   }
 
 /*  public Integer updateBoard(Integer boardIdx, BoardUpdateForm updateForm) {

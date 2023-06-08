@@ -12,6 +12,10 @@
       rel="stylesheet"
     />
     <link href="/css/board/board_read.css" rel="stylesheet" />
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css"
+    />
   </head>
 
   <body>
@@ -170,7 +174,7 @@
                       ></svg>
                       추천
                     </button>
-                    <th:block th:if="|${1 == board.userIdx}|">
+                    <th:block th:if="|${session.vo.userIdx == board.userIdx}|">
                       <!-- 수정 버튼 -->
                       <button
                         type="button"
@@ -253,7 +257,7 @@
                       <div
                         th:class="${comment.commentLevel == 1 ? 'col-12 p-4 main-comments' : (comment.commentLevel == 2 ?  'col-12 p-4 sub-comments' : 'col-12 p-4 sub-sub-comments')}"
                         th:data-parentIdx="${comment.parentCommentIdx}"
-                        th:data-commentLevel = "${comment.commentLevel}"
+                        th:data-commentLevel="${comment.commentLevel}"
                         style="
                           width: 80%;
                           height: auto;
@@ -270,10 +274,10 @@
                             <!-- <img src style="width: 30px; height: 30px; border-radius: 50%;"> -->
                           </div>
                           <div class="col">
-                            <span style="font-weight: bold"
-                                  th:text="${comment.commenter}"
-                              ></span
-                            >
+                            <span
+                              style="font-weight: bold"
+                              th:text="${comment.commenter}"
+                            ></span>
                           </div>
                           <div class="col-auto">
                             <i class="bi bi-clock"></i>
@@ -301,6 +305,55 @@
                               </svg>
                               <span class="visually-hidden">댓글 달기</span>
                             </button>
+                            <th:block
+                              th:if="|${session.vo.userId.equals(comment.commenter)}|"
+                            >
+                              <!-- 수정 버튼 -->
+                              <button
+                                type="button"
+                                class="btn btn-success ml-2"
+                                id="comment_edit_btn"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="currentColor"
+                                  class="bi bi-pencil-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10Z"
+                                  ></path>
+                                </svg>
+                                수정
+                              </button>
+                              <!-- 삭제 버튼 -->
+                              <button
+                                type="button"
+                                class="btn btn-danger ml-2"
+                                data-toggle="modal"
+                                data-target="#commentDeleteModal"
+                              >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="currentColor"
+                                  class="bi bi-trash-fill"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path
+                                    d="M5.5 5.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5z"
+                                  ></path>
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M1 2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm14 3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h13z"
+                                  ></path>
+                                </svg>
+                                삭제
+                              </button>
+                            </th:block>
                           </div>
                         </div>
                         <div class="row no-border">
@@ -314,9 +367,9 @@
                               background-color: #f7f7f7;
                               border: none;
                             "
-                            th:utext="${comment.commentContent}"
-                          >
-                          </div>
+                            th:classappend="${comment.commentStatus.equals('삭제') ? 'deleted' : ''}"
+                            th:utext="${(comment.commentStatus).equals('삭제') ? '삭제된 댓글입니다' : comment.commentContent}"
+                          ></div>
                         </div>
                         <div th:id="|comment_${comment.commentIdx}_reply_area|">
                           <!-- 댓글 입력 칸이 들어갈 공간-->
@@ -326,12 +379,11 @@
                   </th:block>
                 </div>
 
-                <div
-                  class="row"
-                  style="width: 100%; height: 500px"
-                >
-                  <div class="row" style="width: 100%; padding-top: 10px"
-                       id="reply_comment_area"
+                <div class="row" style="width: 100%; height: 500px">
+                  <div
+                    class="row"
+                    style="width: 100%; padding-top: 10px"
+                    id="reply_comment_area"
                   >
                     <div
                       class="col-12 p-4"
@@ -394,21 +446,59 @@
           </div>
         </main>
       </div>
-      <!-- Modal -->
-      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!-- 게시물 삭제 확인 Modal -->
+      <div
+        class="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">게시물을 정말 삭제하시겠습니까?</div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="del_btn">
+                삭제하기
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                취소하기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 댓글 삭제 확인 Modal -->
+      <div class="modal fade" id="commentDeleteModal" tabindex="-1" role="dialog" aria-labelledby="commentDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="commentDeleteModalLabel">댓글 삭제</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              게시물을 정말 삭제하시겠습니까?
+              댓글 을 정말 삭제하시겠습니까?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id="del_btn">삭제하기</button>
+              <button type="button" class="btn btn-primary" id="comment_del_btn">삭제하기</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
             </div>
           </div>
@@ -419,12 +509,18 @@
     <script th:inline="javascript">
       /*<![CDATA[*/
       let isLiked = /*[[${isLiked}]]*/ false;
+      let currentUser = /*[[${session.vo.userId}]]*/ null;
       /*]]>*/
+
+      console.log(currentUser);
+
     </script>
     <script
       src="https://kit.fontawesome.com/54a65148b8.js"
       crossorigin="anonymous"
-    ></script>
+    >
+    </script>
     <script type="text/javascript" src="/js/board/board_read.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
   </body>
 </html>

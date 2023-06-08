@@ -8,4 +8,6 @@ public interface CommentDao {
   int insertOneComment(CommentVO commentVO);
 
   CommentVO selectOneComment(Integer commentIdx);
+
+  Integer deleteOneComment(Integer commentIdx);
 }

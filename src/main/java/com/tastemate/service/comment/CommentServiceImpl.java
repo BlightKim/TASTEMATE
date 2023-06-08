@@ -37,4 +37,11 @@ public class CommentServiceImpl implements CommentService {
   public List<CommentVO> getCommentList(Integer boardIdx) {
     return commentDao.selectAllComment(boardIdx);
   }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public Integer deleteOneComment(Integer commentIdx, Integer boardIdx) {
+    boardDao.decreaseCommentCount(boardIdx);
+    return commentDao.deleteOneComment(commentIdx);
+  }
 }
