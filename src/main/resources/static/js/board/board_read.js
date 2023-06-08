@@ -48,6 +48,17 @@ $(document).ready(function () {
     location.href = "/board/update/" + $("#boardIdx").val();
   });
 
+  $("#del_btn").on("click", () => {
+    $.ajax({
+      url: "/board/delete/" + $("#boardIdx").val(),
+      type: "POST",
+      success: function () {
+        alert("삭제되었습니다.");
+        location.href = "/board/list";
+      },
+    });
+  });
+
   $(document).on("click", ".reply_comment_btn", function () {
     let commentArea = $("#reply_comment_area");
     if ($(this).data("clicked")) {
@@ -72,6 +83,7 @@ $(document).ready(function () {
 
   $("#comment_write_btn").on("click", () => {
     // i want to find a reply_comment_btn near this button
+    $("#reply_comment_area").appendTo(originalParent);
 
     $.ajax({
       type: "post",
@@ -92,17 +104,9 @@ $(document).ready(function () {
       error: function (request, status, error) {},
       success: function (comment) {
         let closest_comment_btn = $(this).find("#reply_comment_area");
-        console.log(closest_comment_btn);
-        console.log(closest_comment_btn.data("clicked"));
-        if (closest_comment_btn.data("clicked")) {
-          closest_comment_btn.appendTo(originalParent);
-          closest_comment_btn.data("clicked", false);
-          currentIdx = 0;
-          commentLevel = 1;
-        }
 
         // console.log(comment.parentCommentIdx);
-        // appendComment(comment);
+        appendComment(comment);
       },
     });
   });
@@ -152,7 +156,6 @@ $(document).ready(function () {
       </div>
     `;
     });
-
     $("#collapseExample").html(commentContent);
   }
 

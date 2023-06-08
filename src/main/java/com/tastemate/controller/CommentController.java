@@ -31,11 +31,13 @@ public class CommentController {
   }
 
   @PostMapping("/write")
-  public CommentVO writeComment(@RequestBody CommentVO commentVO,
-      @SessionAttribute(name = "userIdx") Integer userIdx) {
+  public List<CommentVO> writeComment(@RequestBody CommentVO commentVO,
+      Integer userIdx) {
+    userIdx = 1;
+//    @SessionAttribute(name = "userIdx") Integer userIdx
     Integer result = commentService.writeOneComment(commentVO, userIdx);
-    CommentVO newComment = commentService.getOneComment(result);
-    log.info("commentVO={}", newComment);
-    return newComment;
+    List<CommentVO> commentList = commentService.getCommentList(commentVO.getBoardIdx());
+    log.info("commentList={}", commentList);
+    return commentList;
   }
 }

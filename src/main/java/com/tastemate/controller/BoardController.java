@@ -1,17 +1,16 @@
-
-
 package com.tastemate.controller;
 
 import com.tastemate.domain.board.BoardStatus;
+import com.tastemate.domain.board.BoardUpdateForm;
 import com.tastemate.domain.board.BoardVO;
 import com.tastemate.domain.board.BoardWriteForm;
 import com.tastemate.domain.comment.CommentVO;
-import com.tastemate.domain.member.UploadFileStore;
+import com.tastemate.domain.board.UploadFileStore;
 import com.tastemate.paging.PageHandler;
 import com.tastemate.paging.SearchCondition;
+import com.tastemate.service.MemberService;
 import com.tastemate.service.board.BoardService;
 import com.tastemate.service.comment.CommentService;
-import com.tastemate.service.login.LoginService;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
@@ -36,17 +35,26 @@ import org.springframework.web.util.UriUtils;
 @Controller
 @RequestMapping({"/board"})
 public class BoardController {
+
   private static final Logger log = LoggerFactory.getLogger(BoardController.class);
   private final BoardService boardService;
   private final CommentService commentService;
   private final UploadFileStore fileStore;
-  private final LoginService loginService;
+  private final MemberService memberService;
+
+  public BoardController(BoardService boardService, CommentService commentService,
+      UploadFileStore fileStore, MemberService memberService) {
+    this.boardService = boardService;
+    this.commentService = commentService;
+    this.fileStore = fileStore;
+    this.memberService = memberService;
+  }
 
   @GetMapping
   public String board(SearchCondition sc, Model model) {
-    int totalCnt = this.boardService.getResultCnt(sc);
+    int totalCnt = boardService.getResultCnt(sc);
     PageHandler pageHandler = new PageHandler(totalCnt, sc);
-    List<BoardVO> boardList = this.boardService.getAllBoard(sc);
+    List<BoardVO> boardList = boardService.getAllBoard(sc);
     model.addAttribute("boardList", boardList);
     model.addAttribute("ph", pageHandler);
     return "board/board_list";
@@ -60,12 +68,14 @@ public class BoardController {
   }
 
   @PostMapping({"/write"})
-  public String write(@ModelAttribute(name = "form") BoardWriteForm writeForm, @SessionAttribute(name = "userIdx") Integer userIdx) throws IOException {
-    log.info("writeForm={}", writeForm);
-    BoardVO boardVO = this.writeFormToBoardVO(writeForm, userIdx);
+  public String write(@ModelAttribute(name = "form") BoardWriteForm writeForm,
+      Integer userIdx) throws IOException {
+    userIdx = 1;
+//    @SessionAttribute(name = "userIdx") Integer userIdx
+    BoardVO boardVO = writeFormToBoardVO(writeForm, userIdx);
     MultipartFile boardAttachedFile = writeForm.getMultipartFile();
     if (boardAttachedFile != null) {
-      String storeName = this.fileStore.saveFile(boardAttachedFile);
+      String storeName = fileStore.saveFile(boardAttachedFile);
       boardVO.setOriName(boardAttachedFile.getOriginalFilename());
       boardVO.setStoreName(storeName);
     }
@@ -75,10 +85,12 @@ public class BoardController {
   }
 
   @GetMapping({"/read/{boardIdx}"})
-  public String read(@PathVariable("boardIdx") Integer boardIdx, Model model, @SessionAttribute(name = "userIdx") Integer userIdx) {
-    boolean checkForLike = this.boardService.checkForLike(boardIdx, userIdx);
-    BoardVO board = this.boardService.getOnePost(boardIdx);
-    List<CommentVO> commentList = this.commentService.getCommentList(boardIdx);
+  public String read(@PathVariable("boardIdx") Integer boardIdx, Model model, Integer userIdx) {
+    userIdx = 1;
+//     @SessionAttribute(name = "userIdx") Integer userIdx
+    boolean checkForLike = boardService.checkForLike(boardIdx, userIdx);
+    BoardVO board = boardService.getOnePost(boardIdx);
+    List<CommentVO> commentList = commentService.getCommentList(boardIdx);
     model.addAttribute("isLiked", checkForLike);
     model.addAttribute("board", board);
     model.addAttribute("commentList", commentList);
@@ -86,37 +98,62 @@ public class BoardController {
   }
 
   @PostMapping({"/unlike/{boardIdx}"})
-  public String unlike(@PathVariable("boardIdx") Integer boardIdx, @SessionAttribute(name = "userIdx") Integer userIdx) {
+  public String unlike(@PathVariable("boardIdx") Integer boardIdx,
+      @SessionAttribute(name = "userIdx") Integer userIdx) {
     log.info("unlike 호출");
-    this.boardService.unlike(boardIdx, userIdx);
+    boardService.unlike(boardIdx, userIdx);
     return "redirect:/board/read/" + boardIdx;
   }
 
   @PostMapping({"/like/{boardIdx}"})
-  public String like(@PathVariable("boardIdx") Integer boardIdx, @SessionAttribute(name = "userIdx") Integer userIdx) {
+  public String like(@PathVariable("boardIdx") Integer boardIdx, Integer userIdx) {
+    userIdx = 1;
+//    @SessionAttribute(name = "userIdx") Integer userIdx
     log.info("like 호출");
-    this.boardService.like(boardIdx, userIdx);
+    boardService.like(boardIdx, userIdx);
     return "redirect:/board/read/" + boardIdx;
   }
 
   @PostMapping({"/update/{boardIdx}"})
-  public String update(@PathVariable("boardIdx") Integer boardIdx, @ModelAttribute("board") BoardVO boardVO) {
-    boardVO.setBoardIdx(boardIdx);
-    this.boardService.updateBoard(boardVO);
+  public String update(@PathVariable("boardIdx") Integer boardIdx,
+      @ModelAttribute("board") BoardUpdateForm updateForm) throws IOException {
+    BoardVO boardVO = updateFormToBoardVO(boardIdx, updateForm);
+
+    Integer integer = boardService.updateBoard(boardVO);
+
+//    boardVO.setBoardIdx(boardIdx);
+//    boardService.updateBoard(boardVO);
     return "redirect:/board/read/" + boardIdx;
   }
 
+  @GetMapping({"/update/{boardIdx}"})
+  public String updateForm(@PathVariable("boardIdx") Integer boardIdx,
+      Model model) {
+    BoardVO board = boardService.getOnePost(boardIdx);
+    model.addAttribute("board", board);
+    return "/board/board_update";
+  }
+
+  @PostMapping("/delete/{boardIdx}")
+  public String delete(@PathVariable("boardIdx") Integer boardIdx) {
+    boardService.deleteBoard(boardIdx);
+    return "redirect:/board";
+  }
+
   @GetMapping({"/download/{storeFileName}"})
-  public ResponseEntity<Resource> downloadFile(@PathVariable(name = "storeFileName") Integer boardIdx, HttpServletRequest request) throws MalformedURLException {
-    BoardVO findPost = this.boardService.getOnePost(boardIdx);
+  public ResponseEntity<Resource> downloadFile(
+      @PathVariable(name = "storeFileName") Integer boardIdx, HttpServletRequest request)
+      throws MalformedURLException {
+    BoardVO findPost = boardService.getOnePost(boardIdx);
     String storeFileName = findPost.getStoreName();
     String oriName = findPost.getOriName();
-    String var10002 = this.fileStore.getFullPath(storeFileName);
+    String var10002 = fileStore.getFullPath(storeFileName);
     UrlResource resource = new UrlResource("file:" + var10002);
     log.info("uploadFileName={}", oriName);
     String encodedUploadFileName = UriUtils.encode(oriName, StandardCharsets.UTF_8);
     String contentDisposition = "attachment; fileName=\"" + encodedUploadFileName + "\"";
-    return ((ResponseEntity.BodyBuilder)ResponseEntity.ok().header("Content-Disposition", new String[]{contentDisposition})).body(resource);
+    return ((ResponseEntity.BodyBuilder) ResponseEntity.ok()
+        .header("Content-Disposition", new String[]{contentDisposition})).body(resource);
   }
 
   private BoardVO writeFormToBoardVO(BoardWriteForm writeForm, Integer userIdx) {
@@ -129,10 +166,26 @@ public class BoardController {
     return board;
   }
 
-  public BoardController(final BoardService boardService, final CommentService commentService, final UploadFileStore fileStore, final LoginService loginService) {
-    this.boardService = boardService;
-    this.commentService = commentService;
-    this.fileStore = fileStore;
-    this.loginService = loginService;
+  private BoardVO updateFormToBoardVO(Integer boardIdx, BoardUpdateForm updateForm)
+      throws IOException {
+    BoardVO boardVO = boardService.getOnePost(boardIdx);
+    boardVO.setBoardIdx(boardIdx);
+    boardVO.setTitle(updateForm.getTitle());
+    boardVO.setContent(updateForm.getContent());
+
+    MultipartFile boardAttachedFile = updateForm.getMultipartFile();
+    String originalFilename = boardAttachedFile.getOriginalFilename();
+    String existingFile = updateForm.getExistingFile();
+    if (!"".equals(originalFilename)) {
+      String storeFileName = fileStore.saveFile(boardAttachedFile);
+      boardVO.setOriName(originalFilename);
+      boardVO.setStoreName(storeFileName);
+    } else {
+      if (existingFile == null) {
+        boardVO.setOriName(null);
+        boardVO.setStoreName(null);
+      }
+    }
+    return boardVO;
   }
 }

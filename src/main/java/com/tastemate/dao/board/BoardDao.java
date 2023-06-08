@@ -22,6 +22,7 @@ public interface BoardDao {
   Integer increaseLike(Integer boardIdx);
 
   Integer decreaseLike(Integer boardIdx);
+  Integer deleteBoard(Integer boardIdx);
 
   Integer insertLike(Integer boardIdx, Integer userIdx);
 }

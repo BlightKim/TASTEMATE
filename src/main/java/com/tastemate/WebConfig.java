@@ -11,32 +11,31 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
-
-  private String resourcePath = "/member/**";
-  private String savePath = "file:///Users/bazzi/upload";
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LogInterceptor())
         .order(1)
         .addPathPatterns("/**")
-        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**");
-
-    registry.addInterceptor(new LoginCheckInterceptor())
-        .order(2)
-        .addPathPatterns("/**")
-        .excludePathPatterns("/", "/board", "/login/**", "/login/logout",
-            "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
-            "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**");
+        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**");
+//
+//    registry.addInterceptor(new LoginCheckInterceptor())
+//        .order(2)
+//        .addPathPatterns("/**")
+//        .excludePathPatterns("/", "/board", "/login/**", "/login/logout",
+//            "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
+//            "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**");
 
   }
+  private String resourcePath = "/member/**";
+  private String savePath = "file:///Users/bazzi/upload";
 
-  @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+/*  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry){
     registry.addResourceHandler(resourcePath)
         .addResourceLocations(savePath);
-  }
+  }*/
 }

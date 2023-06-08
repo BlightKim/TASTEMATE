@@ -1,7 +1,9 @@
 package com.tastemate.service.board;
 
 import com.tastemate.dao.board.BoardDao;
+import com.tastemate.domain.board.BoardUpdateForm;
 import com.tastemate.domain.board.BoardVO;
+import com.tastemate.domain.board.UploadFileStore;
 import com.tastemate.paging.SearchCondition;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +24,9 @@ public class BoardService {
     return boardDao.selectAllBoard(sc);
   };
 
+  public Integer deleteBoard(Integer boardIdx) {
+    return boardDao.deleteBoard(boardIdx);
+  }
 
   public Integer saveOneBoard(BoardVO boardVO) {
     return boardDao.insertOne(boardVO);
@@ -62,4 +68,11 @@ public class BoardService {
   public Integer like(Integer boardIdx, Integer userIdx) {
     return boardDao.increaseLike(boardIdx);
   }
+
+/*  public Integer updateBoard(Integer boardIdx, BoardUpdateForm updateForm) {
+    BoardVO boardVO = updateFormToBoardVO(updateForm);
+
+  }*/
+
+
 }

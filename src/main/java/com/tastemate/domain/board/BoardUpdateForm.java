@@ -11,6 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class BoardUpdateForm {
   private String title;
   private String content;
-  private String password;
   private MultipartFile multipartFile;
+  private String existingFile;
 }

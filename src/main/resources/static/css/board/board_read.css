@@ -57,6 +57,12 @@
   margin-left: 40px;
 }
 
+.sub-sub-comments {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  margin-left: 80px;
+}
+
 .sub-comments .comment_btn,
 .sub-comments .comment-content {
   padding-top: 10px;

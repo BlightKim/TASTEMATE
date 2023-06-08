@@ -57,7 +57,13 @@ public class BoardDaoImpl implements BoardDao{
   }
 
   public Integer selectResultCnt(SearchCondition sc) {
+
     return boardMapper.selectResultCnt(sc);
+  }
+
+  @Override
+  public Integer deleteBoard(Integer boardIdx) {
+    return boardMapper.deleteBoard(boardIdx);
   }
 
   @Override

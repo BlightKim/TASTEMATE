@@ -12,8 +12,6 @@ public interface MemberMapper {
         @Autowired
         public List<MemberVO> member_getList();
 
-        @Autowired
-        public String member_checkId();
 
         public int user_join(MemberVO vo);
 
@@ -26,6 +24,7 @@ public interface MemberMapper {
         public int userStatus(MemberVO vo);
 
         public MemberVO findId(String userEmail);
+        public MemberVO findUserByUserIdx(Integer userIdx);
 
-        public Integer check(String userId, String userPwd);
+//        public Integer check(String userId, String userPwd);
     }

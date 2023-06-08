@@ -113,9 +113,9 @@ public class MemberService {
         return mapper.checkId(userId);
     }
 
-    public Integer check(String userId, String userPwd) {
+/*    public Integer check(String userId, String userPwd) {
         return mapper.check(userId, userPwd);
-    }
+    }*/
 
     public MemberVO loginId(String userId) {
         MemberVO vo = mapper.loginId(userId);

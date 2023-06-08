@@ -1,4 +1,4 @@
-package com.tastemate.domain.member;
+package com.tastemate.domain.board;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -30,6 +30,7 @@ public class UploadFileStore {
 
         multipartFile.transferTo(new File(getFullPath(storeFileName)));
         return storeFileName;
+
     }
 
     private String createStoreProfileName(String originalFileName) {
@@ -44,7 +45,7 @@ public class UploadFileStore {
     private String extracted(String originalFileName) {
         int pos = originalFileName.lastIndexOf(".");
         // 확장자 명
-        return originalFileName.substring(pos);
+        return originalFileName.substring(pos+1);
     }
 
 }

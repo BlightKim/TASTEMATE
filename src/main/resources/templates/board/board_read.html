@@ -14,7 +14,6 @@
     <link href="/css/board/board_read.css" rel="stylesheet" />
   </head>
 
-  // please refactoring my whole code
   <body>
     <div
       class="container-fluid"
@@ -171,7 +170,7 @@
                       ></svg>
                       추천
                     </button>
-                    <th:block th:if="|${session.userIdx == board.userIdx}|">
+                    <th:block th:if="|${1 == board.userIdx}|">
                       <!-- 수정 버튼 -->
                       <button
                         type="button"
@@ -196,7 +195,8 @@
                       <button
                         type="button"
                         class="btn btn-danger ml-2"
-                        id="del_btn"
+                        data-toggle="modal"
+                        data-target="#deleteModal"
                       >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -394,7 +394,28 @@
           </div>
         </main>
       </div>
+      <!-- Modal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">게시물 삭제</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              게시물을 정말 삭제하시겠습니까?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="del_btn">삭제하기</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">취소하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
     <script th:inline="javascript">
       /*<![CDATA[*/
       let isLiked = /*[[${isLiked}]]*/ false;

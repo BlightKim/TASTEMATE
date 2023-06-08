@@ -1,6 +1,6 @@
 package com.tastemate.domain.comment;
 
-import com.tastemate.domain.member.MemberVO;
+import com.tastemate.domain.MemberVO;
 import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;

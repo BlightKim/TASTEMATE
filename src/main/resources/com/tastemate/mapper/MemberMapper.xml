@@ -29,9 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="loginId" parameterType="String" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_ID = #{userId}
     </select>
-
-    <select id="check" parameterType="String" resultType="com.tastemate.domain.MemberVO">
-        SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd};
+    
+    <select id="findUserByUserIdx" parameterType="integer" resultType="MemberVO">
+        SELECT * FROM MEMBER WHERE USER_IDX = #{userIdx, jdbcType=INTEGER}
     </select>
 
     <!-- 개인정보 수정 -->

@@ -1,5 +1,6 @@
 package com.tastemate.domain.board;
 
+import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.comment.CommentVO;
 import java.lang.reflect.Member;
 import java.util.Date;
@@ -7,7 +8,6 @@ import java.util.List;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 
-import com.tastemate.domain.member.MemberVO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

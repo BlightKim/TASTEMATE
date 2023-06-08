@@ -2,10 +2,8 @@ package com.tastemate.service.comment;
 
 import com.tastemate.dao.board.BoardDao;
 import com.tastemate.dao.comment.CommentDao;
-import com.tastemate.dao.login.LoginDao;
-import com.tastemate.dao.register.RegisterDao;
+import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.comment.CommentVO;
-import com.tastemate.domain.member.MemberVO;
 import com.tastemate.mapper.CommentMapper;
 import com.tastemate.mapper.MemberMapper;
 import java.util.List;
@@ -24,7 +22,7 @@ public class CommentServiceImpl implements CommentService {
   @Override
   @Transactional(rollbackFor = Exception.class)
   public Integer writeOneComment(CommentVO commentVO, Integer userIdx) {
-    MemberVO member = memberMapper.selectByUserIdx(userIdx);
+    MemberVO member = memberMapper.findUserByUserIdx(userIdx);
     commentVO.setMemberVO(member);
     boardDao.increaseCommentCount(commentVO.getBoardIdx());
     return commentDao.insertOneComment(commentVO);

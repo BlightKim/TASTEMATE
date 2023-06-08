@@ -1,8 +1,7 @@
 package com.tastemate.mapper;
 
+import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.board.BoardVO;
-import com.tastemate.domain.board.BoardVOWithCommentVOList;
-import com.tastemate.domain.member.MemberVO;
 import com.tastemate.paging.SearchCondition;
 import java.util.List;
 import java.util.Map;
@@ -38,4 +37,6 @@ public interface BoardMapper {
   Integer increaseLike(Integer boardIdx);
 
   Integer decreaseLike(Integer boardIdx);
+
+  Integer deleteBoard(Integer boardIdx);
 }
