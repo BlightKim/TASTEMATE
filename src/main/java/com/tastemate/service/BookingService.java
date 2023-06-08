@@ -24,6 +24,7 @@ public class BookingService {
         return result;
     }
 
+
     public BookingVO bookingToPayShow(int bookingIdx) {
       BookingVO bookingVO = bookingMapper.bookingToPay(bookingIdx);
 

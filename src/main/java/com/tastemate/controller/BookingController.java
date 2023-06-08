@@ -59,6 +59,7 @@ public class BookingController {
 
 
     @PostMapping("/bookingInsert")
+
     public String bookingInsert(Model model, BookingVO bookingVO, RedirectAttributes redirect,
                                 @RequestParam String category1, @RequestParam String tableNo,
                                 @RequestParam String selectDate, @RequestParam String time, @RequestParam String onsitePayment) {
@@ -81,10 +82,12 @@ public class BookingController {
         bookingVO.setOnsitePayment(Integer.parseInt(onsitePayment));
 
 
+
         System.out.println("bookingVO = " + bookingVO);
 
 
         int result = bookingService.bookingToPay(bookingVO);
+
 
         redirect.addAttribute("bookingIdx", bookingVO.getBookingIdx());
         System.out.println("result = " + result);

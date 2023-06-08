@@ -9,6 +9,7 @@
     </select>
 
     <insert id="bookingInsert" parameterType="BookingVO">
+
         <selectKey keyProperty="bookingIdx" resultType="int" order="BEFORE">
             select BOOKING_SEQ.nextval FROM dual
         </selectKey>
@@ -18,6 +19,7 @@
             #{userName}, #{onsitePayment}, sysdate, TO_DATE(#{bookingTime},'YYYY-MM-DD HH24:MI:SS') , #{menuIdx},
             #{foodName}, #{price}, #{tableNo})
     </insert>
+
 
     <select id="bookingToPay" parameterType="int" resultType="BookingVO">
         SELECT * FROM BOOKING WHERE BOOKING_IDX = #{bookingIdx}

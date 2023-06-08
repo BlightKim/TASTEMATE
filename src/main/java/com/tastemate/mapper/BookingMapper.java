@@ -13,4 +13,5 @@ public interface BookingMapper {
     public int bookingInsert(BookingVO bookingVO);
 
     public BookingVO bookingToPay(int bookingIdx);
+
 }

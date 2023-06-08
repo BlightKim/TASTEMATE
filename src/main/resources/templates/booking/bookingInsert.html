@@ -94,6 +94,10 @@ oriFilename-->
               <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" th:readonly>
               <input type="hidden" class="form-control" id="userIdx" name="userIdx" th:value="${session.vo.getUserIdx()}">
             <input type="hidden" class="form-control" id="userId" name="userId" th:value="${userId}">
+<<<<<<< HEAD
+=======
+            <input type="hidden" class="form-control" id="storeIdx" name="storeIdx" th:value=2>
+>>>>>>> 5ac27e429a98fce1ce21fedc70e47cd0765b5c6c
           </div>
 
         </div>
@@ -101,8 +105,13 @@ oriFilename-->
           <div class="col-md-6 mb-3">
             <label for="selectDate">예약일자</label>
             <div class="form-group">
+<<<<<<< HEAD
               <select class="form-control" id="selectDate" name="selectDate" required>
                 <option value="" selected disabled>예약하실 일자를 선택해주세요</option>
+=======
+              <select class="form-control" id="selectDate" name="selectDate">
+                <option selected disabled>예약하실 일자를 선택해주세요</option>
+>>>>>>> 5ac27e429a98fce1ce21fedc70e47cd0765b5c6c
                 <option id="date1" name="date1" value=""></option>
                 <option id="date2" name="date2" value=""></option>
                 <option id="date3" name="date3" value=""></option>
@@ -151,6 +160,7 @@ oriFilename-->
             <div class="form-group">
               <select class="form-control" id="tableNo" name="tableNo" required>
                 <option value="" selected disabled>번호를 선택해주세요</option>
+
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>

@@ -43,7 +43,7 @@ public class BookmarkController {
     }
 
     @GetMapping("/delete")
-    public String delete(HttpSession session, HttpServletRequest request, RedirectAttributes redirect, int bookmarkIdx) {
+    public String delete(HttpSession session, HttpServletRequest request,RedirectAttributes redirect, int bookmarkIdx) {
         //로그인 정보 받아오기
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
         System.out.println("memberVO = " + memberVO);

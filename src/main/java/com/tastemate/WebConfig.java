@@ -20,6 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
   private String resourcePath = "/member/**";
   private String savePath = "file:///Users/bazzi/upload";
 
+
   private String storeResourcePath = "/store/**";
   private String storeSavePath = "file:///C:/upload/";
 
@@ -27,5 +28,6 @@ public class WebConfig implements WebMvcConfigurer {
   public void addResourceHandlers(ResourceHandlerRegistry registry){
     registry.addResourceHandler(storeResourcePath)
             .addResourceLocations(storeSavePath);
+
   }
 }
