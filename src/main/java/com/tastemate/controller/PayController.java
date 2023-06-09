@@ -141,6 +141,12 @@ public class PayController {
     }
 
 
+    @GetMapping("/inicisSuccess")
+    public void inicisSuccess(){
+
+    }
+
+
 
 
 }

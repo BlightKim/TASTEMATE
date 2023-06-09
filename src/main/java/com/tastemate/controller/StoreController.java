@@ -1,9 +1,11 @@
 package com.tastemate.controller;
 
+import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.StarVO;
 import com.tastemate.domain.StoreVO;
 import com.tastemate.domain.paging.Criteria;
 import com.tastemate.domain.paging.PageDTO;
+import com.tastemate.mapper.MemberMapper;
 import com.tastemate.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class StoreController {
 
     @Autowired
     private StoreService service;
+
+    @Autowired
+    private MemberMapper memberMapper;
 
     @GetMapping("/list")
     public void get(Model model
@@ -87,6 +92,9 @@ public class StoreController {
         model.addAttribute("storeVO_star", storeVO1);
         model.addAttribute("storeVO_comment", storeVO2);
 
+        /*회원정보*/
+        MemberVO member = memberMapper.findUserByUserIdx(Integer.parseInt(storeVO.getUserIdx()));
+        model.addAttribute("storeVO_member", member);
     }
 
     @GetMapping("/register")
@@ -143,6 +151,7 @@ public class StoreController {
     public void main(){
 
     }
+
 
 
 }

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+
+
+</head>
+<body>
+
+
+이니시스 결제 성공
+일단은 바로 별점주는 화면으로 넘어가게하자 (예약 시간 후로 시간제한도 걸어야해)
+
+<a class="btn btn-warning purple3"
+   th:href="@{/store/starComment}">별점주러가기</a>
+이때 파라미터로 storeIdx 넘겨줘야한다!!!!!
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>
