@@ -86,29 +86,29 @@
 
 
     <!-- 강의실별 수강생 조회 -->
-    <select id="manageFindClass" parameterType="com.tastemate.domain.MemberVO" resultType="com.tastemate.domain.MemberVO">
+    <select id="manageFindClass" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
         SELECT * FROM MEMBER WHERE USER_CLASS = #{userClass}
     </select>
 
 
 
     <!-- 수강생 정보 조회 -->
-    <select id="userInfo" parameterType="com.tastemate.domain.MemberVO" resultType="com.tastemate.domain.MemberVO">
+    <select id="userInfo" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
         SELECT * FROM MEMBER WHERE USER_IDX = #{userIdx}
     </select>
 
     <!-- 수강생 계정 활성 -->
-    <update id="userInfoActive" parameterType="com.tastemate.domain.MemberVO">
+    <update id="userInfoActive" parameterType="com.tastemate.domain.ManageMemberVO">
         UPDATE MEMBER SET USER_STATUS = 0 WHERE USER_IDX = #{userIdx}
     </update>
 
     <!-- 수강생 계정 비활성 -->
-    <update id="userInfoInactive" parameterType="com.tastemate.domain.MemberVO">
+    <update id="userInfoInactive" parameterType="com.tastemate.domain.ManageMemberVO">
         UPDATE MEMBER SET USER_STATUS = 1 WHERE USER_IDX = #{userIdx}
     </update>
 
     <!-- 수강생 계정 강퇴 -->
-    <delete id="deleteUserInfo" parameterType="com.tastemate.domain.MemberVO">
+    <delete id="deleteUserInfo" parameterType="com.tastemate.domain.ManageMemberVO">
         UPDATE MEMBER SET USER_STATUS = 2 WHERE USER_IDX = #{userIdx}
     </delete>
 

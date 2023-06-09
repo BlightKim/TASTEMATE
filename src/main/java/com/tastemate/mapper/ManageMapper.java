@@ -2,7 +2,7 @@ package com.tastemate.mapper;
 
 import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
-import com.tastemate.domain.MemberVO;
+import com.tastemate.domain.ManageMemberVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -56,20 +56,20 @@ public interface ManageMapper {
 
 
     //클래스별 수강생 찾기
-    List<MemberVO> manageFindClass(MemberVO memberVO);
+    List<ManageMemberVO> manageFindClass(ManageMemberVO memberVO);
 
 
 
     //수강생 정보 조회
-    MemberVO userInfo (MemberVO memberVO);
+    ManageMemberVO userInfo (ManageMemberVO memberVO);
 
     //수강생 계정 활성
-    int userInfoActive(MemberVO memberVO);
+    int userInfoActive(ManageMemberVO memberVO);
 
     //수강생 계정 비활성
-    int userInfoInactive(MemberVO memberVO);
+    int userInfoInactive(ManageMemberVO memberVO);
 
     //수강생 계정 강퇴
-    int deleteUserInfo(MemberVO memberVO);
+    int deleteUserInfo(ManageMemberVO memberVO);
 
 }

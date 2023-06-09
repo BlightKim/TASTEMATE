@@ -2,7 +2,7 @@ package com.tastemate.controller;
 
 import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
-import com.tastemate.domain.MemberVO;
+import com.tastemate.domain.ManageMemberVO;
 import com.tastemate.service.ManageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,10 +30,8 @@ public class ManageController {
 
 
     //임시(시험용)
-    @GetMapping("pre")
-    public String managePre(){
-        return "/manage/pre";
-    }
+//    @GetMapping("test")
+//    public String managePre(){ return "/manage/test"; }
 
 
 
@@ -191,8 +189,8 @@ public class ManageController {
 
     //클래스별 수강생 찾기
     @GetMapping("findClass")
-    public String findClass(Model model, MemberVO memberVO) {
-        List<MemberVO> memberVOList = service.manageFindClass(memberVO);
+    public String findClass(Model model, ManageMemberVO memberVO) {
+        List<ManageMemberVO> memberVOList = service.manageFindClass(memberVO);
         model.addAttribute("memberVOList", memberVOList);
         model.addAttribute("userClass", memberVO.getUserClass());
         return "/manage/classMemberList";
@@ -202,15 +200,15 @@ public class ManageController {
 
     //수강생 정보 조회
     @GetMapping("userInfo")
-    public String userInfo(Model model, MemberVO memberVO){
-        MemberVO userInfo = service.userInfo(memberVO);
+    public String userInfo(Model model, ManageMemberVO memberVO){
+        ManageMemberVO userInfo = service.userInfo(memberVO);
         model.addAttribute("memberVO", userInfo);
         return "/manage/classMember";
     }
 
     //수강생 계정 활성
     @GetMapping("userInfoActive")
-    public String userInfoActive(MemberVO memberVO){
+    public String userInfoActive(ManageMemberVO memberVO){
         int result = service.userInfoActive(memberVO);
         return "redirect:/manage/userInfo?userIdx=" + memberVO.getUserIdx();
 //        return "redirect:/manage/findClass?userClass=" + memberVO.getUserClass();
@@ -218,7 +216,7 @@ public class ManageController {
 
     //수강생 계정 비활성
     @GetMapping("userInfoInactive")
-    public String userInfoInactive(Model model, MemberVO memberVO){
+    public String userInfoInactive(Model model, ManageMemberVO memberVO){
         int result = service.userInfoInactive(memberVO);
 
 //        model.addAttribute("userClass", memberVO.getUserClass());
@@ -228,7 +226,7 @@ public class ManageController {
 
     //수강생 계정 강퇴
     @GetMapping("deleteUserInfo")
-    public String deleteUserInfo(Model model, MemberVO memberVO) {
+    public String deleteUserInfo(Model model, ManageMemberVO memberVO) {
         int result = service.deleteUserInfo(memberVO);
 //        model.addAttribute("userClass", memberVO.getUserClass());
         return "redirect:/manage/userInfo?userIdx=" + memberVO.getUserIdx();

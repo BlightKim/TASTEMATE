@@ -2,9 +2,10 @@ package com.tastemate.service;
 
 import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
-import com.tastemate.domain.MemberVO;
+import com.tastemate.domain.ManageMemberVO;
 import com.tastemate.mapper.ManageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -198,31 +199,55 @@ public class ManageService {
 
 
     //클래스별 수강생 찾기
-    public List<MemberVO> manageFindClass(MemberVO memberVO) {
-        List<MemberVO> manageFindClass = mapper.manageFindClass(memberVO);
+    public List<ManageMemberVO> manageFindClass(ManageMemberVO memberVO) {
+        List<ManageMemberVO> manageFindClass = mapper.manageFindClass(memberVO);
         return manageFindClass;
     }
 
     //수강생 정보 조회
-    public MemberVO userInfo (MemberVO memberVO){
-        MemberVO userInfo = mapper.userInfo(memberVO);
+    public ManageMemberVO userInfo (ManageMemberVO memberVO){
+        ManageMemberVO userInfo = mapper.userInfo(memberVO);
         return userInfo;
     }
     //수강생 계정 활성
-    public int userInfoActive(MemberVO memberVO){
+    public int userInfoActive(ManageMemberVO memberVO){
         int result = mapper.userInfoActive(memberVO);
         return result;
     }
     //수강생 계정 비활성
-    public int userInfoInactive(MemberVO memberVO){
+    public int userInfoInactive(ManageMemberVO memberVO){
         int result = mapper.userInfoInactive(memberVO);
         return result;
     }
 
     //수강생 계정 강퇴
-    public int deleteUserInfo(MemberVO memberVO) {
+    public int deleteUserInfo(ManageMemberVO memberVO) {
         int result = mapper.deleteUserInfo(memberVO);
         return result;
+    }
+
+
+//    @Autowired
+//    HttpServletResponse response;
+//    @Autowired
+//    HttpServletRequest request;
+
+    //입실 체크
+    @Scheduled(cron = "* 30 18 ? * MON-FRI")
+    public void inCheck() {
+//        try {
+//            ServletWebRequest servletContainer = (ServletWebRequest) RequestContextHolder.getRequestAttributes();
+//
+//
+//            HttpServletResponse response = servletContainer.getResponse();
+//            response.setContentType("text/html; charset=utf-8");
+//            PrintWriter w = response.getWriter();
+//            w.write("<script>alert('강의시간 입니다.\n입실 체크 해주세요!');</script>");
+//            w.flush();
+//            w.close();
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 }

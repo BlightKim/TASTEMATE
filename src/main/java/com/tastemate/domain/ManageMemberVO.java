@@ -3,7 +3,7 @@ package com.tastemate.domain;
 import lombok.Data;
 
 @Data
-public class MemberVO {
+public class ManageMemberVO {
     private int userIdx;
     private String userId;
     private String userPwd;

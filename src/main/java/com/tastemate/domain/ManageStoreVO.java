@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class ManageStoreVO extends MemberVO {
+public class ManageStoreVO extends ManageMemberVO {
 
     private int storeIdx;
     private int userIdx;
