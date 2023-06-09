@@ -1,10 +1,7 @@
 package com.tastemate.controller;
 
 
-import com.tastemate.domain.InicisRefundVO;
-import com.tastemate.domain.InicisVO;
-import com.tastemate.domain.KakaoCancelResponse;
-import com.tastemate.domain.KakaoPayReadyVO;
+import com.tastemate.domain.*;
 import com.tastemate.service.KakaoPay;
 import com.tastemate.service.PaymentService;
 import lombok.Setter;
@@ -105,6 +102,7 @@ public class PayController {
         String token = paymentService.getToken();
         log.info("token : " + token);
 
+
         //결제상태 iamport에 update
         String iamportUpdate = paymentService.iamportUpdate(inicisVO, token);
         log.info("iamportUpdate : " + iamportUpdate);
@@ -134,15 +132,11 @@ public class PayController {
         log.info("inicisCancel!!!!!!!!!!!!!!! : " + inicisRefundVO);
 
         //토큰 DB에서 가져오기
-        String token = "7571d3dc4676d31346344ce3a361a7809a7f7327";
+        String token = "8be49d26c5a86b99d4bde74f3c9fbef08e7a30a9";
 
+        paymentService.inicisRefund(inicisRefundVO, token);
 
-        paymentService.processRefund(inicisRefundVO, token);
-
-        log.info("환불 완료!!!");
-
-
-
+        log.info("controller 환불 완료!!!");
 
     }
 

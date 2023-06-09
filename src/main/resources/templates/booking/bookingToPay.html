@@ -53,6 +53,20 @@
     padding-left: 15px;
   }
 
+  .kakaoBtn2{
+    background-color: #F7E600;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+  }
+  .iamport{
+    background-color: #8E48C7;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
@@ -93,22 +107,26 @@
       <div class="row padding_50">
         <button class="btn btn-primary" type="submit" style="background-color: #8E48C7; border: none; border-radius: 10%;">결제하기</button>
           <button class="btn btn-success" th:href="@{/store/list}" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</button>
-        </div>
-    </div>
+      </div>
+
+      <div class="row padding_50">
+        <!--결제!!!!!!!!!!!!!!!!-->
+        <button class="kakaoBtn kakaoBtn2">카카오페이 결제</button>
+
+        <form method="post" action="/pay/refund">
+          <button class="kakaoBtn2">카카오페이 결제 취소</button>
+        </form>
+
+        <button onclick="iamport()" class="iamport">iamport 결제</button>
+        <button onClick="cancelPay()" class="iamport">iamport 환불</button>
+      </div>
+
+
+
     </div>
 </div>
 
 
-
-<!--결제!!!!!!!!!!!!!!!!-->
-<button class="kakaoBtn kakaoBtn2">카카오페이 결제</button>
-
-<form method="post" action="/pay/refund">
-  <button class="kakaoBtn2">카카오페이 결제 취소</button>
-</form>
-
-<button onclick="iamport()" class="iamport">iamport 결제</button>
-<button onClick="cancelPay()" class="iamport">iamport 환불</button>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -172,7 +190,7 @@
       pay_method : 'card',
       merchant_uid : 'merchant_' + new Date().getTime(),
       name : '[[${bookingVO.foodName}]]' , //결제창에서 보여질 이름
-      amount : 100, //실제 결제되는 가격
+      amount : 123, //실제 결제되는 가격
       buyer_email : 'gaeun1811@naver.com',
       buyer_name : '싼쵸보고싶다',
       buyer_tel : '010-1234-5678',
@@ -239,8 +257,8 @@
       "type": "POST",
       "contentType": "application/json",
       "data": JSON.stringify({
-        "merchant_uid": "merchant_1686190057124", // 예: ORD20180131-0000011
-        "cancel_request_amount": 10, // 환불금액
+        "merchant_uid": "merchant_1686295852827",  //실제 데이터로 변경하기
+        "cancel_request_amount": 123, // 환불금액
         "reason": "테스트 결제 환불" // 환불사유
       }),
       "dataType": "json"
