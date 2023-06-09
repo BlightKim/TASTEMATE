@@ -118,6 +118,14 @@ public class ManageController {
         return "/manage/storeRegNotView";
     }
 
+    //맛집 상세보기(승인 대기) - 수정페이지
+    @PostMapping("storeRegNotUpdateView")
+    public String storeRegNotUpdateView(Model model, ManageStoreVO manageStoreVO) {
+        ManageStoreVO storeRegNotUpdateView = service.manageStoreView(manageStoreVO);
+        model.addAttribute("storeUpdateView", storeRegNotUpdateView);
+        return "/manage/storeRegNotUpdateView";
+    }
+
     //맛집 상세보기(승인)
     @GetMapping("storeRegOkView")
     public String storeRegOkView (Model model, ManageStoreVO manageStoreVO) {
@@ -129,6 +137,14 @@ public class ManageController {
     //맛집 승인
     @PostMapping("storeRegUpdateOK")
     public String storeRegUpdateOK(ManageStoreVO manageStoreVO) {
+        service.storeRegUpdateOK(manageStoreVO);
+        return "redirect:/manage/storeRegNotList";
+    }
+
+    //맛집 수정 후 승인
+    @PostMapping("storeRegUpdate")
+    public String storeRegUpdate(ManageStoreVO manageStoreVO, MultipartFile oriFilename) {
+        service.updateManageStore(manageStoreVO, oriFilename);
         service.storeRegUpdateOK(manageStoreVO);
         return "redirect:/manage/storeRegNotList";
     }

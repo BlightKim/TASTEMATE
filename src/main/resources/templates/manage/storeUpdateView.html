@@ -126,25 +126,6 @@
               </div>
             </div>
           </div>
-          <!--요기별점-->
-          <div class="col-md-4 mb-3">
-            <label>맛집 평가</label>
-            <div>
-              <fieldset id="star">
-                <input type="radio" name="star" value="5" id="rate1"><label
-                      for="rate1" >★</label>
-                <input type="radio" name="star" value="4" id="rate2"><label
-                      for="rate2" >★</label>
-                <input type="radio" name="star" value="3" id="rate3"><label
-                      for="rate3" >★</label>
-                <input type="radio" name="star" value="2" id="rate4"><label
-                      for="rate4" >★</label>
-                <input type="radio" name="star" value="1" id="rate5"><label
-                      for="rate5" >★</label>
-              </fieldset>
-            </div>
-          </div>
-          <!---->
         </div>
 
         <!--        <div class="mb-3">
@@ -223,7 +204,7 @@
         </div>
 
         <div class="text-center mt-5 mb-3">
-          <button type="submit" class="btn text-white" style="background-color: #E9DFED">수정</button>
+          <button type="submit" class="btn text-white" style="background-color: #8E48C7">수정</button>
           <a th:href="@{/manage/storeList}" class="btn text-white" style="background-color: #9C91B3">목록</a>
         </div>
       </form>
@@ -247,21 +228,6 @@
   }
 </script>
 <!--끝-->
-
-
-
-<script>
-  /* 별점구현 */
-  function sendData() {
-    let firstForm = document.forms[0];
-
-    if ($("input[name='star']:checked").val() == undefined) {
-      alert("별점 선택 필수입니다!");
-      return;
-    }
-  }
-  /* 별점 끝 */
-</script>
 
 
 
