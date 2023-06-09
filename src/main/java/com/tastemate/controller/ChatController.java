@@ -29,7 +29,7 @@ public class ChatController {
     @PostMapping("/getList")//개인 채팅방 목록
     public String getChatList(Model model, MemberVO vo) {
         List<ChatRoomVO> list = chatService.getChatList(vo);
-        System.out.println("vo.toString() : " + vo.toString());
+        System.out.println(list);
         model.addAttribute("room", list);
         return "chat/chatList";
     }

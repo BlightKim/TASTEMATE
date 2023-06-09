@@ -1,0 +1,247 @@
+/*
+@charset "utf-8";
+
+#chatRoom {
+    margin: 5px;
+    border: solid black 1px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    white-space: nowrap;
+}
+
+
+.senderName {
+    font-family: Nunito, sans-serif;
+    font-size: 20px;
+}
+
+.time {
+    font-size: 10px;
+}
+
+.messageContent {
+    display: inline-block;
+    max-width: 70%;
+    background-color: #E9DFED;
+    border-radius: 30px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.systemMessage {
+    display: inline-block;
+    max-width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#userInfoTable {
+    line-height: 0.5;
+    margin: 15px;
+}
+
+.chating p {
+    text-align: left;
+}
+
+input {
+    width: 330px;
+    height: 25px;
+}
+
+
+.img-message {
+    display: inline;
+    width: 50px;
+    height: 50px;
+}
+
+
+.head {
+    display: block;
+    width: 500px;
+    height: 70px;
+    background-color: #bec2c3;
+}
+
+h1 {
+    display: inline;
+    text-align: center;
+    padding: 10px;
+    color: #FFBB00;
+    margin-bottom: 5px;
+}
+
+
+.chating {
+    width: 500px;
+    height: 480px;
+    overflow: auto;
+    border: black solid 0.3px;
+}
+
+#foot {
+    display: block;
+    height: 60px;
+    width: 500px;
+
+    padding-bottom: 30px;
+    !*text-align: center;*!
+}
+
+.sendForm {
+    !*text-align: center;*!
+    display: block;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    !*margin-left: 20px;*!
+    border: solid black 0.5px;
+    border-radius: 30px 30px 30px 30px;
+}
+
+input[type="text"] {
+    border: none;
+    outline: none;
+}
+
+#openbtnContainer {
+    display: inline;
+    float: right;
+    width: auto;
+    height: 100%;
+}
+
+.openbtn {
+    !*font-size: 20px;*!
+    !*background-color: #111;*!
+    !* color: white;*!
+    !*padding: 10px 15px;*!
+    cursor: pointer;
+    border: none;
+    width: 30px;
+    height: 100%;
+}
+
+#message {
+    margin-left: 30px;
+}
+
+!*사이드바 내용물*!
+
+.img {
+    width: 100px;
+    height: 100px;
+}
+
+
+.sidebarMain {
+    width: 500px;
+    !*display: flex;*!
+    display: block;
+    justify-content: center;
+    margin-top: 25px;
+    height: 80%;
+    !*justify-content: space-between;*!
+}
+
+
+.sidebarBtn {
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+    display: inline;
+
+}
+
+
+#shareBtn, #exitBtn {
+    border: none;
+    background-color: transparent;
+    display: inline-block;
+}
+
+.btnImg {
+    width: 30px;
+    height: 30px;
+}
+
+!*사이드바*!
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #E9DFED;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.2); !*사이드바 그림자*!
+}
+
+.sidebar a {
+    padding: 8px 32px 8px 8px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-size: 36px;
+    margin-left: 20px;
+}
+
+#sendBtn{
+    display: none
+}
+.openbtn:hover {
+    background-color: #444;
+}
+
+#main {
+    transition: margin-right .2s;
+    padding: 16px;
+}
+
+#sidebarFoot {
+    display: block;
+    margin-bottom: auto;
+    width: 100%;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+.sender {
+    margin-left: 5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    display: block;
+}*/

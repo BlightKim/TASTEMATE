@@ -14,7 +14,7 @@ public class MemberController {
     @Autowired
     MemberService memberService;
     @GetMapping("/login")
-    public String testLogin(HttpServletRequest request,MemberVO vo) {
+    public String testLogin(HttpServletRequest request,MemberVO vo){
         HttpSession session = request.getSession();
         System.out.println(vo.toString());
         MemberVO member = memberService.login(vo);

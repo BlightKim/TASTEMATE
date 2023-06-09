@@ -1,115 +1,388 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 22 May 2023 19:50:07 GMT</lastBuildDate><item><title><![CDATA[Spring Boot 3.1.0 available now]]></title><link>https://spring.io/blog/2023/05/18/spring-boot-3-1-0-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/spring-boot-3-1-0-available-now</guid><dc:creator><![CDATA[Scott Frederick]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the Spring Boot team and everyone that has contributed, I am pleased to announce that Spring Boot 3.1.0 has been released and is available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release adds a significant number of new features and improvements. For full &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes#upgrading-from-spring-boot-30&quot;&gt;upgrade instructions&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes#new-and-noteworthy&quot;&gt;new and noteworthy&lt;/a&gt; features please see the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes&quot;&gt;release notes&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;What&apos;s new in 3.1&lt;/h2&gt;
-&lt;p&gt;The highlights of the 3.1 release include:&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Spring]]></title><description><![CDATA[Level up your Java code and explore what Spring can do for you.]]></description><link>https://spring.io</link><generator>GatsbyJS</generator><lastBuildDate>Thu, 08 Jun 2023 18:24:13 GMT</lastBuildDate><item><title><![CDATA[A Bootiful Podcast: Microsoft¡¯s Sean Li on Azure and Spring Boot]]></title><link>https://spring.io/blog/2023/06/08/a-bootiful-podcast-microsofts-sean-li-on-azure-and-spring-boot</link><guid isPermaLink="true">https://spring.io/blog/2023/06/08/a-bootiful-podcast-microsofts-sean-li-on-azure-and-spring-boot</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Thu, 08 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this (relatively quick) installment, recorded live from the lovely Spring I/O 2023, Josh Long talks to Microsoft&apos;s Sean Li about some of the latest and greatest in the Azure ecosystem for Spring developers.&lt;/p&gt;
+&lt;iframe title=&quot;Microsoft¡¯s Sean Li on Azure and Spring Boot&quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=c8in6-142c418-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Security Kerberos 2.0.0 available now]]></title><link>https://spring.io/blog/2023/06/08/spring-security-kerberos-2-0-0-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/06/08/spring-security-kerberos-2-0-0-available-now</guid><dc:creator><![CDATA[Janne Valkealahti]]></dc:creator><pubDate>Thu, 08 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I&apos;m happy to announce that a Spring Security Kerberos &lt;code&gt;2.0.0&lt;/code&gt; is now available from maven central.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://projects.spring.io/spring-security-kerberos/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-security-kerberos&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-security-kerberos/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-security-kerberos/reference/&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Securing Spring Boot Applications With SSL]]></title><link>https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl</link><guid isPermaLink="true">https://spring.io/blog/2023/06/07/securing-spring-boot-applications-with-ssl</guid><dc:creator><![CDATA[Scott Frederick]]></dc:creator><pubDate>Wed, 07 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Secure Sockets Layer (SSL) and Transport Layer Security (TLS) are key components of securing communications between systems in a layered or service-oriented architecture. Spring Boot applications in such an architecture often accept incoming network connections or create outgoing connections, and developers are tasked with configuring applications to work in such a secure environment.&lt;/p&gt;
+&lt;p&gt;If you&apos;ve ever worked with the Java security and SSL APIs, you&apos;re probably aware that this is not a particularly fun task. It often involves multiple trips to &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; to copy and paste code. There are a few factors that make working with SSL painful.&lt;/p&gt;
+&lt;p&gt;First off, you might be provided trust material such as certificates and private keys for production use. You might need to generate different trust material for pre-production testing (often using self-signed certificate authorities). This trust material is typically in the form of Java keystore files in either the JKS or PKCS #12 format, or they might be PEM-encoded text files. Each of these file types require different handling.&lt;/p&gt;
+&lt;p&gt;Once you have the trust material, you need to transform it into something that can be passed to Java connection APIs. Things can get difficult here because connection APIs can be configured in a variety of ways:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;Support for managing external services at development time using Testcontainers and Docker Compose&lt;/li&gt;
-&lt;li&gt;Simplified configuration of Testcontainers in integration tests&lt;/li&gt;
-&lt;li&gt;Centralized and expanded configuration of SSL trust material for connections&lt;/li&gt;
-&lt;li&gt;Auto-configuration for Spring Authorization Server&lt;/li&gt;
+&lt;li&gt;Some want you to provide keystore and truststore &lt;code&gt;java.security.KeyStore&lt;/code&gt; instances.&lt;/li&gt;
+&lt;li&gt;Some want you to provide &lt;code&gt;javax.net.ssl.KeyManager&lt;/code&gt; and &lt;code&gt;javax.net.ssl.TrustManager&lt;/code&gt; instances.&lt;/li&gt;
+&lt;li&gt;Some want you to provide a &lt;code&gt;javax.net.ssl.SSLContext&lt;/code&gt; instance.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3&gt;Dependency upgrades&lt;/h3&gt;
-&lt;p&gt;Spring Boot 3.1 moves to new versions of several Spring projects:&lt;/p&gt;
+&lt;p&gt;SSL is also pretty low-level, so you often need to peel back a few layers of abstraction to get to the thing that needs to be configured using objects from the &lt;code&gt;java.security&lt;/code&gt; or &lt;code&gt;java.net.ssl&lt;/code&gt; packages. For example, if you want to configure SSL on a Spring &lt;code&gt;RestTemplate&lt;/code&gt; you need to get down to the &lt;code&gt;ClientHttpRequestFactory&lt;/code&gt; that&apos;s backing it. For a typical Spring Boot application that could be an &lt;code&gt;HttpComponentsClientHttpRequestFactory&lt;/code&gt;, &lt;code&gt;OkHttp3ClientHttpRequestFactory&lt;/code&gt; or &lt;code&gt;SimpleClientHttpRequestFactory&lt;/code&gt;. Each of these provide different configuration APIs.&lt;/p&gt;
+&lt;p&gt;Configuring connections to use SSL or TLS is not new to Spring Boot, but the team decided to take a holistic view of what was currently supported and look for opportunities to improve and expand support. We hope you will find that Spring Boot 3.1 makes SSL configuration much easier.&lt;/p&gt;
+&lt;h2&gt;Introducing SSL Bundles&lt;/h2&gt;
+&lt;p&gt;Spring Boot 3.1 introduces the concept of SSL bundles for configuring and consuming custom SSL trust material, such as keystores, certificates, and private keys. Once configured, a bundle can be applied to one or more connections using configuration properties or APIs.&lt;/p&gt;
+&lt;h3&gt;Configuring SSL Bundles&lt;/h3&gt;
+&lt;p&gt;Properties used to configure SSL trust material are under the &lt;code&gt;spring.ssl.bundle&lt;/code&gt; prefix in an &lt;code&gt;application.yaml&lt;/code&gt; or &lt;code&gt;application.properties&lt;/code&gt; file.  Two top-level groupings are available to reflect the unique information needed to configure trust material of different types.&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/wiki/Spring-Data-2023.0-%28Ullman%29-Release-Notes&quot;&gt;Spring Data 2023.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-graphql/releases/tag/v1.2.0&quot;&gt;Spring GraphQL 1.2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-integration/releases/tag/v6.1.0&quot;&gt;Spring Integration 6.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-security/releases/tag/6.1.0&quot;&gt;Spring Security 6.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/spring-projects/spring-session/releases/tag/3.1.0&quot;&gt;Spring Session 3.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring.ssl.bundle.jks&lt;/code&gt; can be used to configure bundles using Java keystore files.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;spring.sll.bundle.pem&lt;/code&gt; can be used to configure bundles using PEM-encoded text files.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;We¡¯ve also upgraded to the latest stable releases of other third-party libraries wherever possible. Please see the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes#dependency-upgrades&quot;&gt;release notes&lt;/a&gt; for details.&lt;/p&gt;
-&lt;h3&gt;Other changes&lt;/h3&gt;
-&lt;p&gt;There are many other changes and improvements that are documented in the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1-Release-Notes&quot;&gt;release notes&lt;/a&gt;. You can also find a list of deprecated classes and methods that we plan to remove in the next version.&lt;/p&gt;
-&lt;h2&gt;Thank you&lt;/h2&gt;
-&lt;p&gt;We want to take this opportunity to again thank all our users and contributors.&lt;/p&gt;
-&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask at &lt;a href=&quot;http://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;http://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;on Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;http://docs.spring.io/spring-boot/docs/3.1.0/reference/html&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;http://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt; | &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 3.0.7 available now, fixing CVE-2023-20883]]></title><link>https://spring.io/blog/2023/05/18/spring-boot-3-0-7-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/spring-boot-3-0-7-available-now</guid><dc:creator><![CDATA[Andy Wilkinson]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Boot &lt;code&gt;3.0.7&lt;/code&gt; has been released and is now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-boot/releases/tag/v3.0.7&quot;&gt;54 bug fixes, documentation improvements, and dependency upgrades&lt;/a&gt;. Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
-&lt;p&gt;This release includes a fix for &lt;a href=&quot;http://spring.io/security/cve-2023-20883&quot;&gt;CVE-2023-20883: Spring Boot Welcome Page DoS Vulnerability&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;One or more bundles of each type can be configured, with each configured bundle given a user-provided name. The name is used when applying the bundle with properties or retrieving it with an API.&lt;/p&gt;
+&lt;p&gt;The following example &lt;code&gt;application.yaml&lt;/code&gt; file shows the configuration of two SSL bundles. The first is named &lt;code&gt;server&lt;/code&gt; and defines a Java Keystore file (in the PKCS #12 format) that could be used to secure an embedded web server. The second is named &lt;code&gt;client&lt;/code&gt; and defines a trust store with a PEM-encoded certificate file that could be used to secure the client side of a connection to a server that requires client authentication.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;spring:
+  ssl:
+    bundle:
+      jks:
+        server:
+          key:
+            alias: &quot;server&quot;
+          keystore:
+            location: &quot;classpath:server.p12&quot;
+            password: &quot;secret&quot;
+            type: &quot;PKCS12&quot;
+      pem:
+        client:
+          truststore:
+            certificate: &quot;classpath:client.crt&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;See the &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#features.ssl&quot;&gt;Spring Boot reference documentation&lt;/a&gt; as well as the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/blob/main/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/ssl/JksSslBundleProperties.java&quot;&gt;JksSslBundleProperties&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-projects/spring-boot/blob/main/spring-boot-project/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/ssl/PemSslBundleProperties.java&quot;&gt;PemSslBundleProperties&lt;/a&gt; classes for more details on the available configuration properties.&lt;/p&gt;
+&lt;h3&gt;Using Auto-configured SSL Bundles&lt;/h3&gt;
+&lt;p&gt;Spring Boot uses the &lt;code&gt;spring.ssl.bundle&lt;/code&gt; properties to create objects that provide access to the specified trust material.&lt;/p&gt;
+&lt;p&gt;As mentioned above, there are three levels of abstraction provided by the Java security and SSL APIs to expose trust material that has been read from either Java keystore or PEM files:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;java.security.KeyStore&lt;/code&gt; instances used as keystores and truststores.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;javax.net.ssl.KeyManager&lt;/code&gt; and &lt;code&gt;javax.net.ssl.TrustManager&lt;/code&gt; instances.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;javax.net.ssl.SSLContext&lt;/code&gt; instances.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;At the lowest level you might need truststore and keystore objects to apply SSL to a connection. These can be accessed using an &lt;code&gt;SslStoreBundle&lt;/code&gt; interface as shown here:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public interface SslStoreBundle {
+
+	KeyStore getKeyStore();
+
+	String getKeyStorePassword();
+
+	KeyStore getTrustStore();
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;KeyManager&lt;/code&gt; and &lt;code&gt;TrustManager&lt;/code&gt; instances can be derived from a keystore and truststore. These can be accessed using an &lt;code&gt;SslManagerBundle&lt;/code&gt; interface:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public interface SslManagerBundle {
+
+	KeyManager[] getKeyManagers();
+
+	KeyManagerFactory getKeyManagerFactory();
+
+	TrustManager[] getTrustManagers();
+
+	TrustManagerFactory getTrustManagerFactory();
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finally, an &lt;code&gt;SSLContext&lt;/code&gt; can be created from a &lt;code&gt;KeyManager&lt;/code&gt; and &lt;code&gt;TrustManager&lt;/code&gt; and accessed with a &lt;code&gt;createSslContext&lt;/code&gt; factory method.&lt;/p&gt;
+&lt;p&gt;Putting all this together, we have an &lt;code&gt;SslBundle&lt;/code&gt; interface with access to the various different configuration styles:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public interface SslBundle {
+
+	SslStoreBundle getStores();
+
+	SslManagerBundle getManagers();
+
+	SSLContext createSslContext() {
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;See the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/blob/main/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/ssl/SslBundle.java&quot;&gt;source code&lt;/a&gt; for the full list of methods in &lt;code&gt;SslBundle&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The collection of configured &lt;code&gt;SslBundle&lt;/code&gt;s are made available in an &lt;code&gt;SslBundles&lt;/code&gt; bean that can be auto-wired into other Spring beans:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public interface SslBundles {
+
+	SslBundle getBundle(String bundleName) throws NoSuchSslBundleException;
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;An example of using &lt;code&gt;SslBundles&lt;/code&gt; to retrieve and apply an &lt;code&gt;SSLContext&lt;/code&gt; might look like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;@Component
+public class MyComponent {
+
+    public MyComponent(SslBundles sslBundles) {
+        SslBundle sslBundle = sslBundles.getBundle(&quot;client&quot;);
+        SSLContext sslContext = sslBundle.createSslContext();
+        // do something with the created sslContext
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Securing REST Clients&lt;/h2&gt;
+&lt;p&gt;An exciting new area of SSL capabilities that is enabled in Spring Boot 3.1 is the configuration of REST clients. Spring Boot support for customizing a &lt;code&gt;RestTemplate&lt;/code&gt; or &lt;code&gt;WebClient&lt;/code&gt; now includes the ability to apply an SSL bundle to secure the connection between the client and the REST service.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;RestTemplateBuilder&lt;/code&gt; has a new &lt;code&gt;setSslBundle()&lt;/code&gt; method that accepts an SSL bundle retrieved from the auto-configured &lt;code&gt;SslBundles&lt;/code&gt;, as shown in this example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Service
+public class MyService {
+
+    private final RestTemplate restTemplate;
+
+    public MyService(RestTemplateBuilder restTemplateBuilder, SslBundles sslBundles) {
+        this.restTemplate = restTemplateBuilder.setSslBundle(sslBundles.getBundle(&quot;mybundle&quot;)).build();
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;A &lt;code&gt;WebClientSsl&lt;/code&gt; interface lets an SSL bundle be retrieved and applied to a &lt;code&gt;WebClient.Builder&lt;/code&gt;, as shown in this example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@Service
+public class MyService {
+
+    private final WebClient webClient;
+
+    public MyService(WebClient.Builder webClientBuilder, WebClientSsl ssl) {
+        this.webClient = webClientBuilder.baseUrl(&quot;https://example.org&quot;).apply(ssl.fromBundle(&quot;mybundle&quot;)).build();
+    }
+
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Securing Data Service Connections&lt;/h2&gt;
+&lt;p&gt;Spring Boot makes it easy to configure client libraries used to connect from an application to data services. These client libraries are good examples of APIs that use any of the three levels of Java security and SSL APIs for configuration.&lt;/p&gt;
+&lt;p&gt;Prior to 3.1, some form of SSL configuration was available for many of the data services for which Spring Boot provides auto-configuration. However, the level of support and the properties used for configuration were inconsistent across services. Most data services auto-configuration properties now have similar &lt;code&gt;ssl&lt;/code&gt; structures, providing a much higher level of consistency across services:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cassandra - &lt;code&gt;spring.cassandra.ssl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Couchbase - &lt;code&gt;spring.couchbase.env.ssl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Elasticsearch - &lt;code&gt;spring.elasticsearch.restclient.ssl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;MongoDB - &lt;code&gt;spring.data.mongodb.ssl&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Redis - &lt;code&gt;spring.data.redis.ssl&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Most services have a &lt;code&gt;*.ssl.enabled&lt;/code&gt; property which will enable SSL support in the client library using trust material contained in the Java runtime &lt;code&gt;cacerts&lt;/code&gt;. A &lt;code&gt;*.ssl.bundle&lt;/code&gt; property applies a named SSL bundle to enable client library SSL support with custom trust material from the bundle. This makes the configuration much more consistent and allows for the same trust material to be applied to multiple connections, reducing the amount of properties or YAML configuration.&lt;/p&gt;
+&lt;p&gt;To provide this level of consistency, some previous SSL-related properties have been deprecated. See the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-3.1.0-Configuration-Changelog&quot;&gt;configuration properties changelog&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;p&gt;JDBC connections are an obvious omission from this list. We plan to apply the SSL bundle approach to JDBC connections in an upcoming Spring Boot release.&lt;/p&gt;
+&lt;h2&gt;Securing Embedded Web Servers&lt;/h2&gt;
+&lt;p&gt;All embedded web servers supported by Spring Boot can be configured to secure incoming connections with SSL by using &lt;code&gt;server.ssl.*&lt;/code&gt; properties. Java keystore files have been supported since the inception of Spring Boot, and PEM-encoded files have been supported since 2.7.&lt;/p&gt;
+&lt;p&gt;The number of properties under the &lt;code&gt;server.ssl&lt;/code&gt; prefix has grown over time, and the lack of structure made it difficult to tell which properties could be used together and which were mutually exclusive. The previous &lt;code&gt;server.ssl.*&lt;/code&gt; properties continue to be supported, but a new &lt;code&gt;server.ssl.bundle&lt;/code&gt; property can be used to apply a configured SSL bundle to an embedded web server.&lt;/p&gt;
+&lt;p&gt;The following two examples are functionally the same:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;server:
+  ssl:
+    key-alias: ¡°server¡±
+    key-password: ¡°keysecret¡±
+    key-store: &quot;classpath:server.p12&quot;
+    key-store-password: &quot;storesecret&quot;
+    client-auth: NEED    
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;spring:
+  ssl:
+    bundle:
+      jks:
+        web-server:
+          key:
+            alias: &quot;server&quot;
+            password: ¡°keysecret¡±
+          keystore:
+            location: &quot;classpath:server.p12&quot;
+            password: &quot;storesecret&quot;
+server:
+  ssl:
+    bundle: ¡°web-server¡±
+    client-auth: NEED
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The older structure is more concise, but the newer structure reduces the chance of mis-configuration and allows the same SSL bundle to be used on multiple connections.&lt;/p&gt;
+&lt;p&gt;Similar changes have been made to the &lt;code&gt;management.server.ssl&lt;/code&gt; and &lt;code&gt;spring.rsocket.server.ssl&lt;/code&gt; properties.&lt;/p&gt;
+&lt;h2&gt;Future Work&lt;/h2&gt;
+&lt;p&gt;We really hope you find SSL bundles a useful feature of Spring Boot 3.1.
+If you find any other technologies that you think we should add SSL support for, please raise a &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;GitHub issue&lt;/a&gt; and we&apos;ll consider it for a future release.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - June 6th, 2023]]></title><link>https://spring.io/blog/2023/06/06/this-week-in-spring-june-6th-2023</link><guid isPermaLink="true">https://spring.io/blog/2023/06/06/this-week-in-spring-june-6th-2023</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Tue, 06 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! And what an insane week it&apos;s been! Long story short, I&apos;ve spent 10-12 hours a day over the last five days migrating a dozen differnet applications and services from one GKE cluster to another, taking the time to update things as much as possible. In the case of at least one Vue.js application, this meant some major reworking of the codebase. It&apos;s also meant rewriting lots of Github Actions with the new best-practices and patterns, which I confess has been painful.&lt;/p&gt;
+&lt;p&gt;Once everything&apos;s fully migrated (soon, I hope!), I think a next step will be to see what I can do to simplify things in a consistent way across all the services. This means:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;building a new Kubernetes CRD and controller to encapsulate the YAML I find myself repeating across all my services. It&apos;s tedious and error-prone and could be boiled down to a few lines in one YAML file for 90% of my workloads!&lt;/li&gt;
+&lt;li&gt;building a new Github Action that does a lot of the Kubernetes connectivity so I don&apos;t have to copy-and-paste the same four error-prone actions across each Github Actions workflow.&lt;/li&gt;
+&lt;li&gt;Moving everything to Gradle and packaging up things - like my version management and common required dependencies - in a shared plugin which in turn furnishes required plugins, dependencies, and delegates to Spring Boot 3.1 and the like. 3.1&apos;s a great place to be for these applications already, it&apos;d just be nice to know that when it comes time to move to 3.2, or whatever, I can make the change in one place and everywhere else benefits.&lt;/li&gt;
+&lt;li&gt;As part of the work, I&apos;ve decided I wanted to start eliminating some of the crufty, bespoke authentication mechanisms in my various web applications. I&apos;ve stood up an instance of the Spring Authorization Server. (Hurray!) By the way, if you want to see &lt;em&gt;the&lt;/em&gt; easiest and coolest demo of how to get an OAuth client, an OAuth resource server, an OAuth Authorization Server, all from scratch on start.spring.io, do check &lt;a href=&quot;https://www.youtube.com/watch?v=7zm3mxaAFWk&quot;&gt;out this video that Steve Reisenberg&lt;/a&gt; and I put together recently! It&apos;s insane how easy it is to get everything working, and the actual &lt;a href=&quot;https://github.com/developer-advocacy/joshlong-authorization-api&quot;&gt;production code&lt;/a&gt; I&apos;m going to take to my production environment is only slightly more complex)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Anyway, all of that is temporarily on hold as I am in Dallas, Texas at the moment meeting some customers and enjoying the warm weather. But we do have a &lt;em&gt;ton&lt;/em&gt; of stuff to look at this week, and I&apos;ve got a customer to visit, so let&apos;s get this underway!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/06/02/a-bootiful-podcast-spring-boot-team-member-moritz-halbritter-m_halbritter&quot;&gt;A Bootiful Podcast: Spring Boot team member Moritz Halbritter (@m_halbritter)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://feeds.feedblitz.com/~/743713742/0/baeldung~Spring-Boot-Properties-Prefix-Must-Be-in-Canonical-Form&quot;&gt;Spring Boot Properties Prefix Must Be in Canonical Form&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://medium.com/@dimas.setyawan/spring-boot-3-1-%EF%B8%8F-docker-compose-28a6a53af657&quot;&gt;Dimas Adriyanto Setyawan has a nice blog looking at the new Docker Compose support in Spring Boot 3.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Jetbrains &lt;a href=&quot;https://kotlinlang.org/docs/jvm-get-started-spring-boot.html&quot;&gt;Getting Started with Spring Boot and Kotlin&lt;/a&gt; page has been nicely updated&lt;/li&gt;
+&lt;li&gt;With a title like this, how could you &lt;em&gt;not&lt;/em&gt; read?? &lt;a href=&quot;https://medium.com/@corradodebari/how-to-use-chatgpt-openai-apis-from-oracle-backend-for-spring-boot-parse-5fcc0ffa4bcd&quot;&gt;How to use ChatGPT/OpenAI APIs from Oracle Backend for Spring Boot/Parse.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://feeds.feedblitz.com/~/743612807/0/baeldung~The-Difference-Between-findById-and-getById-in-Spring-Data&quot;&gt;The Difference Between findById and getById in Spring Data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I&apos;ll &lt;a href=&quot;https://connect.tanzu.vmware.com/Bootiful_Spring_Boot_3x_au.html&quot;&gt;be speaking in Sydney, Australia &lt;/a&gt;. Come out and join me?&lt;/li&gt;
+&lt;li&gt;I&apos;ll be &lt;a href=&quot;https://webcommwebinar.kktix.cc/events/0616&quot;&gt;speaking in Taipei&lt;/a&gt;. Come out and join me?&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/tschuehly/status/1665810099812683778?s=12&amp;#x26;t=n-UflcIbnx1lage-TBk0Cg&quot;&gt;Thomas Schuehly just released v0.5.4 of Spring ViewComponent&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;I love this: a deep-ish [review of some of the various Spring &lt;code&gt;ApplicationEvent&lt;/code&gt;s](Spring Boot¡¯s Application Events): nice job, Truong Bui!&lt;/li&gt;
+&lt;li&gt;Interesting: &lt;a href=&quot;https://medium.com/@claudiorauso/local-testing-spring-gcp-firestore-57f2ffc49c1e&quot;&gt;how to locally test GCP Firestore and Spring&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Spring Boot team member Moritz Halbritter (@m_halbritter)]]></title><link>https://spring.io/blog/2023/06/02/a-bootiful-podcast-spring-boot-team-member-moritz-halbritter-m_halbritter</link><guid isPermaLink="true">https://spring.io/blog/2023/06/02/a-bootiful-podcast-spring-boot-team-member-moritz-halbritter-m_halbritter</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Fri, 02 Jun 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment &lt;a href=&quot;https://youtube.com/@coffeesoftware&quot;&gt;Josh Long (YouTube.com/@coffeesoftware.com)&lt;/a&gt; talks to Spring Boot team member &lt;a href=&quot;https://twitter.com/m_halbritter&quot;&gt;Moritz Halbritter (@m_halbritter)&lt;/a&gt;&lt;/p&gt;
+&lt;iframe title=&quot;Spring Boot team member Moritz Halbritter &quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=9qczt-14233f0-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[This Week in Spring - May 30th, 2023]]></title><link>https://spring.io/blog/2023/05/30/this-week-in-spring-may-30th-2023</link><guid isPermaLink="true">https://spring.io/blog/2023/05/30/this-week-in-spring-may-30th-2023</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Tue, 30 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! Welcome to another installment of &lt;em&gt;This Week in Spring&lt;/em&gt;! This installment I write on the day of my daughter&apos;s High School graduation, an auspicious day indeed!  There&apos;s a lot to get through this week, though, and I have a graduation to get to, so let&apos;s dive right in!&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/05/24/spring-authorization-server-is-on-spring-initializr&quot;&gt;Spring Authorization Server is on Spring Initializr!&lt;/a&gt; This is my favorite technical news of the week, by far! I loved it so much that I even invited its author, Steve Riesenberg, on my little show. He and I (well, mostly him) did an &lt;em&gt;awesome&lt;/em&gt; live demo setting up an Authorization Server, a Resource server, and OAuth OIDC client with login support. We did it all from scratch using Spring Boot 3.1, too! &lt;a href=&quot;https://www.youtube.com/watch?v=7zm3mxaAFWk&quot;&gt;Check this out&lt;/a&gt;!&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/05/25/spring-cloud-2022-0-3-aka-kilburn-is-available&quot;&gt;Spring Cloud 2022.0.3 (aka Kilburn) Is Available&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/05/25/a-bootiful-podcast-java-developer-advocate-billy-korando-on-the-latest-and&quot;&gt;A Bootiful Podcast: Java Developer Advocate Billy Korando on the latest and greatest in Java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/05/25/spring-shell-2-1-10-3-0-4-and-3-1-0-are-now-available&quot;&gt;Spring Shell 2.1.10, 3.0.4 and 3.1.0 are now available&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/05/23/unleash-spring-apps-in-a-flex-environment-with-azure-spring-apps-consumption&quot;&gt;Unleash Spring apps in a flex environment with Azure Spring Apps Consumption and Dedicated plans&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://feeds.feedblitz.com/~/743373134/0/baeldung~Configuring-Gradle-Tasks-in-Spring-Boot&quot;&gt;Configuring Gradle Tasks in Spring Boot 3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://feeds.feedblitz.com/~/743110019/0/baeldung~Securing-Spring-Boot-API-With-API-Key-and-Secret&quot;&gt;Securing Spring Boot API With API Key and Secret&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://feeds.feedblitz.com/~/742615499/0/baeldung~Spring-Boot-Actuator-Without-Spring-Boot&quot;&gt;Spring Boot Actuator Without Spring Boot&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://spring.io/blog/2023/05/25/spring-security-kerberos-2-0-0-rc2-available-now&quot;&gt;Spring Security Kerberos 2.0.0-RC2 available now&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Our friends at Axon did a profile on me. You might like it: &lt;a href=&quot;https://podcast.axoniq.io/e/1n22r1rn-spring-and-axon-with-josh-long?hss_channel=tw-803611480864227328&quot;&gt;Spring and Axon with Josh Long&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://feeds.feedblitz.com/~/742597193/0/baeldung~Write-Console-Output-to-Text-File-in-Java&quot;&gt;Write Console Output to Text File in Java&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Hey Taiwan, I&apos;ll be at the Taipei JUG on July 16th! &lt;a href=&quot;https://webcommwebinar.kktix.cc/events/0616&quot;&gt;êÉË¬Î¡Ðü x TWJUG  Bootiful Spring Boot 3 ØóÞ¨Ðüâúá³ö©£¬Java ÓÞãêÊ½Óð&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://twitter.com/JavaAtMicrosoft/status/1661046990514561024&quot;&gt;Harness the power of Azure Spring Apps! Experience flexibility with Consumption and Dedicated plans. Tailor the perfect profile for every app, seamlessly mix and match, and al&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://williamx.hashnode.dev/java-your-first-programming-language&quot;&gt;Looking to pick up your first programming language? Why not Java?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Spring Cloud 2022.0.3 (aka Kilburn) Is Available]]></title><link>https://spring.io/blog/2023/05/25/spring-cloud-2022-0-3-aka-kilburn-is-available</link><guid isPermaLink="true">https://spring.io/blog/2023/05/25/spring-cloud-2022-0-3-aka-kilburn-is-available</guid><dc:creator><![CDATA[Spencer Gibb]]></dc:creator><pubDate>Thu, 25 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the community, I am pleased to announce that the General Availability (RELEASE) of the &lt;a href=&quot;https://cloud.spring.io&quot;&gt;Spring Cloud 2022.0.3&lt;/a&gt; Release Train is available today. The release can be found in &lt;a href=&quot;https://repo1.maven.org/maven2/org/springframework/cloud/spring-cloud-dependencies/2022.0.3/&quot;&gt;Maven Central&lt;/a&gt;. You can check out the 2022.0.3 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/wiki/Spring-Cloud-2022.0-Release-Notes&quot;&gt;release notes for more information&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Notable Changes in the 2022.0.3 Release Train&lt;/h2&gt;
+&lt;p&gt;This release provides compatibility with Spring Boot 3.1.x.&lt;/p&gt;
+&lt;p&gt;See all issues and pull requests for this release &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/107&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;There is a known defect in Spring Cloud Config related to locating the config server via service discovery.  In order to activate this feature in this release you will need to set &lt;code&gt;spring.cloud.config.discovery.enabled=true&lt;/code&gt; and &lt;code&gt;spring.cloud.config.discovery.serviceId&lt;/code&gt; in an environment variable or as a system property.  This bug will be addressed in the next release.&lt;/p&gt;
+&lt;h3&gt;Spring Cloud Function&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support for Spring Integration, see &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/pull/1032&quot;&gt;(1032)&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Spring Cloud Commons&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds a fix for certain situations where bootstrap property sources are added to late in the application context lifecycle &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/pull/1228&quot;&gt;(1228)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Spring Cloud Gateway&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds the ability to batch add routes via actuator &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/pull/2915&quot;&gt;(2915)&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Adds the ability to refresh a subset of routes via actuator &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/pull/2916&quot;&gt;(2916)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Spring Cloud Stream&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds support for regular expression-based destination patterns in Kafka reactive binder &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/issues/2709&quot;&gt;(2709)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Spring Cloud Function&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Adds initial support for deploying existing Spring MVC REST applications to serverless platforms such as AWS Lambda Functions and Azure Functions.&lt;/li&gt;
+&lt;li&gt;New Spring Integration module which allows you to use Spring Cloud Function in Spring Integration DSL.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Spring Cloud Config&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Support for profile specific config data &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/pull/2260&quot;&gt;(2260)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Spring Cloud Netflix&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Fixes an issue of referencing Jersey 1 classes instead of Jersey 3 &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/issues/4176&quot;&gt;(4176)&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/issues/4177&quot;&gt;(4177)&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;The following modules were updated as part of 2022.0.3:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Module&lt;/th&gt;
+&lt;th&gt;Version&lt;/th&gt;
+&lt;th&gt;Issues&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Kubernetes&lt;/td&gt;
+&lt;td&gt;3.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-kubernetes/milestone/58?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Task&lt;/td&gt;
+&lt;td&gt;3.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-task/releases/tag/v3.0.3&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Function&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-function/milestone/47?closed=1&quot;&gt;issues&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Commons&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-commons/milestone/113?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Circuitbreaker&lt;/td&gt;
+&lt;td&gt;3.0.2&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Openfeign&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-openfeign/milestone/64?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Gateway&lt;/td&gt;
+&lt;td&gt;4.0.6&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-gateway/milestone/83?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Stream&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-stream/milestone/87?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Contract&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-contract/milestone/101?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Config&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-config/milestone/115?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Build&lt;/td&gt;
+&lt;td&gt;4.0.3&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Starter Build&lt;/td&gt;
+&lt;td&gt;2022.0.3&lt;/td&gt;
+&lt;td&gt;?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Spring Cloud Netflix&lt;/td&gt;
+&lt;td&gt;4.0.2&lt;/td&gt;
+&lt;td&gt;(&lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-netflix/milestone/121?closed=1&quot;&gt;issues&lt;/a&gt;)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;As always, we welcome feedback on &lt;a href=&quot;https://github.com/spring-cloud/&quot;&gt;GitHub&lt;/a&gt;, on &lt;a href=&quot;https://gitter.im/spring-cloud/spring-cloud&quot;&gt;Gitter&lt;/a&gt;, on &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-cloud&quot;&gt;Stack Overflow&lt;/a&gt;, or on &lt;a href=&quot;https://twitter.com/SpringCloud&quot;&gt;Twitter&lt;/a&gt;.&lt;/p&gt;
+&lt;h2&gt;Roadmap&lt;/h2&gt;
+&lt;p&gt;Please watch our &lt;a href=&quot;https://github.com/orgs/spring-cloud/projects/103&quot;&gt;Github Projects&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-cloud/spring-cloud-release/milestones?direction=asc&amp;#x26;sort=due_date&amp;#x26;state=open&quot;&gt;Release Milestones&lt;/a&gt; to track our 2023.0 Release Train (aka Leyton).&lt;/p&gt;
+&lt;h2&gt;Getting Started With 2022.0.3&lt;/h2&gt;
+&lt;p&gt;To get started with Maven with a BOM (dependency management only):&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-xml&quot;&gt;
+&amp;#x3C;dependencyManagement&gt;
+    &amp;#x3C;dependencies&gt;
+        &amp;#x3C;dependency&gt;
+            &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+            &amp;#x3C;artifactId&gt;spring-cloud-dependencies&amp;#x3C;/artifactId&gt;
+            &amp;#x3C;version&gt;2022.0.3&amp;#x3C;/version&gt;
+            &amp;#x3C;type&gt;pom&amp;#x3C;/type&gt;
+            &amp;#x3C;scope&gt;import&amp;#x3C;/scope&gt;
+        &amp;#x3C;/dependency&gt;
+    &amp;#x3C;/dependencies&gt;
+&amp;#x3C;/dependencyManagement&gt;
+&amp;#x3C;dependencies&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-config&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    &amp;#x3C;dependency&gt;
+        &amp;#x3C;groupId&gt;org.springframework.cloud&amp;#x3C;/groupId&gt;
+        &amp;#x3C;artifactId&gt;spring-cloud-starter-netflix-eureka-client&amp;#x3C;/artifactId&gt;
+    &amp;#x3C;/dependency&gt;
+    ...
+&amp;#x3C;/dependencies&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;or with Gradle:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-groovy&quot;&gt;plugins {
+  id &apos;java&apos;
+  id &apos;org.springframework.boot&apos; version &apos;3.1.0&apos;
+  id &apos;io.spring.dependency-management&apos; version &apos;1.1.0&apos;
+}
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  set(&apos;springCloudVersion&apos;, &quot;2022.0.3&quot;)
+}
+
+dependencies {
+  implementation &apos;org.springframework.cloud:spring-cloud-starter-config&apos;
+  implementation &apos;org.springframework.cloud:spring-cloud-starter-netflix-eureka-client&apos;
+}
+
+dependencyManagement {
+  imports {
+    mavenBom &quot;org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}&quot;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Java Developer Advocate Billy Korando on the latest and greatest in Java]]></title><link>https://spring.io/blog/2023/05/25/a-bootiful-podcast-java-developer-advocate-billy-korando-on-the-latest-and</link><guid isPermaLink="true">https://spring.io/blog/2023/05/25/a-bootiful-podcast-java-developer-advocate-billy-korando-on-the-latest-and</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Thu, 25 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, Josh Long (@starbuxman) talks to Java Developer Advocate Billy Korando, recorded live from the amazing Spring I/O show in Barcelona, Spain!&lt;/p&gt;
+&lt;iframe title=&quot;Java Developer Advocate Billy Korando on the latest and greatest in Java&quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=yq5yb-141a01e-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Shell 2.1.10, 3.0.4 and 3.1.0 are now available]]></title><link>https://spring.io/blog/2023/05/25/spring-shell-2-1-10-3-0-4-and-3-1-0-are-now-available</link><guid isPermaLink="true">https://spring.io/blog/2023/05/25/spring-shell-2-1-10-3-0-4-and-3-1-0-are-now-available</guid><dc:creator><![CDATA[Janne Valkealahti]]></dc:creator><pubDate>Thu, 25 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Spring Shell 2.1.10, 3.0.4 and 3.1.0 are now available&lt;/p&gt;
+&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Shell &lt;code&gt;2.1.10&lt;/code&gt;, &lt;code&gt;3.0.4&lt;/code&gt; and &lt;code&gt;3.1.0&lt;/code&gt; has been released and are now available from Maven Central.&lt;/p&gt;
+&lt;p&gt;Please see the &lt;a href=&quot;https://github.com/spring-projects/spring-shell/releases/tag/v2.1.10&quot;&gt;release notes 2.1.10&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-shell/releases/tag/v3.0.4&quot;&gt;release notes 3.0.4&lt;/a&gt; and &lt;a href=&quot;https://github.com/spring-projects/spring-shell/releases/tag/v3.1.0&quot;&gt;release notes 3.1.0&lt;/a&gt; for more details.&lt;/p&gt;
+&lt;p&gt;Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
 &lt;h3&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/3.0.7/reference/html&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt; | &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 2.7.12 available now, fixing CVE-2023-20883]]></title><link>https://spring.io/blog/2023/05/18/spring-boot-2-7-12-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/spring-boot-2-7-12-available-now</guid><dc:creator><![CDATA[Andy Wilkinson]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, I&apos;m happy to announce that Spring Boot &lt;code&gt;2.7.12&lt;/code&gt; has been released and is now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release includes &lt;a href=&quot;https://github.com/spring-projects/spring-boot/releases/tag/v2.7.12&quot;&gt;28 bug fixes, documentation improvements, and dependency upgrades&lt;/a&gt;. Thanks to all those who have contributed with issue reports and pull requests.&lt;/p&gt;
-&lt;p&gt;This release includes a fix for &lt;a href=&quot;http://spring.io/security/cve-2023-20883&quot;&gt;CVE-2023-20883: Spring Boot Welcome Page DoS Vulnerability&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.7.12/reference/html&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt; | &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Boot 2.5.15 and 2.6.15 available now, fixing CVE-2023-20883]]></title><link>https://spring.io/blog/2023/05/18/spring-boot-2-5-15-and-2-6-15-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/spring-boot-2-5-15-and-2-6-15-available-now</guid><dc:creator><![CDATA[Phil Webb]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I happy to announce that Spring Boot &lt;code&gt;2.5.15&lt;/code&gt; and &lt;code&gt;2.6.15&lt;/code&gt; have been released and are now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release follows a request from a customer with commercial support that was looking to have the ability to upgrade to later versions of SnakeYAML.&lt;/p&gt;
-&lt;p&gt;This release also includes fixes for &lt;a href=&quot;http://spring.io/security/cve-2023-20883&quot;&gt;CVE-2023-20883: Spring Boot Welcome Page DoS Vulnerability&lt;/a&gt; as well as &lt;a href=&quot;https://spring.io/security/cve-2023-20873&quot;&gt;CVE-2023-20873: Security Bypass With Wildcard Pattern Matching on Cloud Foundry&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;If you&apos;re interested in purchasing commercial support for Spring, please see &lt;a href=&quot;https://spring.io/support&quot;&gt;https://spring.io/support&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;How can you help?&lt;/h3&gt;
-&lt;p&gt;If you&apos;re interested in helping out, check out the &lt;a href=&quot;https://github.com/spring-projects/spring-boot/labels/status%3A%20ideal-for-contribution&quot;&gt;&quot;ideal for contribution&quot; tag&lt;/a&gt; in the issue repository. If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-boot&quot;&gt;&lt;code&gt;spring-boot&lt;/code&gt; tag&lt;/a&gt; or chat with the community on &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-boot/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-boot/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-boot/docs/2.6.15/reference/html&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-boot&quot;&gt;Stack Overflow&lt;/a&gt; | &lt;a href=&quot;https://gitter.im/spring-projects/spring-boot&quot;&gt;Gitter&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[A Bootiful Podcast: Grubhub's Josh Burns on Kotlin, Spring Boot, and more]]></title><link>https://spring.io/blog/2023/05/18/a-bootiful-podcast-grubhubs-josh-burns-on-kotlin-spring-boot-and-more</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/a-bootiful-podcast-grubhubs-josh-burns-on-kotlin-spring-boot-and-more</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;We&apos;re crossing the streams, again! This time Josh Long talks to Grubhub&apos;s John Burns (twitter: @wakingrufus mastodon: @&lt;a href=&quot;mailto:wakingrufus@bigshoulders.city&quot;&gt;wakingrufus@bigshoulders.city&lt;/a&gt;) about dogfooding human food, Grubhub&apos;s tech stack, and more&lt;/p&gt;
-&lt;iframe title=&quot;Josh Burns on Kotlin, Spring Boot and more at Grubhub&quot; allowtransparency=&quot;true&quot; height=&quot;150&quot; width=&quot;100%&quot; style=&quot;border: none; min-width: min(100%, 430px);&quot; scrolling=&quot;no&quot; data-name=&quot;pb-iframe-player&quot; src=&quot;https://www.podbean.com/player-v2/?i=wj2ue-14109f7-pb&amp;from=pb6admin&amp;share=1&amp;download=1&amp;rtl=0&amp;fonts=Arial&amp;skin=1&amp;font-color=&amp;logo_link=episode_page&amp;btn-skin=7&quot;&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Integration 6.1 goes GA]]></title><link>https://spring.io/blog/2023/05/18/spring-integration-6-1-goes-ga</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/spring-integration-6-1-goes-ga</guid><dc:creator><![CDATA[Artem Bilan]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Dear Spring community,&lt;/p&gt;
-&lt;p&gt;Hope you enjoy &lt;a href=&quot;https://2023.springio.net/&quot;&gt;Spring IO anniversary&lt;/a&gt; in Barcelona these days. I&apos;m not there this years for many reasons. Either way, it is my pleasure to announce that Spring Integration &lt;code&gt;6.1.0&lt;/code&gt; is generally available now from Maven Central.&lt;/p&gt;
-&lt;p&gt;In addition, bug fixes version &lt;code&gt;5.5.18&lt;/code&gt; has been released.&lt;/p&gt;
-&lt;p&gt;The Spring Integration &lt;code&gt;6.1&lt;/code&gt; version is a natural evolution of &lt;code&gt;6.x&lt;/code&gt; generation with fixes and improvements which didn&apos;t make it into &lt;code&gt;6.0&lt;/code&gt;.
-Plus we listen to community and make some possibly, but convenient for target projects breaking changes.&lt;/p&gt;
-&lt;p&gt;Some highlights of this new version include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Upgrades to the latest dependencies, but only if they don&apos;t break the public API we expose&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Added Protobuf transformers support (shout out to &lt;a href=&quot;https://spring.io/team/tzolov&quot;&gt;Christian Tzolov&lt;/a&gt;)&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Migration of Zip extension to respective module in the core project&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The &lt;code&gt;MessageFilter&lt;/code&gt; now emits a WARN log when a request message is dropped making it, technically, not silent as it was before&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Now gateways and replying handlers don&apos;t block forever for sending and receiving operations.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The default timeout in the framework is chosen to be &lt;code&gt;30&lt;/code&gt; seconds&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;The &lt;code&gt;ContextHolderRequestHandlerAdvice&lt;/code&gt; was introduced to manage &lt;code&gt;ThreadLocal&lt;/code&gt; values around handler method&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The convenient &lt;code&gt;handleReactive()&lt;/code&gt; terminal operator was added to Java DSL&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;The &lt;code&gt;IntegrationComponentSpec.get()&lt;/code&gt; of Java DSL has been deprecated in favor of just that spec exposure as a bean to avoid misconfiguration problems where the spec internals might be lost&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;a &lt;code&gt;PartitionedChannel&lt;/code&gt; was introduced for implementing a logic when messages with the same partition key must be processed in the consumer in the same thread.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;See &lt;a href=&quot;https://docs.spring.io/spring-integration/docs/6.1.0/reference/html/whats-new.html#whats-new&quot;&gt;What&apos;s New&lt;/a&gt; in the documentation and don&apos;t forget about a &lt;a href=&quot;https://github.com/spring-projects/spring-integration/wiki/Spring-Integration-6.0-to-6.1-Migration-Guide&quot;&gt;Migration Guide&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;The Spring Boot &lt;code&gt;3.1.0&lt;/code&gt; will be released today including Spring Integration &lt;code&gt;6.1&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Now we have switched to version &lt;code&gt;6.2&lt;/code&gt; which is going to be based on Spring Framework &lt;code&gt;6.1&lt;/code&gt; with much more exciting features and improvements.&lt;/p&gt;
-&lt;p&gt;Cheers,?&lt;br&gt;
-Artem&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://projects.spring.io/spring-integration/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-integration/issues&quot;&gt;GitHub Issues&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-integration/blob/master/CONTRIBUTING.adoc&quot;&gt;Contributing&lt;/a&gt; | &lt;a href=&quot;http://stackoverflow.com/questions/tagged/spring-integration&quot;&gt;Help&lt;/a&gt; | &lt;a href=&quot;https://gitter.im/spring-projects/spring-integration&quot;&gt;Chat&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Tips: go fast with Spring Boot 3.1]]></title><link>https://spring.io/blog/2023/05/18/spring-tips-go-fast-with-spring-boot-3-1</link><guid isPermaLink="true">https://spring.io/blog/2023/05/18/spring-tips-go-fast-with-spring-boot-3-1</guid><dc:creator><![CDATA[Josh Long]]></dc:creator><pubDate>Thu, 18 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Hi, Spring fans! In this installment, &lt;a href=&quot;https://youtube.com/@coffeesoftware&quot;&gt;Josh Long (@coffeesoftware)&lt;/a&gt; looks at how the &lt;a href=&quot;https://start.spring.io&quot;&gt;new Spring Boot 3.1 release&lt;/a&gt; delivers incredible efficiencies for both developers &lt;em&gt;and&lt;/em&gt;  machines.&lt;/p&gt;
-&lt;p&gt;#Java #springboot #Microservices #Testcontainers #GraalVM #Docker #DockerCompose #Devtools #SSL&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/ykEK2xuJrN8&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt;</content:encoded></item><item><title><![CDATA[Spring Batch 5.0.2 available now!]]></title><link>https://spring.io/blog/2023/05/17/spring-batch-5-0-2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/17/spring-batch-5-0-2-available-now</guid><dc:creator><![CDATA[Mahmoud Ben Hassine]]></dc:creator><pubDate>Wed, 17 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I am pleased to announce that Spring Batch 5.0.2 is now available from Maven Central.&lt;/p&gt;
-&lt;p&gt;This release resolves 25 issues, including bug fixes, enhancements, documentation updates and dependency updates. For more details about the changes, please refer to the &lt;a href=&quot;https://github.com/spring-projects/spring-batch/releases/tag/v5.0.2&quot;&gt;change log&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;I would like to thank all contributors who had a role in this release!&lt;/p&gt;
-&lt;h3&gt;Feedback&lt;/h3&gt;
-&lt;p&gt;We look forward to your feedback on &lt;a href=&quot;https://github.com/spring-projects/spring-batch/issues&quot;&gt;Github Issues&lt;/a&gt;, &lt;a href=&quot;https://github.com/spring-projects/spring-batch/discussions&quot;&gt;Github Discussions&lt;/a&gt;, &lt;a href=&quot;https://twitter.com/springbatch&quot;&gt;Twitter&lt;/a&gt;, and &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-batch&quot;&gt;StackOverflow&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-batch&quot;&gt;Spring Batch Home&lt;/a&gt;|&lt;a href=&quot;https://github.com/spring-projects/spring-batch&quot;&gt;Source on Github&lt;/a&gt;|&lt;a href=&quot;https://docs.spring.io/spring-batch/docs/5.0.2/reference/html/index.html&quot;&gt;Reference documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Authorization Server 1.1.0 available now]]></title><link>https://spring.io/blog/2023/05/17/spring-authorization-server-1-1-0-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/17/spring-authorization-server-1-1-0-available-now</guid><dc:creator><![CDATA[Joe Grandja]]></dc:creator><pubDate>Wed, 17 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;On behalf of the team and everyone who has contributed, it is my pleasure to announce the release of Spring Authorization Server 1.1.0.&lt;/p&gt;
-&lt;p&gt;See the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/releases/tag/1.1.0&quot;&gt;release notes&lt;/a&gt; for complete details.&lt;/p&gt;
-&lt;p&gt;To get started using Spring Authorization Server, see the &lt;a href=&quot;https://docs.spring.io/spring-authorization-server/docs/current/reference/html/getting-started.html&quot;&gt;Getting Started&lt;/a&gt; chapter of the reference documentation and the &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/tree/main/samples&quot;&gt;samples&lt;/a&gt; to become familiar with setup and configuration.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-authorization-server&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-authorization-server/issues&quot;&gt;GitHub Issues&lt;/a&gt; | &lt;a href=&quot;https://app.zenhub.com/workspaces/authorization-server-5e8f3182b5e8f5841bfc4902/board?repos=248032165&quot;&gt;ZenHub Board&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring for GraphQL 1.2.0 released]]></title><link>https://spring.io/blog/2023/05/17/spring-for-graphql-1-2-0-released</link><guid isPermaLink="true">https://spring.io/blog/2023/05/17/spring-for-graphql-1-2-0-released</guid><dc:creator><![CDATA[Brian Clozel]]></dc:creator><pubDate>Wed, 17 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I&apos;m pleased to announce that Spring for GraphQL 1.2.0 is now available on Maven Central. This version will ship with Spring Boot 3.1.0 later this week.&lt;/p&gt;
-&lt;p&gt;This is a new feature release for the Spring Boot 3.1.x generation. If you are still using Spring for GraphQL 1.0.x, please consider upgrading to Spring Boot 3.x as &lt;a href=&quot;https://spring.io/projects/spring-graphql#support&quot;&gt;OSS support will end next November&lt;/a&gt;. We have also raised the baseline version for GraphQL Java to 20.x and we will align with the &lt;a href=&quot;https://github.com/graphql-java/graphql-java/discussions/3138&quot;&gt;new GraphQL Java release policy&lt;/a&gt; from now on.&lt;/p&gt;
-&lt;p&gt;We have worked on the most popular issues from the community.&lt;/p&gt;
-&lt;h3&gt;Pagination Support&lt;/h3&gt;
-&lt;p&gt;This release provides first-class support for pagination, seamlessly adapting Spring Data pagination to the GraphQL &lt;a href=&quot;https://relay.dev/graphql/connections.htm&quot;&gt;Cursor Connection specification&lt;/a&gt;, including support for the latest and greatest &lt;a href=&quot;https://github.com/spring-projects/spring-data-commons/wiki/Spring-Data-2023.0-%28Ullman%29-Release-Notes#new-and-noteworthy&quot;&gt;Scroll API&lt;/a&gt; in Spring Data 2023.01. To learn more about the pagination support in Spring GraphQL 1.2, check out the project&apos;s &lt;a href=&quot;https://docs.spring.io/spring-graphql/docs/1.2.0/reference/html/#execution.pagination&quot;&gt;reference documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Schema Mapping Checks&lt;/h3&gt;
-&lt;p&gt;If you are a GraphQL Java Kickstart user, you&apos;re probably missing the feature to check schema mappings on startup. We&apos;ve taken inspiration and created a similar feature to detect schema fields without a corresponding &lt;code&gt;DataFetcher&lt;/code&gt; or Java object property, and likewise to detect controller methods and &lt;code&gt;DataFetcher&lt;/code&gt; registrations to non-existing fields.&lt;/p&gt;
-&lt;p&gt;You can enable this through the &lt;code&gt;GraphQlSource.Builder&lt;/code&gt;, get access to a &lt;code&gt;SchemaReport&lt;/code&gt; on startup, and decide how to handle it. To learn more this, check out the project&apos;s &lt;a href=&quot;https://docs.spring.io/spring-graphql/docs/1.2.0/reference/html/#execution.graphqlsource.schema-mapping-inspection&quot;&gt;reference documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;h3&gt;Annotated Exception Handling&lt;/h3&gt;
-&lt;p&gt;Starting in this release, you can handle exceptions from &lt;code&gt;@SchemaMapping&lt;/code&gt; controller methods via &lt;code&gt;@GraphQlExceptionHandler&lt;/code&gt; annotated handler methods. Those can be declared and apply locally within the same &lt;code&gt;@Controller&lt;/code&gt;, or globally with &lt;code&gt;@ControllerAdvice&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;One benefit of this is the ability to also handle exceptions from &lt;code&gt;@SubscriptionMapping&lt;/code&gt; methods, including exceptions raised later after the &lt;code&gt;Publisher&lt;/code&gt; has started emitting data. To learn more, check out the project&apos;s &lt;a href=&quot;https://docs.spring.io/spring-graphql/docs/1.2.0/reference/html/#controllers.exception-handler&quot;&gt;reference documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;h2&gt;Other&lt;/h2&gt;
-&lt;p&gt;For a list of all enhancements, see the &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/wiki/Spring-for-GraphQL-Versions&quot;&gt;Versions&lt;/a&gt; wiki page.&lt;/p&gt;
-&lt;h2&gt;In Conclusion&lt;/h2&gt;
-&lt;p&gt;We expect to have our next minor release 1.3 in about 6 months, later this year, and look forward to continued feedback and evolution of our programming model and features set.&lt;/p&gt;
-&lt;p&gt;We are also at &lt;a href=&quot;https://2023.springio.net/&quot;&gt;Spring I/O&lt;/a&gt; this week where we will present &lt;a href=&quot;https://2023.springio.net/sessions/observing-spring-for-graphql-in-action/&quot;&gt;Observing Spring for GraphQL in Action&lt;/a&gt;. For those attending the conference, we look forward to seeing you and chatting.&lt;/p&gt;
-&lt;p&gt;Last but not least, check out the newly published book &lt;a href=&quot;https://leanpub.com/graphql-java&quot;&gt;GraphQL with Java and Spring&lt;/a&gt; from our collaborators, Andi Marek and Donna Zhou.&lt;/p&gt;
-&lt;h3&gt;How to get involved?&lt;/h3&gt;
-&lt;p&gt;If you have general questions, please ask on &lt;a href=&quot;https://stackoverflow.com&quot;&gt;stackoverflow.com&lt;/a&gt; using the &lt;a href=&quot;https://stackoverflow.com/tags/spring-graphql&quot;&gt;&lt;code&gt;spring-graphql&lt;/code&gt; tag&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-graphql/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-graphql&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-graphql/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-graphql/docs/1.2.0/reference/html&quot;&gt;Documentation&lt;/a&gt; | &lt;a href=&quot;https://stackoverflow.com/questions/tagged/spring-graphql&quot;&gt;Stack Overflow&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
+&lt;p&gt;&lt;a href=&quot;https://spring.io/projects/spring-shell/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-shell&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-shell/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-shell/docs/3.1.0/docs/index.html&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Spring Security Kerberos 2.0.0-RC2 available now]]></title><link>https://spring.io/blog/2023/05/25/spring-security-kerberos-2-0-0-rc2-available-now</link><guid isPermaLink="true">https://spring.io/blog/2023/05/25/spring-security-kerberos-2-0-0-rc2-available-now</guid><dc:creator><![CDATA[Janne Valkealahti]]></dc:creator><pubDate>Thu, 25 May 2023 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;I&apos;m happy to announce that a Spring Security Kerberos &lt;code&gt;2.0.0-RC2&lt;/code&gt; milestone is now available via &lt;a href=&quot;https://repo.spring.io/milestone&quot;&gt;https://repo.spring.io/milestone&lt;/a&gt;. This release candidate were created because project upgraded to use recently released &lt;code&gt;spring-security&lt;/code&gt; &lt;code&gt;6.1.0&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://projects.spring.io/spring-security-kerberos/&quot;&gt;Project Page&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-security-kerberos&quot;&gt;GitHub&lt;/a&gt; | &lt;a href=&quot;https://github.com/spring-projects/spring-security-kerberos/issues&quot;&gt;Issues&lt;/a&gt; | &lt;a href=&quot;https://docs.spring.io/spring-security-kerberos/reference/&quot;&gt;Documentation&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>

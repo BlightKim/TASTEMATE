@@ -13,4 +13,5 @@ public interface ChatService {
     void insertMessage(ChatMessageVO vo);
     void exitRoom(ChatUserVO vo);
     List<MemberVO>getChatUserInfo(ChatRoomVO vo);
+
 }

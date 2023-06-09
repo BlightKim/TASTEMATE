@@ -49,4 +49,6 @@ public class ChatDAO {
 
         return mybatis.selectList("getChatUserInfo",vo);
     }
+
+
 }
