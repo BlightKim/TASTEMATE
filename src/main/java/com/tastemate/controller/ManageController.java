@@ -237,6 +237,13 @@ public class ManageController {
         return "/manage/storeMenuView";
     }
 
+    //맛집 메뉴 보기(삭제 취소 버전)
+    @PostMapping("deleteMenuBack")
+    public String deleteMenuBack(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+        storeMenuView(model, manageMenuVO, manageStoreVO);
+        return "/manage/storeMenuView";
+    }
+
 
 
     //리뷰 조회
