@@ -1,0 +1,192 @@
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<!--headerFragment 선언-->
+<div th:fragment="headerFragment">
+    <head>
+
+        <!-- jQuery and Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.js"></script>
+        <script src="/static/js/bootstrap.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+                integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+                integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+        </script>
+
+        <!-- 구글 글씨체 적용-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+
+
+
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+        <style>
+            body {
+                font-family: 'Noto Serif KR', serif;
+
+            }
+
+            .navbar {
+                background-color: #fff;
+                box-shadow: 0 0.5px 0 0 #dee2e6;
+            }
+
+            .navbar-brand,
+            .nav-link {
+                color: #343a40;
+            }
+
+            .navbar .navbar-brand {
+                font-weight: 600;
+            }
+
+            .navbar .navbar-nav .nav-link {
+                font-weight: 500;
+            }
+
+            .navbar .btn-outline-dark {
+                margin-left: auto;
+            }
+        </style>
+
+        <title>TasteMate</title>
+        <script>
+            function chatList() {
+                $.ajax("/chat/getList", {
+                    type: "get",
+                    dataType: "json", //서버로 부터 응답받을 데이터 형식
+                    success: function (respData) {
+                        let dispHtml = "";
+                        if (respData !== null && respData.length > 0) {
+                            $.each(respData, function (index, room) {
+                                dispHtml += "<li>";
+                                dispHtml += "<form action='' method='post' target='popupWindow'>";
+                                dispHtml += "<input type='hidden' name='roomIdx' value='" + room.roomIdx + "'>";
+                                dispHtml += "<button type='submit' class='dropdown-item' onclick='getRoom(event)'>" + room.roomName + "</button>";
+                                dispHtml += "</form>";
+                                dispHtml += "</li>";
+                            });
+                        } else {
+                            dispHtml += "<li>";
+                            dispHtml += "<a class='dropdown-item'>대화중인 상대 없음</a>";
+                            dispHtml += "</li>";
+                        }
+                        $("#chatList").html(dispHtml);
+                    },
+                    error: function () {
+                        console.log('>>error!')
+                    }
+                });
+            }
+
+
+            function getRoom(event) {
+                event.preventDefault();
+                var form = event.target.closest('form');
+
+                var roomIdx = form.querySelector('input[name="roomIdx"]').value;
+
+                var popupWindow = window.open("", "popupWindow", "width=500px,height=600px,scrollbars=no,location=no");
+
+                form.setAttribute("action", "/chat/getRoom?roomIdx=" + roomIdx);
+                form.setAttribute("method", "post");
+                form.setAttribute("target", "popupWindow");
+                form.submit();
+            }
+        </script>
+    </head>
+    <body>
+
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand" href="#">TasteMate</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">커뮤니티</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/store/list">맛집</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">내강의장</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">꿀팁</a>
+                </li>
+            </ul>
+            <form class="form-inline mx-auto">
+                <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search">
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">검색</button>
+            </form>
+            <div class="ml-auto">
+                <span th:if="${session.vo != null}" class="mr-2">
+                <span th:text="${session.vo.getUserName()}"></span>
+                <span>님 환영합니다 !</span>
+            </span>
+                <button th:unless="${session.vo != null}" class="btn btn-outline-dark ml-2"
+                        th:onclick="|location.href='@{/member/simpleregister}'|">회원가입
+                </button>
+                <button th:unless="${session.vo != null}" class="btn btn-outline-dark ml-2"
+                        th:onclick="|location.href='@{/member/login}'|">로그인
+                </button>
+                <button th:if="${!(session.vo == null)}" class="btn btn-outline-dark ml-2"
+                        th:onclick="|location.href='@{/member/logout}'|">로그아웃
+                </button>
+                <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
+                    <div class="btn-group" role="group">
+                        <button th:if="${!(session.vo == null)}" type="button"
+                                class="btn btn-outline-dark dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                onclick="chatList(); event.preventDefault()">
+                            채팅방
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li id="chatList">ajax 채팅리스트</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
+                    <div class="btn-group" role="group">
+                        <button th:if="${!(session.vo == null)}" type="button" class="btn btn-outline-dark dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            마이페이지
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/member/mypage}">개인정보 수정</a></li>
+                            <li><a class="dropdown-item" th:href="@{/member/list}">내 강의장</a></li>
+                            <li><a class="dropdown-item" th:href="@{/member/list}">결제정보</a></li>
+                            <li><a class="dropdown-item" th:href="@{/member/list}">북마크 보기</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </body>
+</div>
+
+</html>
+
+<!--<div class="dropdown">-->
+<!--    <a th:if="${session.vo != null}" class="btn btn-secondary dropdown-toggle" href="#" role="button"-->
+<!--       data-bs-toggle="dropdown" aria-expanded="false">마이페이지-->
+<!--    </a>-->
+<!--    <ul class="dropdown-menu">-->
+<!--        <li><a class="dropdown-item" href="#">Action</a></li>-->
+<!--        <li><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+<!--    </ul>-->

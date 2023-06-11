@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.tastemate.mapper.ChatDAO">
+<mapper namespace="com.tastemate.mapper.ChatMapper">
 
     <select id="getChatListAdmin" resultType="ChatRoomVO">
         SELECT ROOM_NAME, ROOM_IDX
         FROM CHAT_ROOM
     </select>
 
-    <select id="getList" parameterType="MemberVO" resultType="ChatRoomVO">
+    <select id="getChatList" parameterType="MemberVO" resultType="ChatRoomVO">
         SELECT R.ROOM_NAME, R.ROOM_IDX
         FROM CHAT_USER U
                  INNER JOIN CHAT_ROOM R

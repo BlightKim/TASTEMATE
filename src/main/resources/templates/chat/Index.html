@@ -19,7 +19,7 @@
 <a href="http://localhost:8080/login?userIdx=1">userIdx= 1 로그인</a><br>
 <a href="http://localhost:8080/login?userIdx=2">userIdx= 2 로그인</a><br>
 <form th:action="@{/getList}" method="post">
-    <input type="hidden" name="userIdx" th:value="${session.user.userIdx}"/>
+    <input type="hidden" name="userIdx" th:value="${userIdx}"/>
     <button type="submit">내채팅방</button>
 </form>
 

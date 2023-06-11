@@ -54,6 +54,7 @@
         var roomIdx = form.querySelector('input[name="roomIdx"]').value;
 
         var popupWindow = window.open("", "popupWindow", "width=500px,height=600px,scrollbars=no,location=no");
+
         form.setAttribute("action", "/getRoom?roomIdx=" + roomIdx);
         form.setAttribute("method", "post");
         form.setAttribute("target", "popupWindow");

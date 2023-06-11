@@ -12,60 +12,68 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class ChatController {
+    private final  ChatService chatService;
     @Autowired
-    private ChatService chatService;
-
-    @GetMapping("/chatListAdmin")//전체 채팅방 목록
+    public ChatController(ChatService chatService) {
+        this.chatService = chatService;
+    }
+/*    @GetMapping("/chatListAdmin")//전체 채팅방 목록
     public String getChatListAdmin(Model model) {
         List<ChatRoomVO> list = chatService.getChatListAdmin();
         model.addAttribute("chat", list);
         return "chat/chatList";
+    }*/
+
+    @GetMapping("/chat/getList")//개인 채팅방 목록
+    @ResponseBody
+    public List<ChatRoomVO> getChatList(Model model, MemberVO vo, HttpSession session) {
+        vo = (MemberVO) session.getAttribute("vo");
+        List<ChatRoomVO> room = chatService.getChatList(vo);
+        System.out.println("room : " + room);
+        return room;
     }
 
-    @PostMapping("/getList")//개인 채팅방 목록
-    public String getChatList(Model model, MemberVO vo) {
-        List<ChatRoomVO> list = chatService.getChatList(vo);
-        System.out.println(list);
-        model.addAttribute("room", list);
-        return "chat/chatList";
-    }
 
-    @PostMapping("/getRoom")//채팅방 들어가기
-    public String getRoom(Model model, ChatRoomVO vo) {
+    @PostMapping("/chat/getRoom")//채팅방 들어가기
+    public String getRoom(Model model, ChatRoomVO vo, HttpSession session) {
+        // vo = (ChatRoomVO) session.getAttribute("vo");
         ChatRoomVO room = chatService.getRoom(vo);
         List<MemberVO> userInfo = chatService.getChatUserInfo(vo);
         List<ChatMessageVO> message = chatService.getMessage(vo);
-
         model.addAttribute("room", room);
         model.addAttribute("info", userInfo);
         model.addAttribute("message", message);
         return "/chat/ChatRoom";
     }
 
-    @PostMapping("/insertMessage")//메세지 보내기
+    @PostMapping("/chat/insertMessage")//메세지 보내기
     @ResponseBody
     public void insertMessage(ChatMessageVO vo) {
         chatService.insertMessage(vo);
     }
 
 
-    @GetMapping("/roomExit")//채팅방 나가기
+    @GetMapping("/chat/roomExit")//채팅방 나가기
     @ResponseBody
     public void exitRoom(ChatUserVO vo) {
         chatService.exitRoom(vo);
 
     }
 
-    @PostMapping("/getUserInfo")//채팅방 유저 정보 보기
     @ResponseBody
-    public void getUserInfo(ChatRoomVO vo ,Model model){
+    @GetMapping("/chat/getChatUserInfo")//채팅방 유저 정보 보기
+    public List<MemberVO> getChatUserInfo(ChatRoomVO vo) {
+        //vo = (ChatRoomVO) session.getAttribute("vo");
+        System.out.println("vo : >>>>>>>>>>" + vo);
         System.out.println("sideOpen() 실행");
-        List<MemberVO>user = chatService.getChatUserInfo(vo);
-        model.addAttribute("info",user);
+        List<MemberVO> user = chatService.getChatUserInfo(vo);
+        System.out.println("userinfo : " + user);
+        return user;
     }
 
 

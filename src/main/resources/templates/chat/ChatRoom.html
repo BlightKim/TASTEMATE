@@ -18,11 +18,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
         /*글씨 폰트*/
-        span, p, h1{
-           /* font-family: 'Noto Sans KR', sans-serif;*/
+        span, p, h1 {
+            /* font-family: 'Noto Sans KR', sans-serif;*/
             /*font-family: 'Poppins', sans-serif;*/
             font-family: 'Kablammo', cursive;
+            /*font-family: 'Dongle', sans-serif;*/
         }
+
         #chatRoom {
             margin: 5px;
             border: solid black 1px;
@@ -109,6 +111,7 @@
             overflow: auto;
             border: black solid 0.3px;
         }
+
         /* 스크롤바의 너비와 색상 설정 */
         ::-webkit-scrollbar {
             width: 10px; /* 스크롤바의 너비 */
@@ -171,6 +174,7 @@
         #message {
             margin-left: 30px;
         }
+
         .sender {
             margin-left: -15px;
             margin-top: 20px;
@@ -199,7 +203,6 @@
             background-color: transparent;
             display: inline-block;
         }
-
 
 
         /*사이드바*/
@@ -285,7 +288,7 @@
         <div id="openbtnContainer">
 
             <img class="openbtn" id="sidebar-toggle" onclick="openNav()"
-                 src="img/openbtn.png" alt="openbtn">
+                 src="/img/Ham.png" alt="openbtn">
         </div>
     </div>
     <!--이전 대화 출력-->
@@ -306,9 +309,9 @@
             <form id="insertMessage" onsubmit="event.preventDefault(); send();">
                 <input type="text" name="messageContent" id="chatting" placeholder="메세지 입력...">
                 <input type="hidden" name="roomIdx" id="roomIdx" th:value="${room.roomIdx}">
-                <input type="hidden" id="userIdx" name="userIdx" th:value="${session.user['userIdx']}">
-                <input type="hidden" id="userName" th:value="${session.user['userName']}">
-                <input type="hidden" id="userProfile" th:value="${session.user['userProfile']}">
+                <input type="hidden" id="userIdx" name="userIdx" th:value="${session.vo['userIdx']}">
+                <input type="hidden" id="userName" th:value="${session.vo['userName']}">
+                <input type="hidden" id="userProfile" th:value="${session.vo['userProfile']}">
                 <input type="submit" id="sendBtn" value="보내기">
             </form>
         </div>
@@ -317,8 +320,8 @@
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
         <div class="sidebar`Main`">
-            <table id="userInfoTable" th:each="user : ${info}">
-                <tbody>
+            <table id="userInfoTable">
+<!--                <tbody>
                 <tr>
                     <td rowspan="4">
                         <img class="img" th:src="@{'/img/' + ${user.userProfile}}" alt="User Image">
@@ -343,25 +346,26 @@
                     </td>
                 </tr>
                 </tbody>
+            </table>-->
             </table>
         </div>
         <div id="sidebarFoot">
             <div class="sidebarBtn">
                 <form>
                     <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
-                    <input type="hidden" name="userIdx" th:value="${session.user['userIdx']}">
+                    <input type="hidden" name="userIdx" th:value="${session.vo['userIdx']}">
                     <button type="submit" id="shareBtn" onclick="share()" value="예약 공유">
                         <span>예약 공유</span>
-                        <img src="img/share.jpg" alt="shareBtn" class="btnImg" type="submit">
+                        <img src="/img/Share.jpg" alt="shareBtn" class="btnImg" type="submit">
                     </button>
                 </form>
                 <form>
                     <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
-                    <input type="hidden" name="userIdx" th:value="${session.user['userIdx']}">
-                    <input type="hidden" name="userName" th:value="${session.user['userName']}">
+                    <input type="hidden" name="userIdx" th:value="${session.vo.userIdx}">
+                    <input type="hidden" name="userName" th:value="${session.vo.userName}">
                     <button type="submit" id="exitBtn" value="나가기">
                         <span>방 나가기</span>
-                        <img src="img/exit.png" alt="exitBtn" class="btnImg" type="submit">
+                        <img src="/img/Exit.png" alt="exitBtn" class="btnImg" type="submit">
                     </button>
                 </form>
             </div>
@@ -400,34 +404,27 @@
         var msg = $("#chatting").val().trim();
         var uN = $("#userName").val();
         if (msg === '') {
-           /* alert("Please enter a message");*/
-
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Please enter a message',
-                width:'345px',
-                height:'200px'
+                width: '345px',
+                height: '200px'
             })
 
 
             return;
         }
-        $.ajax(/*"/insertMessage",*/ {
-            url: "/insertMessage",
+        $.ajax("/chat/insertMessage", {
             type: 'POST',
             data: $("#insertMessage").serialize(),
             success: function () {
                 ws.send(
-                '<div id="message" th:each="message : ${message}">' +
+                    '<div id="message" th:each="message : ${message}">' +
                     '<div class="sender">' + '<img class="img-message" src="/img/' + profile + '" alt="userProfile">' +
                     '<span class="senderName">' + uN + '</span>' + '</div>' +
                     '<span class="messageContent"> ' + msg + '</span>' +
                     '<span class="time">' + getFormattedDate() + '</span></div>'
-
-
-
-
                 )
                 $("#chatting").val(''); /*채팅창 초기화*/
             },
@@ -465,7 +462,7 @@
             var userIdx = $("#userIdx").val();
             var userName = $("#userName").val();
             ws.send('<div class="message"><span class="systemMessage" style="color: #0a58ca">' + uN + '님이 채팅방에서 나갔습니다.' + '</span></div>');
-            location.href = "/roomExit?roomIdx=" + roomIdx + '&userIdx=' + userIdx + '&userName=' + userName
+            location.href = "/chat/roomExit?roomIdx=" + roomIdx + '&userIdx=' + userIdx + '&userName=' + userName
             window.close()
         }
     });
@@ -482,7 +479,39 @@
     document.getElementById("chatting").addEventListener("keydown", handleEnterKey);
 
     function openNav() {
+        $.ajax("/chat/getChatUserInfo", {
+            type: "get",
+            data: $("#roomIdx"),
+            dataType: "json",
+            success: function (respData) {
+                let dispHtml = "";
+                $.each(respData, function (index, user) {
+                    dispHtml += "<table id='userInfoTable'>";
+                    dispHtml += "<tbody>";
+                    dispHtml += "<tr>";
+                    dispHtml += "<td rowspan='4'><img src='/img/" + user.userProfile + "' class='img' alt='User Image'></td>";
+                    dispHtml += "<td><p>이름 : " + user.userName + "</p></td>";
+                    dispHtml += "</tr>";
+                    dispHtml += "<tr>";
+                    dispHtml += "<td><p>반 : " + user.userClass + "</p></td>";
+                    dispHtml += "</tr>";
+                    dispHtml += "<tr>";
+                    dispHtml += "<td><p>선호 음식 : " + user.userLikeFood +"</p></td>";
+                    dispHtml += "</tr>";
+                    dispHtml += "<tr>";
+                    dispHtml += "<td><p>MBTI : " + user.userMbti + "</p></td>";
+                    dispHtml += "</tr>";
+                    dispHtml += "</tbody>";
+                    dispHtml += "</table>";
 
+                });
+
+                $("#userInfoTable").html(dispHtml);
+            },
+            error: function () {
+                console.log('>>error!')
+            }
+        });
 
         document.getElementById("mySidebar").style.width = "250px";
         document.getElementById("main").style.marginRight = "250px";
