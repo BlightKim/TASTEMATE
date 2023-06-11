@@ -1,6 +1,5 @@
 $(document).ready(function() {
-  let wholeComment = $("#collapseExample").children();
-  let originalParent = $(".comment-reply-container").parent();
+  let originalParent = $(".comment-reply-container-wrap")
   let currentIdx = 0;
   let boardIdx = $("#boardIdx").val();
   let commentLevel = 1;
@@ -10,6 +9,12 @@ $(document).ready(function() {
     placeholder: "Hello Bootstrap 4",
     tabsize: 4,
     height: 100,
+    width: 400,
+    toolbar: [
+      ['style', ['style']],
+      ['font', ['bold', 'italic', 'underline', 'clear']],
+      ['height', ['height']],
+    ],
     lang: "ko-KR"
   });
 
@@ -76,28 +81,41 @@ $(document).ready(function() {
   });
 
   $(document).on("click", ".reply_comment_btn", function() {
-    let commentArea = $("#reply_comment_area");
+    let replyContainer = $(".comment-reply-container");
     if ($(this).data("clicked")) {
-      commentArea.appendTo(originalParent);
+      replyContainer.appendTo(originalParent);
       $(this).data("clicked", false);
       currentIdx = 0;
       commentLevel = 1;
       console.log(currentIdx);
     } else {
-      $(this).parent().after(container);  // 현재 클릭한 버튼의 부모 요소 다음에 답글 창을 위치시킵니다.
-      container.show();  // 답글 창을 보이게 합니다.
-      commentArea.appendTo(`#comment_${currentIdx}_reply_area`);
-      // commentArea.insertAfter($(this).closest('.main-comments'));
-      $(".reply_comment_btn").data("clicked", false);
+      let target = $(this).parent().parent().siblings('.comment-area');
+      target.append(replyContainer);
       $(this).data("clicked", true);
 
-/*
+      currentIdx = $(this).data("idx");
+      commentLevel = $(this).data("cl") + 1;
+
       console.log("commentLevel : " + commentLevel);
       console.log("currentIdx : " + currentIdx);
-      currentIdx = $(this).data("idx");
-      commentLevel = $(this).data("cl") + 1;*/
     }
   });
+
+/*  $(".reply_comment_btn").click(function() {
+    // 현재 클릭한 버튼의 부모 요소 다음에 있는 댓글 입력창을 찾습니다.
+    var commentInput = $(this).parent().next(".comment-input");
+
+    // 만약 댓글 입력창이 이미 존재한다면,
+    if (commentInput.length > 0) {
+      // 댓글 입력창을 제거합니다.
+      commentInput.remove();
+    } else {
+      // 그렇지 않다면, 새로운 댓글 입력창을 복제하고 추가합니다.
+      commentInput = $(".comment-input").first().clone();
+      commentInput.show();  // 복제된 댓글 입력창을 보이게 합니다.
+      $(this).parent().after(commentInput);  // 현재 클릭한 버튼의 부모 요소 다음에 댓글 입력창을 추가합니다.
+    }
+  });*/
 
   $("#comment_write_btn").on("click", () => {
     // i want to find a reply_comment_btn near this button

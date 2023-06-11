@@ -307,6 +307,12 @@ ul {
   box-shadow: 0 1px 1px rgba(0,0,0,0.15);
   margin-top: 10px;
 }
+.comments-list .comment-area {
+  width: 680px;
+  float: right;
+  position: relative;
+  margin-top: 10px;
+}
 
 .comments-list .comment-box:before, .comments-list .comment-box:after {
   content: '';
@@ -321,6 +327,19 @@ ul {
   left: -11px;
 }
 
+.comments-list .comment-area:before {
+  border-width: 11px 13px 11px 0;
+  border-color: transparent rgba(0,0,0,0.05);
+  left: -12px;
+}
+
+.comments-list .comment-area:before, .comments-list .comment-area:after {
+  content: '';
+  height: 0;
+  width: 0;
+  position: absolute;
+  display: block;
+}
 .comments-list .comment-box:before {
   border-width: 11px 13px 11px 0;
   border-color: transparent rgba(0,0,0,0.05);
@@ -405,10 +424,11 @@ ul {
 }
 
 .comment-reply-container {
-  justify-content: center;
+  justify-content: left;
   display: flex;
   flex-wrap: wrap;
-  height: 300px;
+  height: 150px;
+  margin-left: 16px;
 }
 
 .inside-comment-reply-container {
@@ -419,6 +439,66 @@ ul {
 #reply_comment_area {
   justify-content: center;
 }
+.comment-reply-container-wrap {
+  display: flex;
+  justify-content: center;
+}
+/*삭제 버튼 시작*/
+.delete-button {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  border: 2px solid rgb(231, 50, 50);
+  background-color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 10px #333;
+  overflow: hidden;
+  transition: .3s;
+}
+
+.delete-button:hover {
+  background-color: rgb(245, 207, 207);
+  transform: scale(1.2);
+  box-shadow: 0 0 4px #111;
+  transition: .3s;
+}
+
+.delete-button-svg {
+  color: rgb(231, 50, 50);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: .3s;
+}
+
+.delete-button:focus svg {
+  opacity: 0;
+  transition: .3s;
+}
+
+.delete-button-span {
+  width: 150px;
+  position: absolute;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  color: rgb(231, 50, 50);
+  font-weight: 600;
+  transition: .3s;
+}
+
+.delete-button:focus {
+  width: 150px;
+  height: 50px;
+  transition: .3s;
+}
+
+.delete-button:focus span {
+  opacity: 1;
+  transition: .3s;
+}
+/*삭제 버튼 끝*/
 
 /** =====================
  * Responsive
