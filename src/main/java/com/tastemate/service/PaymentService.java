@@ -25,7 +25,6 @@ import java.net.URL;
 
 @Service
 public class PaymentService {
-
     // IAMPORT API 인증 정보 설정
     String impKey = "3085212137161101";
     String impSecret = "hIvzsAXLBTySTTX2RPyr3KFfDWu4WBfvkGQb8mvCts3DBB4SsQ8pQ4uhEetSNdF5R0RaymFVBbrG2EbC";

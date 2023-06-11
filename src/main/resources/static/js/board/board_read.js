@@ -1,15 +1,16 @@
 $(document).ready(function() {
   let wholeComment = $("#collapseExample").children();
-  console.log(wholeComment);
-  let originalParent = $("#reply_comment_area").parent();
+  let originalParent = $(".comment-reply-container").parent();
   let currentIdx = 0;
   let boardIdx = $("#boardIdx").val();
   let commentLevel = 1;
+  let container = $('.comment-reply-container')
 
   $("#summernote").summernote({
     placeholder: "Hello Bootstrap 4",
     tabsize: 4,
-    height: 200,
+    height: 100,
+    lang: "ko-KR"
   });
 
   $("#like-button").on("click", () => {
@@ -83,16 +84,18 @@ $(document).ready(function() {
       commentLevel = 1;
       console.log(currentIdx);
     } else {
-      currentIdx = $(this).data("idx");
-      commentLevel = $(this).data("cl") + 1;
-
+      $(this).parent().after(container);  // 현재 클릭한 버튼의 부모 요소 다음에 답글 창을 위치시킵니다.
+      container.show();  // 답글 창을 보이게 합니다.
       commentArea.appendTo(`#comment_${currentIdx}_reply_area`);
       // commentArea.insertAfter($(this).closest('.main-comments'));
       $(".reply_comment_btn").data("clicked", false);
       $(this).data("clicked", true);
 
+/*
       console.log("commentLevel : " + commentLevel);
       console.log("currentIdx : " + currentIdx);
+      currentIdx = $(this).data("idx");
+      commentLevel = $(this).data("cl") + 1;*/
     }
   });
 

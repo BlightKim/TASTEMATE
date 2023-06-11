@@ -59,7 +59,10 @@ public class MemberController {
     MemberVO vo = service.loginId(userId);
     log.info("memberVO={}", vo);
     String[] addressSplit = vo.getUserAddress().split(",");
+    session.setAttribute("vo", vo);
+    return "redirect:" + redirectURL;
 
+/*
     if (vo.getUserStatus() == 0) {
       if (passwordEncoder.matches(userPwd, vo.getUserPwd())) {
         session.setAttribute("vo", vo);
@@ -75,6 +78,7 @@ public class MemberController {
       System.out.println("휴면상태의 아이디입니다.");
       return "member/login/loginForm";
     }
+*/
   }
 
   @GetMapping("member/logout")

@@ -1,5 +1,6 @@
 package com.tastemate.controller;
 
+import com.tastemate.S3Uploader;
 import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.board.BoardStatus;
 import com.tastemate.domain.board.BoardUpdateForm;
@@ -27,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
@@ -48,10 +50,12 @@ public class BoardController {
   private static final Logger log = LoggerFactory.getLogger(BoardController.class);
   private final BoardService boardService;
   private final CommentService commentService;
-  private final UploadFileStore fileStore;
+//  private final S3Uploader s3Uploader;
+  private final S3Uploader fileStore;
+
 
   public BoardController(BoardService boardService, CommentService commentService,
-      UploadFileStore fileStore) {
+      S3Uploader fileStore) {
     this.boardService = boardService;
     this.commentService = commentService;
     this.fileStore = fileStore;
@@ -128,7 +132,6 @@ public class BoardController {
   public String update(@PathVariable("boardIdx") Integer boardIdx,
       @ModelAttribute("board") BoardUpdateForm updateForm) throws IOException {
     BoardVO boardVO = updateFormToBoardVO(boardIdx, updateForm);
-
     Integer integer = boardService.updateBoard(boardVO);
     return "redirect:/board/read/" + boardIdx;
   }
@@ -147,20 +150,29 @@ public class BoardController {
     return "redirect:/board";
   }
 
-  @GetMapping({"/download/{storeFileName}"})
+/*  @GetMapping({"/download/{storeFileName}"})
   public ResponseEntity<Resource> downloadFile(
       @PathVariable(name = "storeFileName") Integer boardIdx, HttpServletRequest request)
       throws MalformedURLException {
     BoardVO findPost = boardService.getOnePost(boardIdx);
     String storeFileName = findPost.getStoreName();
     String oriName = findPost.getOriName();
-    String var10002 = fileStore.getFullPath(storeFileName);
-    UrlResource resource = new UrlResource("file:" + var10002);
+    UrlResource resource = new UrlResource("file:" + storeFileName);
     log.info("uploadFileName={}", oriName);
     String encodedUploadFileName = UriUtils.encode(oriName, StandardCharsets.UTF_8);
     String contentDisposition = "attachment; fileName=\"" + encodedUploadFileName + "\"";
     return ((ResponseEntity.BodyBuilder) ResponseEntity.ok()
         .header("Content-Disposition", new String[]{contentDisposition})).body(resource);
+  }*/
+
+    @GetMapping({"/download/{storeFileName}"})
+  public ResponseEntity<byte[]> downloadFile(
+      @PathVariable(name = "storeFileName") Integer boardIdx, HttpServletRequest request)
+        throws IOException {
+    BoardVO findPost = boardService.getOnePost(boardIdx);
+    String storeFileName = findPost.getStoreName();
+      log.info("storeFileName={}", storeFileName);
+    return fileStore.downloadFile(storeFileName,findPost.getOriName());
   }
 
   private BoardVO writeFormToBoardVO(BoardWriteForm writeForm, Integer userIdx) {

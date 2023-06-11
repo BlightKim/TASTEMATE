@@ -129,7 +129,7 @@
     <include refid="memberColumnList"/>
     FROM BOARD B
            JOIN MEMBER M on B.USER_IDX = M.USER_IDX
-    WHERE 1 = 1
+    WHERE BOARD_STATUS LIKE '등록'
     <include refid="searchCondition"/>
     ) DATA
     <![CDATA[
