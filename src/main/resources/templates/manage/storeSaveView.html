@@ -217,20 +217,6 @@
 <!--끝-->
 
 
-
-<script>
-  /* 별점구현 */
-  function sendData() {
-    let firstForm = document.forms[0];
-
-    if ($("input[name='star']:checked").val() == undefined) {
-      alert("별점 선택 필수입니다!");
-      return;
-    }
-  }
-  /* 별점 끝 */
-</script>
-
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>
 </html>

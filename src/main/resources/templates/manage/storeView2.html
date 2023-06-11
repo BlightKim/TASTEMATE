@@ -10,6 +10,12 @@
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
 
 
+  <!-- alert 꾸미기 -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
   <style>
     body {
       min-height: 100vh;
@@ -176,7 +182,8 @@
           <form method="post">
             <input type="hidden" name="storeIdx" th:value="${storeView.storeIdx}">
             <button onclick="storeUpdateView(this.form)" class="btn text-white" style="background-color: #8E48C7">수정</button>
-            <button onclick="deleteManageStore(this.form)" class="btn text-white" style="background-color: #601599">삭제</button>
+<!--            <button onclick="deleteManageStore(this.form)" class="btn text-white" style="background-color: #601599">삭제</button>-->
+            <button onclick="openDeleteModal()" id="deleteForm" class="btn text-white" style="background-color: #601599">삭제</button>
             <a th:href="@{/manage/storeList}" class="btn text-white" style="background-color: #9C91B3">목록</a>
           </form>
         </div>
@@ -189,6 +196,7 @@
         <hr>
         <div th:each="manageStarVO : ${manageStarVOList}">
           <p>유저(인덱스): [[${manageStarVO.userIdx}]]/ 별점: [[${manageStarVO.storeStar}]]/ 리뷰: [[${manageStarVO.storeComment}]]</p>
+          <!-- if문 필요: userType(세션값) == 0(관리자) 또는 userIdx(세션값) == manageStarVO.userIdx 일때만 보인다. -->
           <form method="post">
             <div>
               <input type="hidden" name="starIdx" th:value="${manageStarVO.starIdx}">
@@ -226,6 +234,73 @@
 
 
 
+<!-- Alert, Confirm Modal -->
+<div class="modal" id="msg_popup" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- MSG Space-->
+      </div>
+      <div class="modal-footer" id="btn_confirm">
+        <button type="button" id="confirm_yes" class="btn btn-primary" data-dismiss="modal" >YES</button>
+        <button type="button" id="confirm_no"class="btn btn-secondary" data-dismiss="modal">NO</button>
+      </div>
+      <div class="modal-footer" id="btn_alert">
+        <button type="button" id="alert_ok"class="btn btn-primary" data-dismiss="modal" >OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 삭제 모달 -->
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <!-- 모달 헤더 -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">리뷰 삭제</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <!-- 모달 본문 -->
+      <div class="modal-body">
+        리뷰를 삭제하시겠습니까?
+      </div>
+      <!-- 모달 푸터 -->
+      <div class="modal-footer">
+        <!-- 취소 버튼 -->
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <!-- 삭제 버튼 -->
+        <button type="button" class="btn btn-danger" onclick="deleteReview()">삭제</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 삭제 모달을 열기 위한 함수
+  function openDeleteModal() {
+    // 모달을 보여줌
+    $('#deleteModal').modal({
+      backdrop: 'static', // 모달 외부를 클릭해도 모달이 사라지지 않도록 함
+      keyboard: false // 키보드의 ESC 키를 사용해도 모달이 사라지지 않도록 함
+    });
+  }
+
+  // 리뷰 삭제를 처리하는 함수
+  function deleteReview() {
+    // 확인 대화상자를 통해 사용자에게 삭제 여부를 확인
+    let isDelete = confirm("리뷰를 삭제하시겠습니까?");
+    if (isDelete) {
+      // 삭제 버튼을 클릭하고 확인을 선택한 경우, 폼을 제출
+      let frm = document.getElementById('deleteForm');
+      frm.action = '/manage/deleteUserReview';
+      frm.submit();
+    }
+  }
+</script>
+
 <script>
   /* 맛집 수정*/
   function storeUpdateView(frm) {
@@ -233,17 +308,17 @@
     frm.submit();
   }
 
-/* 맛집 삭제 */
-
-  function deleteManageStore(frm){
-    let isDelete = confirm("삭제하시겠습니까?");
-    if (isDelete) {
-      frm.action='/manage/deleteManageStore';
-      frm.submit();
-    } else {
-      history.back();
-    }
-  }
+// <!--    /* 맛집 삭제 */-->
+//
+// <!--    function deleteManageStore(frm){-->
+// <!--        let isDelete = confirm("삭제하시겠습니까?");-->
+// <!--        if (isDelete) {-->
+// <!--          frm.action='/manage/deleteManageStore';-->
+// <!--          frm.submit();-->
+// <!--        } else {-->
+// <!--          history.back();-->
+// <!--        };-->
+// <!--    }-->
 </script>
 
 

@@ -1,5 +1,6 @@
 package com.tastemate.service;
 
+import com.tastemate.domain.ManageMenuVO;
 import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
 import com.tastemate.domain.ManageMemberVO;
@@ -167,6 +168,38 @@ public class ManageService {
     //맛집 승인 대기(취소)
     public int storeRegUpdateNot(ManageStoreVO manageStoreVO) {
         int result = mapper.storeRegUpdateNot(manageStoreVO);
+        return result;
+    }
+
+
+
+    //맛집 메뉴 조회
+    public List<ManageMemberVO> storeMenuView(ManageMenuVO manageMenuVO) {
+        List<ManageMemberVO> storeMenuView = mapper.storeMenuView(manageMenuVO);
+        return storeMenuView;
+    }
+
+    //메뉴 추가 등록
+    public int maAddMenu(ManageMenuVO manageMenuVO) {
+        int result = mapper.maAddMenu(manageMenuVO);
+        return result;
+    }
+
+    //메뉴 조회(1개)
+    public ManageMenuVO storeMenuUpdateView(ManageMenuVO manageMenuVO) {
+        ManageMenuVO storeMenuUpdateView = mapper.storeMenuUpdateView(manageMenuVO);
+        return storeMenuUpdateView;
+    }
+
+    //메뉴 수정
+    public int maUpdateMenu(ManageMenuVO manageMenuVO) {
+        int result = mapper.maUpdateMenu(manageMenuVO);
+        return result;
+    }
+
+    //메뉴 삭제
+    public int maDeleteMenu(ManageMenuVO manageMenuVO) {
+        int result = mapper.maDeleteMenu(manageMenuVO);
         return result;
     }
 

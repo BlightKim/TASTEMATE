@@ -1,5 +1,6 @@
 package com.tastemate.mapper;
 
+import com.tastemate.domain.ManageMenuVO;
 import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
 import com.tastemate.domain.ManageMemberVO;
@@ -38,6 +39,23 @@ public interface ManageMapper {
 
     //맛집 승인 대기(취소)
     int storeRegUpdateNot(ManageStoreVO manageStoreVO);
+
+
+
+    //맛집 메뉴 조회
+    List<ManageMemberVO> storeMenuView(ManageMenuVO manageMenuVO);
+
+    //메뉴 조회(1개)
+    ManageMenuVO storeMenuUpdateView(ManageMenuVO manageMenuVO);
+
+    //메뉴 추가 등록
+    int maAddMenu(ManageMenuVO manageMenuVO);
+
+    //메뉴 수정
+    int maUpdateMenu(ManageMenuVO manageMenuVO);
+
+    //메뉴 삭제
+    int maDeleteMenu(ManageMenuVO manageMenuVO);
 
 
 

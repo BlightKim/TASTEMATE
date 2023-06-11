@@ -61,6 +61,33 @@
 
 
 
+    <!-- 맛집 메뉴 조회 -->
+    <select id="storeMenuView" parameterType="com.tastemate.domain.ManageMenuVO" resultType="com.tastemate.domain.ManageMenuVO">
+        SELECT * FROM MENU WHERE STORE_IDX = #{storeIdx} ORDER BY FOOD_NAME
+    </select>
+
+    <!-- 메뉴 조회(1개) -->
+    <select id="storeMenuUpdateView" parameterType="com.tastemate.domain.ManageMenuVO" resultType="com.tastemate.domain.ManageMenuVO">
+        SELECT * FROM MENU WHERE MENU_IDX = #{menuIdx}
+    </select>
+
+    <!-- 맛집 메뉴 추가 -->
+    <insert id="maAddMenu" parameterType="com.tastemate.domain.ManageMenuVO">
+        INSERT INTO MENU (MENU_IDX, STORE_IDX, FOOD_NAME, PRICE)
+        VALUES (MUNU_SEQ.NEXTVAL,  #{storeIdx}, #{foodName}, #{price})
+    </insert>
+
+    <!-- 맛집 메뉴 수정 -->
+    <update id="maUpdateMenu" parameterType="com.tastemate.domain.ManageMenuVO">
+        UPDATE MENU SET FOOD_NAME = #{foodName}, PRICE = #{price} WHERE MENU_IDX = #{menuIdx}
+    </update>
+
+    <!-- 맛집 메뉴 삭제 -->
+    <delete id="maDeleteMenu" parameterType="com.tastemate.domain.ManageMenuVO">
+        DELETE MENU WHERE MENU_IDX = #{menuIdx}
+    </delete>
+
+
 
     <!-- 리뷰 리스트 조회 -->
     <select id="selectUserReview" parameterType="com.tastemate.domain.ManageStarVO" resultType="com.tastemate.domain.ManageStarVO">

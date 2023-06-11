@@ -1,5 +1,6 @@
 package com.tastemate.controller;
 
+import com.tastemate.domain.ManageMenuVO;
 import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
 import com.tastemate.domain.ManageMemberVO;
@@ -169,6 +170,71 @@ public class ManageController {
     public String storeRegOkUpdate(ManageStoreVO manageStoreVO, MultipartFile oriFilename) {
         service.updateManageStore(manageStoreVO, oriFilename);
         return "redirect:/manage/storeRegOkList";
+    }
+
+
+
+    //맛집 리스트(승인 - 메뉴)
+    @RequestMapping("storeRegOkListMenu")
+    public String storeRegOkListMenu(Model model, ManageStoreVO manageStoreVO) {
+        List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
+        model.addAttribute("storeRegList", storeRegOkList);
+        return "/manage/storeRegOkListMenu";
+    }
+
+    //맛집 메뉴보기 - 상세 페이지
+    @RequestMapping("storeMenuView")
+    public String storeMenuView(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+        //맛집 상세보기
+        ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
+        model.addAttribute("storeRegView", storeRegOkView);
+
+        //맛집 메뉴보기
+        List<ManageMemberVO> storeMenuView = service.storeMenuView(manageMenuVO);
+        model.addAttribute("storeMenuView", storeMenuView);
+        return "/manage/storeMenuView";
+    }
+
+    //메뉴 추가 페이지
+    @PostMapping("storeMenuAddView")
+    public String storeMenuAddView(Model model, ManageStoreVO manageStoreVO){
+        model.addAttribute("storeIdx", manageStoreVO.getStoreIdx());
+        return "/manage/storeMenuAddView";
+    }
+
+    //메뉴 수정 페이지
+    @PostMapping("storeMenuUpdateView")
+    public String storeMenuUpdateView(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+        //메뉴 조회(1개)
+        ManageMenuVO storeMenuUpdateView = service.storeMenuUpdateView(manageMenuVO);
+
+        model.addAttribute("storeIdx", manageStoreVO.getStoreIdx());
+        model.addAttribute("storeMenuUpdateView", storeMenuUpdateView);
+        return "/manage/storeMenuUpdateView";
+    }
+
+    //메뉴 추가 등록
+    @PostMapping("maAddMenu")
+    public String maAddMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+        service.maAddMenu(manageMenuVO);
+        storeMenuView(model, manageMenuVO, manageStoreVO);
+        return "/manage/storeMenuView";
+    }
+
+    //메뉴 수정
+    @PostMapping("maUpdateMenu")
+    public String maUpdateMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+        service.maUpdateMenu(manageMenuVO);
+        storeMenuView(model, manageMenuVO, manageStoreVO);
+        return "/manage/storeMenuView";
+    }
+
+    //메뉴 삭제
+    @PostMapping("maDeleteMenu")
+    public String maDeleteMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+        service.maDeleteMenu(manageMenuVO);
+        storeMenuView(model, manageMenuVO, manageStoreVO);
+        return "/manage/storeMenuView";
     }
 
 
