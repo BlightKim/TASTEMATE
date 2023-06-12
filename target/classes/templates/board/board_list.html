@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <th:block th:replace="header_footer/header :: headerFragment"></th:block>
+  <head>
+    <meta charset="UTF-8" />
+    <title>커뮤니티 게시판</title>
+    <!--    font-awesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    />
+    <!-- include summernote css/js -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+      rel="stylesheet"
+    />
+    <!--  부트스트랩 아이콘 cdn -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="/css/board/board_list.css" />
+  </head>
+  <body>
+    <div class="container" style="height: 850px" th:fragment="main">
+      <div class="row" style="height: 100%">
+        <main class="col-md-12 ms-sm-auto col-lg-12 px-md-4">
+          <div class="chartjs-size-monitor">
+            <div class="chartjs-size-monitor-expand">
+              <div class=""></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink">
+              <div class=""></div>
+            </div>
+          </div>
+          <div
+            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 top-border-bottom"
+          >
+            <h1 class="h2">FreeTalk</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <button
+                type="button"
+                class="btn btn-sm btn-outline-secondary dropdown-toggle"
+              >
+                <i class="bi bi-funnel"></i>
+                카테고리
+              </button>
+            </div>
+          </div>
+
+          <div
+            class="row px-4 bg-light bg-gradient"
+            style="height: 100%; width: 80%; display: contents"
+          >
+            <div
+              class="row border-primary border-bottom head-border-bottom"
+              style="height: 50px; width: 100%"
+            >
+              <div
+                class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                style="height: 100%"
+              >
+                <i class="bi bi-clock icon_font">&nbsp;작성일</i>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                style="height: 100%"
+              >
+                <i class="bi bi-hand-thumbs-up-fill icon_font">&nbsp;추천</i>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center col-md-3 col-lg-4 border-primary px-4 icon_font"
+                style="height: 100%"
+              >
+                &nbsp;제목
+              </div>
+
+              <div
+                class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                style="height: 100%"
+              >
+                <i class="bi bi-person icon_font">&nbsp;작성자</i>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                style="height: 100%"
+              >
+                <i class="bi bi-eye icon_font">&nbsp;조회수</i>
+              </div>
+            </div>
+          </div>
+          <!-- 글 목록 시작 -->
+          <div
+            class="row px-4 bg-light bg-gradient"
+            style="height: 800px; width: 100%; display: contents"
+          >
+            <th:block th:each="board : ${boardList}">
+              <div
+                class="row border-primary content-border-bottom"
+                style="height: 50px; width: 100%"
+              >
+                <div
+                  class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                  style="height: 100%"
+                >
+                  <span
+                    th:text="${#dates.format(board.regDate, 'yyyy-MM-dd HH:mm')}"
+                    >2012-05-12 10:53</span
+                  >
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                  style="height: 100%"
+                >
+                  <span th:text="${board.boardLike}">좋아요 개수</span>
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-left col-md-3 col-lg-4 border-primary px-4"
+                  style="height: 100%"
+                >
+                  <span
+                    th:text="${board.title}"
+                    th:onclick="|location.href='/board/read/${board.boardIdx}'|"
+                    style="cursor: pointer"
+                    >타이틀 제목</span
+                  >
+                  <span
+                    class="text-danger"
+                    style="margin-left: 10px"
+                    th:text="${board.commentCount}"
+                    >1</span
+                  >
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                  style="height: 100%"
+                >
+                  <span th:text="${board.memberVO.userId}"
+                    >아이디 입력 공간</span
+                  >
+                </div>
+                <div
+                  class="d-flex align-items-center justify-content-center col-md-3 col-lg-2 border-primary px-4"
+                  style="height: 100%"
+                >
+                  <span th:text="${board.hits}"></span>
+                </div>
+              </div>
+            </th:block>
+            <div class="row">
+              <div class="col-lg-12 write_btn_location">
+                <button
+                  class="btn btn-primary write_btn_color"
+                  th:onclick="|location.href='@{/board/write}'|"
+                  th:text="글쓰기"
+                ></button>
+              </div>
+            </div>
+            <div class="row mt-10">
+              <div class="col d-flex justify-content-center">
+                <!-- Bootstrap 클래스로 중앙에 위치 -->
+                <div class="input-group mb-3 search_btn_width">
+                  <!-- 검색창 div -->
+                  <select name="searchType" class="form-select search_option">
+                    <!-- Bootstrap의 form-select 클래스 사용 -->
+                    <option value="title">제목</option>
+                    <option value="content">내용</option>
+                    <option value="title_content">제목+내용</option>
+                    <option value="writer">작성자</option>
+                  </select>
+                  <input
+                    type="text"
+                    name="keyword"
+                    class="form-control search_term"
+                  />
+                  <!-- Bootstrap의 form-control 클래스 사용, 검색어 입력란에 placeholder 추가 -->
+                  <button
+                    type="button"
+                    class="btn btn-primary search_btn_color"
+                  >
+                    <i class="fa fa-search"></i>
+                  </button>
+                  <!-- Bootstrap의 btn 클래스 사용 -->
+                </div>
+              </div>
+            </div>
+            <!-- 페이지 네이션 -->
+            <div class="row mt-10">
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul
+                    class="pagination d-flex align-items-center justify-content-center"
+                  >
+                    <th:block
+                      th:with="start = ${ph.getBeginPage()}, end = ${ph.getEndPage()}"
+                    >
+                      <li
+                        class="page-item"
+                        th:classappend="${ph.isShowPrev() == true} ? '' : 'disabled'"
+                      >
+                        <a
+                          class="page-link"
+                          href="#"
+                          th:href="@{|/board?page=${ph.beginPage - ph.NAV_SIZE}|}"
+                          ><</a
+                        >
+                      </li>
+                      <li
+                        class="page-item"
+                        th:with="start = ${ph.getBeginPage()}, end = ${ph.getEndPage()}"
+                        th:each="pageButton : ${#numbers.sequence(start, end)}"
+                        th:classappend="${pageButton == pageButtonStat.index} ? 'is-active' : ''"
+                      >
+                        <a
+                          class="page-link pagination_num_color"
+                          href="#"
+                          th:href="@{|/board?page=${pageButton}|}"
+                          th:text="${pageButton}"
+                          >1</a
+                        >
+                      </li>
+                      <li
+                        class="page-item"
+                        th:classappend="${ph.isShowNext() == true} ? '' : 'disabled'"
+                      >
+                        <a
+                          class="page-link"
+                          href="#"
+                          th:href="@{|/board?page=${ph.endPage + ph.NAV_SIZE}|}"
+                          >></a
+                        >
+                      </li>
+                    </th:block>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+            <!-- 페이지 네이션 -->
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script type="text/javascript" src="/js/board/board_list.js"></script>
+    <script>
+      $("#summernote").summernote({
+        placeholder: "본문을 입력해주세요.",
+        lang: "ko-KR",
+        tabsize: 2,
+        height: 100,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TestDataGeneratorSettingsState">
+    <option name="userDefinedGenerators">
+      <list>
+        <CustomGeneratorSettings>
+          <option name="data">
+            <map>
+              <entry key="dictionary_key" value="January&#10;February&#10;March&#10;April&#10;May&#10;June&#10;July&#10;August&#10;September&#10;October&#10;November&#10;December" />
+            </map>
+          </option>
+          <option name="vtlVariable" value="name" />
+        </CustomGeneratorSettings>
+      </list>
+    </option>
+  </component>
+</project>
