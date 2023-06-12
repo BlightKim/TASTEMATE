@@ -89,15 +89,15 @@
 
 
 
-    <!-- 리뷰 리스트 조회 -->
+    <!-- 리뷰 리스트 조회(리뷰기준 조인) -->
     <select id="selectUserReview" parameterType="com.tastemate.domain.ManageStarVO" resultType="com.tastemate.domain.ManageStarVO">
-        SELECT * FROM STAR WHERE STORE_IDX = #{storeIdx} ORDER BY STAR_IDX DESC
+        SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX(+) AND S.STORE_IDX = #{storeIdx} ORDER BY S.STAR_IDX DESC
     </select>
     <!-- SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND STORE_IDX = 1 ORDER BY STAR_IDX DESC; -->
 
-    <!-- 리뷰 상세보기-->
+    <!-- 리뷰 상세보기(리뷰기준 조인) -->
     <select id="viewUserReview" parameterType="com.tastemate.domain.ManageStarVO" resultType="com.tastemate.domain.ManageStarVO">
-        SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND S.STAR_IDX = #{starIdx}
+        SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX(+) AND S.STAR_IDX = #{starIdx}
     </select>
 
     <!-- 리뷰 수정 -->

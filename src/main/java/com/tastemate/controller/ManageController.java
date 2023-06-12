@@ -237,13 +237,6 @@ public class ManageController {
         return "/manage/storeMenuView";
     }
 
-    //맛집 메뉴 보기(삭제 취소 버전)
-    @PostMapping("deleteMenuBack")
-    public String deleteMenuBack(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
-        storeMenuView(model, manageMenuVO, manageStoreVO);
-        return "/manage/storeMenuView";
-    }
-
 
 
     //리뷰 조회
@@ -315,7 +308,6 @@ public class ManageController {
     public String userInfoActive(ManageMemberVO memberVO){
         int result = service.userInfoActive(memberVO);
         return "redirect:/manage/userInfo?userIdx=" + memberVO.getUserIdx();
-//        return "redirect:/manage/findClass?userClass=" + memberVO.getUserClass();
     }
 
     //수강생 계정 비활성
@@ -323,18 +315,14 @@ public class ManageController {
     public String userInfoInactive(Model model, ManageMemberVO memberVO){
         int result = service.userInfoInactive(memberVO);
 
-//        model.addAttribute("userClass", memberVO.getUserClass());
         return "redirect:/manage/userInfo?userIdx=" + memberVO.getUserIdx();
-//        return "redirect:/manage/findClass?userClass=" + memberVO.getUserClass();
     }
 
     //수강생 계정 강퇴
     @GetMapping("deleteUserInfo")
     public String deleteUserInfo(Model model, ManageMemberVO memberVO) {
         int result = service.deleteUserInfo(memberVO);
-//        model.addAttribute("userClass", memberVO.getUserClass());
         return "redirect:/manage/userInfo?userIdx=" + memberVO.getUserIdx();
-//        return "redirect:/manage/findClass";
     }
 
 }
