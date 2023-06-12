@@ -1,10 +1,12 @@
 package com.tastemate.domain;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
 @Data
+@Alias("KakaoPayReadyVO")
 public class KakaoPayReadyVO {
 
     private String tid, next_redirect_pc_url;

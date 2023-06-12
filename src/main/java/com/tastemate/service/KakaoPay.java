@@ -122,7 +122,7 @@ public class KakaoPay {
         //tid는?
         kakaoPayReadyVO.setPgToken(pg_token);
         log.info("kakaoPayInfo : " + kakaoPayReadyVO);
-        //int result = kakaoPayMapper.kakaoPayReady_insert();
+        //int result = kakaoPayMapper.kakaoPayReady_insert(kakaoPayReadyVO);
         //log.info("kakaoPayReady_insert " + result);
 
 

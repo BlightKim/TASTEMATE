@@ -5,9 +5,9 @@
 
 <mapper namespace="com.tastemate.mapper.KakaoPayMapper">
 
-    <insert id="kakaoPayReady_insert">
-
-
+    <insert id="kakaoPayReady_insert" parameterType="KakaoPayReadyVO">
+        insert into KAKAOPAYREADY(KAKAO_READY_IDX, USER_IDX, STORE_IDX, BOOKING_IDX, PARTNER_ORDER_ID, TOTAL_AMOUNT, PG_TOKEN, TID)
+        values (KAKAOREADY_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx}, #{partnerOrderId},#{totalAmount}, #{pgToken}, #{tid})
     </insert>
 
 </mapper>
