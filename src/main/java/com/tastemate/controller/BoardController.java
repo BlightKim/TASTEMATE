@@ -9,13 +9,20 @@ import com.tastemate.domain.comment.CommentVO;
 import com.tastemate.domain.board.UploadFileStore;
 import com.tastemate.paging.PageHandler;
 import com.tastemate.paging.SearchCondition;
-import com.tastemate.service.MemberService;
 import com.tastemate.service.board.BoardService;
 import com.tastemate.service.comment.CommentService;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
@@ -25,7 +32,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,6 +98,7 @@ public class BoardController {
     Integer userIdx = memberVO.getUserIdx();
     boolean checkForLike = boardService.checkForLike(boardIdx, userIdx);
     BoardVO board = boardService.getOnePost(boardIdx);
+    viewCountValidation(boardIdx, request, response);
     List<CommentVO> commentList = commentService.getCommentList(boardIdx);
     model.addAttribute("isLiked", checkForLike);
     model.addAttribute("board", board);
@@ -164,6 +171,32 @@ public class BoardController {
     board.setBoardPassword(writeForm.getPassword());
     board.setBoardStatus(BoardStatus.등록);
     return board;
+  }
+
+  private void viewCountValidation(Integer boardIdx, HttpServletRequest request,
+      HttpServletResponse response) {
+    Cookie[] cookies = request.getCookies();
+    AtomicBoolean isCookie = new AtomicBoolean(false);
+    Stream<Cookie> stream = Arrays.stream(cookies);
+    stream.filter((cookie -> cookie.getName().equals("boardView"))).findAny().ifPresent(cookie -> {
+      if(!cookie.getValue().contains("["+boardIdx+"]")) {
+        boardService.increaseHit(boardIdx);
+        cookie.setValue(cookie.getValue() + "["+boardIdx+"]");
+        } else {
+          isCookie.set(true);
+        }
+    });
+
+    if(!isCookie.get()) {
+      Cookie cookie = new Cookie("boardView", "["+boardIdx+"]");
+      boardService.increaseHit(boardIdx);
+      response.addCookie(cookie);
+      long todayEndSecond = LocalDate.now().atTime(LocalTime.MAX).toEpochSecond(ZoneOffset.UTC);
+      long currentSecond = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+      cookie.setPath("/");
+      cookie.setMaxAge((int)(todayEndSecond - currentSecond));
+      response.addCookie(cookie);
+    }
   }
 
   private BoardVO updateFormToBoardVO(Integer boardIdx, BoardUpdateForm updateForm)

@@ -16,8 +16,8 @@
 
   .img-wrapper {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
   }
   .img-wrapper img {
     position: absolute;
@@ -48,10 +48,17 @@
     padding-bottom: 1.5rem !important;
   }
 
-  .padding_50 {
-    padding-top: 50px;
-    padding-left: 15px;
+  .padding_100 {
+    padding-left: 100px;
   }
+  .center {
+    align-content: center;
+    text-align: center;
+  }
+  ul{
+    list-style:none;
+  }
+
 
   .kakaoBtn2{
     background-color: #F7E600;
@@ -68,68 +75,64 @@
     border-radius: 10px;
   }
 </style>
+
 </head>
 <body>
-<!--
-<p th:text="${bookingIdx}"></p>
-<p th:text="${bookingVO}"></p>
--->
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <!-- Left Column: Photos -->
-      <div class="imgText">
-      <div class="img-wrapper">
-      <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
+<main>
+  <div class="container py-4">
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="row">
+      <div class="col-md-6 center">
+        <div class="imgText padding_100">
+          <div class="img-wrapper">
+            <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
+          </div>
+        </div>
+          <span th:text="${storeVO.category1}" class="purple2"></span>
+          <h2 class="display-5 fw-bold" th:text="${storeVO.storeName}"></h2>
+        <div th:text="${storeVO.storeAddress}" class="purple2"></div>
       </div>
-      <h2 style="text-align: center" th:text="${storeVO.storeName}"></h2>
+      <div class="col-md-6">
+        <div id="map" style="width:450px;height:400px;"></div><br>
+      </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <!-- Right Column: Reservation Information -->
-      <h2>Reservation Information</h2>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
-        </li>
-        <li class="list-group-item">
-          <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
-        </li>
-        <li class="list-group-item">
-          <strong>예약일자:</strong> [[${bookingVO.bookingDate}]]
-        </li>
-        <li class="list-group-item">
-          <strong>예약한 시간:</strong> [[${bookingVO.bookingTime}]]
-        </li>
-        <li class="list-group-item">
-          <strong>결제 금액:</strong> [[${bookingVO.price}]]
-        </li>
-      </ul>
-      <div class="row padding_50">
-        <button class="btn btn-primary" type="submit" style="background-color: #8E48C7; border: none; border-radius: 10%;">결제하기</button>
-          <button class="btn btn-success" th:href="@{/store/list}" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</button>
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6 center" style="padding-left: 20px; padding-top: 35px;">
+          <h3 style="padding-left: 40px;">예약 정보</h3>
+          <br>
+          <ul>
+            <li>
+              <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
+            </li>
+            <li>
+              <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
+            </li>
+            <li>
+              <strong>예약 일시:</strong> [[${bookingVO.bookingDate}]]
+            </li>
+            <li>
+              <strong>예약 일자:</strong> [[${bookingVO.bookingTime}]]
+            </li>
+            <li>
+              <strong>결제 금액:</strong> [[${bookingVO.price}]]
+            </li>
+          </ul>
       </div>
-
-      <div class="row padding_50">
-        <!--결제!!!!!!!!!!!!!!!!-->
-        <button class="kakaoBtn kakaoBtn2">카카오페이 결제</button>
-
-        <form method="post" action="/pay/refund">
-          <button class="kakaoBtn2">카카오페이 결제 취소</button>
-        </form>
-
-        <button onclick="iamport()" class="iamport">iamport 결제</button>
-        <button onClick="cancelPay()" class="iamport">iamport 환불</button>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>유의사항</h2>
+          <br>
+          <p>예약/결제 취소 : 예약 일자의 1시간 전까지<br>시간이 경과한 예약 건에 대해서는 관리자에게 문의</p>
+          <a th:onclick="iamport()" class="btn btn-primary" style="background-color: #8E48C7; border: none; border-radius: 10%; color: white;">결제하기</a>
+          <a th:href="@{/store/list}" class="btn btn-success" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</a>
+          <button class="btn btn-outline-secondary" type="button">Example button</button>
+        </div>
       </div>
-
-
-
     </div>
-</div>
-
-
-
+  </div>
+</main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -276,7 +279,46 @@
 
 </script>
 
+<!-- 카카오 지도 -->
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8abceac52f5d250937ec886cf8cd8d21"></script>
 
+<script th:inline="javascript">
+  //카카오 지도 사용하기
+  var container = document.getElementById('map');
+
+
+  var lati = /*[[${storeVO.storeLati}]]*/;
+  var longi = /*[[${storeVO.storeLongi}]]*/;
+
+  console.log(lati);
+  console.log(longi);
+
+  var options = {
+    center: new kakao.maps.LatLng(lati, longi),
+    /* https://map.kakao.com/?urlX=523954.0&urlY=1084098.0*/
+    level: 3
+  };
+
+  var map = new kakao.maps.Map(container, options);
+
+
+  //마커찍기
+  // 마커가 표시될 위치입니다
+  var markerPosition  = new kakao.maps.LatLng(lati, longi);
+
+  // 마커를 생성합니다
+  var marker = new kakao.maps.Marker({
+    position: markerPosition
+  });
+
+  // 마커가 지도 위에 표시되도록 설정합니다
+  marker.setMap(map);
+
+  // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+  // marker.setMap(null);
+</script>
+<!-- 카카오 지도 끝 -->
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 

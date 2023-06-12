@@ -41,14 +41,15 @@ public class BoardService {
   }
 
   public BoardVO getOnePost(Integer boardIdx) {
-    boardDao.increaseHit(boardIdx);
     return boardDao.selectOneBoardByBoardIdx(boardIdx);
   }
 
   public Integer updateBoard(BoardVO boardVO) {
     return boardDao.updateBoard(boardVO);
   }
-
+  public Integer increaseHit(Integer boardIdx) {
+    return boardDao.increaseHit(boardIdx);
+  }
   public boolean checkForLike(Integer boardIdx, Integer userIdx) {
     HashMap map = new HashMap();
     map.put("boardIdx", boardIdx);

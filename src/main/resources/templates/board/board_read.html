@@ -2,8 +2,9 @@
 <html
   lang="en"
   xmlns:th="http://www.thymeleaf.org"
-  th:replace="~{layout/logout_layout :: layout(~{::title}, ~{::main}, ~{::link}, ~{::script})}"
 >
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
   <head>
     <meta charset="UTF-8" />
     <title>Title</title>
@@ -16,6 +17,8 @@
         rel="stylesheet"
         href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css"
     />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+          rel="stylesheet">
   </head>
 
   <body>
@@ -506,6 +509,8 @@
       </div>
     </div>
 
+    <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <script th:inline="javascript">
       /*<![CDATA[*/
       let isLiked = /*[[${isLiked}]]*/ false;

@@ -23,6 +23,8 @@
         <!--제이쿼리-->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
+        <!-- alert창 꾸미기-->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
         <style>
             body {
@@ -86,15 +88,9 @@
     <header class="header">
 <!--        <h1 class="header__logo">TasteMate</h1>-->
         <div>
-
             <a th:href="@{/store/main}">
                 <img th:src="@{/img/headerLogo.png}" class="header__logo" />
             </a>
-
-
-
-
-<!--        <img th:src="@{/img/헤더용로고_보라_2단.png}" class="header__logo"/>-->
         </div>
 
         <ul class="header__navigation">
@@ -117,10 +113,3 @@
 
         </ul>
     </header>
-
-    <script>
-
-        function notLogined() {
-            alert("로그인 후 이용 가능합니다.")
-        }
-    </script>
