@@ -176,7 +176,32 @@
           <form method="post">
             <input type="hidden" name="storeIdx" th:value="${storeView.storeIdx}">
             <button onclick="storeUpdateView(this.form)" class="btn text-white" style="background-color: #8E48C7">수정</button>
-            <button onclick="deleteManageStore(this.form)" class="btn text-white" style="background-color: #601599">삭제</button>
+
+            <!-- 모달 시작 -->
+            <a class="btn text-white" style="background-color: #601599" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>
+
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+                 aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmDeleteModalLabel">맛집 삭제</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p>추천 맛집을 삭제하시겠습니까?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <button class="btn btn-danger" onclick="deleteManageStore(this.form)">삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 모달 끝-->
+
             <a th:href="@{/manage/storeList}" class="btn text-white" style="background-color: #9C91B3">목록</a>
           </form>
         </div>
@@ -198,7 +223,33 @@
             </div>
             <div>
               <button onclick="updateStoreReview(this.form)" class="btn text-white btn-sm" style="background-color: #E9DFED">수정</button>
-              <button onclick="deleteStoreReview(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">삭제</button>
+<!--              <button onclick="deleteStoreReview(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">삭제</button>-->
+
+              <!-- 모달 시작 -->
+              <a class="btn text-white btn-sm" style="background-color: #8E48C7" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>
+
+              <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+                   aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="confirmDeleteModalLabel2">리뷰 삭제</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>리뷰를 삭제하시겠습니까?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                      <button class="btn btn-danger" onclick="deleteStoreReview(this.form)">삭제</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- 모달 끝-->
+
             </div>
           </form>
           </div>
@@ -234,15 +285,9 @@
   }
 
 /* 맛집 삭제 */
-
   function deleteManageStore(frm){
-    let isDelete = confirm("삭제하시겠습니까?");
-    if (isDelete) {
-      frm.action='/manage/deleteManageStore';
-      frm.submit();
-    } else {
-      history.back();
-    }
+    frm.action='/manage/deleteManageStore';
+    frm.submit();
   }
 </script>
 
@@ -257,13 +302,8 @@
 
     /* 리뷰 삭제 */
   function deleteStoreReview(frm) {
-    let isDelete = confirm("리뷰를 삭제하시겠습니까?");
-    if (isDelete) {
-      frm.action='/manage/deleteUserReview';
-      frm.submit();
-    } else {
-      history.back();
-    };
+    frm.action='/manage/deleteUserReview';
+    frm.submit();
   }
 </script>
 

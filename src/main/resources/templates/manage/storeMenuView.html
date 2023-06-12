@@ -134,7 +134,32 @@
                   <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
                 </div>
                 <button onclick="storeMenuUpdateView(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">수정</button>
-                <button onclick="maDeleteMenu(this.form)" class="btn text-white btn-sm" style="background-color: #601599">삭제</button>
+
+                <!-- 모달 시작 -->
+                <a class="btn text-white btn-sm" style="background-color: #601599" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>
+
+                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+                     aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="confirmDeleteModalLabel">메뉴 삭제</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>메뉴를 삭제하시겠습니까?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                        <button class="btn btn-danger" onclick="maDeleteMenu(this.form)">삭제</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- 모달 끝-->
+
               </form>
             </td>
           </tr>
@@ -178,16 +203,9 @@
 
   /* 메뉴 삭제 */
   function maDeleteMenu(frm) {
-    let isDelete = confirm("메뉴를 삭제하시겠습니까?");
-    if (isDelete) {
-      frm.action='/manage/maDeleteMenu';
-      frm.submit();
-    } else {
-      //history.back();
-      frm.action='/manage/deleteMenuBack';
-      frm.submit();
-
-    };
+    //frm.action='/manage/deleteMenuBack';
+    frm.action='/manage/maDeleteMenu';
+    frm.submit();
   }
 </script>
 
