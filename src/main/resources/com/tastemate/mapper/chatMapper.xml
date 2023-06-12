@@ -3,17 +3,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.tastemate.mapper.ChatMapper">
 
-    <select id="getChatListAdmin" resultType="ChatRoomVO">
-        SELECT ROOM_NAME, ROOM_IDX
-        FROM CHAT_ROOM
-    </select>
 
     <select id="getChatList" parameterType="MemberVO" resultType="ChatRoomVO">
         SELECT R.ROOM_NAME, R.ROOM_IDX
         FROM CHAT_USER U
                  INNER JOIN CHAT_ROOM R
                             ON U.ROOM_IDX = R.ROOM_IDX
-        WHERE USER_IDX  = #{userIdx} AND R.ROOM_STATUS = 1 AND U.USER_STATUS = 1
+        WHERE USER_IDX = #{userIdx}
+          AND R.ROOM_STATUS = 1
+          AND U.USER_STATUS = 1
         ORDER BY R.ROOM_IDX
     </select>
 
@@ -33,11 +31,6 @@
         ORDER BY CM.TIME
     </select>
 
-<!--    <select id="getSysMessage" parameterType="ChatRoomVO" resultType="ChatMessageVO">
-        SELECT *
-        FROM CHAT_MESSAGE
-        WHERE CHAT_IDX = #{chatIdx} AND USER_IDX = 0
-    </select>-->
 
     <select id="getUser" parameterType="ChatUserVO" resultType="int">
         SELECT USER_IDX
@@ -67,14 +60,10 @@
     <select id="getUserCount" parameterType="ChatUserVO" resultType="int">
         SELECT COUNT(*)
         FROM CHAT_USER
-        WHERE ROOM_IDX = 1 AND USER_STATUS = 1
+        WHERE ROOM_IDX = 1
+          AND USER_STATUS = 1
     </select>
 
-<!--    <delete id="deleteChatRoom" parameterType="ChatUserVO">
-        DELETE
-        FROM CHAT_ROOM
-        WHERE ROOM_IDX = #{roomIdx}
-    </delete>-->
 
     <delete id="updateRoomStatus" parameterType="ChatUserVO">
         UPDATE CHAT_ROOM
@@ -87,7 +76,23 @@
         FROM CHAT_ROOM CR
                  JOIN CHAT_USER CU ON CR.ROOM_IDX = CU.ROOM_IDX
                  JOIN MEMBER M ON M.USER_IDX = CU.USER_IDX
-        WHERE CR.ROOM_IDX = #{roomIdx} AND CU.USER_STATUS = 1
+        WHERE CR.ROOM_IDX = #{roomIdx}
+          AND CU.USER_STATUS = 1
     </select>
+    <select id="matchingUser" resultType="MemberVO">
+        SELECT USER_IDX
+        FROM MEMBER
+        WHERE USER_IDX = 3;
+    </select>
+    <insert id="createRoom" parameterType="String">
+        INSERT INTO CHAT_ROOM
+            (ROOM_IDX, ROOM_NAME, ROOM_STATUS)
+        VALUES(CHAT_MESSAGE_SEQ.NEXTVAL,#{roomName},1)
+    </insert>
 
+<!--    <insert id="insertChatRoomUser" parameterType="MemberVO,ChatRoomVO">
+        INSERT INTO CHAT_USER
+            (ROOM_IDX, USER_IDX, USER_STATUS)
+        VALUES(#{roomIdx},#{userIdx},1)
+    </insert>-->
 </mapper>

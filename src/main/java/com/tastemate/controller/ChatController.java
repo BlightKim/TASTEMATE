@@ -22,16 +22,10 @@ public class ChatController {
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
-/*    @GetMapping("/chatListAdmin")//전체 채팅방 목록
-    public String getChatListAdmin(Model model) {
-        List<ChatRoomVO> list = chatService.getChatListAdmin();
-        model.addAttribute("chat", list);
-        return "chat/chatList";
-    }*/
 
     @GetMapping("/chat/getList")//개인 채팅방 목록
     @ResponseBody
-    public List<ChatRoomVO> getChatList(Model model, MemberVO vo, HttpSession session) {
+    public List<ChatRoomVO> getChatList(MemberVO vo, HttpSession session) {
         vo = (MemberVO) session.getAttribute("vo");
         List<ChatRoomVO> room = chatService.getChatList(vo);
         System.out.println("room : " + room);
@@ -62,7 +56,6 @@ public class ChatController {
     @ResponseBody
     public void exitRoom(ChatUserVO vo) {
         chatService.exitRoom(vo);
-
     }
 
     @ResponseBody
@@ -76,5 +69,21 @@ public class ChatController {
         return user;
     }
 
+
+    @PostMapping("/chat/matching")
+    public void matching(Model model, HttpSession session) {
+        MemberVO vo1 = (MemberVO) session.getAttribute("vo");
+        MemberVO vo2 = chatService.matchingUser();
+        String roomName = vo1.getUserName() + "," + vo2.getUserName();
+        ChatRoomVO room = chatService.createRoom(roomName);
+
+        chatService.insertChatRoomUser(room, vo1);
+        chatService.insertChatRoomUser(room, vo2);
+
+        System.out.println("roomName : " + roomName);
+
+
+        model.addAttribute("room", room);
+    }
 
 }

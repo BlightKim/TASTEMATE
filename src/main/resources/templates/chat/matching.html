@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>matching</title>
+</head>
+<body>
+<h1>매칭</h1>
+<div th:each="matching : ${matching}">
+  <form action="" method="post">
+<a th:text="${matching.userName}" th:value="${matching.userIdx}">유저이름</a>
+  </form>
+</div>
+</body>
+</html>

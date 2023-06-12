@@ -1,9 +1,6 @@
 package com.tastemate.mapper;
 
-import com.tastemate.domain.ChatMessageVO;
-import com.tastemate.domain.ChatRoomVO;
-import com.tastemate.domain.ChatUserVO;
-import com.tastemate.domain.MemberVO;
+import com.tastemate.domain.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -26,6 +23,15 @@ public interface ChatMapper {
     public void updateRoomStatus(ChatUserVO vo);
 
     public List<MemberVO> getChatUserInfo(ChatRoomVO vo);
+
+    public MemberVO matchingUser();
+
+    public ChatRoomVO createRoom(String roomName);
+
+    void insertChatRoomUser(ChatRoomVO room, MemberVO vo);
+
+
+
 
 
 /*    public void exitRoom(ChatUserVO vo) {

@@ -102,6 +102,7 @@
                 form.setAttribute("target", "popupWindow");
                 form.submit();
             }
+
         </script>
     </head>
     <body>
@@ -147,6 +148,11 @@
                 </button>
                 <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
                     <div class="btn-group" role="group">
+<!--                        <form action="/chat/matchingUser" method="post">
+                            <button type="submit" class="dropdown-item">
+                                친구추천
+                            </button>
+                        </form>-->
                         <button th:if="${!(session.vo == null)}" type="button"
                                 class="btn btn-outline-dark dropdown-toggle"
                                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -154,6 +160,7 @@
                             채팅방
                         </button>
                         <ul class="dropdown-menu">
+                            <li>
                             <li id="chatList">ajax 채팅리스트</li>
                         </ul>
                     </div>

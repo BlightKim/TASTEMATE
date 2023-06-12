@@ -19,7 +19,6 @@ public class ChatService {
         this.mapper = mapper;
     }
 
-//    List<ChatRoomVO> getChatListAdmin();
 
     public List<ChatRoomVO> getChatList(MemberVO vo) {
         return mapper.getChatList(vo);
@@ -51,4 +50,29 @@ public class ChatService {
         return mapper.getChatUserInfo(vo);
     }
 
+    /*    public HashSet<MemberVO> matchingUser(MemberVO vo) {
+
+            HashSet<MemberVO> user = mapper.matchingUser(vo);
+            HashSet<MemberVO> matchingUser = new HashSet<>();
+            for (int i = 1; i <= 3; i++) {
+                for (MemberVO matching : user) {
+                    matchingUser.add(matching);
+                    System.out.println(matching);
+                }
+
+            }
+            return matchingUser;
+        }*/
+    public MemberVO matchingUser() {
+        return mapper.matchingUser();
+    }
+
+
+
+    public void insertChatRoomUser(ChatRoomVO room, MemberVO vo) {
+        mapper.insertChatRoomUser(room,vo);
+    }
+    public ChatRoomVO createRoom(String roomName){
+        return mapper.createRoom(roomName);
+    };
 }
