@@ -17,12 +17,14 @@
   <select id="selectAllComment" parameterType="integer" resultMap="BaseResultMap">
     /* 댓글 보기 쿼리 (계층식)*/
     SELECT BOARD_IDX
-         , LEVEL COMMENT_LEVEL
+         , LEVEL                         COMMENT_LEVEL
          , COMMENT_CONTENT
          , COMMENT_IDX
          , PARENT_COMMENT_IDX
          , CASE WHEN LEVEL = 1 THEN '' ELSE LPAD('└', LEVEL * 4, ' ') END ||
-           CASE WHEN COMMENT_STATUS = '삭제' THEN '***삭제된 댓글입니다***' ELSE COMMENT_CONTENT END AS COMMENT_CONTENT
+           CASE
+             WHEN COMMENT_STATUS = '삭제' THEN '***삭제된 댓글입니다***'
+             ELSE COMMENT_CONTENT END AS COMMENT_CONTENT
          , COMMENTER
          , COMMENT_STATUS
          , REG_DATE
@@ -31,7 +33,7 @@
     FROM (SELECT *
           FROM BOARD_COMMENT
           WHERE BOARD_IDX = #{boardIdx}
-         )
+            AND COMMENT_STATUS = '등록')
 
     START WITH PARENT_COMMENT_IDX = 0
     CONNECT BY PRIOR COMMENT_IDX = PARENT_COMMENT_IDX

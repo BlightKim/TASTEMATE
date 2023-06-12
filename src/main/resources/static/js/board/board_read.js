@@ -1,53 +1,67 @@
-$(document).ready(function() {
-  let originalParent = $(".comment-reply-container-wrap")
+$(document).ready(function () {
+
+  let originalParent = $(".comment-reply-container-wrap");
   let currentIdx = 0;
   let boardIdx = $("#boardIdx").val();
   let commentLevel = 1;
-  let container = $('.comment-reply-container')
+  let container = $(".comment-reply-container");
 
   $("#summernote").summernote({
-    placeholder: "Hello Bootstrap 4",
+    placeholder: "댓글을 입력해주세요.",
     tabsize: 4,
     height: 100,
     width: 400,
     toolbar: [
-      ['style', ['style']],
-      ['font', ['bold', 'italic', 'underline', 'clear']],
-      ['height', ['height']],
+      ["style", ["style"]],
+      ["font", ["bold", "italic", "underline", "clear"]],
+      ["height", ["height"]],
     ],
-    lang: "ko-KR"
+    lang: "ko-KR",
   });
 
-  $("#like-button").on("click", () => {
-    if (isLiked) {
-      // 이미 추천한 상태이므로 'unlike' 요청
-      $.ajax({
-        url: "/board/unlike/" + boardIdx, // 수정 필요: 실제 'unlike' 요청을 처리하는 URL로 변경
-        type: "POST",
-        data: {
-          boardIdx: boardIdx,
-        },
-        success: function() {
-          isLiked = false;
-          // 버튼 텍스트를 '추천'으로 변경
-          $("#like-button").text("추천");
-        },
-      });
-    } else {
-      // 추천하지 않은 상태이므로 'like' 요청
-      $.ajax({
-        url: "/board/like/" + boardIdx, // 수정 필요: 실제 'like' 요청을 처리하는 URL로 변경
-        type: "POST",
-        data: {
-          boardIdx: boardIdx,
-        },
-        success: function() {
-          isLiked = true;
-          // 버튼 텍스트를 '추천 취소'로 변경
-          $("#like-button").text("추천 취소");
-        },
-      });
-    }
+
+  $("#like-button").on("click", "#like-button", () => {
+    $.ajax({
+      url: "/board/unlike/" + boardIdx,
+      type: "POST",
+      data: {
+        boardIdx: boardIdx,
+      },
+      success: function (data) {
+        // 'like-button'을 삭제하고 'unlike-button'을 생성
+        let unlikeButton = `
+        <button type="button" class="btn btn-outline-danger" id="unlike-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-down-fill" viewBox="0 0 16 16">
+            <path d="M6.956 14.534c.065.936.952 1.659 1.908 1.42l.261-.065a1.378 1.378 0 0 0 1.012-.965c.22-.816.533-2.512.062-4.51.136.02.285.037.443.051.713.065 1.669.071 2.516-.211.518-.173.994-.68 1.2-1.272a1.896 1.896 0 0 0-.234-1.734c.058-.118.103-.242.138-.362.077-.27.113-.568.113-.856 0-.29-.036-.586-.113-.857a2.094 2.094 0 0 0-.16-.403c.169-.387.107-.82-.003-1.149a3.162 3.162 0 0 0-.488-.9c.054-.153.076-.313.076-.465a1.86 1.86 0 0 0-.253-.912C13.1.757 12.437.28 11.5.28H8c-.605 0-1.07.08-1.466.217a4.823 4.823 0 0 0-.97.485l-.048.029c-.504.308-.999.61-2.068.723C2.682 1.815 2 2.434 2 3.279v4c0 .851.685 1.433 1.357 1.616.849.232 1.574.787 2.132 1.41.56.626.914 1.28 1.039 1.638.199.575.356 1.54.428 2.591z"></path>
+          </svg>
+          추천 취소
+        </button>
+      `;
+        $('#like-button').replaceWith(unlikeButton);
+      },
+    });
+  });
+
+  $("#unlike-button").on("click", "#unlike-button",() => {
+    $.ajax({
+      url: "/board/like/" + boardIdx,
+      type: "POST",
+      data: {
+        boardIdx: boardIdx,
+      },
+      success: function (data) {
+        // 'unlike-button'을 삭제하고 'like-button'을 생성
+        let likeButton = `
+        <button type="button" class="btn btn-primary" id="like-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-hand-thumbs-up-fill" viewBox="0 0 16 16">
+            <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"></path>
+          </svg>
+          추천
+        </button>
+      `;
+        $('#unlike-button').replaceWith(likeButton);
+      },
+    });
   });
 
   $("#edit_btn").on("click", () => {
@@ -58,29 +72,47 @@ $(document).ready(function() {
     $.ajax({
       url: "/board/delete/" + $("#boardIdx").val(),
       type: "POST",
-      success: function() {
+      success: function () {
         alert("삭제되었습니다.");
         location.href = "/board";
       },
     });
   });
 
-  $("#comment_del_btn").on("click", () => {
+  $('.del_btn').on('click', () => {
     $.ajax({
       url: "/comments/delete/" + $("#commentIdx").val() + "?boardIdx=" + $("#boardIdx").val(),
       type: "delete",
-      success: function() {
+      success: function () {
         Swal.fire({
           icon: "success",
           title: "댓글 삭제 완료",
           text: "댓글 삭제가 완료되었습니다",
         });
         location.reload();
-      }
+      },
     });
   });
+/*  $("#comment_del_btn").on("click", () => {
+    $.ajax({
+      url:
+          "/comments/delete/" +
+          $("#commentIdx").val() +
+          "?boardIdx=" +
+          $("#boardIdx").val(),
+      type: "delete",
+      success: function () {
+        Swal.fire({
+          icon: "success",
+          title: "댓글 삭제 완료",
+          text: "댓글 삭제가 완료되었습니다",
+        });
+        location.reload();
+      },
+    });
+  });*/
 
-  $(document).on("click", ".reply_comment_btn", function() {
+  $(document).on("click", ".reply_comment_btn", function () {
     let replyContainer = $(".comment-reply-container");
     if ($(this).data("clicked")) {
       replyContainer.appendTo(originalParent);
@@ -89,7 +121,8 @@ $(document).ready(function() {
       commentLevel = 1;
       console.log(currentIdx);
     } else {
-      let target = $(this).parent().parent().siblings('.comment-area');
+      let target = $(this).parent().parent().siblings(".comment-area");
+      console.log(target);
       target.append(replyContainer);
       $(this).data("clicked", true);
 
@@ -101,7 +134,7 @@ $(document).ready(function() {
     }
   });
 
-/*  $(".reply_comment_btn").click(function() {
+  /*  $(".reply_comment_btn").click(function() {
     // 현재 클릭한 버튼의 부모 요소 다음에 있는 댓글 입력창을 찾습니다.
     var commentInput = $(this).parent().next(".comment-input");
 
@@ -119,8 +152,7 @@ $(document).ready(function() {
 
   $("#comment_write_btn").on("click", () => {
     // i want to find a reply_comment_btn near this button
-    $("#reply_comment_area").appendTo(originalParent);
-
+    $(".comment-reply-container").appendTo(originalParent);
     $.ajax({
       type: "post",
       url: "/comments/write",
@@ -129,7 +161,7 @@ $(document).ready(function() {
         "Content-Type": "application/json",
         "X-HTTP-Method-Override": "POST",
       },
-      dataType: "json",
+      dataType: "text",
       data: JSON.stringify({
         commentLevel: commentLevel,
         parentCommentIdx: currentIdx,
@@ -137,127 +169,14 @@ $(document).ready(function() {
         commentContent: $("#summernote").summernote("code"),
         commentStatus: "등록",
       }),
-      error: function(request, status, error) {},
-      success: function(comment) {
-        let closest_comment_btn = $(this).find("#reply_comment_area");
-
-        // console.log(comment.parentCommentIdx);
-        appendComment(comment, currentUser);
+      error: function (request, status, error) {},
+      success: function (comment) {
+        console.log(comment);
+        $("#comment-container").replaceWith(comment);
+        $("#summernote").summernote('code', '');
       },
     });
   });
-
-  function appendComment(commentList, currentUser) {
-    let commentContent = "";
-    commentList.forEach((comment) => {
-      let commenter = comment.commenter;
-      let comment_content = comment.commentContent;
-      let commentClass =
-          comment.commentLevel === 1 ?
-              "col-12 p-4 main-comments" :
-              comment.commentLevel === 2 ?
-                  "col-12 p-4 sub-comments" :
-                  "col-12 p-4 sub-sub-comments";
-
-      let editDeleteButtons = "";
-      console.log(currentUser);
-      if (`${commenter}` === currentUser) {
-        editDeleteButtons = `<button
-                                type="button"
-                                class="btn btn-success ml-2"
-                                id="comment_edit_btn"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-pencil-fill"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10Z"
-                                  ></path>
-                                </svg>
-                                수정
-                              </button>
-                              <button
-                                type="button"
-                                class="btn btn-danger ml-2"
-                                data-toggle="modal"
-                                data-target="#commentDeleteModal"
-                              >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="16"
-                                  height="16"
-                                  fill="currentColor"
-                                  class="bi bi-trash-fill"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M5.5 5.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5z"
-                                  ></path>
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm14 3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h13z"
-                                  ></path>
-                                </svg>
-                                삭제
-                              </button>
-        `;
-      }
-
-      commentContent += `
-      <div class="${commentClass}" style="width: 80%; height: auto; text-align: justify; position: relative; background-color: #f9f9f9; padding: 10px; border-radius: 8px;" data-parentIdx="${
-          comment.parentCommentIdx
-      }">
-        <div class="row align-items-center">
-          <div class="col-auto">
-           
-          </div>
-          <div class="col">
-            <span style="font-weight: bold;">${comment.commenter}</span>
-          </div>
-          <div class="col-auto">
-            <i class="bi bi-clock"></i>
-            &nbsp; &nbsp; ${formatDate(comment.regDate)}
-          </div>
-          <div class="col-auto ms-auto">
-           <button
-           type="button"                              
-           class="btn btn-outline-secondary reply_comment_btn"
-           data-idx="${comment.commentIdx}"
-           data-cl="${comment.commentLevel}"
-           >
-           <svg
-           xmlns="http://www.w3.org/2000/svg"
-           width="16"
-           height="16"
-           fill="currentColor"
-           class="bi bi-reply"
-           viewBox="0 0 16 16"
-           >
-           <path
-           d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.960v-.667z"
-           ></path>
-           </svg>
-           <span class="visually-hidden">댓글 달기</span>
-           </button>
-            ${editDeleteButtons}
-          </div>
-        </div>
-        <div class="row no-border">
-          <div class="col-12 p-4 comment-content" style="width: 100%; height: auto; text-align: justify; margin-top: 10px; background-color: #f7f7f7; border: none;">
-            ${comment_content}
-          </div>
-        </div>
-        <div id="comment_${comment.commentIdx}_reply_area"></div>
-      </div>
-    `;
-    });
-    $("#collapseExample").html(commentContent);
-  }
 
   function formatDate(dateString) {
     const date = new Date(dateString);

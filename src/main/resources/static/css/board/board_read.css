@@ -427,7 +427,7 @@ ul {
   justify-content: left;
   display: flex;
   flex-wrap: wrap;
-  height: 150px;
+  height: 220px;
   margin-left: 16px;
 }
 
@@ -497,6 +497,23 @@ ul {
 .delete-button:focus span {
   opacity: 1;
   transition: .3s;
+}
+.comment-second-level .comment-reply-container {
+  justify-content: left;
+  display: flex;
+  flex-wrap: wrap;
+  height: 220px;
+  margin-left: 70px;
+}
+.comment-third-level .comment-reply-container {
+  justify-content: left;
+  display: flex;
+  flex-wrap: wrap;
+  height: 220px;
+  margin-left: 160px;
+}
+.write-btn-area {
+  margin-left: 10px;
 }
 /*삭제 버튼 끝*/
 

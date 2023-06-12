@@ -82,7 +82,9 @@ public class BoardController {
   public String write(@ModelAttribute(name = "form") BoardWriteForm writeForm,
       @SessionAttribute(name = "vo") MemberVO memberVO) throws IOException {
     Integer userIdx = memberVO.getUserIdx();
-    BoardVO boardVO = writeFormToBoardVO(writeForm, userIdx);
+    String userId = memberVO.getUserId();
+        log.info("boardWriteForm: {}", writeForm);
+    BoardVO boardVO = writeFormToBoardVO(writeForm, userIdx, userId);
     MultipartFile boardAttachedFile = writeForm.getMultipartFile();
     if (boardAttachedFile != null) {
       String storeName = fileStore.saveFile(boardAttachedFile);
@@ -90,7 +92,7 @@ public class BoardController {
       boardVO.setStoreName(storeName);
     }
 
-    this.boardService.saveOneBoard(boardVO);
+    boardService.saveOneBoard(boardVO);
     return "redirect:/board";
   }
 
@@ -175,9 +177,10 @@ public class BoardController {
     return fileStore.downloadFile(storeFileName,findPost.getOriName());
   }
 
-  private BoardVO writeFormToBoardVO(BoardWriteForm writeForm, Integer userIdx) {
+  private BoardVO writeFormToBoardVO(BoardWriteForm writeForm, Integer userIdx, String userId) {
     BoardVO board = new BoardVO();
     board.setUserIdx(userIdx);
+    board.setWriter(userId);
     board.setTitle(writeForm.getTitle());
     board.setContent(writeForm.getContent());
     board.setBoardPassword(writeForm.getPassword());
