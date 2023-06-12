@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+<head>
+  <meta charset="UTF-8">
+  <title>bookmark list</title>
+</head>
+<body>
+
+
+
+<div th:each="bookmarkVO : ${bookmarkList}">
+  <span th:text="${bookmarkVO.storeIdx} + ' & ' + ${bookmarkVO.storeName}"></span>
+</div>
+
+<div id="map" style="width:500px;height:400px;"></div>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=647ffaa97f099e851a11e20515ac5533"></script>
+<script>
+    var container = document.getElementById('map');
+    var options = {
+    center: new kakao.maps.LatLng(33.450701, 126.570667),
+    level: 3
+  };
+
+    var map = new kakao.maps.Map(container, options);
+
+
+</script>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>

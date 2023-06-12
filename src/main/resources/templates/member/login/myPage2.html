@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"
+      lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <title>list.jsp</title>
+
+
+
+    <!--  다음 주소 스크립트 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 제이쿼리 사용 -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- CSS only -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+            crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    <!-- 부트스트랩 아이콘 -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- 구글 글씨체 -->
+    <link rel="stylesheet" href="/css/header.css" type="text/css">
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: #E9DFED;
+        }
+    </style>
+
+
+</head>
+<body>
+<form th:action="@{modify}" method="post" enctype="multipart/form-data">
+    <div class="container-fluid" style="height: 720px; margin-top: 100px;">
+        <div class="col-md-12 mx-auto input-form">
+            <div class="row justify-content-center" style="height: 70%;">
+                <div style="margin-left: 550px;"></div>
+                <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">
+                    <div class="row">
+                        <label for="userName" class="form-label">이름</label>
+                        <input type="text" class="form-control form-control" th:placeholder="${session.vo.getUserName()}"
+                               id="userName" name="userName">
+                    </div>
+                    <div class="row">
+                        <label for="userPhone" class="form-label">전화번호</label>
+                        <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
+                               id="userPhone" name="userPhone">
+                    </div>
+                    <div class="row">
+                        <label for="userEmail" class="form-label">이메일</label>
+                        <input type="text" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
+                               id="userEmail" name="userEmail">
+                    </div>
+                    <div class="row">
+                        <label for="userLikeFood" class="form-label">음식</label>
+                        <select class="form-control" id="userLikeFood" name="userLikeFood">
+                            <option th:selected="${session.vo.getUserLikeFood() == null}" value="" selected disabled>음식을
+                                선택해주세요
+                            </option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '한식'}" value="한식">한식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '중식'}" value="중식">중식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '일식'}" value="일식">일식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '양식'}" value="양식">양식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '퓨전'}" value="퓨전">퓨전</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '푸드코트'}" value="푸드코트">푸드코트</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label for="userMbti" class="form-label">MBTI</label>
+                        <select class="form-control" id="userMbti" name="userMbti">
+                            <option th:selected="${session.vo.getUserMbti() == null}" value="" selected disabled>MBTI를
+                                선택해주세요
+                            </option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISFP'}" value="ISFP">ISFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISFJ'}" value="ISFJ">ISFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISTP'}" value="ISTP">ISTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISTJ'}" value="ISTJ">ISTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INFP'}" value="INFP">INFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INFJ'}" value="INFJ">INFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INTP'}" value="INTP">INTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INTJ'}" value="INTJ">INTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESFP'}" value="ESFP">ESFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESFJ'}" value="ESFJ">ESFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESTP'}" value="ESTP">ESTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESTJ'}" value="ESTJ">ESTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENFP'}" value="ENFP">ENFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENFJ'}" value="ENFJ">ENFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENTP'}" value="ENTP">ENTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENTJ'}" value="ENTJ">ENTJ</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label for="userPost">우편번호</label>
+                        <input id="userPost" name="userAddress1" class="form-control form-control" type="text"
+                               th:placeholder="${session.addressSplit[0]}"/>
+                    </div>
+                    <div class="row">
+                        <label for="userAddr">주소</label>
+                        <input id="userAddr" name="userAddress2" class="form-control form-control" type="text"
+                               th:placeholder="${session.addressSplit[1]}"/>
+                    </div>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <label>상세주소<span class="text-muted"></span></label>
+                        <input id="userAddrDetail" class="form-control form-control" type="text" name="userAddress3"
+                               th:placeholder="${session.addressSplit[2]}"/>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-outline-primary active" type="submit" id="address_update_btn"
+                                onclick="modifyOk(this.form)">수정
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</form>
+</div>
+<form th:action="@{status}" method="post">
+    <div class="row justify-content-center" style="margin-bottom: 150px; padding: 12px;">
+        <div div style="margin-left: 550px;"></div>
+        <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">
+            <div class="row">
+                <button class="btn btn-outline btn-danger" type="submit" id="withDrawl_update_btn" onclick="deleteOk()">
+                    탈퇴
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    $(document).ready(() => {
+        $('#userPost, #userAddr').click(findArr);
+    });
+
+    function findArr() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                console.log(data);
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('userPost').value = data.zonecode;
+                if (roadAddr !== '') {
+                    document.getElementById("userAddr").value = roadAddr;
+                } else if (jibunAddr !== '') {
+                    document.getElementById("userAddrDetail").value = jibunAddr;
+                }
+            }
+        }).open();
+    }
+
+    function deleteOk() {
+        alert("삭제하시겠습니까?");
+
+    }
+
+    function modifyOk() {
+        alert("수정하시겠습니까?");
+    }
+</script>
+
+
+<!--    여기서 부터는 modal 영역 -->
+
+
+<!-- Modal_패스워드 -->
+<div class="modal fade" id="password_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="password1" class="col-form-label">비밀번호</label>
+                        <input type="password" class="form-control" id="password1" name="password1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="password1_warning" class="col" style="text-align: center" hidden><span></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="password2" class="col-form-label">비밀번호 확인</label>
+                        <input type="password" class="form-control" id="password2" name="password2"></input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="password2_warning" class="col" style="text-align: center" hidden><span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="password_change_btn" type="button" class="btn btn-primary">비밀번호 변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal_전화번호 -->
+<div class="modal fade" id="cellPhone_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cellPhoneModalLabel">전화번호 변경</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="cellPhone" class="col-form-label">전화번호</label>
+                        <input type="tel" class="form-control" id="cellPhone" name="cellPhone">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="cellPhone_warning" class="col" style="text-align: center" hidden><span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="cellPhone_change_btn" type="button" class="btn btn-primary">전화번호 변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal_이메일 -->
+<div class="modal fade" id="eMail_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="eMailModalLabel">이메일 변경</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="eMail" class="col-form-label">이메일</label>
+                        <input type="email" class="form-control" id="eMail" name="eMail">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="eMail_warning" class="col" style="text-align: center" hidden><span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="eMail_change_btn" type="button" class="btn btn-primary">이메일 변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal_우편주소 -->
+<div class="modal fade" id="introduction_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="introductionModalLabel">자기소개 변경</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="introduction" class="col-form-label">자기소개</label>
+                        <input type="text" class="form-control" id="introduction" name="introduction">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="introduction_warning" class="col" style="text-align: center" hidden>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="introduction_change_btn" type="button" class="btn btn-primary">자기소개 변경
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 주소 -->
+<div class="modal fade" id="address_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addressModalLabel">주소 변경</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="member_post" class="col-form-label">우편번호</label>
+                        <input type="text" class="form-control" id="member_post" name="address"
+                               placeholder="우편번호" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="member_post" class="col-form-label">주소</label>
+                        <input type="text" class="form-control" id="member_addr" name="address"
+                               placeholder="주소" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="detailed_address" class="col-form-label">상세주소</label>
+                        <input type="text" class="form-control" id="detailed_address" name="address"
+                               placeholder="상세주소를 입력해주세요.">
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="address_warning" class="col" style="text-align: center" hidden><span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button id="address_change_btn" type="button" class="btn btn-primary">주소 변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal_회원탈퇴 -->
+<div class="modal fade" id="withDrawl_modal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="withDrawlModalLabel">회원탈퇴</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="mb-3">
+                        <label for="eMail" class="col-form-label">정말 삭제하시겠습니까?</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+                <button id="withDrawl_change_btn" type="button" class="btn btn-danger bg-danger" onclick="">예
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>

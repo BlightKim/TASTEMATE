@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>member list</title>
+</head>
+<body>
+
+<div>
+    <h5 th:text="${memberList}"></h5>
+</div>
+
+
+<h6 th:text="${member}"></h6>
+<div th:each="memberVO : ${memberList}">
+    <span th:text="${memberVO.userIdx} + ' & ' + ${memberVO.userName}"></span>
+</div>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

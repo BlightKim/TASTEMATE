@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <div class="comments-container" id="comment-container">
+      <h1>
+        댓글
+      </h1>
+      <ul
+        id="comments-list"
+        class="comments-list"
+        th:if="${commentList != null}"
+      >
+        <li>
+          <th:block th:each="comment : ${commentList}">
+            <div
+              class="comment-main-level"
+              th:if="${comment.commentLevel == 1}"
+            >
+              <!-- Avatar -->
+              <div class="comment-avatar">
+                <img
+                  src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg"
+                  alt=""
+                />
+              </div>
+              <!-- Contenedor del Comentario -->
+              <div class="comment-box">
+                <div class="comment-head">
+                  <h6 class="comment-name" th:classappend="${boardVO.writer == comment.commenter ? 'by-author' : ''}">
+                    <a
+                      href="http://creaticode.com/blog"
+                      th:text="${comment.commenter}"
+                      >Agustin Ortiz</a
+                    >
+                  </h6>
+                  <span
+                    th:text="${#dates.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"
+                    >hace 20 minutos</span
+                  >
+                  <i
+                    class="fa fa-reply reply_comment_btn"
+                    th:data-idx="${comment.commentIdx}"
+                    th:data-cl="${comment.commentLevel}"
+                  ></i>
+                  <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                    <i class="fas fa-edit"></i>
+                  </th:block>
+                </div>
+                <div
+                  class="comment-content"
+                  th:utext="${comment.commentContent}"
+                >
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Velit omnis animi et iure laudantium vitae, praesentium optio,
+                  sapiente distinctio illo?
+                </div>
+              </div>
+
+              <div class="comment-area"></div>
+            </div>
+            <!-- 댓글 -->
+            <div
+              class="comment-second-level"
+              th:if="${comment.commentLevel == 2}"
+            >
+              <ul class="comments-list reply-list">
+                <li>
+                  <!-- Avatar -->
+                  <div class="comment-avatar">
+                    <img
+                      src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <!-- Contenedor del Comentario -->
+                  <div class="comment-box">
+                    <div class="comment-head">
+                      <h6 class="comment-name" th:classappend="${boardVO.writer == comment.commenter ? 'by-author' : ''}">
+                        <a
+                          href="http://creaticode.com/blog"
+                          th:text="${comment.commenter}"
+                          >Agustin Ortiz</a
+                        >
+                      </h6>
+                      <span
+                          th:text="${#dates.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"
+                      >hace 10 minutos</span>
+                      <i
+                        class="fa fa-reply reply_comment_btn"
+                        th:data-idx="${comment.commentIdx}"
+                        th:data-cl="${comment.commentLevel}"
+                      ></i>
+                      <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <i class="fas fa-edit"></i>
+                      </th:block>
+                    </div>
+                    <div
+                      class="comment-content"
+                      th:utext="${comment.commentContent}"
+                    >
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Velit omnis animi et iure laudantium vitae, praesentium
+                      optio, sapiente distinctio illo?
+                    </div>
+                  </div>
+                  <div class="comment-area"></div>
+                </li>
+              </ul>
+            </div>
+            <div
+              class="comment-third-level"
+              th:if="${comment.commentLevel == 3}"
+            >
+              <ul class="comments-list reply-list reply-reply-list">
+                <li>
+                  <!-- Avatar -->
+                  <div class="comment-avatar">
+                    <img
+                      src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <!-- Contenedor del Comentario -->
+                  <div class="comment-box">
+                    <div class="comment-head">
+                      <h6 class="comment-name" th:classappend="${boardVO.writer == comment.commenter ? 'by-author' : ''}">
+                        <a
+                          href="http://creaticode.com/blog"
+                          th:text="${comment.commenter}"
+                          >Lorena Rojero</a
+                        >
+                      </h6>
+                      <span
+                          th:text="${#dates.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"
+                        >hace 10 minutos</span
+                      >
+                      <i
+                        class="fa fa-reply reply_comment_btn"
+                        th:data-idx="${comment.commentIdx}"
+                        th:data-cl="${comment.commentLevel}"
+                      ></i>
+                      <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                        <i class="fas fa-edit"></i>
+                      </th:block>
+                    </div>
+                    <div
+                      class="comment-content"
+                      th:utext="${comment.commentContent}"
+                    >
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Velit omnis animi et iure laudantium vitae, praesentium
+                      optio, sapiente distinctio illo?
+                    </div>
+                  </div>
+                  <div class="comment-area"></div>
+                </li>
+              </ul>
+            </div>
+          </th:block>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
