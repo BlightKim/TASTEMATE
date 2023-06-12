@@ -13,7 +13,7 @@ public interface StoreMapper {
 
     //List<StoreVO> store_getList();
     List<StoreVO> store_getList_withStar_withPaging(Map<String,Object> orderMap);
-    int getTotalCount(Criteria cri);
+    int getTotalCount(Map<String,Object> orderMap);
     StoreVO store_get(int storeIdx);
 
 

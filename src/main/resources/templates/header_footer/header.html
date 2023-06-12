@@ -7,48 +7,6 @@
     <!doctype html>
     <html lang="ko">
 
-    <body>
-
-
-
-
-    <header class="header">
-<!--        <h1 class="header__logo">TasteMate</h1>-->
-        <div>
-        <img th:src="@{/img/headerLogo.png}" class="header__logo"/>
-<!--        <img th:src="@{/img/헤더용로고_보라_2단.png}" class="header__logo"/>-->
-        </div>
-
-        <ul class="header__navigation">
-            <li><a href="/store/list">맛집</a></li>
-            <th:block th:if="${session.vo != null }">
-                <li><a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a></li>
-            </th:block>
-            <th:block th:if="${session.vo == null}">
-                <li><a href="#" onclick="javascript:notLogined(); return false;">내강의장</a></li>
-            </th:block>
-            <li><a href="#">꿀팁</a></li>
-            <li><a href="#">관리자모드</a></li>
-            <li><a href="#">MY</a></li>
-            <div class="ml-auto">
-                <button th:onclick="|location.href='@{/member/simpleregister}'|" class="btn btn-outline-dark ml-2" type="button">회원가입</button>
-                <button th:onclick="|location.href='@{/member/login}'|" class="btn btn-outline-dark ml-2" type="button">로그인</button>
-            </div>
-
-
-
-        </ul>
-    </header>
-
-    <script>
-
-        function notLogined() {
-            alert("로그인 후 이용 가능합니다.")
-        }
-
-    </script>
-
-
     <head>
         <!-- 구글 글씨체 적용-->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,9 +20,8 @@
         <!-- Bootstrap CSS -->
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-        <!-- 제이쿼리 -->
-
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <!--제이쿼리-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 
         <!-- alert창 꾸미기-->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -122,3 +79,37 @@
 
         <title>TasteMate</title>
     </head>
+
+    <body>
+
+
+
+
+    <header class="header">
+<!--        <h1 class="header__logo">TasteMate</h1>-->
+        <div>
+            <a th:href="@{/store/main}">
+                <img th:src="@{/img/headerLogo.png}" class="header__logo" />
+            </a>
+        </div>
+
+        <ul class="header__navigation">
+            <li><a href="/store/list">맛집</a></li>
+            <th:block th:if="${session.vo != null }">
+                <li><a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a></li>
+            </th:block>
+            <th:block th:if="${session.vo == null}">
+                <li><a href="#" onclick="javascript:notLogined(); return false;">내강의장</a></li>
+            </th:block>
+            <li><a href="#">꿀팁</a></li>
+            <li><a href="#">관리자모드</a></li>
+            <li><a href="#">MY</a></li>
+            <div class="ml-auto">
+                <button class="btn btn-outline-dark ml-2" type="button">회원가입</button>
+                <button th:onclick="|location.href='@{/member/login}'|" class="btn btn-outline-dark ml-2" type="button">로그인</button>
+            </div>
+
+
+
+        </ul>
+    </header>

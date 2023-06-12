@@ -26,6 +26,8 @@ public class StoreVO {
   private String filename;
   private MultipartFile oriFilename;
 
+  private int storeStat;
+
 
   // join
   private List<MenuVO> menuVO;

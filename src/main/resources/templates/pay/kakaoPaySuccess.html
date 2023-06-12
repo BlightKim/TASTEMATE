@@ -9,22 +9,105 @@
   <meta charset="UTF-8">
   <title>Insert title here</title>
   <link rel="stylesheet" th:href="@{/css/store_css.css}">
+<style>
 
+  #main {
+    /*min-height: 100vh;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: -webkit-gradient(linear, left bottom, right top, from(#E2E2E2), to(#E2E2E2));
+    background: -webkit-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+    background: -moz-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+    background: -o-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+    background: linear-gradient(to top right, #E2E2E2 0%, #E2E2E2 100%);
+  }
+  .input-form {
+    max-width: 100%;
+
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding: 32px;
+
+    background: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+  }
+
+  .yellow{
+    color : #FFA500;
+  }
+
+
+
+</style>
 </head>
 <body>
 
 
-카카오페이 결제가 정상적으로 완료되었습니다.
+<div class="text-center" id="main">
+  <div class="input-form-backgroud">
+    <form class="input-form">
 
-결제일시:     [[${info.approved_at}]]<br/>
-주문번호:    [[${info.partner_order_id}]]<br/>
-상품명:    [[${info.item_name}]]<br/>
-상품수량:    [[${info.quantity}]]<br/>
-결제금액:    [[${info.amount.total}]]<br/>
-결제방법:    [[${info.payment_method_type}]]<br/>
+      <h4 class="yellow"><strong>카카오페이 결제가 완료되었습니다.</strong></h4><br>
+
+      <hr>
+      <div class="row">
+        <div class="col text-left">결제일시:</div>
+        <div class="col text-right">
+          <div th:text="${#dates.format(info.approved_at, 'yyyy-MM-dd HH:mm:ss')}"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col text-left">주문번호:</div>
+        <div class="col text-right">[[${info.partner_order_id}]]</div>
+      </div>
+      <div class="row">
+        <div class="col text-left">상품명:</div>
+        <div class="col text-right">[[${info.item_name}]]</div>
+      </div>
+      <div class="row">
+        <div class="col text-left">상품수량:</div>
+        <div class="col text-right">[[${info.quantity}]]</div>
+      </div>
+      <div class="row">
+        <div class="col text-left">결제방법:</div>
+        <div class="col text-right">[[${info.payment_method_type}]]</div>
+      </div>
+      <hr>
+      <div class="row mb-5">
+        <div class="col text-left">결제금액:</div>
+        <div class="col text-right">
+          <strong>
+            <div data-th-text="${#numbers.formatInteger(info.amount.total, 3, 'COMMA') + '원'}"></div>
+          </strong>
+        </div>
+      </div>
+
+      <a class="btn btn-warning" th:href="@{/store/starComment}">별점주러가기</a>
+      <a class="btn btn-warning" style="background-color: #8E48C7; border: none;">결제 취소</a>
+      <br>진짜취소하시겠습니까 묻고 취소
+    </form>
+  </div>
+</div>
 
 
+
+
+
+
+<br><br><br><br><br><br><br><br>
+일단은 바로 별점주는 화면으로 넘어가게하자 <br>
+(예약 시간 후로 시간제한도 걸어야해)<br>
+<br>이때 파라미터로 storeIdx 넘겨줘야한다!!!!!
 <h2>[[${info}]]</h2>
+
+
 
 
 

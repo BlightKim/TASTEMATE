@@ -1,10 +1,7 @@
 package com.tastemate.controller;
 
 
-import com.tastemate.domain.InicisRefundVO;
-import com.tastemate.domain.InicisVO;
-import com.tastemate.domain.KakaoCancelResponse;
-import com.tastemate.domain.KakaoPayReadyVO;
+import com.tastemate.domain.*;
 import com.tastemate.service.KakaoPay;
 import com.tastemate.service.PaymentService;
 import lombok.Setter;
@@ -39,13 +36,19 @@ public class PayController {
     }
 
     //카카오페이 결제 요청 (ajax)
-    @GetMapping ("/kakaoPay123")
+    @GetMapping ("/kakaoPayGo")
     @ResponseBody
-    public KakaoPayReadyVO kakaoPay(int total_amount, String item_name, Model model, HttpServletRequest request) {
+    public KakaoPayReadyVO kakaoPay(int total_amount, String item_name,
+                                    Model model, HttpServletRequest request
+                                    , int userIdx, int storeIdx, int bookingIdx
+                                    ) {
         log.info("kakaoPay post............................................");
         log.info("total_amount : " + total_amount);
 
-        KakaoPayReadyVO readyResponse = kakaopay.kakaoPayReady(total_amount, item_name);
+
+        KakaoPayReadyVO readyResponse = kakaopay.kakaoPayReady(total_amount, item_name
+                                        ,userIdx, storeIdx, bookingIdx);
+
 
         model.addAttribute("tid", readyResponse.getTid());
         log.info("tid : " + readyResponse.getTid());
@@ -53,22 +56,22 @@ public class PayController {
 
         request.getSession().setAttribute("total_amount",total_amount);
 
-
         return readyResponse;
-
     }
+
 
     // 결제 승인 요청
     @GetMapping("/kakaoPaySuccess")
     public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token,
-                                //@RequestParam("total_amount") int total_amount,
                                 HttpServletRequest request,
                                 Model model) {
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
-
         model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+
+
+        //이거 DB에 저장? approval
     }
 
 
@@ -105,6 +108,7 @@ public class PayController {
         String token = paymentService.getToken();
         log.info("token : " + token);
 
+
         //결제상태 iamport에 update
         String iamportUpdate = paymentService.iamportUpdate(inicisVO, token);
         log.info("iamportUpdate : " + iamportUpdate);
@@ -134,15 +138,17 @@ public class PayController {
         log.info("inicisCancel!!!!!!!!!!!!!!! : " + inicisRefundVO);
 
         //토큰 DB에서 가져오기
-        String token = "7571d3dc4676d31346344ce3a361a7809a7f7327";
+        String token = "8be49d26c5a86b99d4bde74f3c9fbef08e7a30a9";
+
+        paymentService.inicisRefund(inicisRefundVO, token);
+
+        log.info("controller 환불 완료!!!");
+
+    }
 
 
-        paymentService.processRefund(inicisRefundVO, token);
-
-        log.info("환불 완료!!!");
-
-
-
+    @GetMapping("/inicisSuccess")
+    public void inicisSuccess(){
 
     }
 
