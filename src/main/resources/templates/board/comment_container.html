@@ -47,8 +47,11 @@
                     th:data-cl="${comment.commentLevel}"
                   ></i>
                   <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
-                    <i class="fa fa-trash" aria-hidden="true"></i>
-                    <i class="fas fa-edit"></i>
+                    <i class="fa fa-trash comment-del-btn" aria-hidden="true"></i>
+                    <i class="fas fa-edit comment-edit-btn"
+                       th:data-boardIdx="${boardVO.boardIdx}"
+                       th:data-idx="${comment.commentIdx}"
+                    ></i>
                   </th:block>
                 </div>
                 <div
@@ -96,8 +99,11 @@
                         th:data-cl="${comment.commentLevel}"
                       ></i>
                       <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                        <i class="fas fa-edit"></i>
+                        <i class="fa fa-trash comment-del-btn" aria-hidden="true"></i>
+                        <i class="fas fa-edit comment-edit-btn"
+                           th:data-boardIdx="${boardVO.boardIdx}"
+                           th:data-idx="${comment.commentIdx}"
+                        ></i>
                       </th:block>
                     </div>
                     <div
@@ -146,8 +152,11 @@
                         th:data-cl="${comment.commentLevel}"
                       ></i>
                       <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                        <i class="fas fa-edit"></i>
+                        <i class="fa fa-trash comment-del-btn" aria-hidden="true"></i>
+                        <i class="fas fa-edit comment-edit-btn"
+                           th:data-boardIdx="${boardVO.boardIdx}"
+                           th:data-idx="${comment.commentIdx}"
+                        ></i>
                       </th:block>
                     </div>
                     <div

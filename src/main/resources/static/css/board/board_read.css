@@ -1,132 +1,5 @@
-/*
-.row {
-  width: 100%;
-}
-
-.col-12,
-.p-4,
-.comment_btn,
-.comment-content {
-  width: 100%;
-  height: auto;
-  text-align: justify;
-  position: relative;
-}
-
-.p-4 {
-  padding: 16px;
-}
-
-.comment_btn {
-  width: 80%;
-  height: auto;
-  text-align: justify;
-  position: relative;
-}
-
-.comment_btn .row {
-  display: flex;
-  align-items: center;
-}
-
-.comment_btn .col-1 {
-  height: 30px;
-  margin-right: 10px;
-}
-
-.comment_btn .col-6 {
-  flex: 1;
-}
-
-.comment_btn #reg_date_area {
-  justify-content: flex-end;
-}
-
-.comment_btn .bi-clock {
-  margin-right: 5px;
-}
-
-.comment-content {
-  width: 100%;
-  height: auto;
-  text-align: justify;
-}
-
-.sub-comments {
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  margin-left: 40px;
-}
-
-.sub-sub-comments {
-  margin-top: 10px;
-  border: 1px solid #ccc;
-  margin-left: 80px;
-}
-
-.sub-comments .comment_btn,
-.sub-comments .comment-content {
-  padding-top: 10px;
-}
-
-.reply_comment_btn {
-  margin-left: 10px;
-}
-
-.commentIdx {
-  display: none;
-}
-
-!* 추가 스타일 *!
-.col-12 {
-  background-color: #f7f7f7;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-
-.comment_btn {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-
-.sub-comments {
-  background-color: #f2f2f2;
-  margin-bottom: 10px;
-}
-
-.row.no-border {
-  border: none;
-}
-
-.row.no-border .col-12 {
-  border: none;
-}
-.comment-header {
-  border: none;
-}
-
-!* 기존 CSS에 추가 *!
-.attachment-area {
-  background-color: #fff;  !* 원하는 배경색으로 변경 *!
-  border: none;  !* 필요에 따라 변경 *!
-}
-
-.liked {
-  !* 추천 상태일 때의 스타일 *!
-  !* 예: 배경색을 변경 *!
-  background-color: green;
-  color: white;
-}
-
-.comment-content.deleted {
-  !* 삭제된 댓글의 스타일 *!
-  color: gray;  !* 예: 텍스트를 회색으로 변경 *!
-  font-style: italic;  !* 예: 텍스트를 이탤릭체로 변경 *!
-}*/
-
 .top-border-bottom {
-  border-bottom: 1px solid #E9DFED!important;
+  border-bottom: 1px solid #E9DFED !important;
 }
 
 .content-container {
@@ -149,9 +22,12 @@ ul {
   margin-bottom: inherit;
 
 }
+
 .comments-container {
   margin: 60px auto 15px;
   width: 768px;
+  border: 1px solid #E9DFED;
+  border-radius: 4px;
 }
 
 .comments-container h1 {
@@ -197,7 +73,10 @@ ul {
   border-radius: 50%;
 }
 
-.reply-list:before, .reply-list:after {display: none;}
+.reply-list:before, .reply-list:after {
+  display: none;
+}
+
 .reply-list li:before {
   content: '';
   width: 101px;
@@ -211,7 +90,11 @@ ul {
 .reply-reply-list.comment-box {
   width: 570px;
 }
-.reply-reply-list:before, .reply-reply-list:after {display: none;}
+
+.reply-reply-list:before, .reply-reply-list:after {
+  display: none;
+}
+
 .reply-reply-list li:before {
   content: '';
   width: 180px;
@@ -247,6 +130,7 @@ ul {
   clear: both;
   margin-top: 15px;
 }
+
 /**
  * Avatar
  ---------------------------*/
@@ -260,9 +144,9 @@ ul {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
@@ -288,6 +172,7 @@ ul {
   display: block;
   clear: both;
 }
+
 .comment-second-level-level:after {
   content: '';
   width: 0;
@@ -295,6 +180,7 @@ ul {
   display: block;
   clear: both;
 }
+
 /**
  * Caja del Comentario
  ---------------------------*/
@@ -302,11 +188,12 @@ ul {
   width: 680px;
   float: right;
   position: relative;
-  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.15);
-  box-shadow: 0 1px 1px rgba(0,0,0,0.15);
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   margin-top: 10px;
 }
+
 .comments-list .comment-area {
   width: 680px;
   float: right;
@@ -329,7 +216,7 @@ ul {
 
 .comments-list .comment-area:before {
   border-width: 11px 13px 11px 0;
-  border-color: transparent rgba(0,0,0,0.05);
+  border-color: transparent rgba(0, 0, 0, 0.05);
   left: -12px;
 }
 
@@ -340,9 +227,10 @@ ul {
   position: absolute;
   display: block;
 }
+
 .comments-list .comment-box:before {
   border-width: 11px 13px 11px 0;
-  border-color: transparent rgba(0,0,0,0.05);
+  border-color: transparent rgba(0, 0, 0, 0.05);
   left: -12px;
 }
 
@@ -353,8 +241,9 @@ ul {
 .reply-reply-list .comment-box {
   width: 523px;
 }
+
 .comment-box .comment-head {
-  background: #FCFCFC;
+  background: #E9DFED;
   padding: 10px 12px;
   border-bottom: 1px solid #E9DFED;
   overflow: hidden;
@@ -409,7 +298,10 @@ ul {
   border-radius: 0 0 4px 4px;
 }
 
-.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {color: #03658c;}
+.comment-box .comment-name.by-author, .comment-box .comment-name.by-author a {
+  color: #03658c;
+}
+
 .comment-box .comment-name.by-author:after {
   content: 'autor';
   background: #03658c;
@@ -436,13 +328,16 @@ ul {
   border-radius: 8px;
   padding: 10px;
 }
+
 #reply_comment_area {
   justify-content: center;
 }
+
 .comment-reply-container-wrap {
   display: flex;
   justify-content: center;
 }
+
 /*삭제 버튼 시작*/
 .delete-button {
   position: relative;
@@ -498,6 +393,7 @@ ul {
   opacity: 1;
   transition: .3s;
 }
+
 .comment-second-level .comment-reply-container {
   justify-content: left;
   display: flex;
@@ -505,6 +401,7 @@ ul {
   height: 220px;
   margin-left: 70px;
 }
+
 .comment-third-level .comment-reply-container {
   justify-content: left;
   display: flex;
@@ -512,9 +409,23 @@ ul {
   height: 220px;
   margin-left: 160px;
 }
+
 .write-btn-area {
   margin-left: 10px;
 }
+
+#wrapper {
+  height: auto;
+  min-height: 100%;
+  padding-bottom: 300px;
+}
+
+footer {
+  height: 300px;
+  position: relative;
+  transform: translateY(100%);
+}
+
 /*삭제 버튼 끝*/
 
 /** =====================

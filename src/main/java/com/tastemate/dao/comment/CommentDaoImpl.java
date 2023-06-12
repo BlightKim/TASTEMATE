@@ -3,6 +3,7 @@ package com.tastemate.dao.comment;
 import com.tastemate.domain.comment.CommentVO;
 import com.tastemate.mapper.CommentMapper;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +32,10 @@ public class CommentDaoImpl implements CommentDao {
   @Override
   public Integer deleteOneComment(Integer commentIdx) {
     return commentMapper.deleteOneComment(commentIdx);
+  }
+
+  @Override
+  public Integer updateOneComment(Map map) {
+    return commentMapper.updateOneComment(map);
   }
 }

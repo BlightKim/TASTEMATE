@@ -62,6 +62,12 @@
     SET COMMENT_STATUS = '삭제'
     WHERE COMMENT_IDX = #{commentIdx}
   </update>
+  <update id="updateOneComment" parameterType="map">
+    UPDATE BOARD_COMMENT
+    SET COMMENT_CONTENT = #{commentContent, jdbcType=VARCHAR},
+        UPDATE_DATE = SYSDATE
+    WHERE COMMENT_IDX = #{commentIdx, jdbcType=INTEGER}
+  </update>
   <sql id="Join_Column_List">
     <!--@mbg.generated-->
     BOARD_COMMENT.COMMENT_IDX as BC_COMMENT_IDX,

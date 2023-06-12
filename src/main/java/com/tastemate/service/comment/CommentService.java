@@ -10,4 +10,6 @@ public interface CommentService {
    CommentVO getOneComment(Integer commentIdx);
 
   Integer deleteOneComment(Integer commentIdx, Integer boardIdx);
+
+  Integer updateOneComment(Integer commentIdx, CommentVO commentVO);
 }

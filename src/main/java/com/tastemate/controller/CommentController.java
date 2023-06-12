@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,20 +45,39 @@ public class CommentController {
   public String writeComment(@RequestBody CommentVO commentVO,
       @SessionAttribute(name = "vo") MemberVO memberVO, Model model) {
     Integer userIdx = memberVO.getUserIdx();
-    commentService.writeOneComment(commentVO,userIdx);
+    commentService.writeOneComment(commentVO, userIdx);
     List<CommentVO> commentList = commentService.getCommentList(commentVO.getBoardIdx());
     BoardVO boardVO = boardService.getOnePost(commentVO.getBoardIdx());
     model.addAttribute("boardVO", boardVO);
     model.addAttribute("commentList", commentList);
     return "board/comment_container :: #comment-container";
   }
-  @DeleteMapping("/comments/delete/{commentIdx}")
+
+  @ResponseBody
+  @PostMapping("/delete/{commentIdx}")
   public void deleteComment(@PathVariable(name = "commentIdx") Integer commentIdx,
       @RequestParam(name = "boardIdx") Integer boardIdx) {
     Integer result = commentService.deleteOneComment(commentIdx, boardIdx);
 
-    if(result != 1) {
-     throw new RuntimeException("오류가 발생했습니다.");
+    if (result != 1) {
+      throw new RuntimeException("오류가 발생했습니다.");
     }
+  }
+
+  @PostMapping("/update/{commentIdx}")
+  public String updateComment(@PathVariable(name = "commentIdx") Integer commentIdx,
+      @RequestBody CommentVO commentVO, Model model){
+    Integer result = commentService.updateOneComment(commentIdx, commentVO);
+
+    if (result != 1) {
+      throw new RuntimeException("오류가 발생했습니다.");
+    }
+    List<CommentVO> commentList = commentService.getCommentList(commentVO.getBoardIdx());
+    BoardVO boardVO = boardService.getOnePost(commentVO.getBoardIdx());
+    model.addAttribute("boardVO", boardVO);
+    model.addAttribute("commentList", commentList);
+    log.info("commentList: {}", commentList);
+    log.info("boardVO: {}", boardVO);
+    return "board/comment_container :: #comment-container";
   }
 }

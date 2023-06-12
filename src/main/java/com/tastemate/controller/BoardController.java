@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriUtils;
@@ -112,22 +113,42 @@ public class BoardController {
     return "board/board_read";
   }
 
+  @ResponseBody
   @PostMapping({"/unlike/{boardIdx}"})
   public String unlike(@PathVariable("boardIdx") Integer boardIdx,
       @SessionAttribute(name = "vo") MemberVO memberVO) {
     Integer userIdx = memberVO.getUserIdx();
     log.info("unlike 호출");
-    boardService.decreaseLike(boardIdx, userIdx);
-    return "redirect:/board/read/" + boardIdx;
+    boolean isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if (isLiked) {
+      boardService.decreaseLike(boardIdx, userIdx);
+    }
+
+    isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if(isLiked) {
+      return "fail";
+    } else {
+      return "ok";
+    }
   }
 
+  @ResponseBody
   @PostMapping({"/like/{boardIdx}"})
   public String like(@PathVariable("boardIdx") Integer boardIdx,
       @SessionAttribute(name = "vo") MemberVO memberVO) {
     Integer userIdx = memberVO.getUserIdx();
     log.info("like 호출");
-    boardService.increaseLike(boardIdx, userIdx);
-    return "redirect:/board/read/" + boardIdx;
+    boolean isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if (!isLiked) {
+      boardService.increaseLike(boardIdx, userIdx);
+    }
+
+    isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if(isLiked) {
+      return "ok";
+    } else {
+      return "fail";
+    }
   }
 
   @PostMapping({"/update/{boardIdx}"})
