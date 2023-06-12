@@ -5,6 +5,7 @@ import com.tastemate.domain.KakaoPayApprovalVO;
 import com.tastemate.domain.KakaoPayReadyVO;
 import com.tastemate.mapper.KakaoPayMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -24,6 +25,7 @@ import java.util.Date;
 @Slf4j
 public class KakaoPay {
 
+    @Autowired
     private KakaoPayMapper kakaoPayMapper;
 
     private static final String HOST = "https://kapi.kakao.com";
@@ -118,20 +120,34 @@ public class KakaoPay {
         params.add("total_amount", String.valueOf(kakaoPayReadyVO.getTotalAmount()));
 
 
-        //여기서 ready는 DB저장해야겠다 핵심은 tid이고 레디VO는 전역에서 갖고 있는 상태니까
-        //tid는?
-        kakaoPayReadyVO.setPgToken(pg_token);
-        log.info("kakaoPayInfo : " + kakaoPayReadyVO);
-        //int result = kakaoPayMapper.kakaoPayReady_insert(kakaoPayReadyVO);
-        //log.info("kakaoPayReady_insert " + result);
-
-
-
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+
+
+        // DB 연동 (kakaoPayReadyVO)
+
+        kakaoPayReadyVO.setPgToken(pg_token);
+
+        log.info("kakaoPayInfo : " + kakaoPayReadyVO);
+        int result = kakaoPayMapper.kakaoPayReady_insert(kakaoPayReadyVO);
+        log.info("kakaoPayReady_insert " + result);
+
+
 
         try {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
             log.info("" + kakaoPayApprovalVO);
+
+            // DB 연동 (kakaoPayApprovalVO)
+            kakaoPayApprovalVO.setPgToken(pg_token);
+            kakaoPayApprovalVO.setUserIdx(kakaoPayReadyVO.getUserIdx());
+            kakaoPayApprovalVO.setStoreIdx(kakaoPayReadyVO.getStoreIdx());
+            kakaoPayApprovalVO.setBookingIdx(kakaoPayReadyVO.getBookingIdx());
+            kakaoPayApprovalVO.setTid(kakaoPayReadyVO.getTid());
+            kakaoPayApprovalVO.setAmount2(kakaoPayReadyVO.getTotalAmount());
+            int result2 = kakaoPayMapper.kakaoPayApproval_insert(kakaoPayApprovalVO);
+            log.info("kakaoPayApproval_insert " + result2);
+            
+            //추가로 결제되면 store 테이블에서 count +1되게
 
             return kakaoPayApprovalVO;
 
@@ -147,7 +163,7 @@ public class KakaoPay {
 
 
     // 결제 환불
-    public KakaoCancelResponse kakaoCancel() {
+    public KakaoCancelResponse kakaoCancel(String tid) {
 
         log.info("service kakaoCancel............................................");
 
@@ -155,14 +171,21 @@ public class KakaoPay {
         MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
         parameters.add("cid", "TC0ONETIME");
         //parameters.add("tid", "환불할 결제 고유 번호");
-        parameters.add("tid", "T48174cf62ea0bae2003");   //DB에서 가져와야함!!!
-        parameters.add("cancel_amount", "54321");   //DB에서
+        parameters.add("tid", tid);
+
+        int amount = kakaoPayMapper.get_amount(tid);
+        parameters.add("cancel_amount", String.valueOf(amount));
         parameters.add("cancel_tax_free_amount", "0");
         parameters.add("cancel_vat_amount", "0");
        // parameters.add("cancel_available_amount", "4000");
 
         // 파라미터, 헤더
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(parameters, this.getHeaders());
+
+        // DB 작업
+        //kakaoPayApprovalVO 에서 status를 0이 결제완료인것
+        // , 1이 결제 취소인것으로 변경할까??(delete가아니라)
+
 
         // 외부에 보낼 url
         RestTemplate restTemplate = new RestTemplate();
@@ -209,7 +232,9 @@ public class KakaoPay {
     }
 
 
+    public KakaoPayApprovalVO getKakaoApproval(int userIdx) {
+        log.info("getKakaoApproval 도착");
 
-
-
+        return kakaoPayMapper.get_KakaoApproval(userIdx);
+    }
 }

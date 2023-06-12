@@ -8,11 +8,13 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
@@ -62,26 +64,37 @@ public class PayController {
 
     // 결제 승인 요청
     @GetMapping("/kakaoPaySuccess")
-    public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token,
+    public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token,
                                 HttpServletRequest request,
                                 Model model) {
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
-        model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+        kakaopay.kakaoPayInfo(pg_token);
+        //model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
 
+        return "redirect:/pay/mykakaoPaySuccess";
+    }
 
-        //이거 DB에 저장? approval
+    @GetMapping("/mykakaoPaySuccess")
+    public void mykakaoPaySuccess(HttpSession session, Model model){
+        log.info("mykakaoPaySuccess 도착!");
+
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("세션 memberVO 확인!"+memberVO);
+        KakaoPayApprovalVO info = kakaopay.getKakaoApproval(memberVO.getUserIdx());
+        log.info("mykakaoPaySuccess info : " + info);
+        model.addAttribute("info", info);
     }
 
 
     // 카카오페이
     @PostMapping("/refund")
-    public String refund(Model model) {
+    public String refund(Model model, String tid) {
 
         log.info("controller refund............................................");
 
-        KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel();
+        KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel(tid);
 
         log.info("kakaoCancelResponse : " + kakaoCancelResponse);
 

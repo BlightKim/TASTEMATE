@@ -5,9 +5,51 @@
 
 <mapper namespace="com.tastemate.mapper.KakaoPayMapper">
 
+    <resultMap id="KakaoApproval" type="com.tastemate.domain.KakaoPayApprovalVO">
+        <id column="KAKAO_APPROVAL_IDX" property="kakaoApprovalIdx"/>
+        <result column="USER_IDX" property="userIdx"/>
+        <result column="STORE_IDX" property="storeIdx"/>
+        <result column="BOOKING_IDX" property="bookingIdx"/>
+        <result column="STATUS" property="status"/>
+        <result column="PG_TOKEN" property="pgToken"/>
+        <result column="partner_order_id" property="partner_order_id"/>
+        <result column="payment_method_type" property="payment_method_type"/>
+        <result column="item_name" property="item_name"/>
+        <result column="approved_at" property="approved_at"/>
+        <result column="amount" property="amount2"/>
+        <result column="tid" property="tid"/>
+    </resultMap>
+
+
+
     <insert id="kakaoPayReady_insert" parameterType="KakaoPayReadyVO">
         insert into KAKAOPAYREADY(KAKAO_READY_IDX, USER_IDX, STORE_IDX, BOOKING_IDX, PARTNER_ORDER_ID, TOTAL_AMOUNT, PG_TOKEN, TID)
         values (KAKAOREADY_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx}, #{partnerOrderId},#{totalAmount}, #{pgToken}, #{tid})
     </insert>
+
+    <insert id="kakaoPayApproval_insert" parameterType="KakaoPayApprovalVO">
+        insert into KakaoPayApproval(kakao_approval_idx, user_idx, store_idx, booking_idx,
+        partner_order_id, amount, pg_token, payment_method_type,
+        item_name, quantity, approved_at)
+        values (KAKAOAPPROVAL_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx},
+        #{partner_order_id}, #{amount.total}, #{pgToken}, #{payment_method_type},
+        #{item_name}, #{quantity}, #{approved_at})
+    </insert>
+
+    <select id="get_KakaoApproval" resultMap="KakaoApproval">
+        select *
+        from KAKAOPAYAPPROVAL
+        where USER_IDX = #{userIdx}
+        and status = 0
+    </select>
+
+    <select id="get_amount" resultType="int">
+        select amount
+        from KAKAOPAYAPPROVAL
+        where tid = #{tid}
+    </select>
+
+
+
 
 </mapper>
