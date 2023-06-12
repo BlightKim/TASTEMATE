@@ -70,6 +70,21 @@
         WHERE s.store_idx = #{storeIdx}
     </select>
 
+<!-- 메인 화면에서 별점이 가장 높은 가게 하나 받기 -->
+    <select id="getStoreHighestStar" resultMap="storeStarResultMap">
+        SELECT s.store_idx, s.store_address, s.store_name, s.filename, avg_star.store_star
+        FROM STORE s
+                 LEFT OUTER JOIN (
+            SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+            FROM STAR
+            GROUP BY store_idx
+        ) avg_star ON s.store_idx = avg_star.store_idx
+        WHERE avg_star.store_star = (SELECT MAX(avg_star.store_star) from ( SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+                                                                              FROM STAR
+                                                                              GROUP BY store_idx
+                                                                          ) avg_star)
+    </select>
+
 
 <!-- 메인 맛집 전체보기 화면에서 별점과 같이 받기 -->
     <select id="store_getList_withStar_withPaging" resultMap="storeStarResultMap"

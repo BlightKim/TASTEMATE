@@ -46,4 +46,19 @@ public class BookmarkService {
         }
 
     }
+
+    public int bookmarkValidate(String userId, int storeIdx) {
+        int result = 0;
+        BookmarkVO bookmarkVO = new BookmarkVO();
+        bookmarkVO.setUserId(userId);
+        bookmarkVO.setStoreIdx(storeIdx);
+        BookmarkVO bookmarkVO1 = bookmarkMapper.bookmarkValidate(bookmarkVO);
+        if (bookmarkVO1 != null ) {
+            result = 1;
+            return result;
+        } else {
+            result = 0;
+            return result;
+        }
+    }
 }

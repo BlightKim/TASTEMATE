@@ -31,6 +31,9 @@ public interface StoreMapper {
     StoreVO getStoreWithComment(int storeIdx);
     StoreVO getStoreWithStar(int storeIdx);
 
+    //main
+    List<StoreVO> getStoreHighestStar();
+
 
 
 }

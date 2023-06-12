@@ -124,8 +124,8 @@ oriFilename-->
                 <option id="time3" name="time3" value="13:00:00">13:00</option>
                 <option id="time4" name="time4" value="13:15:00">13:15</option>
                 <option id="time5" name="time5" value="13:30:00">13:30</option>
-                <option id="time6" name="time5" value="13:45:00">13:45</option>
-                <option id="time7" name="time5" value="14:00:00">14:00</option>
+                <option id="time6" name="time6" value="13:45:00">13:45</option>
+                <option id="time7" name="time7" value="14:00:00">14:00</option>
               </select>
             </div>
           </div>
@@ -194,6 +194,7 @@ oriFilename-->
     var date = new Date(); // 오늘 대입
     var nowWeek = date.getDay(); // 현재 요일 (0~6)
 
+    document.write(nowWeek);
     if (nowWeek == 6) {
       date.setDate(date.getDate() + 1); // 오늘이 토요일이면 1일 추가
     }
@@ -225,16 +226,30 @@ oriFilename-->
       return y1 + "-" + m1 + "-" + d1;
 
   }
+
+
   // document.write("오늘 날짜 : " + (new Date().toString() + "<br>"));
-  // document.write("평일 10일 이후 날짜 : " + (dateAdd(5) + "<br>"));
+  // document.write("오늘 요일 : " + (new Date().getDay() + "<br>"));
+  // document.write("평일 5일 이후 날짜 : " + (dateAdd(1) + "<br>"));
   // document.date.date1.valueOf(dateAdd(1));
 
-  for(var i = 0; i < 5; i++) {
-    var dd = "date" + (i + 1);
-    document.write(dd);
-    document.getElementById(dd).innerHTML = dateAdd(i);
-    document.getElementById(dd).value = dateAdd(i);
+  if (new Date().getDay().toString().valueOf(0) || new Date().getDay().toString().valueOf(6)) {
+    for(var i = 1; i < 6; i++) {
+      var dd = "date" + (i);
+        document.getElementById(dd).innerHTML = dateAdd(i);
+        document.getElementById(dd).value = dateAdd(i);
+      }
+  } else {
+    for(var i = 0; i < 5; i++) {
+      var dd = "date" + (i+1);
+      document.getElementById(dd).innerHTML = dateAdd(i);
+      document.getElementById(dd).value = dateAdd(i);
+    }
   }
+
+  // var yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
+  // document.write("어제 날짜 : " + (yesterday.toString() + "<br>"));
+
 
 
 </script>

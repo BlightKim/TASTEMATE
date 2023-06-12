@@ -63,6 +63,12 @@ public class StoreService {
 
         return storeVO;
     }
+    public StoreVO getStoreHighestStar() {
+        List<StoreVO> list = mapper.getStoreHighestStar();
+        StoreVO storeVO = list.get(0);
+
+        return storeVO;
+    }
 
 
     public void saveFile(StoreVO storeVO, MultipartFile multipartFile) {

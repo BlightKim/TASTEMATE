@@ -9,15 +9,14 @@
   <meta charset="UTF-8">
   <title>my bookmark</title>
 
-
   <link rel="stylesheet" th:href="@{/css/store_css.css}">
 
 <style>
 
   .img-wrapper {
     position: relative;
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
   }
   .img-wrapper img {
     position: absolute;
@@ -48,212 +47,156 @@
     padding-bottom: 1.5rem !important;
   }
 
-  .padding_50 {
-    padding-top: 50px;
-    padding-left: 15px;
+  .padding_100 {
+    padding-left: 100px;
+  }
+  .center {
+    align-content: center;
+    text-align: center;
+  }
+  ul{
+    list-style:none;
   }
 
+
 </style>
+
 </head>
 <body>
-<!--<p th:text="${bookingIdx}"></p>-->
-<!--<p th:text="${bookingVO}"></p>-->
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">
-      <!-- Left Column: Photos -->
-      <div class="imgText">
-      <div class="img-wrapper">
-      <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
-      </div>
-      <h2 style="text-align: center" th:text="${storeVO.storeName}"></h2>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <!-- Right Column: Reservation Information -->
-      <h2>Reservation Information</h2>
-      <ul class="list-group">
-        <li class="list-group-item">
-          <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
-        </li>
-        <li class="list-group-item">
-          <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
-        </li>
-        <li class="list-group-item">
-          <strong>예약일자:</strong> [[${bookingVO.bookingDate}]]
-        </li>
-        <li class="list-group-item">
-          <strong>예약한 시간:</strong> [[${bookingVO.bookingTime}]]
-        </li>
-        <li class="list-group-item">
-          <strong>결제 금액:</strong> [[${bookingVO.price}]]
-        </li>
-      </ul>
-      <div class="row padding_50">
-        <button class="btn btn-primary" type="submit" style="background-color: #8E48C7; border: none; border-radius: 10%;">결제하기</button>
-          <button class="btn btn-success" th:href="@{/store/list}" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</button>
+<main>
+  <div class="container py-4">
+    <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="row">
+      <div class="col-md-6 center">
+        <div class="imgText padding_100">
+          <div class="img-wrapper">
+            <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
+          </div>
         </div>
+          <span th:text="${storeVO.category1}" class="purple2"></span>
+          <h2 class="display-5 fw-bold" th:text="${storeVO.storeName}"></h2>
+        <div th:text="${storeVO.storeAddress}" class="purple2"></div>
+      </div>
+      <div class="col-md-6">
+        <div id="map" style="width:450px;height:400px;"></div><br>
+      </div>
+      </div>
     </div>
+
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6 center" style="padding-left: 20px; padding-top: 35px;">
+          <h3 style="padding-left: 40px;">예약 정보</h3>
+          <br>
+          <ul>
+            <li>
+              <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
+            </li>
+            <li>
+              <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
+            </li>
+            <li>
+              <strong>예약 일시:</strong> [[${bookingVO.bookingDate}]]
+            </li>
+            <li>
+              <strong>예약 일자:</strong> [[${bookingVO.bookingTime}]]
+            </li>
+            <li>
+              <strong>결제 금액:</strong> [[${bookingVO.price}]]
+            </li>
+          </ul>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>유의사항</h2>
+          <br>
+          <p>예약/결제 취소 : 예약 일자의 1시간 전까지<br>시간이 경과한 예약 건에 대해서는 관리자에게 문의</p>
+          <a th:onclick="iamport()" class="btn btn-primary" style="background-color: #8E48C7; border: none; border-radius: 10%; color: white;">결제하기</a>
+          <a th:href="@{/store/list}" class="btn btn-success" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</a>
+          <button class="btn btn-outline-secondary" type="button">Example button</button>
+        </div>
+      </div>
     </div>
-</div>
-
-
-
-<!--결제!!!!!!!!!!!!!!!!-->
-<button class="kakaoBtn kakaoBtn2">카카오페이 결제</button>
-
-<form method="post" action="/pay/refund">
-  <button class="kakaoBtn2">카카오페이 결제 취소</button>
-</form>
-
-<button onclick="iamport()" class="iamport">iamport 결제</button>
-<button onClick="cancelPay()" class="iamport">iamport 환불</button>
-
+  </div>
+</main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-  jQuery(function($){
-
-    $(".kakaoBtn").click(function(){
-      //alert("클릭");
-
-      //let으로 정보 전달해주기
-
-      $.ajax({
-        type : 'get',
-        url : '/pay/kakaoPay123',
-        data : {
-          //보낼정보들 (일단 임의값 테스트)
-          total_amount : 54321,         /*[[${bookingVO.price}]]*/
-          item_name : '[[${bookingVO.foodName}]]'
-        },
-        dataType : 'json',
-        success : function(readyResponse){
-          console.log("성공!");
-          console.log(readyResponse);
-          console.log(readyResponse.next_redirect_pc_url);
-
-          // var tid = readyResponse.tid;
-          //console.log(readyResponse.respond.tid);
-
-          // var kakaoPayReadyVO = JSON.parse(readyResponse);
-          //console.log(kakaoPayReadyVO);
-          location.href = readyResponse.next_redirect_pc_url;
-        },
-        error: function(xhr, status, error) {
-          console.log("에러 발생");
-          console.log(xhr);
-        }
-      });
-
-
-    });
-
-
-  });
-
-</script>
-
-
-<!--아임포트-->
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <script>
 
-  // 카드결제
   function iamport(){
     var IMP = window.IMP;
     //가맹점 식별코드
-    IMP.init('imp71427334');
+    IMP.init('imp40866160');
     IMP.request_pay({
-      //name과 amout만있어도 결제 진행가능
-      pg : 'html5_inicis', /*kakaopay*/
+      pg : 'html5_inicis',
       pay_method : 'card',
       merchant_uid : 'merchant_' + new Date().getTime(),
-      name : '[[${bookingVO.foodName}]]' , //결제창에서 보여질 이름
-      amount : 100, //실제 결제되는 가격
-      buyer_email : 'gaeun1811@naver.com',
-      buyer_name : '싼쵸보고싶다',
+      name : '그냥하염없이눈물이나' , //결제창에서 보여질 이름
+      amount : 1000, //실제 결제되는 가격
+      buyer_email : 'kchj8177@naver.com',
+      buyer_name : '김채정',
       buyer_tel : '010-1234-5678',
-      buyer_addr : '동탄동탄동탄',
-      buyer_postcode : '123-456',
-
+      buyer_addr : '서울 용산',
+      buyer_postcode : '123-456'
     }, function(rsp) {
-      console.log("??"+rsp);
-      if (rsp.success) {
+      console.log(rsp);
+      if ( rsp.success ) {
         var msg = '결제가 완료되었습니다.';
-
-        var result = {
-          "imp_uid": rsp.imp_uid,
-          "merchant_uid": rsp.merchant_uid,
-          "buyer_email": 'gaeun1811@naver.com',
-          "pay_date": new Date().getTime(),
-          "amount": rsp.paid_amount,
-          "card_no": rsp.apply_num,
-          "refund": 'payed'
-        };
-
-        console.log("결제성공 " + msg);
-
-        $.ajax({
-          url: '/pay/inicisComplete',
-          type: 'POST',
-          data: JSON.stringify(result,
-                  ['imp_uid', 'merchant_uid', 'buyer_email',
-                    'pay_date', 'amount', 'card_no', 'refund']),
-          contentType: 'application/json;charset=utf-8',
-          dataType: 'json', //서버에서 보내줄 데이터 타입
-          success: function (res) {
-
-            if (res == 1) {
-              console.log("추가성공");
-              //페이지이동!!! location.replace('');
-            } else {
-              console.log("Insert Fail!!!");
-            }
-          },
-          error: function () {
-            console.log("Insert ajax 통신 실패!!!");
-          }
-        })
-      }
-
-      else {
+        msg += '고유ID : ' + rsp.imp_uid;
+        msg += '상점 거래ID : ' + rsp.merchant_uid;
+        msg += '결제 금액 : ' + rsp.paid_amount;
+        msg += '카드 승인번호 : ' + rsp.apply_num;
+      } else {
         var msg = '결제에 실패하였습니다.';
         msg += '에러내용 : ' + rsp.error_msg;
       }
-      console.log(msg);
+      alert(msg);
     });
   }
-
-
-
-
-
-
-  function cancelPay() {
-    $.ajax({
-
-      "url": "/pay/inicisCancel",
-      "type": "POST",
-      "contentType": "application/json",
-      "data": JSON.stringify({
-        "merchant_uid": "merchant_1686190057124", // 예: ORD20180131-0000011
-        "cancel_request_amount": 10, // 환불금액
-        "reason": "테스트 결제 환불" // 환불사유
-      }),
-      "dataType": "json"
-    });
-  }
-
-
-
-
-
 </script>
 
+<!-- 카카오 지도 -->
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8abceac52f5d250937ec886cf8cd8d21"></script>
 
+<script th:inline="javascript">
+  //카카오 지도 사용하기
+  var container = document.getElementById('map');
+
+
+  var lati = /*[[${storeVO.storeLati}]]*/;
+  var longi = /*[[${storeVO.storeLongi}]]*/;
+
+  console.log(lati);
+  console.log(longi);
+
+
+  var options = {
+    center: new kakao.maps.LatLng(lati, longi),
+    /* https://map.kakao.com/?urlX=523954.0&urlY=1084098.0*/
+    level: 3
+  };
+
+  var map = new kakao.maps.Map(container, options);
+
+
+  //마커찍기
+  // 마커가 표시될 위치입니다
+  var markerPosition  = new kakao.maps.LatLng(lati, longi);
+
+  // 마커를 생성합니다
+  var marker = new kakao.maps.Marker({
+    position: markerPosition
+  });
+
+  // 마커가 지도 위에 표시되도록 설정합니다
+  marker.setMap(map);
+
+  // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+  // marker.setMap(null);
+</script>
+<!-- 카카오 지도 끝 -->
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 
