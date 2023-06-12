@@ -36,13 +36,19 @@ public class PayController {
     }
 
     //카카오페이 결제 요청 (ajax)
-    @GetMapping ("/kakaoPay123")
+    @GetMapping ("/kakaoPayGo")
     @ResponseBody
-    public KakaoPayReadyVO kakaoPay(int total_amount, String item_name, Model model, HttpServletRequest request) {
+    public KakaoPayReadyVO kakaoPay(int total_amount, String item_name,
+                                    Model model, HttpServletRequest request
+                                    , int userIdx, int storeIdx, int bookingIdx
+                                    ) {
         log.info("kakaoPay post............................................");
         log.info("total_amount : " + total_amount);
 
-        KakaoPayReadyVO readyResponse = kakaopay.kakaoPayReady(total_amount, item_name);
+
+        KakaoPayReadyVO readyResponse = kakaopay.kakaoPayReady(total_amount, item_name
+                                        ,userIdx, storeIdx, bookingIdx);
+
 
         model.addAttribute("tid", readyResponse.getTid());
         log.info("tid : " + readyResponse.getTid());
@@ -50,22 +56,22 @@ public class PayController {
 
         request.getSession().setAttribute("total_amount",total_amount);
 
-
         return readyResponse;
-
     }
+
 
     // 결제 승인 요청
     @GetMapping("/kakaoPaySuccess")
     public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token,
-                                //@RequestParam("total_amount") int total_amount,
                                 HttpServletRequest request,
                                 Model model) {
         log.info("kakaoPaySuccess get............................................");
         log.info("kakaoPaySuccess pg_token : " + pg_token);
 
-
         model.addAttribute("info", kakaopay.kakaoPayInfo(pg_token));
+
+
+        //이거 DB에 저장? approval
     }
 
 

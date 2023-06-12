@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -41,21 +42,26 @@ public class StoreController {
              , Criteria cri
     ){
 
-        if(cuisineSelect == null){
-            cuisineSelect = "없음";
+        if(cuisineSelect == null || cuisineSelect == ""){
+            cuisineSelect = "none";
         }
 
-        if(storeStar == null){
-            storeStar = "없음";
+        if(storeStar == null || storeStar == ""){
+            storeStar = "none";
         }
 
-        if(storeCount == null){
-            storeCount = "없음";
+        if(storeCount == null || storeCount == ""){
+            storeCount = "none";
         }
 
-        if(storeDistance == null){
-            storeDistance = "없음";
+        if(storeDistance == null || storeDistance == ""){
+            storeDistance = "none";
         }
+
+        if(cri.getKeyword() == null || cri.getKeyword() == ""){
+            cri.setKeyword("none");
+        }
+
 
         Map<String,Object> orderMap = new HashMap<>();
         orderMap.put("cuisineSelect", cuisineSelect);
@@ -71,7 +77,7 @@ public class StoreController {
         model.addAttribute("storeList", storeVO);
 
         /*페이징*/
-        int total = service.store_totalCnt(cri);
+        int total = service.store_totalCnt(orderMap);
         PageDTO pageMaker = new PageDTO(cri, total);
         model.addAttribute("pageMaker", pageMaker);
 
@@ -95,6 +101,7 @@ public class StoreController {
         /*회원정보*/
         MemberVO member = memberMapper.findUserByUserIdx(Integer.parseInt(storeVO.getUserIdx()));
         model.addAttribute("storeVO_member", member);
+
     }
 
     @GetMapping("/register")
@@ -103,9 +110,12 @@ public class StoreController {
     }
 
     @PostMapping("/register")
-    public String registerStoreVO(StoreVO storeVO, MultipartFile oriFilename){
+    public String registerStoreVO(StoreVO storeVO, MultipartFile oriFilename, RedirectAttributes rttr){
 
         service.saveFile(storeVO, oriFilename);
+
+        String wow = "complete";
+        rttr.addFlashAttribute("message", wow);
 
         return "redirect:/store/list";
     }
@@ -113,10 +123,13 @@ public class StoreController {
 
 
     @PostMapping("/update")
-    public String updateStoreVO(StoreVO storeVO, MultipartFile oriFilename){
+    public String updateStoreVO(StoreVO storeVO, MultipartFile oriFilename, RedirectAttributes rttr){
 
         log.info("Controller storeVO : " + storeVO);
         service.updateFile(storeVO, oriFilename);
+
+        String wow = "complete";
+        rttr.addFlashAttribute("message", wow);
 
 
         return "redirect:/store/list";

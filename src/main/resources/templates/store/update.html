@@ -117,7 +117,7 @@
           </div>
         </div>
 
-        <div class = "row">
+      <div class="row">
           <div class="col-md-8 mb-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-heart" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
@@ -127,17 +127,19 @@
             <div class="mb-3">
               <div class="form-group">
                 <select class="form-control" id="category1" name="category1" required>
-                  <option value="" selected disabled>FOOD STYLE</option>
-                  <option value="한식">한식</option>
-                  <option value="중식">중식</option>
-                  <option value="일식">일식</option>
-                  <option value="양식">양식</option>
-                  <option value="퓨전">퓨전</option>
-                  <option value="푸드코트">푸드코트</option>
+                  <option value="" disabled>FOOD STYLE</option>
+                  <option value="한식" th:selected="${storeVO.category1 == '한식'}">한식</option>
+                  <option value="중식" th:selected="${storeVO.category1 == '중식'}">중식</option>
+                  <option value="일식" th:selected="${storeVO.category1 == '일식'}">일식</option>
+                  <option value="양식" th:selected="${storeVO.category1 == '양식'}">양식</option>
+                  <option value="퓨전" th:selected="${storeVO.category1 == '퓨전'}">퓨전</option>
+                  <option value="푸드코트" th:selected="${storeVO.category1 == '푸드코트'}">푸드코트</option>
                 </select>
               </div>
             </div>
           </div>
+
+      </div>
           <!--요기별점
           <div class="col-md-4 mb-3">
             <label>맛집 평가</label>
@@ -157,7 +159,7 @@
             </div>
           </div>
           -->
-        </div>
+
 
         <!--        <div class="mb-3">
                   <label for="storeAddress">가게 주소</label>
@@ -239,16 +241,23 @@
         <input type="hidden" class="form-control" id="storeIdx" name="storeIdx"
                th:value="${storeVO.storeIdx}" >
 
-        <div class="text-center mt-5 mb-3">
-          <button class="btn btn-primary" type="submit">맛집 수정 요청</button>
-          <a class="btn btn-success" th:href="@{/store/list}">목록으로</a>
+        <div class="text-center mt-5">
+
+          <button class="btn btn-primary" type="submit" style="background-color: #8E48C7; border: none;">맛집 수정 요청</button>
+          <a class="btn btn-success" th:href="@{/store/list}" style="background-color: #9C91B3; border: none;">목록으로</a>
         </div>
 
       </form>
 
 
-      <div class="text-center mt-5 mb-3">
-        <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#confirmDeleteModal">
+
+
+
+
+
+      <div class="text-center mt-1 mb-3">
+        <a class="btn btn-warning" href="#" data-toggle="modal"
+           data-target="#confirmDeleteModal">
        <!-- <a class="btn btn-danger" th:href="@{/store/delete(storeIdx=${storeVO.storeIdx})}">-->
           삭제하기</a>
       </div>
@@ -292,25 +301,6 @@
   }
 </script>
 <!--끝-->
-
-
-
-
-
-
-<script>
-  /* 별점구현 */
-  function sendData() {
-    let firstForm = document.forms[0];
-
-    if ($("input[name='star']:checked").val() == undefined) {
-      alert("별점 선택 필수입니다!");
-      return;
-    }
-  }
-  /* 별점 끝 */
-</script>
-
 
 
 

@@ -70,8 +70,10 @@
 </style>
 </head>
 <body>
-<!--<p th:text="${bookingIdx}"></p>-->
-<!--<p th:text="${bookingVO}"></p>-->
+<!--
+<p th:text="${bookingIdx}"></p>
+<p th:text="${bookingVO}"></p>
+-->
 
 <div class="container">
   <div class="row">
@@ -140,11 +142,14 @@
 
       $.ajax({
         type : 'get',
-        url : '/pay/kakaoPay123',
+        url : '/pay/kakaoPayGo',
         data : {
-          //보낼정보들 (일단 임의값 테스트)
-          total_amount : 54321,         /*[[${bookingVO.price}]]*/
-          item_name : '[[${bookingVO.foodName}]]'
+          //보낼정보들
+          total_amount : [[${bookingVO.price}]],         /*[[${bookingVO.price}]]*/
+          item_name : '[[${bookingVO.foodName}]]',
+          userIdx : [[${bookingVO.userIdx}]],
+          storeIdx : [[${bookingVO.storeIdx}]],
+          bookingIdx : [[${bookingVO.bookingIdx}]]
         },
         dataType : 'json',
         success : function(readyResponse){

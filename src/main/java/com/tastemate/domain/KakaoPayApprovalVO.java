@@ -15,4 +15,20 @@ public class KakaoPayApprovalVO {
     private String item_name, item_code, payload;
     private Integer quantity, tax_free_amount, vat_amount;
     private Date created_at, approved_at;
+
+    /* 내가 추가 */
+    private int kakaoApprovalIdx;
+    private int userIdx;
+    private int storeIdx;
+    private int bookingIdx;
+    private int status;
+
+    //private String partnerOrderId;
+
+    private String pgToken;
+    //private String paymentMethodType;
+    //private String itemName;
+    //private Date approvedAt;
+
+
 }

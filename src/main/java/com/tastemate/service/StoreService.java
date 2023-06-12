@@ -37,9 +37,9 @@ public class StoreService {
         return  storeList;
     }
 
-    public int store_totalCnt(Criteria cri) {
+    public int store_totalCnt(Map<String, Object> orderMap) {
 
-        return mapper.getTotalCount(cri);
+        return mapper.getTotalCount(orderMap);
     }
 
     public StoreVO store_get(int storeIdx) {

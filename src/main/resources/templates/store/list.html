@@ -11,6 +11,8 @@
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
     <th:block th:replace="header_footer/header :: headerFragment"></th:block>
 
+
+
     <style>
         .yellow {
             color : #FFA500;
@@ -21,6 +23,7 @@
         .img_size{
             width: 350px;
             height: 300px;
+            border-radius: 5%;
         }
         .red{
             color: tomato;
@@ -109,7 +112,6 @@
 
 
 
-
     </style>
 </head>
 <body>
@@ -118,17 +120,38 @@
 <!--<td th:text="${storeList}"></td>-->
 
 
+
+
+
+<!-- HTML 코드 -->
+
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="text-center">
+    관리자의 승인 후 게시됩니다 ^^
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+
+
+
+
+
 <!--main-->
 <main class="container">
     <div class="container">
         <h1 class="text-center mt-5 mb-5 purple">이 맛집 어때요?</h1>
 
             <a class="btn btn-warning purple3"
-                    th:href="@{/store/list(storeStar='별점순')}">별점순</a>
+                    th:href="@{/store/list(storeStar='star')}">별점순</a>
             <a class="btn btn-warning purple3"
-                    th:href="@{/store/list(storeCount='인기순')}">인기순</a>
+                    th:href="@{/store/list(storeCount='popular')}">인기순</a>
             <a class="btn btn-warning purple3"
-                    th:href="@{/store/list(storeDistance='거리순')}">거리순</a>
+                    th:href="@{/store/list(storeDistance='distance')}">거리순</a>
 
         <div class="col-md-2 float-right">
             <div class="form-group">
@@ -165,9 +188,7 @@
                               class="fs20" style="color: black"></span>
 <!-- 별점 -->
 
-                            <!--<span th:each="i: ${#numbers.sequence(1, 4)}" class="yellow">★</span>-->
-
-                            <th:block th:with="starCount=${storeVO.starVO[0].storeStar}">
+                           <th:block th:with="starCount=${storeVO.starVO[0].storeStar}">
                                 <span th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}" class="yellow">★</span>
                             </th:block>
 
@@ -185,9 +206,28 @@
         <div class="text-right">
         <a th:href="@{/store/register}" class="btn btn-danger purple3">
             나만의 맛집등록
-        </a></div><br><br><br>
+        </a></div><br>
 
     </div>
+
+
+    <!--검색시작-->
+
+    <div class="container text-center">
+        <form th:action="@{/store/list}" method="GET">
+            <div class="row justify-content-center mt-2 mb-5">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input name="keyword" type="text" class="form-control rounded-pill" placeholder="맛집 검색!" aria-describedby="button-addon2">
+                            <button type="submit" class="btn btn-warning mx-3">검색</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
 
 
 <!--페이징시작!!!!-->
@@ -204,7 +244,9 @@
     <th:block th:with="pageMaker = ${pageMaker}">
         <th:block th:each="num : *{#numbers.sequence(pageMaker.pageStart, pageMaker.pageEnd)}">
             <li class="pageMaker_btn pagination-item" th:classappend="${pageMaker.cri.pageNum == num} ? 'active' : ''">
-                <a href="javascript:void(0)" th:text="${num}" th:onclick="movePage([[ ${#request.requestURI} ]],[[ ${pageMaker.cri.makeQueryString(num)} ]])"></a>
+                <a href="javascript:void(0)" th:text="${num}"
+                   th:onclick="movePage([[ ${#request.requestURI} ]]
+                ,[[ ${pageMaker.cri.makeQueryString(num)} ]])"></a>
             </li>
         </th:block>
     </th:block>
@@ -213,7 +255,9 @@
     <!-- 다음 버튼 -->
     <th:block th:if="${pageMaker.next}">
         <li class="pageMaker_btn next pagination-item">
-            <a href="javascript:void(0)" th:onclick="movePage( [[ ${#request.requestURI} ]], [[ ${pageMaker.cri.makeQueryString(pageMaker.pageEnd + 1)} ]])">다음</a>
+            <a href="javascript:void(0)" th:onclick="movePage(
+            [[ ${#request.requestURI} ]],
+            [[ ${pageMaker.cri.makeQueryString(pageMaker.pageEnd + 1)} ]])">다음</a>
         </li>
     </th:block>
 

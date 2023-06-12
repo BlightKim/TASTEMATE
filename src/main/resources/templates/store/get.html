@@ -99,7 +99,7 @@
 
 
 
-<div class="container py-4">
+<div class="container py-4 mb-5">
     <div class="row">
         <div class="col-lg-6">
             <div class="d-flex justify-content-center align-items-center mt-5">
@@ -122,63 +122,48 @@
             <p th:text="'주소 : ' + ${storeVO.storeAddress}" class="mb-4"></p>
             <p th:text="'전화번호 : ' + ${storeVO.phoneNumber}" class="mb-4"></p>
 
-<!--
-                        <p th:text="${storeVO.storeLati}" class="mb-4"></p>
-                        <p th:text="${storeVO.storeLongi}" class="mb-4"></p>
- -->
 
             <a href="#" class="btn btn-danger purple5" id="getMenu">메뉴보기</a><br><br>
 
             <div id="map" style="width:450px;height:300px;"></div><br>
 
-            <!--<a href="#" class="btn btn-primary">찜하기</a>-->
-
-
-<!--
-                <span class="border">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                        <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                    </svg>
-                </span>
-
-                <a href="#" class="btn btn-warning purple4">예약하기</a>
-                <a class="btn btn-success purple4" th:href="@{/store/list}">목록으로</a>
-                <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark">맛집 정보 수정</a>
--->
-
+<!--찜하기 이모티콘-->
             <div class="row g-0 no-gutters">
                 <div class="col-auto mx-1">
+                    <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx}, storeName=${storeVO.storeName})}">
+
                     <span class="border">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
                             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                         </svg>
                     </span>
+                    </a>
                 </div>
-<!--                <div class="col-auto mx-1">
-                    <a href="#" class="btn btn-warning purple4">예약하기</a>
-                </div>-->
+
+
+
+<!--                <td th:text="${storeVO.userIdx}"></td>
+                <td th:text="${session.vo.getUserIdx()}"></td>-->
+
+ 로그인한 사람과 등록한 사람이 동일할때만 맛집 수정버튼이 보임!
+<!--             <th:block th:if="${session.vo.getUserIdx() == storeVO.userIdx}">-->
+                    <div class="col-auto mx-1">
+                        <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark"
+                           style="background-color: #8E48C7; border: none;">맛집 정보 수정</a>
+                    </div>
+<!--             </th:block>-->
+
                 <div class="col-auto mx-1">
-                    <a class="btn btn-success purple4" th:href="@{/store/list}">목록으로</a>
-                </div>
-                <div class="col-auto mx-1">
-                    <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark">맛집 정보 수정</a>
+                    <a class="btn btn-success" th:href="@{/store/list}"
+                       style="background-color: #9C91B3; border: none;">목록으로</a>
                 </div>
 
-
-<!--
-
-                <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx}, storeName=${storeVO.storeName})}" class="btn btn-primary">북마크</a>
-                <a th:href="@{/booking/bookingInsert(storeIdx=${storeVO.storeIdx})}" class="btn btn-warning">예약하기</a>
--->
-
-                    <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx}, storeName=${storeVO.storeName})}" class="btn btn-primary">북마크</a>
-                    <a th:href="@{/booking/bookingInsert(storeIdx=${storeVO.storeIdx})}" class="btn btn-warning">예약하기</a>
-
-
+                <div class="mx-1">
+                    <a th:href="@{/booking/bookingInsert(storeIdx=${storeVO.storeIdx})}"
+                       class="btn btn-warning"
+                    style="border: none;">예약하기</a>
+                </div>
             </div>
-
-
-
 
         </div>
 
