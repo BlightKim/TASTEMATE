@@ -12,6 +12,8 @@ public interface MemberMapper {
         @Autowired
         public List<MemberVO> member_getList();
 
+        @Autowired
+        public String member_checkId();
 
         public int user_join(MemberVO vo);
 
@@ -24,6 +26,12 @@ public interface MemberMapper {
         public int userStatus(MemberVO vo);
 
         public MemberVO findId(String userEmail);
+
+        public Integer check(String userId, String userPwd);
+
+        public MemberVO userGet(String userId, String userEmail);
+
+        public int resetPassword(MemberVO vo);
         public MemberVO findUserByUserIdx(Integer userIdx);
         public List<MemberVO> member_getClassList(int userClass);
 

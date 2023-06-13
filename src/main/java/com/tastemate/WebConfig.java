@@ -1,10 +1,11 @@
 package com.tastemate;
 
+
 import com.tastemate.interceptor.LogInterceptor;
 import com.tastemate.interceptor.LoginCheckInterceptor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -17,21 +18,22 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LogInterceptor())
-        .order(1)
-        .addPathPatterns("/**")
-        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**");
+            .order(1)
+            .addPathPatterns("/**")
+            .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**");
 
     registry.addInterceptor(new LoginCheckInterceptor())
             .order(2)
             .addPathPatterns("/**")
-            .excludePathPatterns("/", "/board", "/member/login**",
-                    "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
-                    "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "/member/simpleregister"
-            ,"/store/**", "/booking/**", "/pay/**", "/store/get", "/bookmark/insertAjax.do");
+            .excludePathPatterns("/", "/board", "/member/login**", "/member/logout",
+                    "/css/**", "/*.ico", "**/js/**", "/error", "/member/register", "/img/**",
+                    "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**", "/member/class",
+                    "/member/mbti", "/member/selectFood", "/store/**", "member/list", "/member/simpleregister",
+                    "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/get", "/store/register",
+                    "/store/update", "/store/starComment", "/member/resetPassword", "/member/reset", "/member/checkId",
+                    "/member/resetSuccess", "/member/mailConfirm");
 
   }
-
-
   private String resourcePath = "/member/**";
   private String savePath = "file:///Users/bazzi/upload";
 
@@ -46,4 +48,6 @@ public class WebConfig implements WebMvcConfigurer {
 
 
   }
+
 }
+
