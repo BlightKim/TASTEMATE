@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+  <style>
+    body {
+        min-height: 100vh;
+
+        background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+        background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+    }
+
+    .input-form {
+      /*max-width: 680px;*/
+
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+
+    /* 별점 구현 */
+    #star{
+      display: inline-block;
+      direction: rtl;
+      border:0;
+    }
+    #star legend{
+      text-align: right;
+    }
+    input[type=radio]{
+      display: none;
+    }
+    #star label{
+      font-size: 2em;
+      color: transparent;
+      text-shadow: 0 0 0 #f0f0f0;
+    }
+    #star label:hover{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #star label:hover ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #star input[type=radio]:checked ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    .disable {
+      background-color: darkgray;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="input-form-backgroud row">
+    <div class="input-form col-md-12 mx-auto">
+
+      <h3 class="mb-3 mb-5 purple2 text-center">리뷰 수정</h3>
+      <form th:action="@{/manage/updateUserReview}" method="post">
+
+        <div class="row">
+
+            <div class="col-md-8 mb-3">
+                <label>맛집 평가</label>
+                <div>
+                    <fieldset id="star">
+                        <input type="radio" name="storeStar" value="5" id="rate1"><label
+                            for="rate1" >★</label>
+                        <input type="radio" name="storeStar" value="4" id="rate2"><label
+                            for="rate2" >★</label>
+                        <input type="radio" name="storeStar" value="3" id="rate3"><label
+                            for="rate3" >★</label>
+                        <input type="radio" name="storeStar" value="2" id="rate4"><label
+                            for="rate4" >★</label>
+                        <input type="radio" name="storeStar" value="1" id="rate5"><label
+                            for="rate5" >★</label>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                </svg>
+                <label>사용자 ID</label>
+                <input th:if="${viewUserReview.userId == null}" type="text" class="form-control" value="ID 정보없음" readonly>
+                <input th:if="${viewUserReview.userId != null}" type="text" class="form-control" id="userId" name="userId" th:value="${viewUserReview.userId}" readonly>
+                <input type="hidden" class="form-control" id="userName" name="userName" th:value="${viewUserReview.userName}">
+            </div>
+
+        </div>
+
+
+        <label>코멘트</label>
+        <div class="mb-3">
+            <input type="text" name="storeComment" id="storeComment"
+                   size="70" class="form-control" th:value="${viewUserReview.storeComment}">
+        </div>
+          <div>
+              <input type="hidden" name="storeIdx" th:value="${viewUserReview.storeIdx}">
+              <input type="hidden" name="starIdx" th:value="${viewUserReview.starIdx}">
+          </div>
+
+        <div class="text-center mt-5 mb-3">
+            <button type="submit" class="btn text-white" style="background-color: #8E48C7">수정</button>
+            <a th:href="@{|/manage/storeView?storeIdx=${viewUserReview.storeIdx}|}" class="btn text-white" style="background-color: #9C91B3">목록</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  /* 별점구현 */
+  function sendData() {
+    let firstForm = document.forms[0];
+
+    if ($("input[name='star']:checked").val() == undefined) {
+      alert("별점 선택 필수입니다!");
+      return;
+    }
+  }
+  /* 별점 끝 */
+</script>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>
+
+
+
+<!--    <div class = "row">-->
+<!--        &lt;!&ndash;요기별점&ndash;&gt;-->
+<!--        <div class="mb-3">-->
+<!--            <label>맛집 평가</label>-->
+<!--            <div>-->
+<!--                <fieldset id="star">-->
+<!--                    <input type="radio" name="star" value="5" id="rate1"><label-->
+<!--                        for="rate1" >★</label>-->
+<!--                    <input type="radio" name="star" value="4" id="rate2"><label-->
+<!--                        for="rate2" >★</label>-->
+<!--                    <input type="radio" name="star" value="3" id="rate3"><label-->
+<!--                        for="rate3" >★</label>-->
+<!--                    <input type="radio" name="star" value="2" id="rate4"><label-->
+<!--                        for="rate4" >★</label>-->
+<!--                    <input type="radio" name="star" value="1" id="rate5"><label-->
+<!--                        for="rate5" >★</label>-->
+<!--                    <input type="radio" name="star" th:value="${viewUserReview.userStar}" th:id="'rate' + ${viewUserReview.userStar}"><label-->
+<!--                        for="rate1" >★</label>-->
+<!--                    <input th:if="${viewUserReview.userStar != 5}" type="radio" name="star" value="5" id="rate1"><label-->
+<!--                        for="rate1" >★</label>-->
+<!--                    <input th:if="${viewUserReview.userStar != 4}" type="radio" name="star" value="4" id="rate2"><label-->
+<!--                        for="rate2" >★</label>-->
+<!--                    <input th:if="${viewUserReview.userStar != 3}" type="radio" name="star" value="3" id="rate3"><label-->
+<!--                        for="rate3" >★</label>-->
+<!--                    <input th:if="${viewUserReview.userStar != 2}" type="radio" name="star" value="2" id="rate4"><label-->
+<!--                        for="rate4" >★</label>-->
+<!--                    <input th:if="${viewUserReview.userStar != 1}" type="radio" name="star" value="1" id="rate5"><label-->
+<!--                        for="rate5" >★</label>-->
+<!--                </fieldset>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--        <div class="col-md-4 mb-3">-->
+<!--            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">-->
+<!--                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>-->
+<!--            </svg>-->
+<!--            <label for="userIdx">사용자 ID</label>-->
+<!--            <input type="text" class="form-control" id="userIdx" name="userId" readonly="readonly" th:value="${viewUserReview.userId}">-->
+<!--            <input type="hidden" class="form-control" id="userName" name="userName" th:value="${viewUserReview.userName}">-->
+<!--        </div>-->
+<!--    </div>-->
