@@ -77,14 +77,32 @@ public class PayController {
     }
 
     @GetMapping("/mykakaoPaySuccess")
-    public void mykakaoPaySuccess(HttpSession session, Model model){
+    public String mykakaoPaySuccess(HttpSession session, Model model){
         log.info("mykakaoPaySuccess 도착!");
 
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
         log.info("세션 memberVO 확인!"+memberVO);
-        KakaoPayApprovalVO info = kakaopay.getKakaoApproval(memberVO.getUserIdx());
-        log.info("mykakaoPaySuccess info : " + info);
-        model.addAttribute("info", info);
+
+        try {
+            KakaoPayApprovalVO info = kakaopay.getKakaoApproval(memberVO.getUserIdx());
+            log.info("mykakaoPaySuccess info : " + info);
+
+            if(info == null){
+                return "redirect:/pay/mykakaoPayNothing";
+            }
+
+            model.addAttribute("info", info);
+
+        } catch (Exception e){
+            log.info("mykakaoPaySuccess 에러발생");
+        }
+
+        return "/pay/mykakaoPaySuccess";
+    }
+
+    @GetMapping("/mykakaoPayNothing")
+    public void mykakaoPayNothing(){
+
     }
 
 
@@ -129,7 +147,7 @@ public class PayController {
 
 
 
-    //이후 DB 작업해서 insert되면 1되게 하자
+    //이후 DB 작업해서 insert되면 1되게 하자    model에 저장까지???
 /*        int res = paySV.insert_pay(pvo);
         if(res == 1) {
             Biz_memberVO bvo = memberSV.selectBizMember(pvo.getBiz_email());
@@ -162,6 +180,8 @@ public class PayController {
 
     @GetMapping("/inicisSuccess")
     public void inicisSuccess(){
+
+        //여기서 DB에서 가져와야하나?
 
     }
 

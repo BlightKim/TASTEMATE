@@ -14,4 +14,6 @@ public interface KakaoPayMapper {
     KakaoPayApprovalVO get_KakaoApproval(int userIdx);
 
     int get_amount(String tid);
+
+    int delete_update(String tid);
 }

@@ -30,10 +30,10 @@
     <insert id="kakaoPayApproval_insert" parameterType="KakaoPayApprovalVO">
         insert into KakaoPayApproval(kakao_approval_idx, user_idx, store_idx, booking_idx,
         partner_order_id, amount, pg_token, payment_method_type,
-        item_name, quantity, approved_at)
+        item_name, quantity, approved_at, tid)
         values (KAKAOAPPROVAL_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx},
-        #{partner_order_id}, #{amount.total}, #{pgToken}, #{payment_method_type},
-        #{item_name}, #{quantity}, #{approved_at})
+        #{partner_order_id}, #{amount2}, #{pgToken}, #{payment_method_type},
+        #{item_name}, #{quantity}, #{approved_at}, #{tid})
     </insert>
 
     <select id="get_KakaoApproval" resultMap="KakaoApproval">
@@ -48,6 +48,12 @@
         from KAKAOPAYAPPROVAL
         where tid = #{tid}
     </select>
+
+    <update id="delete_update">
+        update KAKAOPAYAPPROVAL
+        set STATUS = 1
+        where tid = #{tid}
+    </update>
 
 
 

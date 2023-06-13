@@ -135,7 +135,7 @@ public class KakaoPay {
 
         try {
             kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalVO.class);
-            log.info("" + kakaoPayApprovalVO);
+
 
             // DB 연동 (kakaoPayApprovalVO)
             kakaoPayApprovalVO.setPgToken(pg_token);
@@ -144,6 +144,7 @@ public class KakaoPay {
             kakaoPayApprovalVO.setBookingIdx(kakaoPayReadyVO.getBookingIdx());
             kakaoPayApprovalVO.setTid(kakaoPayReadyVO.getTid());
             kakaoPayApprovalVO.setAmount2(kakaoPayReadyVO.getTotalAmount());
+            log.info("" + kakaoPayApprovalVO);
             int result2 = kakaoPayMapper.kakaoPayApproval_insert(kakaoPayApprovalVO);
             log.info("kakaoPayApproval_insert " + result2);
             
@@ -185,6 +186,9 @@ public class KakaoPay {
         // DB 작업
         //kakaoPayApprovalVO 에서 status를 0이 결제완료인것
         // , 1이 결제 취소인것으로 변경할까??(delete가아니라)
+        int result = kakaoPayMapper.delete_update(tid);
+        log.info("delete_update : " + result);
+
 
 
         // 외부에 보낼 url
