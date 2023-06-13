@@ -28,4 +28,6 @@ public class MemberVO {
         private String userAddressSi;
         private String userAddressGu;
 
+
+        private StarVO starVO;
 }

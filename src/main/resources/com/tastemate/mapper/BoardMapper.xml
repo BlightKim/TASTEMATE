@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.BoardMapper">
+  <resultMap id="BaseResultMap" type="com.tastemate.domain.board.BoardVO">
+    <!--@mbg.generated-->
+    <!--@Table BOARD-->
+    <id column="BOARD_IDX" jdbcType="INTEGER" property="boardIdx"/>
+    <result column="USER_IDX" jdbcType="INTEGER" property="userIdx"/>
+    <result column="WRITER" jdbcType="VARCHAR" property="writer"/>
+    <result column="TITLE" jdbcType="VARCHAR" property="title"/>
+    <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+    <result column="HITS" jdbcType="INTEGER" property="hits"/>
+    <result column="REG_DATE" jdbcType="DATE" property="regDate"/>
+    <result column="UPDATE_DATE" jdbcType="DATE" property="updateDate"/>
+    <result column="DELETE_DATE" jdbcType="DATE" property="deleteDate"/>
+    <result column="BOARD_STATUS" jdbcType="VARCHAR"
+      typeHandler="com.tastemate.handlers.BoardStatusHandler" property="boardStatus"/>
+    <result column="COMMENT_COUNT" jdbcType="INTEGER" property="commentCount"/>
+    <result column="BOARD_LIKE" jdbcType="INTEGER" property="boardLike"/>
+    <result column="ORI_NAME" jdbcType="VARCHAR" property="oriName"/>
+    <result column="STORE_NAME" jdbcType="VARCHAR" property="storeName"/>
+    <association property="memberVO" javaType="com.tastemate.domain.MemberVO"
+      resultMap="memberResultMap"/>
+  </resultMap>
+  <resultMap id="memberResultMap" type="com.tastemate.domain.MemberVO">
+    <id column="USER_IDX" property="userIdx"/>
+    <result column="USER_ID" property="userId"/>
+    <result column="USER_PWD" property="userPwd"/>
+    <result column="USER_NAME" property="userName"/>
+    <result column="USER_GENDER" property="userGender"/>
+    <result column="USER_PHONE" property="userPhone"/>
+    <result column="USER_ADDRESS" property="userAddress"/>
+    <result column="USER_CLASS" property="userClass"/>
+    <result column="USER_LIKE_FOOD" property="userLikeFood"/>
+    <result column="USER_LOGINTYPE" property="userLoginType"/>
+    <result column="USER_DATE" property="userDate"/>
+    <result column="USER_STATUS" property="userStatus"/>
+    <result column="USER_PROFILE" property="userProfile"/>
+    <result column="USER_TYPE" property="userType"/>
+    <result column="USER_MBTI" property="userMbti"/>
+    <result column="USER_EMAIL" property="userEmail"/>
+    <result column="USER_BIRTH" property="userBirth"/>
+  </resultMap>
+  <resultMap id="commentMap" type="CommentVO">
+    <!--@Table BOARD_COMMENT-->
+    <id column="COMMENT_IDX" property="commentIdx" jdbcType="INTEGER"/>
+    <result column="COMMENT_LEVEL" property="commentLevel" jdbcType="INTEGER"/>
+    <result column="PARENT_COMMENT_IDX" property="parentCommentIdx" jdbcType="INTEGER"/>
+    <result column="COMMENT_CONTENT" property="commentContent" jdbcType="VARCHAR"/>
+    <result column="COMMENTER" property="commenter" jdbcType="VARCHAR"/>
+    <result column="REG_DATE" property="regDate" jdbcType="DATE"/>
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="DATE"/>
+    <result column="COMMENT_STATUS" property="commentStatus"
+      typeHandler="com.tastemate.handlers.CommentStatusHandler"/>
+    <result column="BOARD_IDX" property="boardIdx" jdbcType="INTEGER"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    B.BOARD_IDX,
+    B.USER_IDX,
+    B.WRITER,
+    B.TITLE,
+    B.CONTENT,
+    B.HITS,
+    B.REG_DATE,
+    B.UPDATE_DATE,
+    B.DELETE_DATE,
+    B.BOARD_STATUS,
+    B.BOARD_LIKE,
+    B.ORI_NAME,
+    B.STORE_NAME,
+    B.COMMENT_COUNT
+  </sql>
+  <sql id="memberColumnList">
+    M.USER_IDX AS M_IDX,
+    M.USER_ID,
+    M.USER_PWD,
+    M.USER_NAME,
+    M.USER_GENDER,
+    M.USER_PHONE,
+    M.USER_ADDRESS,
+    M.USER_CLASS,
+    M.USER_LIKE_FOOD,
+    M.USER_LOGINTYPE,
+    M.USER_DATE,
+    M.USER_STATUS,
+    M.USER_PROFILE,
+    M.USER_ORI_PROFILE,
+    M.USER_TYPE,
+    M.USER_MBTI,
+    M.USER_EMAIL,
+    M.USER_BIRTH
+  </sql>
+  <sql id="boardCommentColumnList">
+    BC.COMMENT_IDX,
+    BC.COMMENT_LEVEL,
+    BC.PARENT_COMMENT_IDX,
+    BC.COMMENT_CONTENT,
+    BC.COMMENTER,
+    BC.REG_DATE,
+    BC.UPDATE_DATE,
+    BC.COMMENT_STATUS,
+    BC.BOARD_IDX
+  </sql>
+  <sql id="searchCondition">
+    <choose>
+      <when test='option == "T"'>
+        AND title LIKE '%' || #{keyword,jdbcType=VARCHAR} || '%'
+      </when>
+      <when test='option == "W"'>
+        AND writer '%' || #{keyword,jdbcType=VARCHAR} || '%'
+      </when>
+      <!--      <otherwise>-->
+      <!--        AND title '%' || #{keyword,jdbcType=VARCHAR} || '%'-->
+      <!--        OR content '%' || #{keyword,jdbcType=VARCHAR} || '%'-->
+      <!--      </otherwise>-->
+    </choose>
+  </sql>
+
+  <select id="selectResultPage" parameterType="com.tastemate.paging.SearchCondition"
+    resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select *
+    FROM
+    (select row_number() over (order by REG_DATE DESC) AS rnum,
+    <include refid="Base_Column_List"/>,
+    <include refid="memberColumnList"/>
+    FROM BOARD B
+           JOIN MEMBER M on B.USER_IDX = M.USER_IDX
+    WHERE 1 = 1
+    <include refid="searchCondition"/>
+    ) DATA
+    <![CDATA[
+    where ((#{page} - 1) * #{pageSize}) < rnum
+      AND rnum <= (#{page} * #{pageSize})
+    ]]>
+  </select>
+  <select id="selectResultCnt" parameterType="com.tastemate.paging.SearchCondition"
+    resultType="integer">
+    SELECT count(*)
+    FROM board
+    WHERE BOARD_STATUS LIKE '등록'
+    <include refid="searchCondition"/>
+  </select>
+  <select id="findLikedUsers" resultType="MemberVO" parameterType="integer">
+    SELECT M.*
+    FROM MEMBER M
+           INNER JOIN BOARD_LIKES bl ON M.user_idx = bl.user_idx
+    WHERE bl.board_idx = #{boardIdx}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="integer">
+    <!--@mbg.generated-->
+    delete
+    from BOARD
+    where BOARD_IDX = #{boardIdx,jdbcType=INTEGER}
+  </delete>
+  <select id="selectOneBoardByBoardIdx" parameterType="integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>,
+    <include refid="memberColumnList"/>
+    FROM BOARD B
+           JOIN MEMBER M on B.USER_IDX = M.USER_IDX
+    WHERE B.BOARD_IDX = #{boardIdx}
+  </select>
+  <insert id="insert" parameterType="com.tastemate.domain.board.BoardVO">
+    <!--@mbg.generated-->
+    <selectKey keyProperty="boardIdx" order="BEFORE" resultType="integer">
+      select BOARD_SEQ.nextval
+      from dual
+    </selectKey>
+    insert into BOARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      BOARD_IDX,
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="writer != null">
+        WRITER,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+      <if test="hits != null">
+        HITS,
+      </if>
+
+      REG_DATE,
+      UPDATE_DATE,
+      DELETE_DATE,
+      BOARD_STATUS,
+      ORI_NAME,
+      STORE_NAME
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{boardIdx,jdbcType=INTEGER},
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="boardPassword != null">
+        #{boardPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="writer != null">
+        #{writer,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null">
+        #{hits,jdbcType=INTEGER},
+      </if>
+        SYSDATE,
+        NULL,
+        NULL,
+        #{boardStatus, typeHandler=com.tastemate.handlers.BoardStatusHandler},
+      <if test="oriName != null">
+        #{oriName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertSelective" parameterType="BoardVO">
+    <!--@mbg.generated-->
+    <selectKey keyProperty="boardIdx" order="BEFORE" resultType="integer">
+      select BOARD_SEQ.nextval
+      from dual
+    </selectKey>
+    insert into BOARD
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      BOARD_IDX,
+      <if test="userIdx != null">
+        USER_IDX,
+      </if>
+      <if test="writer != null">
+        WRITER,
+      </if>
+      <if test="title != null">
+        TITLE,
+      </if>
+      <if test="content != null">
+        CONTENT,
+      </if>
+      <if test="hits != null">
+        HITS,
+      </if>
+      <if test="regDate != null">
+        REG_DATE,
+      </if>
+      <if test="updateDate != null">
+        UPDATE_DATE,
+      </if>
+      <if test="deleteDate != null">
+        DELETE_DATE,
+      </if>
+      <if test="boardStatus != null">
+        BOARD_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{boardIdx,jdbcType=INTEGER},
+      <if test="userIdx != null">
+        #{userIdx,jdbcType=INTEGER},
+      </if>
+      <if test="boardPassword != null">
+        #{boardPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="writer != null">
+        #{writer,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="hits != null">
+        #{hits,jdbcType=INTEGER},
+      </if>
+      <if test="regDate != null">
+        #{regDate,jdbcType=DATE},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="deleteDate != null">
+        #{deleteDate,jdbcType=DATE},
+      </if>
+      <if test="boardStatus != null">
+        #{boardStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertLike" parameterType="map">
+    INSERT INTO board_likes (board_idx, user_idx)
+    VALUES (#{boardIdx}, #{userIdx})
+  </insert>
+
+  <delete id="deleteLike" parameterType="map">
+    DELETE
+    FROM board_likes
+    WHERE board_idx = #{boardIdx}
+      AND user_idx = #{userIdx}
+  </delete>
+  <update id="increaseCommentCount" parameterType="integer">
+    UPDATE BOARD
+    SET COMMENT_COUNT = COMMENT_COUNT + 1
+    WHERE BOARD_IDX = #{boardIdx}
+  </update>
+  <update id="increaseHit" parameterType="integer">
+    UPDATE BOARD
+    SET HITS = HITS + 1
+    WHERE BOARD_IDX = #{boardIdx, jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="BoardVO">
+    <!--@mbg.generated-->
+    update BOARD
+    set USER_IDX       = #{userIdx,jdbcType=INTEGER},
+        WRITER         = #{writer,jdbcType=VARCHAR},
+        TITLE          = #{title,jdbcType=VARCHAR},
+        CONTENT        = #{content,jdbcType=VARCHAR},
+        HITS           = #{hits,jdbcType=INTEGER},
+        REG_DATE       = #{regDate,jdbcType=DATE},
+        UPDATE_DATE    = #{updateDate,jdbcType=DATE},
+        DELETE_DATE    = #{deleteDate,jdbcType=DATE},
+        BOARD_STATUS   = #{boardStatus,jdbcType=VARCHAR}
+    where BOARD_IDX = #{boardIdx,jdbcType=INTEGER}
+  </update>
+  <update id="updateBoard" parameterType="com.tastemate.domain.board.BoardVO">
+    UPDATE BOARD
+    SET TITLE          = #{title, jdbcType=VARCHAR},
+        CONTENT        = #{content, jdbcType=VARCHAR},
+        UPDATE_DATE    = #{updateDate, jdbcType=DATE},
+        ORI_NAME       = #{oriName, jdbcType=VARCHAR},
+        STORE_NAME     = #{storeName, jdbcType=VARCHAR}
+    WHERE BOARD_IDX = #{boardIdx, jdbcType=INTEGER}
+  </update>
+  <update id="deleteBoard" parameterType="integer">
+    UPDATE BOARD
+    SET BOARD_STATUS = '삭제',
+        DELETE_DATE  = SYSDATE
+    WHERE BOARD_IDX = #{boardIdx}
+  </update>
+  <select id="checkForLike" parameterType="map" resultType="integer">
+    SELECT COUNT(*)
+    FROM board_likes
+    WHERE board_idx = #{boardIdx}
+      AND user_idx = #{userIdx}
+  </select>
+
+  <update id="increaseLike">
+    UPDATE BOARD
+    SET BOARD_LIKE = BOARD_LIKE + 1
+    WHERE BOARD_IDX = #{boardIdx}
+  </update>
+
+  <update id="decreaseLike">
+    UPDATE BOARD
+    SET BOARD_LIKE = BOARD_LIKE - 1
+    WHERE BOARD_IDX = #{boardIdx}
+  </update>
+  <update id="decreaseCommentCount">
+    UPDATE BOARD
+    SET COMMENT_COUNT = COMMENT_COUNT - 1
+    WHERE BOARD_IDX = #{boardIdx}
+  </update>
+</mapper>
