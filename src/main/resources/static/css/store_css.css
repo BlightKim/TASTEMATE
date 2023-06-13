@@ -19,11 +19,21 @@
 }
 
 .purple2 {
-    color: mediumpurple;
+    color : #601599;
+    /*color: blueviolet;*/
 }
+
 
 .gray {
     color: gray;
+}
+
+.yellow {
+    color : #FFA500;
+}
+
+.red {
+    color : crimson;
 }
 
 /* 등록 폼 */
