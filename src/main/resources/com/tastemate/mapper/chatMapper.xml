@@ -80,19 +80,27 @@
           AND CU.USER_STATUS = 1
     </select>
     <select id="matchingUser" resultType="MemberVO">
-        SELECT USER_IDX
+        SELECT USER_IDX, USER_NAME
         FROM MEMBER
-        WHERE USER_IDX = 3;
+        WHERE USER_IDX = 17
     </select>
-    <insert id="createRoom" parameterType="String">
+    <insert id="createRoom" parameterType="ChatRoomVO">
         INSERT INTO CHAT_ROOM
             (ROOM_IDX, ROOM_NAME, ROOM_STATUS)
-        VALUES(CHAT_MESSAGE_SEQ.NEXTVAL,#{roomName},1)
+        VALUES(CHAT_ROOM_SEQ.NEXTVAL,#{roomName},1)
     </insert>
 
-<!--    <insert id="insertChatRoomUser" parameterType="MemberVO,ChatRoomVO">
+    <insert id="insertChatRoomUser" parameterType="ChatUserVO">
         INSERT INTO CHAT_USER
             (ROOM_IDX, USER_IDX, USER_STATUS)
         VALUES(#{roomIdx},#{userIdx},1)
-    </insert>-->
+    </insert>
+
+    <select id="findLatestRoomIdx" resultType="int">
+        SELECT ROOM_IDX
+        FROM CHAT_ROOM
+        WHERE 1= rownum
+        ORDER BY ROOM_IDX DESC
+    </select>
+
 </mapper>

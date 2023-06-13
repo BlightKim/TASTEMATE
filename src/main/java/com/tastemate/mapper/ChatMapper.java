@@ -26,10 +26,10 @@ public interface ChatMapper {
 
     public MemberVO matchingUser();
 
-    public ChatRoomVO createRoom(String roomName);
+    public void createRoom(ChatRoomVO room);
 
-    void insertChatRoomUser(ChatRoomVO room, MemberVO vo);
-
+    public void insertChatRoomUser(ChatUserVO vo);
+    public  int findLatestRoomIdx();
 
 
 

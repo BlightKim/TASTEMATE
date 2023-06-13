@@ -69,21 +69,29 @@ public class ChatController {
         return user;
     }
 
-
+    @ResponseBody
     @PostMapping("/chat/matching")
-    public void matching(Model model, HttpSession session) {
+    public ChatRoomVO matching(Model model, HttpSession session) {
         MemberVO vo1 = (MemberVO) session.getAttribute("vo");
         MemberVO vo2 = chatService.matchingUser();
-        String roomName = vo1.getUserName() + "," + vo2.getUserName();
-        ChatRoomVO room = chatService.createRoom(roomName);
+        ChatRoomVO roomName = new ChatRoomVO();
+        roomName.setRoomName(vo1.getUserName() + "," + vo2.getUserName() + " 대화방");
+        System.out.println(">>roomName : " + roomName);
+        int roomIdx = chatService.createRoom(roomName);
+        System.out.println(">>roomIdx : " + roomIdx);
+        ChatUserVO user1 = new ChatUserVO();
+        user1.setRoomIdx(roomIdx);
+        user1.setUserIdx(vo1.getUserIdx());
+        chatService.insertChatRoomUser(user1);
+        System.out.println("user1 : " + user1);
 
-        chatService.insertChatRoomUser(room, vo1);
-        chatService.insertChatRoomUser(room, vo2);
+        ChatUserVO user2 = new ChatUserVO();
+        user2.setRoomIdx(roomIdx);
+        user2.setUserIdx(vo2.getUserIdx());
+        chatService.insertChatRoomUser(user2);
+        System.out.println("user2 : " + user2);
 
-        System.out.println("roomName : " + roomName);
-
-
-        model.addAttribute("room", room);
+        return chatService.getRoom(roomName);
     }
 
 }

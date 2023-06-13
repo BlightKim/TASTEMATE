@@ -95,12 +95,38 @@
 
                 var roomIdx = form.querySelector('input[name="roomIdx"]').value;
 
-                var popupWindow = window.open("", "popupWindow", "width=500px,height=600px,scrollbars=no,location=no");
+                var popupWindow = window.open("", "popupWindow", "width=500px,height=600px,scrollbars=no");
 
                 form.setAttribute("action", "/chat/getRoom?roomIdx=" + roomIdx);
                 form.setAttribute("method", "post");
                 form.setAttribute("target", "popupWindow");
                 form.submit();
+            }
+
+            function matching(){
+                $.ajax("/chat/matching", {
+                    type: "post",
+                    dataType: "json", //서버로 부터 응답받을 데이터 형식
+                    success: function (respData) {
+                        let dispHtml = "";
+                        if (respData !== null && respData.length > 0) {
+                            $.each(respData, function (index, room) {
+                                dispHtml += "<li>";
+                                dispHtml += "<form action='' method='post' target='popupWindow'>";
+                                dispHtml += "<input type='hidden' name='roomIdx' value='" + room.roomIdx + "'>";
+                                dispHtml += "<button type='submit' class='dropdown-item' onclick='getRoom(event)'>" + room.roomName + "</button>";
+                                dispHtml += "</form>";
+                                dispHtml += "</li>";
+                            });
+                        }
+                        $("#matching").html(dispHtml);
+                    },
+                    error: function () {
+                        console.log('>>error!')
+                    }
+                });
+
+
             }
 
         </script>
@@ -148,11 +174,7 @@
                 </button>
                 <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
                     <div class="btn-group" role="group">
-<!--                        <form action="/chat/matchingUser" method="post">
-                            <button type="submit" class="dropdown-item">
-                                친구추천
-                            </button>
-                        </form>-->
+
                         <button th:if="${!(session.vo == null)}" type="button"
                                 class="btn btn-outline-dark dropdown-toggle"
                                 data-bs-toggle="dropdown" aria-expanded="false"
@@ -161,6 +183,12 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li>
+                                <form action="/chat/matching" method="post">
+                                    <button type="submit" class="dropdown-item" style="background-color:#9C91B3" onclick="matching(); event.preventDefault()">
+                                        친구추천
+                                    </button>
+                                </form>
+                            <li id="matching"></li>
                             <li id="chatList">ajax 채팅리스트</li>
                         </ul>
                     </div>

@@ -69,10 +69,11 @@ public class ChatService {
 
 
 
-    public void insertChatRoomUser(ChatRoomVO room, MemberVO vo) {
-        mapper.insertChatRoomUser(room,vo);
+    public void insertChatRoomUser(ChatUserVO vo) {
+        mapper.insertChatRoomUser(vo);
     }
-    public ChatRoomVO createRoom(String roomName){
-        return mapper.createRoom(roomName);
+    public int createRoom(ChatRoomVO room){
+          mapper.createRoom(room);
+          return mapper.findLatestRoomIdx();
     };
 }
