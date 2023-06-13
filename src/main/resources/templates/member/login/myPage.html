@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html"
+      lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+<head>
+
+
+    <meta charset="UTF-8">
+    <title>개인정보 수정</title>
+
+    <!-- Alert -->
+    <!--  alert 창 꾸미기 -->
+    <link rel="stylesheet" href="sweetalert2.min.css">
+
+
+    <!--  다음 주소 스크립트 -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 제이쿼리 사용 -->
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- CSS only -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+            crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+            crossorigin="anonymous"></script>
+
+    <!-- 부트스트랩 아이콘 -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+
+    <!-- 구글 글씨체 -->
+    <link rel="stylesheet" href="/css/header.css" type="text/css">
+
+
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: #E9DFED;
+        }
+
+        .input-form {
+            max-width: 680px;
+
+            margin-top: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+
+
+</head>
+<body>
+<form action="modify" method="post" enctype="multipart/form-data" onclick="return alert()">
+<div class="container-fluid" style="height: 950px; margin-top: 100px;">
+    <div class="col-md-12 mx-auto input-form">
+        <div class="row justify-content-center" style="height: 70%;">
+            <div style="margin-left: 550px;"></div>
+            <div class="col-12 d-grid gap-2" style="align-self: center; width: 45%;">
+                <div class="row">
+                    <label for="userName" class="form-label">이름</label>
+                    <input type="text" class="form-control form-control"
+                           th:placeholder="${session.vo.getUserName()}"
+                           id="userName" name="userName">
+                </div>
+                <div class="row">
+                    <div id="userName_warning" class="col-md-6 mb-3" style="text-align: center" hidden="hidden">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="userPhone" class="form-label">전화번호</label>
+                    <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
+                           id="userPhone" name="userPhone">
+                </div>
+                <div class="row">
+                    <div id="cellphone_warning" class="col-md-6 mb-3" style="text-align: center" hidden="hidden">
+                        <span></span>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="userEmail" class="form-label">이메일</label>
+                    <input type="email" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
+                           id="userEmail" name="userEmail">
+                </div>
+                <div class="row">
+                    <div id="email_warning" class="col-md-6 mb-3" style="text-align: center" hidden="hidden">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="userLikeFood" class="form-label">음식</label>
+                    <select class="form-control" id="userLikeFood" name="userLikeFood">
+                        <option th:selected="${session.vo.getUserLikeFood() == null}" value="" selected disabled>음식을
+                            선택해주세요
+                        </option>
+                        <option th:selected="${session.vo.getUserLikeFood() == '한식'}" value="한식">한식</option>
+                        <option th:selected="${session.vo.getUserLikeFood() == '중식'}" value="중식">중식</option>
+                        <option th:selected="${session.vo.getUserLikeFood() == '일식'}" value="일식">일식</option>
+                        <option th:selected="${session.vo.getUserLikeFood() == '양식'}" value="양식">양식</option>
+                        <option th:selected="${session.vo.getUserLikeFood() == '퓨전'}" value="퓨전">퓨전</option>
+                        <option th:selected="${session.vo.getUserLikeFood() == '푸드코트'}" value="푸드코트">푸드코트</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="userMbti" class="form-label">MBTI</label>
+                    <select class="form-control" id="userMbti" name="userMbti">
+                        <option th:selected="${session.vo.getUserMbti() == null}" value="" selected disabled>MBTI를
+                            선택해주세요
+                        </option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ISFP'}" value="ISFP">ISFP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ISFJ'}" value="ISFJ">ISFJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ISTP'}" value="ISTP">ISTP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ISTJ'}" value="ISTJ">ISTJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'INFP'}" value="INFP">INFP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'INFJ'}" value="INFJ">INFJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'INTP'}" value="INTP">INTP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'INTJ'}" value="INTJ">INTJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ESFP'}" value="ESFP">ESFP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ESFJ'}" value="ESFJ">ESFJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ESTP'}" value="ESTP">ESTP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ESTJ'}" value="ESTJ">ESTJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ENFP'}" value="ENFP">ENFP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ENFJ'}" value="ENFJ">ENFJ</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ENTP'}" value="ENTP">ENTP</option>
+                        <option th:selected="${session.vo.getUserMbti() == 'ENTJ'}" value="ENTJ">ENTJ</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                         class="bi bi-card-image" viewBox="0 0 16 16">
+                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+                    </svg>
+                    <label for="oriFilename">프로필 사진</label>
+                    <input type="file" class="form-control" id="oriFilename" name="oriFilename"
+                           accept="image/png, image/gif, image/jpeg" multiple="multiple">
+                </div>
+                <div class="row">
+                    <label for="userPost">우편번호</label>
+                    <input id="userPost" name="userAddress1" class="form-control form-control" type="text"
+                           th:placeholder="${session.addressSplit[0]}"/>
+                </div>
+                <div class="row">
+                    <label for="userAddr">주소</label>
+                    <input id="userAddr" name="userAddress2" class="form-control form-control" type="text"
+                           th:placeholder="${session.addressSplit[1]}"/>
+                </div>
+                <div class="row" style="margin-bottom: 30px;">
+                    <label>상세주소<span class="text-muted"></span></label>
+                    <input id="userAddrDetail" class="form-control form-control" type="text" name="userAddress3"
+                           th:placeholder="${session.addressSplit[2]}"/>
+                </div>
+                <div class="row" style="margin-bottom: 20px;">
+                    <button class="btn btn-outline-primary active" id="modify_btn"
+                            type="submit" onclick="return alert()">
+                        수정
+                    </button>
+                </div>
+                <!--th:formaction="|@{modify}|" type="submit" -->
+                <div class="row">
+                    <button class="btn btn-outline btn-danger" type="submit" id="withDrawl_update_btn"
+                            onclick="deleteOk()" th:formaction="|@{status}|" th:formmethod="post">
+                        탈퇴
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+
+<!-- Modal -->
+
+<!--<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="modal-header">-->
+<!--                <h5 class="modal-title" id="confirmModalLabel">수정하시겠습니까?</h5>-->
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--            </div>-->
+<!--            <div class="modal-body">-->
+<!--                수정 사항을 저장하시겠습니까?-->
+<!--            </div>-->
+<!--            <div class="modal-footer">-->
+<!--                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
+<!--                <form method="post" enctype="multipart/form-data">-->
+<!--                    <button type="submit" class="btn btn-primary" th:formaction="|@{modify}|">저장</button>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</form>-->
+<!--<form th:action="" method="post">-->
+<!--    <div class="row justify-content-center" style="margin-bottom: 150px; padding: 12px;">-->
+<!--        <div div style="margin-left: 550px;"></div>-->
+<!--        <div class="col-6 d-grid gap-2" style="align-self: center; width: 30%;">-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--    </div>-->
+
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+
+
+    const nameRegExp = RegExp(/^[가-힣]+$/);
+
+    const cellPhoneRegExp = RegExp(/^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/);
+
+    const emailRegExp = RegExp(/^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/);
+
+    $(document).ready(() => {
+        $('#userPost, #userAddr').click(findArr);
+
+        $('#userName').keyup(check_userName);
+
+        $('#userPhone').keyup(check_cellphone);
+
+        $('#userEmail').change(check_email);
+
+        $('#modify_btn').on('show.bs.modal', function (e) {
+            let userName = $('#userName').val();
+            let userPhone = $('#userPhone').val();
+            let userEmail = $('#userEmail').val();
+            let userLikeFood = $('#userLikeFood').val();
+            let userMbti = $('#userMbti').val();
+            let userAddress1 = $('#userAddress1').val();
+            let userAddress2 = $('#userAddress2').val();
+            let userAddress3 = $('#userAddress3').val();
+
+
+        });
+
+    });
+
+
+    function findArr() {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                console.log(data);
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var jibunAddr = data.jibunAddress; // 지번 주소 변수
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('userPost').value = data.zonecode;
+                if (roadAddr !== '') {
+                    document.getElementById("userAddr").value = roadAddr;
+                } else if (jibunAddr !== '') {
+                    document.getElementById("userAddrDetail").value = jibunAddr;
+                }
+            }
+        }).open();
+    }
+
+    function deleteOk() {
+        alert("삭제하시겠습니까?");
+
+    }
+
+
+    function check_userName() {
+        console.log($('#userName').val());
+        if (!nameRegExp.test($('#userName').val())) {
+            $('#userName_warning').removeAttr('hidden', 'hidden');
+            $('#userName_warning').html('<b style="font-size: 14px; color:red">[한글 이름을 입력해주세요.]</b>');
+        } else {
+            $('#userName_warning').attr('hidden', 'hidden');
+            nameChk = true;
+        }
+    }
+
+    function check_cellphone() {
+        if (!cellPhoneRegExp.test($("#userPhone").val())) {
+            $('#cellphone_warning').removeAttr('hidden', 'hidden');
+            $('#cellphone_warning').html(
+                '<b style="font-size: 14px; color: red">[올바른 형식의 휴대폰 번호를 입력해주세요.]</b>')
+            let text = $('#userPhone').val();
+            text = text.replace(/[^0-9]/g, '').replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g,
+                "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+            $('#userPhone').val(text);
+            cellphoneChk = false;
+            // $('.sendSms').attr('hidden', 'hidden');
+        } else {
+            $('#cellphone_warning').attr('hidden', 'hidden');
+            // $('.sendSms').removeAttr('hidden');
+            cellphoneChk = true;
+        }
+    }
+
+    function check_email() {
+        if (!emailRegExp.test($("#userEmail").val())) {
+            $('#email_warning').removeAttr('hidden', 'hidden');
+            $('#email_warning').html(
+                '<b style="font-size: 14px; color: red">[올바른 형식의 이메일을 입력해주세요.]</b>')
+            emailChk = false;
+        } else {
+            $('#email_warning').attr('hidden', 'hidden');
+            emailChk = true;
+        }
+    }
+
+    function alert() {
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            denyButtonText: `Don't save`,
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+                return true;
+            } else if (result.isDenied) {
+                Swal.fire('Changes are not saved', '', 'info')
+                return false;
+            }
+        })
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.min.js"></script>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>
