@@ -213,7 +213,7 @@
       name : '[[${bookingVO.foodName}]]' , //결제창에서 보여질 이름
       amount : [[${bookingVO.price}]], //실제 결제되는 가격
       buyer_email : '[[${session.vo.getUserEmail()}]]',
-      buyer_name : '[[${session.vo.getUserName()}]]',     //세션에서 가져오게
+      buyer_name : '[[${session.vo.getUserName()}]]',
       /*buyer_tel : '010-1234-5678',*/
       /*buyer_addr : '동탄동탄동탄',*/
       /*buyer_postcode : '123-456',*/
@@ -230,7 +230,9 @@
           "pay_date": new Date().getTime(),
           "amount": rsp.paid_amount,
           "card_no": rsp.apply_num,
-          "refund": 'payed'
+          "refund": 'payed',
+          "buyer_name" : '[[${session.vo.getUserName()}]]',
+          "name" : '[[${bookingVO.foodName}]]'
         };
 
         console.log("결제성공 " + msg);
@@ -240,7 +242,7 @@
           type: 'POST',
           data: JSON.stringify(result,
                   ['imp_uid', 'merchant_uid', 'buyer_email',
-                    'pay_date', 'amount', 'card_no', 'refund']),
+                    'pay_date', 'amount', 'card_no', 'refund', 'buyer_name', 'name']),
           contentType: 'application/json;charset=utf-8',
           dataType: 'json', //서버에서 보내줄 데이터 타입
           success: function (res) {
