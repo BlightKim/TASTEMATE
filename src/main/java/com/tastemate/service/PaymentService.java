@@ -9,11 +9,13 @@ import com.google.gson.JsonParser;
 import com.tastemate.domain.InicisRefundVO;
 import com.tastemate.domain.InicisVO;
 import com.tastemate.domain.TokenVO;
+import com.tastemate.mapper.PayMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,10 @@ import java.util.List;
 @Service
 @Slf4j
 public class PaymentService {
+
+
+    @Autowired
+    private PayMapper payMapper;
 
     // IAMPORT API 인증 정보 설정
     //String impKey = "3085212137161101";
@@ -124,29 +130,29 @@ public class PaymentService {
    
 
 
-    public void inicisRefund(InicisRefundVO inicisRefundVO, String token) throws IOException {
+    public void inicisRefund(InicisRefundVO inicisRefundVO) throws IOException {
 
         String cancelUrl = "https://api.iamport.kr/payments/cancel";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", token);
+        headers.set("Authorization", inicisRefundVO.getToken());
 
         RestTemplate restTemplate = new RestTemplate();
 
         JSONObject requestData = new JSONObject();
         requestData.put("reason", inicisRefundVO.getReason());
         requestData.put("merchant_uid", inicisRefundVO.getMerchant_uid());
-        requestData.put("imp_uid", "imp_688853734311");
+        requestData.put("imp_uid", inicisRefundVO.getImp_uid());
         requestData.put("amount", inicisRefundVO.getCancel_request_amount());
 
+        log.info("확인 : "+requestData);
 
         HttpEntity<String> requestEntity = new HttpEntity<>(requestData.toString(), headers);
 
         ResponseEntity<String> responseEntity = restTemplate.exchange(cancelUrl, HttpMethod.POST, requestEntity, String.class);
-        if (responseEntity.getStatusCode().is2xxSuccessful()) {
 
-            log.info("으어어어?");
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String responseData = responseEntity.getBody();
             log.info("responseData?"+responseData);
             //JSONObject responseJson = new JSONObject();
@@ -159,8 +165,19 @@ public class PaymentService {
     }
 
 
+    public int insert_inicis(InicisVO inicisVO) {
 
+        return payMapper.insert_inicis(inicisVO);
+    }
 
+    public InicisVO get_inicis(int userIdx) {
 
+        return payMapper.get_inicis(userIdx);
+    }
+
+    public int cancel_inicis(String token) {
+
+        return payMapper.cancel_inicis(token);
+    }
 }
 

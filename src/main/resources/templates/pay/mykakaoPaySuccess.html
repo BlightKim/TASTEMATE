@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html lagn="ko"
       xmlns:th="http://www.thymeleaf.org"
@@ -43,14 +42,21 @@
   .yellow{
     color : #FFA500;
   }
-
+  .kakaoBtn2{
+    background-color: #F7E600;
+    padding: 7px 10px;
+    border: none;
+    outline: none;
+    border-radius: 7px;
+  }
 
 
 </style>
 </head>
 <body>
 
-이거안씀
+
+
 <div class="text-center" id="main">
   <div class="input-form-backgroud">
     <form class="input-form">
@@ -85,15 +91,28 @@
         <div class="col text-left">결제금액:</div>
         <div class="col text-right">
           <strong>
-            <div data-th-text="${#numbers.formatInteger(info.amount.total, 3, 'COMMA') + '원'}"></div>
+            <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
           </strong>
         </div>
       </div>
 
-      <a class="btn btn-warning" th:href="@{/store/starComment}">별점주러가기</a>
-      <a class="btn btn-warning" style="background-color: #8E48C7; border: none;">결제 취소</a>
-      <br>진짜취소하시겠습니까 묻고 취소 / + 예약내용 더 추가
+      <a class="btn btn-warning" th:href="@{/store/starComment(storeIdx=${info.storeIdx})}">별점주러가기</a>
+
+
+<!--      <a class="btn btn-warning" th:href="@{/pay/refund(tid=${info.tid})}"
+         style="background-color: #8E48C7; border: none;">결제 취소</a>-->
+
+
+
+
     </form>
+
+
+    <form method="post" th:action="@{/pay/refund(tid=${info.tid})}">
+      <button class="kakaoBtn2">카카오페이 결제 취소</button>
+    </form>
+    <br>진짜취소하시겠습니까 묻고 취소
+
   </div>
 </div>
 
@@ -115,4 +134,4 @@
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 
 </body>
-</html>-->
+</html>

@@ -59,10 +59,6 @@
     list-style:none;
   }
 
-  .bg-lightPurple {
-    background-color: #EDE6F5;
-  }
-
 
   .kakaoBtn2{
     background-color: #F7E600;
@@ -126,35 +122,25 @@
         <div class="col text-left">예약 일자:</div>
         <div class="col text-right">[[${bookingVO.bookingTime}]]</div>
       </div>
-      <hr>
-      <div class="row mb-5">
-        <div class="col text-left">결제금액:</div>
-        <div class="col text-right">
-          <strong>
-            <div data-th-text="${#numbers.formatInteger(bookingVO.price, 3, 'COMMA') + '원'}"></div>
-          </strong>
-        </div>
-      </div>
-        </div>
-      </div>
-
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>유의사항</h2>
           <br>
           <p>예약/결제 취소 : 예약 일자의 1시간 전까지<br>시간이 경과한 예약 건에 대해서는 관리자에게 문의</p>
-          <button class="kakaoBtn kakaoBtn2">카카오페이 결제</button>
 
-          <form method="post" action="/pay/refund">
-            <button class="kakaoBtn2">카카오페이 결제 취소</button>
-          </form>
+<!--
+          <a th:href="@{/store/list}" class="btn btn-success" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</a>
+          <button class="btn btn-outline-secondary" type="button">Example button</button>
+-->
 
-          <button onclick="iamport()" class="iamport">iamport</button>
-          <button onClick="cancelPay()" class="iamport">iamport 환불</button>
 
-<!--          <a th:onclick="iamport()" class="btn btn-primary" style="background-color: #8E48C7; border: none; border-radius: 10%; color: white;">결제하기</a>-->
-<!--          <a th:href="@{/store/list}" class="btn btn-success" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</a>-->
-<!--          <button class="btn btn-outline-secondary" type="button">Example button</button>-->
+
+          <div class="row padding_50">
+            <!--결제!!!!!!!!!!!!!!!!-->
+            <button class="kakaoBtn kakaoBtn2 mx-1">카카오페이 결제</button>
+            <button onclick="iamport()" class="iamport" style="color:white; background-color: #9C91B3;">iamport 결제</button>
+          </div>
+
         </div>
       </div>
     </div>
@@ -221,16 +207,19 @@
     IMP.init('imp71427334');
     IMP.request_pay({
       //name과 amout만있어도 결제 진행가능
-      pg : 'html5_inicis', /*kakaopay*/
+      pg : 'html5_inicis',
       pay_method : 'card',
       merchant_uid : 'merchant_' + new Date().getTime(),
       name : '[[${bookingVO.foodName}]]' , //결제창에서 보여질 이름
-      amount : 123, //실제 결제되는 가격
-      buyer_email : 'gaeun1811@naver.com',
-      buyer_name : '싼쵸보고싶다',
-      buyer_tel : '010-1234-5678',
-      buyer_addr : '동탄동탄동탄',
-      buyer_postcode : '123-456',
+      amount : [[${bookingVO.price}]], //실제 결제되는 가격
+      buyer_email : '[[${session.vo.getUserEmail()}]]',
+      buyer_name : '[[${session.vo.getUserName()}]]',
+      userIdx : [[${bookingVO.userIdx}]],
+      storeIdx : [[${bookingVO.storeIdx}]],
+      bookingIdx : [[${bookingVO.bookingIdx}]]
+      /*buyer_tel : '010-1234-5678',*/
+      /*buyer_addr : '동탄동탄동탄',*/
+      /*buyer_postcode : '123-456',*/
 
     }, function(rsp) {
       console.log("??"+rsp);
@@ -240,11 +229,16 @@
         var result = {
           "imp_uid": rsp.imp_uid,
           "merchant_uid": rsp.merchant_uid,
-          "buyer_email": 'gaeun1811@naver.com',
+          "buyer_email": '[[${session.vo.getUserEmail()}]]',
           "pay_date": new Date().getTime(),
           "amount": rsp.paid_amount,
           "card_no": rsp.apply_num,
-          "refund": 'payed'
+          "refund": 'payed',
+          "buyer_name" : '[[${session.vo.getUserName()}]]',
+          "name" : '[[${bookingVO.foodName}]]',
+          "userIdx" : [[${bookingVO.userIdx}]],
+          "storeIdx" : [[${bookingVO.storeIdx}]],
+          "bookingIdx" : [[${bookingVO.bookingIdx}]]
         };
 
         console.log("결제성공 " + msg);
@@ -254,7 +248,8 @@
           type: 'POST',
           data: JSON.stringify(result,
                   ['imp_uid', 'merchant_uid', 'buyer_email',
-                    'pay_date', 'amount', 'card_no', 'refund']),
+                    'pay_date', 'amount', 'card_no', 'refund', 'buyer_name', 'name',
+                  'userIdx','storeIdx','bookingIdx']),
           contentType: 'application/json;charset=utf-8',
           dataType: 'json', //서버에서 보내줄 데이터 타입
           success: function (res) {
@@ -284,21 +279,6 @@
 
 
 
-
-  function cancelPay() {
-    $.ajax({
-
-      "url": "/pay/inicisCancel",
-      "type": "POST",
-      "contentType": "application/json",
-      "data": JSON.stringify({
-        "merchant_uid": "merchant_1686295852827",  //실제 데이터로 변경하기
-        "cancel_request_amount": 123, // 환불금액
-        "reason": "테스트 결제 환불" // 환불사유
-      }),
-      "dataType": "json"
-    });
-  }
 
 
 

@@ -28,4 +28,13 @@ public class InicisVO {
     private Date pay_date;
 
 
+    /*내가 추가*/
+    private int inicisIdx;
+    private String token;
+    private int userIdx;
+    private int storeIdx;
+    private int bookingIdx;
+    private int status;
+
+
 }
