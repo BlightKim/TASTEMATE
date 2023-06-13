@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -49,7 +50,7 @@ public class MemberController {
 
     // login 홈페이지 POST
     @PostMapping("login")
-    public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/member/list") String redirectURL) {
+    public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/store/main") String redirectURL) {
         String userId = request.getParameter("userId");
         String userPwd = request.getParameter("userPwd");
         System.out.println("userId = " + userId);
@@ -77,7 +78,7 @@ public class MemberController {
     @GetMapping("member/logout")
     public String logoutPost(HttpServletRequest request) {
         request.getSession().invalidate();
-        return "redirect:/member/list";
+        return "redirect:/store/main";
     }
 
     @PostMapping("member/findId")
@@ -143,7 +144,7 @@ public class MemberController {
         service.reset(vo, request, session);
         session.invalidate();
 
-        return "member/list";
+        return "store/main";
     }
 
     // Food에서 href로 넘어오는 곳
@@ -172,7 +173,7 @@ public class MemberController {
     public String registerMember(MemberVO vo, MultipartFile oriProfile) {
         log.info("userJoin도착");
         service.user_join(vo, oriProfile);
-        return "redirect:/member/list";
+        return "redirect:/store/main";
     }
 
 
@@ -280,7 +281,8 @@ public class MemberController {
     }
 
     @PostMapping("modify")
-    public String userModify(MemberVO vo, MultipartFile oriProfile, HttpServletRequest request, HttpSession session) {
+    public String userModify(MemberVO vo, MultipartFile oriProfile, HttpServletRequest request, HttpSession session,
+                             RedirectAttributes rttr) {
         MemberVO sessionVO = (MemberVO) session.getAttribute("vo");
         session.setAttribute("sessionVO", sessionVO);
         String[] addressSplit = (String[]) session.getAttribute("addressSplit");
@@ -293,7 +295,11 @@ public class MemberController {
 
         log.info("modify도착");
         service.userModify(sessionVO, oriProfile, session, request);
-        return "redirect:/member/list";
+
+        String wow = "complete";
+        rttr.addFlashAttribute("message", wow);
+
+        return "redirect:/member/mypage";
     }
 
     @PostMapping("status")
@@ -314,22 +320,25 @@ public class MemberController {
     @PostMapping("member/mailConfirm")
     @ResponseBody
     String mailConfirm(@RequestBody String userEmail) throws Exception {
+        System.out.println("userEmail = " + userEmail);
         String[] split = userEmail.split("=");
         String convertEmail = split[1];
         System.out.println("split = " + convertEmail);
 
-        String emailAddress = convertEmail.substring(11, convertEmail.length());
-        System.out.println("emailAddress = " + emailAddress);
-
         String[] emailSplit = convertEmail.split("%");
         System.out.println("emailSplit = " + emailSplit[0]);
 
-        String email = emailSplit[0] + "@" + emailAddress;
+        String emailAddress = emailSplit[1];
+        System.out.println("emailAddress = " + emailAddress);
+
+        String address = emailAddress.substring(2, emailAddress.length());
+        System.out.println("address = " + address);
+
+        convertEmail.substring(11, convertEmail.length());
+        String email = emailSplit[0] + "@" + address;
 
         System.out.println("email = " + email);
 
-
-        System.out.println("email = " + split[1]);
         String code = service.sendSimpleMessage(email);
         System.out.println("인증코드 : " + code);
         return code;
