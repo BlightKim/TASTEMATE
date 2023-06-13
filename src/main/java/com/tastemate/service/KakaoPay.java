@@ -3,7 +3,7 @@ package com.tastemate.service;
 import com.tastemate.domain.KakaoCancelResponse;
 import com.tastemate.domain.KakaoPayApprovalVO;
 import com.tastemate.domain.KakaoPayReadyVO;
-import com.tastemate.mapper.KakaoPayMapper;
+import com.tastemate.mapper.PayMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -26,7 +26,7 @@ import java.util.Date;
 public class KakaoPay {
 
     @Autowired
-    private KakaoPayMapper kakaoPayMapper;
+    private PayMapper kakaoPayMapper;
 
     private static final String HOST = "https://kapi.kakao.com";
 

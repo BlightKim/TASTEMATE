@@ -139,8 +139,6 @@
             <button onclick="iamport()" class="iamport" style="color:white; background-color: #9C91B3;">iamport 결제</button>
           </div>
 
-          <br><button onClick="cancelPay()" class="iamport">iamport 환불</button>
-
         </div>
       </div>
     </div>
@@ -214,6 +212,9 @@
       amount : [[${bookingVO.price}]], //실제 결제되는 가격
       buyer_email : '[[${session.vo.getUserEmail()}]]',
       buyer_name : '[[${session.vo.getUserName()}]]',
+      userIdx : [[${bookingVO.userIdx}]],
+      storeIdx : [[${bookingVO.storeIdx}]],
+      bookingIdx : [[${bookingVO.bookingIdx}]]
       /*buyer_tel : '010-1234-5678',*/
       /*buyer_addr : '동탄동탄동탄',*/
       /*buyer_postcode : '123-456',*/
@@ -232,7 +233,10 @@
           "card_no": rsp.apply_num,
           "refund": 'payed',
           "buyer_name" : '[[${session.vo.getUserName()}]]',
-          "name" : '[[${bookingVO.foodName}]]'
+          "name" : '[[${bookingVO.foodName}]]',
+          "userIdx" : [[${bookingVO.userIdx}]],
+          "storeIdx" : [[${bookingVO.storeIdx}]],
+          "bookingIdx" : [[${bookingVO.bookingIdx}]]
         };
 
         console.log("결제성공 " + msg);
@@ -242,7 +246,8 @@
           type: 'POST',
           data: JSON.stringify(result,
                   ['imp_uid', 'merchant_uid', 'buyer_email',
-                    'pay_date', 'amount', 'card_no', 'refund', 'buyer_name', 'name']),
+                    'pay_date', 'amount', 'card_no', 'refund', 'buyer_name', 'name',
+                  'userIdx','storeIdx','bookingIdx']),
           contentType: 'application/json;charset=utf-8',
           dataType: 'json', //서버에서 보내줄 데이터 타입
           success: function (res) {
@@ -273,20 +278,7 @@
 
 
 
-  function cancelPay() {
-    $.ajax({
 
-      "url": "/pay/inicisCancel",
-      "type": "POST",
-      "contentType": "application/json",
-      "data": JSON.stringify({
-        "merchant_uid": "merchant_1686295852827",  //실제 데이터로 변경하기
-        "cancel_request_amount": 123, // 환불금액
-        "reason": "테스트 결제 환불" // 환불사유
-      }),
-      "dataType": "json"
-    });
-  }
 
 
 
