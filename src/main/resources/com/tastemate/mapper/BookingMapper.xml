@@ -25,4 +25,11 @@
         SELECT * FROM BOOKING WHERE BOOKING_IDX = #{bookingIdx}
     </select>
 
+    <select id="bookingTableCheck" parameterType="BookingVO" resultType="int">
+        select count(*) from (select * from booking
+                              where booking_time = to_date(#{bookingTime},'yyyy-mm-dd hh24:mi:ss')
+                                and table_no = #{tableNo}
+                                and store_idx = #{storeIdx}) table_check
+    </select>
+
 </mapper>

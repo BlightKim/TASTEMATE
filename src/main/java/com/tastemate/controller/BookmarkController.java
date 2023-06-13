@@ -38,7 +38,7 @@ public class BookmarkController {
     }
 
     @GetMapping("/get")
-    public String getMap(Model model , @RequestParam int userIdx) {
+    public String getMap(Model model, @RequestParam int userIdx) {
         List<BookmarkVO> bookmarkList = bookmarkService.bookmarkList(userIdx);
         System.out.println("bookmarkList = " + bookmarkList);
         model.addAttribute("bookmarkList", bookmarkList);
@@ -47,26 +47,27 @@ public class BookmarkController {
     }
 
     @GetMapping("/delete")
-    public String delete(HttpSession session, HttpServletRequest request,RedirectAttributes redirect, int bookmarkIdx) {
+    public String delete(HttpSession session, HttpServletRequest request, RedirectAttributes redirect, int bookmarkIdx) {
         //로그인 정보 받아오기
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
         System.out.println("memberVO = " + memberVO);
         int userIdx = memberVO.getUserIdx();
-        
-        
+
+
         //log.info("bno" + bno);
         int result = bookmarkService.bookmark_delete(bookmarkIdx);
         //log.info("delete result : " + result);
-        
+
         redirect.addAttribute("userIdx", userIdx);
         return "redirect:/bookmark/get";
     }
 
-    @RequestMapping(value = "/insertAjax.do" , produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    //ajax 북마크 추가
+    @RequestMapping(value = "/insertAjax.do", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> insert (Model model, HttpSession session, HttpServletRequest request,
-                           RedirectAttributes redirect,
-                           @RequestParam("storeIdx") int storeIdx) {
+    public Map<String, String> insert(Model model, HttpSession session, HttpServletRequest request,
+                                      RedirectAttributes redirect,
+                                      @RequestParam("storeIdx") int storeIdx) {
         System.out.println("model = " + model);
         System.out.println("storeIdx : " + storeIdx);
         BookmarkVO bookmarkVO = new BookmarkVO();
@@ -87,7 +88,7 @@ public class BookmarkController {
             bookmarkVO.setUserIdx(userIdx);
             bookmarkVO.setUserId(userId);
             bookmarkVO.setUserName(userName);
-            System.out.println("bookmarkVO : " +bookmarkVO);
+            System.out.println("bookmarkVO : " + bookmarkVO);
             //log.info("bno" + bno);
             int result = bookmarkService.bookmark_insert(bookmarkVO);
             System.out.println("result = " + result);
@@ -109,9 +110,50 @@ public class BookmarkController {
         }
 
 
-
     }
 
+    //ajax 북마크 삭제
+    @RequestMapping(value = "/deleteAjax.do", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, String> deleteAjax(Model model, HttpSession session, HttpServletRequest request,
+                                          RedirectAttributes redirect,
+                                          @RequestParam("storeIdx") int storeIdx) {
+        System.out.println("model = " + model);
+        System.out.println("storeIdx : " + storeIdx);
+        BookmarkVO bookmarkVO = new BookmarkVO();
+        StoreVO storeVO = storeService.store_get(storeIdx);
+        bookmarkVO.setStoreIdx(storeIdx);
 
+        //로그인 정보 받아오기
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        System.out.println("memberVO = " + memberVO);
+        Map<String, String> msg = new HashMap<String, String>();
+        if (memberVO != null) {
+            int userIdx = memberVO.getUserIdx();
+
+            bookmarkVO.setUserIdx(userIdx);
+            System.out.println("bookmarkVO : " + bookmarkVO);
+            //log.info("bno" + bno);
+            int result = bookmarkService.bookmark_deleteAjax(bookmarkVO);
+            System.out.println("result = " + result);
+            //log.info("delete result : " + result);
+            if (result == 0) {
+                msg.put("message", "북마크에 없는 맛집입니다.");
+                System.out.println(msg.toString());
+                return msg;
+            } else {
+                msg.put("message", "북마크에서 삭제되었습니다.");
+                System.out.println(msg.toString());
+                return msg;
+            }
+
+        } else {
+            msg.put("message", "로그인 후 이용 가능한 기능입니다.");
+            System.out.println(msg.toString());
+            return msg;
+        }
+
+
+    }
 
 }

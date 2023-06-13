@@ -31,6 +31,11 @@ public class BookingService {
       return bookingVO;
     };
 
+    public int bookingTableCheck(BookingVO bookingVO) {
+        int result = bookingMapper.bookingTableCheck(bookingVO);
+        return result;
+    }
+
 
 
 }

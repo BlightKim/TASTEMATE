@@ -69,44 +69,58 @@
   <div class="container py-4">
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="row">
-        <div class="col-md-6 center">
-          <div class="imgText padding_100">
+        <div class="col-md-5">
+          <div class="imgText">
             <div class="img-wrapper">
               <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
             </div>
           </div>
+        </div>
+        <div class="col-md-7">
           <span th:text="${storeVO.category1}" class="purple2"></span>
           <h2 class="display-5 fw-bold" th:text="${storeVO.storeName}"></h2>
           <div th:text="${storeVO.storeAddress}" class="purple2"></div>
-        </div>
-        <div class="col-md-6">
-          <div id="map" style="width:450px;height:400px;"></div><br>
+          <br>
+          <div id="map" style="width:500px;height:300px;"></div><br>
         </div>
       </div>
     </div>
 
     <div class="row align-items-md-stretch">
-      <div class="col-md-6 center" style="padding-left: 20px; padding-top: 35px;">
-        <h3 style="padding-left: 40px;">예약 정보</h3>
-        <br>
-        <ul>
-          <li>
-            <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
-          </li>
-          <li>
-            <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
-          </li>
-          <li>
-            <strong>예약 일시:</strong> [[${bookingVO.bookingDate}]]
-          </li>
-          <li>
-            <strong>예약 일자:</strong> [[${bookingVO.bookingTime}]]
-          </li>
-          <li>
-            <strong>결제 금액:</strong> [[${bookingVO.price}]]
-          </li>
-        </ul>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+          <div class="row">
+            <h3 class="padding_20">예약 정보</h3>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col text-left">예약자 성함:</div>
+            <div class="col text-right">[[${bookingVO.userName}]]</div>
+          </div>
+          <div class="row">
+            <div class="col text-left">예약메뉴:</div>
+            <div class="col text-right">[[${bookingVO.foodName}]]</div>
+          </div>
+          <div class="row">
+            <div class="col text-left">예약 일시:</div>
+            <div class="col text-right">[[${bookingVO.bookingDate}]]</div>
+          </div>
+          <div class="row">
+            <div class="col text-left">예약 일자:</div>
+            <div class="col text-right">[[${bookingVO.bookingTime}]]</div>
+          </div>
+          <hr>
+          <div class="row mb-5">
+            <div class="col text-left">결제금액:</div>
+            <div class="col text-right">
+              <strong>
+                <div data-th-text="${#numbers.formatInteger(bookingVO.price, 3, 'COMMA') + '원'}"></div>
+              </strong>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>유의사항</h2>

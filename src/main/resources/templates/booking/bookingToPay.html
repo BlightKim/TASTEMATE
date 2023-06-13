@@ -16,8 +16,8 @@
 
   .img-wrapper {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
   }
   .img-wrapper img {
     position: absolute;
@@ -48,8 +48,8 @@
     padding-bottom: 1.5rem !important;
   }
 
-  .padding_100 {
-    padding-left: 100px;
+  .padding_20 {
+    padding-left: 10px;
   }
   .center {
     align-content: center;
@@ -57,6 +57,10 @@
   }
   ul{
     list-style:none;
+  }
+
+  .bg-lightPurple {
+    background-color: #EDE6F5;
   }
 
 
@@ -82,52 +86,75 @@
   <div class="container py-4">
     <div class="p-5 mb-4 bg-light rounded-3">
       <div class="row">
-      <div class="col-md-6 center">
-        <div class="imgText padding_100">
+        <div class="col-md-5">
+        <div class="imgText">
           <div class="img-wrapper">
             <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size mb-4"/>
           </div>
         </div>
-          <span th:text="${storeVO.category1}" class="purple2"></span>
-          <h2 class="display-5 fw-bold" th:text="${storeVO.storeName}"></h2>
-        <div th:text="${storeVO.storeAddress}" class="purple2"></div>
       </div>
-      <div class="col-md-6">
-        <div id="map" style="width:450px;height:400px;"></div><br>
+      <div class="col-md-7">
+        <span th:text="${storeVO.category1}" class="purple2"></span>
+        <h2 class="display-5 fw-bold" th:text="${storeVO.storeName}"></h2>
+        <div th:text="${storeVO.storeAddress}" class="purple2"></div>
+        <br>
+        <div id="map" style="width:500px;height:300px;"></div><br>
       </div>
       </div>
     </div>
 
     <div class="row align-items-md-stretch">
-      <div class="col-md-6 center" style="padding-left: 20px; padding-top: 35px;">
-          <h3 style="padding-left: 40px;">예약 정보</h3>
-          <br>
-          <ul>
-            <li>
-              <strong>예약자 이름:</strong> [[${bookingVO.userName}]]
-            </li>
-            <li>
-              <strong>예약 메뉴:</strong> [[${bookingVO.foodName}]]
-            </li>
-            <li>
-              <strong>예약 일시:</strong> [[${bookingVO.bookingDate}]]
-            </li>
-            <li>
-              <strong>예약 일자:</strong> [[${bookingVO.bookingTime}]]
-            </li>
-            <li>
-              <strong>결제 금액:</strong> [[${bookingVO.price}]]
-            </li>
-          </ul>
+      <div class="col-md-6">
+        <div class="h-100 p-5 bg-light border rounded-3">
+      <div class="row">
+        <h3 class="padding_20">예약 정보</h3>
       </div>
+      <br>
+      <div class="row">
+        <div class="col text-left">예약자 성함:</div>
+        <div class="col text-right">[[${bookingVO.userName}]]</div>
+      </div>
+      <div class="row">
+        <div class="col text-left">예약메뉴:</div>
+        <div class="col text-right">[[${bookingVO.foodName}]]</div>
+      </div>
+      <div class="row">
+        <div class="col text-left">예약 일시:</div>
+        <div class="col text-right">[[${bookingVO.bookingDate}]]</div>
+      </div>
+      <div class="row">
+        <div class="col text-left">예약 일자:</div>
+        <div class="col text-right">[[${bookingVO.bookingTime}]]</div>
+      </div>
+      <hr>
+      <div class="row mb-5">
+        <div class="col text-left">결제금액:</div>
+        <div class="col text-right">
+          <strong>
+            <div data-th-text="${#numbers.formatInteger(bookingVO.price, 3, 'COMMA') + '원'}"></div>
+          </strong>
+        </div>
+      </div>
+        </div>
+      </div>
+
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>유의사항</h2>
           <br>
           <p>예약/결제 취소 : 예약 일자의 1시간 전까지<br>시간이 경과한 예약 건에 대해서는 관리자에게 문의</p>
-          <a th:onclick="iamport()" class="btn btn-primary" style="background-color: #8E48C7; border: none; border-radius: 10%; color: white;">결제하기</a>
-          <a th:href="@{/store/list}" class="btn btn-success" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</a>
-          <button class="btn btn-outline-secondary" type="button">Example button</button>
+          <button class="kakaoBtn kakaoBtn2">카카오페이 결제</button>
+
+          <form method="post" action="/pay/refund">
+            <button class="kakaoBtn2">카카오페이 결제 취소</button>
+          </form>
+
+          <button onclick="iamport()" class="iamport">iamport</button>
+          <button onClick="cancelPay()" class="iamport">iamport 환불</button>
+
+<!--          <a th:onclick="iamport()" class="btn btn-primary" style="background-color: #8E48C7; border: none; border-radius: 10%; color: white;">결제하기</a>-->
+<!--          <a th:href="@{/store/list}" class="btn btn-success" style="background-color: #9C91B3; border: none; border-radius: 10%;">우야노</a>-->
+<!--          <button class="btn btn-outline-secondary" type="button">Example button</button>-->
         </div>
       </div>
     </div>
@@ -272,6 +299,8 @@
       "dataType": "json"
     });
   }
+
+
 
 
 
