@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>메인페이지(관리자)</title>
+    <style>
+        table, th, td {
+            margin: auto;
+            padding: 30px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+            background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+        }
+
+        .input-form {
+            /*max-width: 680px;*/
+            min-height: 510px;
+
+            margin-top: 80px;
+            margin-bottom: 80px;
+            padding: 32px;
+
+            background: #fff;
+            /*background: #E9DFED;*/
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+            <h3 class="mb-3 mb-5 purple2 text-center">관리자 페이지</h3>
+            <table>
+                <tr>
+                    <td>
+                        <div class="dropdown">
+                            <a href="#"
+                               class="list-group-item list-group-item-action list-group-item-primary dropdown-toggle"
+                               data-toggle="dropdown">맛집 등록</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/manage/storeList">추천 맛집</a>
+                                <a class="dropdown-item" href="/manage/storeRegNotList">승인 대기</a>
+                                <a class="dropdown-item" href="/manage/storeRegOkList">승인 완료</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="dropdown">
+                            <a href="#"
+                               class="list-group-item list-group-item-action list-group-item-primary dropdown-toggle"
+                               data-toggle="dropdown">수강생 관리</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/manage/classList">수강생(강의실)</a>
+                                <a class="dropdown-item" href="#">수강생(활성)</a>
+                                <a class="dropdown-item" href="#">수강생(비활성)</a>
+                                <a class="dropdown-item" href="#">수강생(강퇴)</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>
