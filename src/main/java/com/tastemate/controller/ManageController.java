@@ -129,9 +129,12 @@ public class ManageController {
 
     //맛집 상세보기(승인)
     @GetMapping("storeRegOkView")
-    public String storeRegOkView (Model model, ManageStoreVO manageStoreVO) {
+    public String storeRegOkView (Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
         ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
         model.addAttribute("storeRegView", storeRegOkView);
+
+        //리뷰 조회
+        selectUserReview(model, manageStarVO);
         return "/manage/storeRegOkView";
     }
 
