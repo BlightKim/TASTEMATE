@@ -70,6 +70,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="check" parameterType="String" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd};
+    </select>
+
 
     <select id="findUserByUserIdx" parameterType="integer" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_IDX = #{userIdx, jdbcType=INTEGER}
