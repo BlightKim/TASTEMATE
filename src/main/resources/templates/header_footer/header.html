@@ -105,7 +105,7 @@
             <li><a href="#">관리자모드</a></li>
             <li><a href="#">MY</a></li>
             <div class="ml-auto">
-                <button class="btn btn-outline-dark ml-2" type="button">회원가입</button>
+                <button th:onclick="|location.href='@{/member/simpleregister}'|" class="btn btn-outline-dark ml-2" type="button">회원가입</button>
                 <button th:onclick="|location.href='@{/member/login}'|" class="btn btn-outline-dark ml-2" type="button">로그인</button>
             </div>
 

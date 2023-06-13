@@ -284,55 +284,20 @@ oriFilename-->
   function typeFn() {
     var selectedDate = $("select[name=selectDate] > option:selected").val();
     var storeIdx2 = $("#storeIdx").val();
+    $("select option[id='time1']").prop("disabled",false);
+    $("select option[id='time2']").prop("disabled",false);
+    $("select option[id='time3']").prop("disabled",false);
+    $("select option[id='time4']").prop("disabled",false);
+    $("select option[id='time5']").prop("disabled",false);
+    $("select option[id='time6']").prop("disabled",false);
+    $("select option[id='time7']").prop("disabled",false);
+
+
     if (selectedDate.length > 1) {
       $("#time").prop("disabled",false);
+
     }
-    // let today = new Date();
-    //
-    // console.log(today);
-    // console.log(dateFormat(today));
-    //
-    // var todayDate = dateFormat(today).split(' ')[0];
-    // var nowTime = dateFormat(today).split(' ')[1];
-    //
-    // console.log(dateFormat(today).split(' ')[0]);
-    // console.log(dateFormat(today).split(' ')[1]);
-    //
-    // console.log(todayDate + ' ' + nowTime);
-    //
-    // if (selectedDate == todayDate) {
-    //
-    //   var hour = nowTime.split(':')[0];
-    //   var minute = nowTime.split(':')[1];
-    //   if (hour > 10) {
-    //     $("select option[id='time1']").prop("disabled",true);
-    //     $("select option[id='time2']").prop("disabled",true);
-    //   }
-    //   if (hour > 12 && minute <= 30) {
-    //     $("select option[id='time1']").prop("disabled",true);
-    //     $("select option[id='time2']").prop("disabled",true);
-    //     $("select option[id='time3']").prop("disabled",true);
-    //     $("select option[id='time4']").prop("disabled",true);
-    //   }
-    //   if (hour > 12 && minute > 30) {
-    //     $("select option[id='time1']").prop("disabled",true);
-    //     $("select option[id='time2']").prop("disabled",true);
-    //     $("select option[id='time3']").prop("disabled",true);
-    //     $("select option[id='time4']").prop("disabled",true);
-    //     $("select option[id='time5']").prop("disabled",true);
-    //     $("select option[id='time6']").prop("disabled",true);
-    //   }
-    //   if (hour > 13) {
-    //     $("select option[id='time1']").prop("disabled",true);
-    //     $("select option[id='time2']").prop("disabled",true);
-    //     $("select option[id='time3']").prop("disabled",true);
-    //     $("select option[id='time4']").prop("disabled",true);
-    //     $("select option[id='time5']").prop("disabled",true);
-    //     $("select option[id='time6']").prop("disabled",true);
-    //     $("select option[id='time7']").prop("disabled",true);
-    //
-    //   }
-    // }
+
 
     console.log(selectedDate);
 
@@ -365,7 +330,7 @@ oriFilename-->
 
           var hour = nowTime.split(':')[0];
           var minute = nowTime.split(':')[1];
-          if (hour >= 10) {
+          if (hour >= 11 && minute >= 30) {
             $("select option[id='time1']").prop("disabled", true);
             $("select option[id='time2']").prop("disabled", true);
           }

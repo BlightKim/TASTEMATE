@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -101,7 +102,7 @@ public class PayController {
     /*===================== 이니시스 ============================*/
     @PostMapping("/inicisComplete")
     @ResponseBody
-    public int paymentComplete(@RequestBody InicisVO inicisVO) throws IOException, ParseException {
+    public int paymentComplete(@RequestBody InicisVO inicisVO, HttpServletResponse response) throws IOException, ParseException {
 
         log.info("inicisComplete!!!!!!!!!!!!!!! : " + inicisVO);
 

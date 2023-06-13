@@ -34,8 +34,10 @@ import java.util.List;
 public class PaymentService {
 
     // IAMPORT API 인증 정보 설정
-    String impKey = "3085212137161101";
-    String impSecret = "hIvzsAXLBTySTTX2RPyr3KFfDWu4WBfvkGQb8mvCts3DBB4SsQ8pQ4uhEetSNdF5R0RaymFVBbrG2EbC";
+    //String impKey = "3085212137161101";
+    String impKey = "6605686173750148";
+    //String impSecret = "hIvzsAXLBTySTTX2RPyr3KFfDWu4WBfvkGQb8mvCts3DBB4SsQ8pQ4uhEetSNdF5R0RaymFVBbrG2EbC";
+    String impSecret = "NKk4ASKxmOC9x0NvLUMy5qxOZ7QXCwGdfpGkoyR4aC2MwZdmfLjjksZJceYW3jJ0SmYY4c1ffnTm3M8W";
 
     public String getToken() throws ParseException {
 
