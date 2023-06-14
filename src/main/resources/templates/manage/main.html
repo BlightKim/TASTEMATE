@@ -50,53 +50,11 @@
 <div class="container">
     <div class="input-form-background row">
         <div class="input-form col-md-12 mx-auto">
-            <div class="jumbotron text-center purple2">
-                <h1>관리자 추천</h1>
-                <!--                <p>관리자를 위한 전용 페이지 입니다!</p>-->
-            </div>
 
-            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark sticky-top">
-                <!-- 로고 -->
-                <!--                <a class="navbar-brand" href="#">Logo</a>-->
-                <ul class="navbar-nav">
-                    <!-- 링크 -->
-<!--                    <li class="nav-item">-->
-<!--                        <a class="nav-link" href="#">Link</a>-->
-<!--                    </li>-->
-                    <!-- 드롭다운 -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
-                            맛집 등록
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-                            게시물 관리
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">
-                            수강생 관리
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <br><br><br>
+            <!-- 관리자 미니 해더-->
+            <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
+
+            <!-- 콘텐츠 -->
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
@@ -120,115 +78,6 @@
     </div>
 </div>
 
-<div class="container">
-    <div class="input-form-background row">
-        <div class="input-form col-md-12 mx-auto">
-            <div class="jumbotron text-center">
-                <h1>관리자 페이지</h1>
-                <!--                <p>관리자를 위한 전용 페이지 입니다!</p>-->
-            </div>
-
-            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark sticky-top">
-                <!-- 로고 -->
-                <!--                <a class="navbar-brand" href="#">Logo</a>-->
-                <ul class="navbar-nav">
-                    <!-- 링크 -->
-                    <!--                    <li class="nav-item">-->
-                    <!--                        <a class="nav-link" href="#">Link</a>-->
-                    <!--                    </li>-->
-                    <!-- 드롭다운 -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                            맛집 등록
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                            게시물 관리
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                            수강생 관리
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <br><br><br>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h3>Column 1</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <h3>Column 2</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                    <div class="col-sm-4">
-                        <h3>Column 3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="input-form-background row">
-        <div class="input-form col-md-12 mx-auto">
-            <h3 class="mb-3 mb-5 purple2 text-center">관리자 페이지</h3>
-            <table>
-                <tr>
-                    <td>
-                        <div class="dropdown">
-                            <a href="#"
-                               class="list-group-item list-group-item-action list-group-item-primary dropdown-toggle"
-                               data-toggle="dropdown">맛집 등록</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/manage/storeList">추천 맛집</a>
-                                <a class="dropdown-item" href="/manage/storeRegNotList">승인 대기</a>
-                                <a class="dropdown-item" href="/manage/storeRegOkList">승인 완료</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="dropdown">
-                            <a href="#"
-                               class="list-group-item list-group-item-action list-group-item-primary dropdown-toggle"
-                               data-toggle="dropdown">수강생 관리</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="/manage/classList">수강생(강의실)</a>
-                                <a class="dropdown-item" href="#">수강생(활성)</a>
-                                <a class="dropdown-item" href="#">수강생(비활성)</a>
-                                <a class="dropdown-item" href="#">수강생(강퇴)</a>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 
 </body>

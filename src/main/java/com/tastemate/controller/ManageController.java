@@ -27,7 +27,9 @@ public class ManageController {
 
     //메인 페이지(관리자)
     @GetMapping("main")
-    public String manageMain(){
+    public String manageMain(Model model) {
+        String title = "관리자 페이지";
+        model.addAttribute("title", title);
         return "/manage/main";
     }
 
@@ -44,6 +46,9 @@ public class ManageController {
     public String manageStoreList(Model model) {
         List<ManageStoreVO> manageStoreList = service.manageStoreListGet();
         model.addAttribute("manageStoreList", manageStoreList);
+
+        String title = "관리자 추천";
+        model.addAttribute("title", title);
         return "/manage/storeList";
     }
 
@@ -103,6 +108,9 @@ public class ManageController {
     public String storeRegNotList(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegNotList = service.storeRegNotList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegNotList);
+
+        String title = "승인 대기";
+        model.addAttribute("title", title);
         return "/manage/storeRegNotList";
     }
 
@@ -111,6 +119,9 @@ public class ManageController {
     public String storeRegOkList(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegOkList);
+
+        String title = "승인 완료";
+        model.addAttribute("title", title);
         return "/manage/storeRegOkList";
     }
 
@@ -185,6 +196,9 @@ public class ManageController {
     public String storeRegOkListMenu(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegOkList);
+
+        String title = "메뉴 등록";
+        model.addAttribute("title", title);
         return "/manage/storeRegOkListMenu";
     }
 

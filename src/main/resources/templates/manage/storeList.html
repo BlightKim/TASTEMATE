@@ -51,56 +51,11 @@
 <div class="container">
     <div class="input-form-background row">
         <div class="input-form col-md-12 mx-auto">
-            <div class="jumbotron text-center purple2">
-                <h1>관리자 추천</h1>
-            </div>
-            <!-- 네비게이션 바 -->
-            <nav class="navbar navbar-expand-sm bg-secondary navbar-dark sticky-top">
-                <ul class="navbar-nav">
-                    <!-- 드롭다운 -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
-                            맛집 등록
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-                            게시물 관리
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">
-                            수강생 관리
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <br><br><br>
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
 
+            <!-- 관리자 미니 해더-->
+            <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
 
-<!--<div class="container">-->
-<!--    <div class="input-form-background row">-->
-<!--        <div class="input-form col-md-12 mx-auto">-->
-<!--            <div>-->
-                <table class="table table-hover">
+            <table class="table table-hover">
                     <tr>
                         <th>카테고리</th>
                         <th>맛집</th>
