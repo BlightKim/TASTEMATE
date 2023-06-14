@@ -153,8 +153,7 @@ public class PaymentService {
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String responseData = responseEntity.getBody();
             log.info("responseData?"+responseData);
-            //JSONObject responseJson = new JSONObject();
-           // JSONObject response = responseJson.getJSONObject("response");
+
             // 처리 결과에 대한 작업 수행
         } else {
             // 요청 실패에 대한 작업 수행
@@ -173,9 +172,9 @@ public class PaymentService {
         return payMapper.get_inicis(userIdx);
     }
 
-    public int cancel_inicis(String token) {
+    public int cancel_inicis(String merchant_uid) {
 
-        return payMapper.cancel_inicis(token);
+        return payMapper.cancel_inicis(merchant_uid);
     }
 }
 

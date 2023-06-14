@@ -39,4 +39,17 @@ public class KakaoPayApprovalVO {
     //private Date approvedAt;
 
 
+
+    /*booking join*/
+
+    private List<BookingVO> bookingVO;
+/*    private String bookingTime;
+    private int tableNo;
+    private String storeName;*/
+
+
+
+
+
+
 }

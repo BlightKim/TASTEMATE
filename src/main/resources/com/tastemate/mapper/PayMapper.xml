@@ -18,6 +18,15 @@
         <result column="approved_at" property="approved_at"/>
         <result column="amount" property="amount2"/>
         <result column="tid" property="tid"/>
+            <collection property="bookingVO" resultMap="bookingVOResultMap"/>
+    </resultMap>
+
+    <resultMap id="bookingVOResultMap" type="BookingVO">
+        <id column="booking_Idx" property="bookingIdx"/>
+        <result column="booking_Time" property="bookingTime"/>
+        <result column="table_No" property="tableNo"/>
+        <result column="store_Name" property="storeName"/>
+        <result column="user_name" property="userName"/>
     </resultMap>
 
     <resultMap id="inicis" type="com.tastemate.domain.InicisVO">
@@ -50,15 +59,17 @@
         item_name, quantity, approved_at, tid)
         values (KAKAOAPPROVAL_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx},
         #{partner_order_id}, #{amount2}, #{pgToken}, #{payment_method_type},
-        #{item_name}, #{quantity}, #{approved_at}, #{tid})
+        #{item_name}, #{quantity}, SYSDATE, #{tid})
     </insert>
 
     <select id="get_KakaoApproval" resultMap="KakaoApproval">
         select *
-        from KAKAOPAYAPPROVAL
-        where USER_IDX = #{userIdx}
-        and status = 0
+        from KAKAOPAYAPPROVAL K left outer join BOOKING B
+        on k.booking_Idx = b.booking_Idx
+        where k.USER_IDX = #{userIdx}
+          and k.status = 0
     </select>
+
 
     <select id="get_amount" resultType="int">
         select amount
@@ -76,9 +87,9 @@
     <!-- 여기부터 이니시스 -->
     <insert id="insert_inicis">
         INSERT INTO INICIS(INICIS_IDX, USER_IDX, STORE_IDX, BOOKING_IDX, IMP_UID, TOKEN,
-                           MERCHANT_UID, NAME, AMOUNT, BUYER_NAME, CARD_NO, PAY_DATE)
+                           MERCHANT_UID, NAME, AMOUNT, BUYER_NAME, CARD_NO, PAY_DATE, STATUS)
         VALUES (INICIS_SEQ.nextval, #{userIdx},#{storeIdx},#{bookingIdx},#{imp_uid},#{token},
-                #{merchant_uid},#{name},#{amount},#{buyer_name},#{card_no},#{pay_date})
+                #{merchant_uid},#{name},#{amount},#{buyer_name},#{card_no},#{pay_date}, 0)
 
     </insert>
 
@@ -86,12 +97,13 @@
         select *
         from INICIS
         where user_idx = #{userIdx}
+        and status = 0
     </select>
 
     <update id="cancel_inicis">
         update INICIS
         set status = 1
-        where token #{token}
+        where merchant_uid = #{merchant_uid}
     </update>
 
 

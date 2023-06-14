@@ -22,5 +22,5 @@ public interface PayMapper {
 
     InicisVO get_inicis(int userIdx);
 
-    int cancel_inicis(String token);
+    int cancel_inicis(String merchant_uid);
 }
