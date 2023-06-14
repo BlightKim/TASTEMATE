@@ -43,7 +43,7 @@ public interface ManageMapper {
 
 
     //맛집 메뉴 조회
-    List<ManageMemberVO> storeMenuView(ManageMenuVO manageMenuVO);
+    List<ManageMenuVO> storeMenuView(ManageMenuVO manageMenuVO);
 
     //메뉴 조회(1개)
     ManageMenuVO storeMenuUpdateView(ManageMenuVO manageMenuVO);

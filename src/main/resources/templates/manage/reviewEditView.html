@@ -103,7 +103,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
             </svg>
-            <label for="userId">작성자 ID</label>
+            <label for="userId">사용자 ID</label>
             <input type="text" class="form-control" id="userId" name="userId" readonly th:value="${storeRegView.userId}">
             <input type="hidden" class="form-control" id="userName" name="userName" th:value="${storeRegView.userName}">
           </div>
@@ -180,6 +180,11 @@
 
 
         <div class="text-center mt-5 mb-3">
+<!--          <form th:action="@{/manage/storeRegUpdateNot}" method="post">-->
+<!--            <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">-->
+<!--            <button type="submit" class="btn text-white" style="background-color: #8E48C7">승인 취소</button>-->
+<!--            <a th:href="@{/manage/storeRegOkList}" class="btn text-white" style="background-color: #9C91B3">목록</a>-->
+<!--          </form>-->
           <form method="post">
             <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
             <button onclick="storeRegOkUpdateView(this.form)" class="btn text-white" style="background-color: #8E48C7">수정</button>
@@ -223,9 +228,9 @@
                       </svg>
                       Mate
                       <th:block th:with="starCount=${manageStarVO.storeStar}">
-                        <span th:if="${starCount != 0.0}"
-                              th:each="i: ${#numbers.sequence(1, starCount)}"
-                              class="yellow">★</span>
+                                                <span th:if="${starCount != 0.0}"
+                                                      th:each="i: ${#numbers.sequence(1, starCount)}"
+                                                      class="yellow">★</span>
                       </th:block>
                     </div>
 
@@ -240,12 +245,12 @@
                            th:value="${manageStarVO.storeComment}">
                     <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
 
-                    <span>
-                      <button onclick="updateStoreReview(this.form)" class="btn text-white btn-sm"
-                              style="background-color: #E9DFED">수정</button>
-                      <a class="btn text-white btn-sm" style="background-color: #8E48C7" href="#" data-toggle="modal"
-                         data-target="#confirmDeleteModal2">삭제</a>
-                    </span>
+                    <span class="padding-left">
+                                            <button onclick="updateStoreReview(this.form)" class="btn text-white btn-sm"
+                                                    style="background-color: #E9DFED">수정</button>
+                                            <a class="btn text-white btn-sm" style="background-color: #8E48C7" href="#" data-toggle="modal"
+                                               data-target="#confirmDeleteModal2">삭제</a>
+                                        </span>
 
                     <!-- 리뷰 삭제 모달 -->
                     <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog"
@@ -279,36 +284,14 @@
                   </div>
                 </form>
               </div>
-            </div>
-            <div class="card mb-3"
-                 th:each="manageStarVO : ${manageStarVOList}"
-                 th:if="${manageStarVO.storeComment == null}">
 
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                         fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-                    </svg>
-                    Mate
-                  </div>
-
-                  <div class="col-sm-6">
-
-                    <span th:text="맛집 평가가 없습니다."></span>
-                  </div>
-                </div>
-<!--            <div class="card mb-3"-->
-<!--                 th:each="manageStarVO : ${manageStarVOList}"-->
-<!--                 th:if="${manageStarVO.storeComment == null}">-->
-<!--            <div th:if="${manageStarVOList.size() == 0}" class="card-body">-->
-<!--              <p>맛집 평가가 없습니다.</p>-->
             </div>
           </div>
         </div>
 
       </div>
+
+
 
     </div>
   </div>

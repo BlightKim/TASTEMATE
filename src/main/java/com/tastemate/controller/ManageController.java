@@ -5,6 +5,7 @@ import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
 import com.tastemate.domain.ManageMemberVO;
 import com.tastemate.service.ManageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/manage/*")
+@Slf4j
 public class ManageController {
 
     @Autowired
@@ -193,7 +196,7 @@ public class ManageController {
         model.addAttribute("storeRegView", storeRegOkView);
 
         //맛집 메뉴보기
-        List<ManageMemberVO> storeMenuView = service.storeMenuView(manageMenuVO);
+        List<ManageMenuVO> storeMenuView = service.storeMenuView(manageMenuVO);
         model.addAttribute("storeMenuView", storeMenuView);
         return "/manage/storeMenuView";
     }
@@ -233,9 +236,26 @@ public class ManageController {
     }
 
     //메뉴 삭제
+    //@RequestMapping("maDeleteMenu")
+    //@GetMapping("maDeleteMenu")
     @PostMapping("maDeleteMenu")
+//    public String maDeleteMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO, RedirectAttributes redirectAttributes) {
+//        int result = service.maDeleteMenu(manageMenuVO);
+//        log.info(String.valueOf(result));
+//        log.info(String.valueOf(manageMenuVO));
+//
+//        String wow = "complete";
+//        redirectAttributes.addAttribute("message", wow);
+//
+//        return "redirect:/manage/storeRegOkListMenu";
+////        storeMenuView(model, manageMenuVO, manageStoreVO);
+////        return "/manage/storeMenuView";
+//    }
     public String maDeleteMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
-        service.maDeleteMenu(manageMenuVO);
+        int result = service.maDeleteMenu(manageMenuVO);
+
+        log.info(String.valueOf(result));
+        log.info(String.valueOf(manageMenuVO));
         storeMenuView(model, manageMenuVO, manageStoreVO);
         return "/manage/storeMenuView";
     }

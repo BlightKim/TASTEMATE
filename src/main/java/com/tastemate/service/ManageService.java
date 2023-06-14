@@ -174,8 +174,8 @@ public class ManageService {
 
 
     //맛집 메뉴 조회
-    public List<ManageMemberVO> storeMenuView(ManageMenuVO manageMenuVO) {
-        List<ManageMemberVO> storeMenuView = mapper.storeMenuView(manageMenuVO);
+    public List<ManageMenuVO> storeMenuView(ManageMenuVO manageMenuVO) {
+        List<ManageMenuVO> storeMenuView = mapper.storeMenuView(manageMenuVO);
         return storeMenuView;
     }
 

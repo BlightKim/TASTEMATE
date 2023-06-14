@@ -20,7 +20,7 @@
     }
 
     .input-form {
-      /*max-width: 680px;*/
+      max-width: 800px;
 
       margin-top: 80px;
       margin-bottom: 80px;
@@ -68,6 +68,15 @@
 </head>
 <body>
 
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div class="text-center">
+    관리자의 승인 후 게시됩니다 ^^
+  </div>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
 
 <div class="container">
   <div class="input-form-backgroud row">
@@ -90,7 +99,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
               <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
             </svg>
-            <label for="userId">ID</label>
+            <label for="userId">작성자 ID</label>
             <input type="text" class="form-control" id="userId" name="userId" readonly th:value="${storeRegView.userId}">
             <input type="hidden" class="form-control" id="userName" name="userName" th:value="${storeRegView.userName}">
           </div>
@@ -123,41 +132,43 @@
           <tr th:if="${storeMenuView.size() == 0}">
             <td class="center" colspan="3">등록한 메뉴가 없습니다.</td>
           </tr>
-
           <tr th:each="storeMenu : ${storeMenuView}">
             <td class="center">[[${storeMenu.foodName}]]</td>
             <td class="center">[[${storeMenu.price}]] 원</td>
             <td class="center">
               <form method="post">
                 <div>
-                  <input type="hidden" name="menuIdx" th:value="${storeMenu.menuIdx}">
+<!--                  메뉴 idx: [[${storeMenu.menuIdx}]]-->
+<!--                  스토어 idx: [[${storeRegView.storeIdx}]]-->
+                  <input type="hidden" name="menuIdx" th:value="${storeMenu.getMenuIdx()}">
                   <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
                 </div>
                 <button onclick="storeMenuUpdateView(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">수정</button>
-
+                <button class="btn text-white btn-sm" style="background-color: #601599" onclick="maDeleteMenu(this.form)">삭제</button>
                 <!-- 모달 시작 -->
-                <a class="btn text-white btn-sm" style="background-color: #601599" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>
+<!--                <a class="btn text-white btn-sm" style="background-color: #601599" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>-->
 
-                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">메뉴 삭제</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p>메뉴를 삭제하시겠습니까?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                        <button class="btn btn-danger" onclick="maDeleteMenu(this.form)">삭제</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<!--                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"-->
+<!--                     aria-hidden="true">-->
+<!--                  <div class="modal-dialog" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                      <div class="modal-header">-->
+<!--                        <h5 class="modal-title" id="confirmDeleteModalLabel">메뉴 삭제</h5>-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                          <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+<!--                      </div>-->
+<!--                      <div class="modal-body">-->
+<!--                        <p>메뉴를 삭제하시겠습니까?</p>-->
+<!--                      </div>-->
+<!--                      <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>-->
+<!--                        <button class="btn btn-danger" th:onclick="@{/manage/maDeleteMenu(menuIdx=${storeMenu.menuIdx}, storeIdx=${storeRegView.storeIdx})}">삭제(Get)</button>-->
+<!--&lt;!&ndash;                        <button class="btn btn-danger" onclick="maDeleteMenu(this.form)">삭제</button>&ndash;&gt;-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
                 <!-- 모달 끝-->
 
               </form>

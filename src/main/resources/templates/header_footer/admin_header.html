@@ -36,11 +36,6 @@
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!--     서머노트   -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
-        rel="stylesheet"
-    />
     <style>
       body {
         margin: 0;
@@ -125,38 +120,55 @@
       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">관리자모드</a>
         <div class="dropdown-menu">
           <h5 class="dropdown-header" style="color:#8E48C7;"><i class="fa fa-cloud"></i> 맛집 등록</h5>
-          <a class="dropdown-item" href="/manage/storeList">- 관리자 추천</a>
-          <a class="dropdown-item" href="/manage/storeRegNotList">- 승인 대기</a>
-          <a class="dropdown-item" href="/manage/storeRegOkList">- 승인 완료</a>
+          <a class="dropdown-item" href="/manage/storeList">&nbsp;&nbsp; - 관리자 추천</a>
+          <a class="dropdown-item" href="/manage/storeRegNotList">&nbsp;&nbsp; - 승인 대기</a>
+          <a class="dropdown-item" href="/manage/storeRegOkList">&nbsp;&nbsp; - 승인 완료</a>
           <h5 class="dropdown-header" style="color:#8E48C7;"><i class="fa fa-cloud"></i> 메뉴 관리</h5>
-          <a class="dropdown-item" href="/manage/storeRegOkListMenu">- 메뉴 등록</a>
+          <a class="dropdown-item" href="/manage/storeRegOkListMenu">&nbsp;&nbsp; - 메뉴 등록</a>
           <h5 class="dropdown-header" style="color:#8E48C7;"><i class="fa fa-cloud"></i> 수강생 관리</h5>
-          <a class="dropdown-item" href="/manage/classList">- 강의실</a>
+          <a class="dropdown-item" href="/manage/classList">&nbsp;&nbsp; - 강의실</a>
         </div>
       </li>
-      <li><a href="#">MY</a></li>
+
+<!--      <li><a href="#">MY</a></li>-->
+
       <div class="ml-auto">
-        <button class="btn btn-outline-dark ml-2" type="button">
+
+        <span th:if="${session.vo != null}">
+          <button class="btn btn-outline-dark ml-2" type="button"
+                  th:onclick="|location.href='@{/member/logout}'|">
+          로그아웃
+          </button>
+        </span>
+
+        <span th:unless="${session.vo != null}">
+          <button class="btn btn-outline-dark ml-2" type="button"
+                  th:onclick="|location.href='@{/member/simpleregister}'|">
           회원가입
-        </button>
-        <button
-            th:onclick="|location.href='@{/member/login}'|"
-            class="btn btn-outline-dark ml-2"
-            type="button"
-        >
+          </button>
+          <button class="btn btn-outline-dark ml-2" type="button"
+                  th:onclick="|location.href='@{/member/login}'|">
           로그인
-        </button>
+          </button>
+        </span>
+        <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
+        <div class="btn-group" role="group">
+          <button th:if="${!(session.vo == null)}" type="button"
+                  class="btn btn-outline-dark dropdown-toggle"
+                  data-bs-toggle="dropdown" aria-expanded="false"
+                  style="width: 167px;">
+            마이페이지
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" th:href="@{/member/mypage}">개인정보 수정</a></li>
+            <th:block th:if="${session.vo != null }">
+              <li><a class="dropdown-item" th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a></li>
+            </th:block>
+            <li><a class="dropdown-item" th:href="@{/member/list}">결제정보</a></li>
+            <li><a class="dropdown-item" th:href="@{/member/list}">북마크 보기</a></li>
+          </ul>
+        </div>
+        </div>
       </div>
     </ul>
   </header>
-  <!-- 서머노트 스크립트-->
-  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-  <script>
-    function notLogined() {
-      alert("로그인 후 이용 가능합니다.");
-    }
-  </script>
-  </body>
-  </html>
-</div>
-</html>
