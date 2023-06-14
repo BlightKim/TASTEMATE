@@ -194,6 +194,123 @@
       <div class="container">
         <div class="text-center mb-3 mt-1">
           <h5 class="card-header mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-egg-fried" viewBox="0 0 16 16">
+              <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+            </svg>
+            맛집 한줄 평가
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-egg-fried" viewBox="0 0 16 16">
+              <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+            </svg>
+          </h5>
+        </div>
+        <div class="row mb-5">
+          <div class="col-sm-12">
+            <div class="card mb-3"
+               th:each="manageStarVO : ${manageStarVOList}"
+               th:if="${manageStarVO.storeComment != null}">
+
+              <div class="card-body">
+
+                <div class="row">
+                  <div class="col-sm-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                    </svg>
+                    Mate
+                    <th:block th:with="starCount=${manageStarVO.storeStar}">
+                      <span th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}" class="yellow">★</span>
+                    </th:block>
+
+                  </div>
+
+                  <div class="col-sm-9">
+
+                    <span th:text="${manageStarVO.storeComment}"></span>
+                  </div>
+
+                  <input type="hidden" name="starIdx" th:value="${manageStarVO.starIdx}">
+                  <input type="hidden" name="storeStar" th:value="${manageStarVO.storeStar}">
+                  <input type="hidden" name="storeComment"
+                         th:value="${manageStarVO.storeComment}">
+                  <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
+
+                  <span>
+                      <button onclick="updateStoreReview(this.form)" class="btn text-white btn-sm"
+                              style="background-color: #E9DFED">수정</button>
+                      <a class="btn text-white btn-sm" style="background-color: #8E48C7" href="#" data-toggle="modal"
+                         data-target="#confirmDeleteModal2">삭제</a>
+                    </span>
+
+                  <!-- 리뷰 삭제 모달 -->
+                  <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog"
+                       aria-labelledby="confirmDeleteModalLabel"
+                       aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="confirmDeleteModalLabel2">리뷰 삭제</h5>
+                          <button type="button" class="close" data-dismiss="modal"
+                                  aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>리뷰를 삭제하시겠습니까?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary"
+                                  data-dismiss="modal">취소
+                          </button>
+                          <button class="btn btn-danger"
+                                  onclick="deleteStoreReview(this.form)">삭제
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 모달 끝 -->
+
+                </div>
+              </div>
+            </div>
+
+            <span th:if="${manageStarVOList.size() == 0}">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12 text-center purple2">
+                      등록된 리뷰가 없습니다.
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-emoji-smile" viewBox="0 0 16 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                      <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="container">
+        <div class="text-center mb-3 mt-1">
+          <h5 class="card-header mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
                  class="bi bi-egg-fried" viewBox="0 0 16 16">
               <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
@@ -248,71 +365,45 @@
                     </span>
 
                     <!-- 리뷰 삭제 모달 -->
-                    <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog"
-                         aria-labelledby="confirmDeleteModalLabel"
-                         aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel2">리뷰 삭제</h5>
-                            <button type="button" class="close" data-dismiss="modal"
-                                    aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <p>리뷰를 삭제하시겠습니까?</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                    data-dismiss="modal">취소
-                            </button>
-                            <button class="btn btn-danger"
-                                    onclick="deleteStoreReview(this.form)">삭제
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+<!--                    <div class="modal fade" id="confirmDeleteModal2" tabindex="-1" role="dialog"-->
+<!--                         aria-labelledby="confirmDeleteModalLabel"-->
+<!--                         aria-hidden="true">-->
+<!--                      <div class="modal-dialog" role="document">-->
+<!--                        <div class="modal-content">-->
+<!--                          <div class="modal-header">-->
+<!--                            <h5 class="modal-title" id="confirmDeleteModalLabel2">리뷰 삭제</h5>-->
+<!--                            <button type="button" class="close" data-dismiss="modal"-->
+<!--                                    aria-label="Close">-->
+<!--                              <span aria-hidden="true">&times;</span>-->
+<!--                            </button>-->
+<!--                          </div>-->
+<!--                          <div class="modal-body">-->
+<!--                            <p>리뷰를 삭제하시겠습니까?</p>-->
+<!--                          </div>-->
+<!--                          <div class="modal-footer">-->
+<!--                            <button type="button" class="btn btn-secondary"-->
+<!--                                    data-dismiss="modal">취소-->
+<!--                            </button>-->
+<!--                            <button class="btn btn-danger"-->
+<!--                                    onclick="deleteStoreReview(this.form)">삭제-->
+<!--                            </button>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
                     <!-- 모달 끝 -->
 
                   </div>
                 </form>
               </div>
             </div>
-            <div class="card mb-3"
-                 th:each="manageStarVO : ${manageStarVOList}"
-                 th:if="${manageStarVO.storeComment == null}">
-
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-sm-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                         fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                      <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
-                    </svg>
-                    Mate
-                  </div>
-
-                  <div class="col-sm-6">
-
-                    <span th:text="맛집 평가가 없습니다."></span>
-                  </div>
-                </div>
-<!--            <div class="card mb-3"-->
-<!--                 th:each="manageStarVO : ${manageStarVOList}"-->
-<!--                 th:if="${manageStarVO.storeComment == null}">-->
-<!--            <div th:if="${manageStarVOList.size() == 0}" class="card-body">-->
-<!--              <p>맛집 평가가 없습니다.</p>-->
-            </div>
           </div>
-        </div>
-
       </div>
-
     </div>
   </div>
 </div>
+
+
 
 <!-- 카카오 주소 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
