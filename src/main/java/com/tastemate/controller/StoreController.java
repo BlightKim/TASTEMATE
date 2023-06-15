@@ -1,9 +1,6 @@
 package com.tastemate.controller;
 
-import com.tastemate.domain.BookingVO;
-import com.tastemate.domain.MemberVO;
-import com.tastemate.domain.StarVO;
-import com.tastemate.domain.StoreVO;
+import com.tastemate.domain.*;
 import com.tastemate.domain.paging.Criteria;
 import com.tastemate.domain.paging.PageDTO;
 import com.tastemate.service.*;
@@ -282,6 +279,48 @@ public class StoreController {
     public void main(Model model){
         StoreVO storeVO = service.getStoreHighestStar();
         model.addAttribute("storeVO", storeVO);
+    }
+
+
+
+    @RequestMapping(value = "/payCheckAjax" , produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Integer> payCheckAjax(HttpSession session, String storeIdx){
+        
+        log.info("payCheckAjax Controller 도착");
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("payCheckAjax memberVO 확인 : " + memberVO);
+        log.info("payCheckAjax storeIdx 확인 : " + storeIdx);
+
+
+        Map<String, Integer> resultMap = new HashMap<>();
+
+        resultMap.put("userIdx", memberVO.getUserIdx());
+        resultMap.put("storeIdx", Integer.parseInt(storeIdx));
+
+        log.info("payCheckAjax resultMap 확인 : " + resultMap);
+
+        // 확인
+        InicisVO inicisVO = paymentService.findInicis(memberVO.getUserIdx());
+        KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.findKakao(memberVO.getUserIdx());
+
+        log.info("inicisVO 확인 : " + inicisVO);
+        log.info("kakaoPayApprovalVO 확인 : " + kakaoPayApprovalVO);
+
+        if (inicisVO != null){
+            log.info("inicisSuccess 값 확인");
+            resultMap.put("inicis", 1);
+
+            return resultMap;
+
+        } else if (kakaoPayApprovalVO != null){
+            log.info("mykakaoPaySuccess 값 확인");
+            resultMap.put("kakao", 1);
+            return resultMap;
+        }
+
+
+        return resultMap;
     }
 
 
