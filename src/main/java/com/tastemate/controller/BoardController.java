@@ -42,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 
 @Controller
@@ -63,12 +64,14 @@ public class BoardController {
   }
 
   @GetMapping
-  public String board(SearchCondition sc, Model model) {
+  public String board(SearchCondition sc, Model model, RedirectAttributes redirectAttributes) {
+    log.info("searchCondition: {}", sc);
     int totalCnt = boardService.getResultCnt(sc);
     PageHandler pageHandler = new PageHandler(totalCnt, sc);
     List<BoardVO> boardList = boardService.getAllBoard(sc);
     model.addAttribute("boardList", boardList);
     model.addAttribute("ph", pageHandler);
+
     return "board/board_list";
   }
 
@@ -94,7 +97,7 @@ public class BoardController {
     }
 
     boardService.saveOneBoard(boardVO);
-    return "redirect:/board";
+    return "/board/board_list";
   }
 
   @GetMapping({"/read/{boardIdx}"})

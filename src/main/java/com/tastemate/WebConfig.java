@@ -19,14 +19,15 @@ public class WebConfig implements WebMvcConfigurer {
     registry.addInterceptor(new LogInterceptor())
         .order(1)
         .addPathPatterns("/**")
-        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**");
+        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**", "/ws/**");
 
     registry.addInterceptor(new LoginCheckInterceptor())
             .order(2)
             .addPathPatterns("/**")
-            .excludePathPatterns("/", "/board", "/member/login**",
-                    "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
-                    "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**");
+            .excludePathPatterns("/", "/board", "/member/login**", "/css/**", "/*.ico", "**/js/**", "/error",
+                "/register", "/img/**", "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "/js/**",
+                "/ws/**", "/app/**/chat/**", "/chat/**"
+            );
   }
 
 
@@ -41,7 +42,6 @@ public class WebConfig implements WebMvcConfigurer {
   public void addResourceHandlers(ResourceHandlerRegistry registry){
     registry.addResourceHandler(storeResourcePath)
             .addResourceLocations(storeSavePath);
-
-
+    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static");
   }
 }

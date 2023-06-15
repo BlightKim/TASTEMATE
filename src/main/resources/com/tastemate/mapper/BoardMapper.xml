@@ -107,14 +107,14 @@
   <sql id="searchCondition">
     <choose>
       <when test='option == "T"'>
-        AND title LIKE '%' || #{keyword,jdbcType=VARCHAR} || '%'
+        AND UPPER(TITLE) LIKE '%' || UPPER(#{keyword,jdbcType=VARCHAR}) || '%'
       </when>
       <when test='option == "W"'>
-        AND writer '%' || #{keyword,jdbcType=VARCHAR} || '%'
+        AND UPPER(WRITER) LIKE '%' || UPPER(#{keyword,jdbcType=VARCHAR}) || '%'
       </when>
       <!--      <otherwise>-->
-      <!--        AND title '%' || #{keyword,jdbcType=VARCHAR} || '%'-->
-      <!--        OR content '%' || #{keyword,jdbcType=VARCHAR} || '%'-->
+      <!--        AND UPPER(title) LIKE '%' || UPPER(#{keyword,jdbcType=VARCHAR}) || '%'-->
+      <!--        OR UPPER(content) LIKE '%' || UPPER(#{keyword,jdbcType=VARCHAR}) || '%'-->
       <!--      </otherwise>-->
     </choose>
   </sql>

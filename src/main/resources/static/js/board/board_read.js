@@ -19,7 +19,7 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".comment-del-btn", function () {
-    let commentIdx = $(this).data("idx");
+    let commentIdx = $(this).attr("data-idx");
     console.log(commentIdx);
     Swal.fire({
       title: "댓글을 삭제하시겠습니까?",

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link href="/css/chat/chat_view.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+</head>
+<body>
+<section style="background-color: #eee;">
+  <div class="container py-5">
+    <div class="card-body" data-mdb-perfect-scrollbar="true" style="position: relative; height: 400px">
+      <div id="chatMessages"></div>
+    </div>
+    <div id="chatInput">
+      <input type="text" class="form-control form-control-lg" id="chatMessageInput" placeholder="Type message">
+      <button class="btn btn-primary" id="sendMessageBtn">Send</button>
+    </div>
+  </div>
+  <input type="hidden" id="roomId" th:value="${chatRoom.roomId}">
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+  var roomId = /*[[${chatRoom.roomId}]]*/ null;
+  var roomName = /*[[${chatRoom.roomName}]]*/ null;
+
+  var socket = new WebSocket("ws://" + 'http://192.168.45.41:8080' + "/ws/echo");
+  var stompClient = Stomp.over(socket);
+
+  var chatMessageInput = document.getElementById("chatMessageInput");
+  var sendMessageBtn = document.getElementById("sendMessageBtn");
+  sendMessageBtn.addEventListener("click", sendMessage);
+
+  stompClient.connect({}, function () {
+    console.log("STOMP Connected");
+
+    stompClient.subscribe("/queue/chat/" + roomId, function (message) {
+      var content = JSON.parse(message.body).content;
+      console.log("Received message: ", content);
+
+      var chatMessages = document.getElementById("chatMessages");
+      var messageElement = document.createElement("p");
+      messageElement.innerText = content;
+      chatMessages.appendChild(messageElement);
+    });
+  });
+
+  function sendMessage() {
+    var message = chatMessageInput.value;
+
+    // 메시지를 전송할 목적지 주소 설정 (백엔드의 채팅 엔드포인트 경로)
+    var destination = 'http://192.168.45.41:8080/app/ws/chat?roomId='+roomId;
+
+    // 전송할 메시지 객체 생성
+    var chatMessage = {
+      content: message
+    };
+
+    // 메시지를 JSON 형태로 변환
+    var jsonMessage = JSON.stringify(chatMessage);
+
+    // stompClient.send()를 사용하여 메시지 전송
+    stompClient.send(destination, {}, jsonMessage);
+
+    chatMessageInput.value = "";
+  }
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
+</body>
+</html>

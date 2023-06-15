@@ -4,22 +4,21 @@
   <head>
     <meta charset="UTF-8" />
     <title>커뮤니티 게시판</title>
-    <!--    font-awesome-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-    />
-    <!-- include summernote css/js -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
-      rel="stylesheet"
-    />
-    <!--  부트스트랩 아이콘 cdn -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-    <link rel="stylesheet" href="/css/board/board_list.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <link href="/css/board/board_list.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script type="text/javascript" src="/js/board/board_list.js"></script>
+
+
   </head>
   <body>
     <div class="container" style="height: 850px" th:fragment="main">
@@ -161,17 +160,18 @@
                 <!-- Bootstrap 클래스로 중앙에 위치 -->
                 <div class="input-group mb-3 search_btn_width">
                   <!-- 검색창 div -->
-                  <select name="searchType" class="form-select search_option">
+                  <select name="option" class="form-select search_option">
                     <!-- Bootstrap의 form-select 클래스 사용 -->
-                    <option value="title">제목</option>
-                    <option value="content">내용</option>
-                    <option value="title_content">제목+내용</option>
-                    <option value="writer">작성자</option>
+                    <option value="T">제목</option>
+<!--                    <option value="content">내용</option>
+                    <option value="title_content">제목+내용</option>-->
+                    <option value="W">작성자</option>
                   </select>
                   <input
-                    type="text"
+                    type= "text"
                     name="keyword"
                     class="form-control search_term"
+                    th:value="${param.keyword}"
                   />
                   <!-- Bootstrap의 form-control 클래스 사용, 검색어 입력란에 placeholder 추가 -->
                   <button
@@ -191,7 +191,7 @@
                   <ul
                     class="pagination d-flex align-items-center justify-content-center"
                   >
-                    <th:block
+                    <th:block th:if="${ph.totalPage > 1}"
                       th:with="start = ${ph.getBeginPage()}, end = ${ph.getEndPage()}"
                     >
                       <li
@@ -214,7 +214,7 @@
                         <a
                           class="page-link pagination_num_color"
                           href="#"
-                          th:href="@{|/board?page=${pageButton}|}"
+                          th:href="@{|/board${ph.sc.getQueryString(pageButton)}|}"
                           th:text="${pageButton}"
                           >1</a
                         >
@@ -231,6 +231,20 @@
                         >
                       </li>
                     </th:block>
+                    <th:block th:if="${ph.totalPage <= 1}">
+                      <li
+                          class="page-item"
+                          th:classappend="${ph.isShowPrev() == true} ? '' : 'disabled'"
+                      >
+                      <li class="page-item disabled">
+                        <a class="page-link" href="#">1</a>
+                      </li>
+                      <li
+                          class="page-item"
+                          th:classappend="${ph.isShowNext() == true} ? '' : 'disabled'"
+                          >
+                      </li>
+                    </th:block>
                   </ul>
                 </nav>
               </div>
@@ -243,7 +257,6 @@
 
     <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-    <script type="text/javascript" src="/js/board/board_list.js"></script>
     <script>
       $("#summernote").summernote({
         placeholder: "본문을 입력해주세요.",

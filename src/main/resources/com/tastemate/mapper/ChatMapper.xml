@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.ChatMapper">
+  <select id="findAllRoom" resultType="com.tastemate.domain.chatting.ChatRoomVO">
+    SELECT *
+    FROM CHAT_ROOM_TEST
+  </select>
+
+  <select id="findRoomById" parameterType="string"
+    resultType="com.tastemate.domain.chatting.ChatRoomVO">
+    SELECT *
+    FROM CHAT_ROOM_TEST
+    WHERE ROOM_ID = #{roomId,jdbcType=VARCHAR}
+  </select>
+
+
+  <insert id="insertRoom" parameterType="com.tastemate.domain.chatting.ChatRoomVO">
+    INSERT INTO CHAT_ROOM_TEST (ROOM_ID, ROOM_NAME, REG_DATE)
+    VALUES(#{roomId, jdbcType=VARCHAR}, #{roomName, jdbcType=VARCHAR}, SYSDATE)
+  </insert>
+<!--  <insert id="insertUser" parameterType="map">
+    INSERT INTO CHAT_ROOM_TEST (ROOM_IDX, ROOM_ID, USER_NAME, REG_DATE)
+    VALUES(CHAT_ROOM_SEQ.nextval, #{,jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, SYSDATE)
+  </insert>-->
+  <delete id="deleteRoom" parameterType="string">
+    DELETE FROM CHAT_ROOM_TEST
+    WHERE ROOM_ID = #{roomId,jdbcType=VARCHAR}
+  </delete>
+</mapper>

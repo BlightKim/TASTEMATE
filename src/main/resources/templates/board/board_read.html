@@ -16,10 +16,8 @@
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
-  <script
-      src="https://kit.fontawesome.com/54a65148b8.js"
-      crossorigin="anonymous"
-  ></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
   <script type="text/javascript" src="/js/board/board_read.js"></script>
 
 </head>
@@ -232,7 +230,7 @@
                 </div>
                 <div
                     class="comment-content"
-                    th:utext="${comment.commentContent}"
+                    th:utext="${comment.commentStatus == '삭제'} ? '해당 댓글은 삭제되었습니다.' : ${comment.commentContent}"
                 >
                   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                   Velit omnis animi et iure laudantium vitae, praesentium
@@ -285,7 +283,7 @@
                     </div>
                     <div
                         class="comment-content"
-                        th:utext="${comment.commentContent}"
+                        th:utext="${comment.commentStatus.equals('삭제')} ? '해당 댓글은 삭제되었습니다.' : ${comment.commentContent}"
                     >
                       Lorem ipsum dolor sit amet, consectetur adipisicing
                       elit. Velit omnis animi et iure laudantium vitae,
@@ -341,7 +339,7 @@
                     </div>
                     <div
                         class="comment-content"
-                        th:utext="${comment.commentContent}"
+                        th:utext="${comment.commentStatus.equals('삭제')} ? '해당 댓글은 삭제되었습니다.' : ${comment.commentContent}"
                     >
                       Lorem ipsum dolor sit amet, consectetur adipisicing
                       elit. Velit omnis animi et iure laudantium vitae,

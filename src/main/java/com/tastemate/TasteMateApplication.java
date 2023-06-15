@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Import;
     @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ContextStackAutoConfiguration.class),
     @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ContextRegionProviderAutoConfiguration.class),
     @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = SecurityAutoConfiguration.class)})
-@Import(S3Config.class)
+@Import({S3Config.class, ChatConfig.class, WebSockConfig.class})
 public class TasteMateApplication {
 
   public static void main(String[] args) {

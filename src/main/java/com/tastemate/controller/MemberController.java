@@ -1,5 +1,6 @@
 package com.tastemate.controller;
 
+import com.tastemate.WebSessionListener;
 import com.tastemate.domain.MemberVO;
 import com.tastemate.service.MemberService;
 import lombok.extern.slf4j.Slf4j;
@@ -64,6 +65,8 @@ public class MemberController {
       if (passwordEncoder.matches(userPwd, vo.getUserPwd())) {
         session.setAttribute("vo", vo);
         session.setAttribute("addressSplit", addressSplit);
+        WebSessionListener webSessionListener = WebSessionListener.getInstance();
+        webSessionListener.sessionCreated(session);
         System.out.println("vo = " + vo);
         System.out.println(vo.getUserPwd());
         return "redirect:" + redirectURL;
