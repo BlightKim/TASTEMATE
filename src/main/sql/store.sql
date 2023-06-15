@@ -288,7 +288,7 @@ STORAGE
 )
 NOPARALLEL
 
-    -------------------------------
+-------------------------------
 CREATE TABLE KAKAOPAYAPPROVAL
 (
     KAKAO_APPROVAL_IDX NUMBER NOT NULL

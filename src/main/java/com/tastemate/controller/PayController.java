@@ -12,6 +12,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -90,7 +91,7 @@ public class PayController {
             log.info("mykakaoPaySuccess info : " + info);
 
             if(info == null){
-                return "redirect:/pay/mykakaoPayNothing";
+                return "redirect:/pay/payNothing";
             }
 
             model.addAttribute("info", info);
@@ -102,15 +103,24 @@ public class PayController {
         return "/pay/mykakaoPaySuccess";
     }
 
-    @GetMapping("/mykakaoPayNothing")
-    public void mykakaoPayNothing(){
+    @GetMapping("/payNothing")
+    public void payNothing(@RequestParam(value="message", required = false) String message,
+                           RedirectAttributes rttr){
+
+        log.info("payNothing 도착");
+        log.info("message : "+ message);
+
+        if (message != null){
+            rttr.addFlashAttribute("message", message);
+            log.info("rttr");
+        }
 
     }
 
 
     // 카카오페이
     @PostMapping("/refund")
-    public String refund(Model model, String tid) {
+    public String refund(Model model, String tid, RedirectAttributes rttr) {
 
         log.info("controller refund............................................");
 
@@ -120,12 +130,11 @@ public class PayController {
 
         model.addAttribute("kakaoRefund", kakaoCancelResponse);
 
-        return "redirect:/pay/kakaoPayRefund";
-    }
 
-    @GetMapping("/kakaoPayRefund")
-    public void kakaoPayRefund(){
+        String msg = "complete";
+        rttr.addFlashAttribute("message", msg);
 
+        return "redirect:/pay/payNothing";
     }
 
 
@@ -157,7 +166,8 @@ public class PayController {
 
     @RequestMapping(value = "/inicisCancel", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, String> inicisCancel(@RequestBody InicisRefundVO inicisRefundVO) throws IOException {
+    public Map<String, String> inicisCancel(@RequestBody InicisRefundVO inicisRefundVO
+    ,RedirectAttributes rttr) throws IOException {
 
         log.info("inicisCancel!!!!!!!!!!!!!!! : " + inicisRefundVO);
 
@@ -172,6 +182,9 @@ public class PayController {
         log.info("controller 환불 완료!!!");
         Map<String, String> resultMap = new HashMap<>();
         resultMap.put("a", "환불성공");
+
+        String msg = "complete";
+        rttr.addFlashAttribute("message", msg);
 
         return resultMap;
     }
@@ -189,7 +202,7 @@ public class PayController {
             log.info("inicisSuccess : " + inicisVO);
 
             if (inicisVO == null) {
-                return "redirect:/pay/mykakaoPayNothing";
+                return "redirect:/pay/payNothing";
             }
 
             model.addAttribute("inicisVO", inicisVO);

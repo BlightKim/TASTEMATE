@@ -10,6 +10,7 @@ import com.tastemate.mapper.MemberMapper;
 import com.tastemate.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -162,7 +163,10 @@ public class StoreController {
     }
 
     @GetMapping("/starComment")
-    public void starComment(){
+    public void starComment(String storeIdx, Model model){
+
+        log.info("storeIdx : "+ storeIdx);
+        model.addAttribute("storeIdx",storeIdx);
 
     }
 
@@ -172,6 +176,8 @@ public class StoreController {
 
         int result = service.store_starComment(starVO);
         log.info("starVO result : " + result);
+
+
 
         return "redirect:/store/main";  //추후 수정 필요!
     }

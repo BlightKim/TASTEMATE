@@ -4,6 +4,7 @@ import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Alias("InicisVO")
@@ -35,6 +36,9 @@ public class InicisVO {
     private int storeIdx;
     private int bookingIdx;
     private int status;
+
+    /*join추가*/
+    private BookingVO bookingVO;
 
 
 }
