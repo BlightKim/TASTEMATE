@@ -71,7 +71,7 @@
 <div class="container">
   <div class="input-form-backgroud row">
     <div class="input-form col-md-12 mx-auto">
-      <h3 class="mb-3 mb-5 purple2 text-center">메뉴 등록</h3>
+      <h3 class="mb-3 mb-5 purple2 text-center">맛집 메뉴</h3>
 
       <div class="row">
         <div class="col-md-8 mb-3">
@@ -134,36 +134,37 @@
                   <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
                 </div>
                 <button onclick="storeMenuUpdateView(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">수정</button>
-                <!--                <button class="btn text-white btn-sm" style="background-color: #601599" onclick="maDeleteMenu(this.form)">삭제</button>-->
+                <button class="btn text-white btn-sm" style="background-color: #601599" onclick="maDeleteMenu(this.form)">삭제</button>
                 <!-- 모달 시작 -->
-                <a class="btn text-white btn-sm" style="background-color: #601599" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>
+<!--                <a class="btn text-white btn-sm" style="background-color: #601599" href="#" data-toggle="modal" data-target="#confirmDeleteModal">삭제</a>-->
 
-                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
-                     aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="confirmDeleteModalLabel">메뉴 삭제</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <p>메뉴를 삭제하시겠습니까?</p>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                        <!--                        <button class="btn btn-danger" th:onclick="@{/manage/maDeleteMenu(menuIdx=${storeMenu.menuIdx}, storeIdx=${storeRegView.storeIdx})}">삭제(Get)</button>-->
-                        <button class="btn btn-danger" onclick="maDeleteMenu(this.form)" id="confirmSubmitBtn">삭제</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+<!--                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"-->
+<!--                     aria-hidden="true">-->
+<!--                  <div class="modal-dialog" role="document">-->
+<!--                    <div class="modal-content">-->
+<!--                      <div class="modal-header">-->
+<!--                        <h5 class="modal-title" id="confirmDeleteModalLabel">메뉴 삭제</h5>-->
+<!--                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                          <span aria-hidden="true">&times;</span>-->
+<!--                        </button>-->
+<!--                      </div>-->
+<!--                      <div class="modal-body">-->
+<!--                        <p>메뉴를 삭제하시겠습니까?</p>-->
+<!--                      </div>-->
+<!--                      <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>-->
+<!--                        &lt;!&ndash;                        <button class="btn btn-danger" th:onclick="@{/manage/maDeleteMenu(menuIdx=${storeMenu.menuIdx}, storeIdx=${storeRegView.storeIdx})}">삭제(Get)</button>&ndash;&gt;-->
+<!--                        <button class="btn btn-danger" onclick="maDeleteMenu(this.form)" id="confirmSubmitBtn">삭제</button>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
                 <!-- 모달 끝-->
 
               </form>
             </td>
           </tr>
+
           <tr>
             <td colspan="2"></td>
             <td class="center">
@@ -210,22 +211,7 @@
   }
 </script>
 
-<script>
-  $(document).ready(function() {
-    // 제출하기 버튼 클릭 시 모달 표시
-    $('#submitBtn').click(function(e) {
-      e.preventDefault(); // 기본 동작 중지
 
-      // 모달 표시
-      $('#confirmationModal').modal('show');
-    });
-
-    // 모달 확인 버튼 클릭 시 폼 제출
-    $('#confirmSubmitBtn').click(function() {
-      $('#inputForm').unbind('submit').submit(); // 폼 제출
-    });
-  });
-</script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>

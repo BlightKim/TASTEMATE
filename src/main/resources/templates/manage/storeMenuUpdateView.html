@@ -71,7 +71,7 @@
   <div class="input-form-backgroud row">
     <div class="input-form col-md-12 mx-auto">
       <h3 class="mb-3 mb-5 purple2 text-center">메뉴 수정</h3>
-      <form th:action="@{/manage/maUpdateMenu}" method="post">
+      <form method="post">
 
         <div>
           <table class="table table-hover">
@@ -86,17 +86,20 @@
               <td>
                 <input type="hidden" name="storeIdx" th:value="${storeIdx}">
                 <input type="hidden" name="menuIdx" th:value="${storeMenuUpdateView.menuIdx}">
-                <button type="submit" class="btn text-white btn-sm" style="background-color: #8E48C7">메뉴 수정</button>
+                <button onclick="maUpdateMenu(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">메뉴 수정</button>
               </td>
             </tr>
           </table>
+        </div>
+        <div class="text-center mt-5 mb-3">
+          <button onclick="storeMenuView(this.form)" class="btn text-white" style="background-color: #9C91B3">취소</button>
         </div>
 
       </form>
 
 
 <!--      <div class="text-center mt-5 mb-3">-->
-<!--        <a th:href="@{/manage/storeRegOkListMenu}" class="btn text-white" style="background-color: #9C91B3">목록</a>-->
+<!--        <a th:href="@{/manage/storeMenuView}" class="btn text-white" style="background-color: #9C91B3">취소</a>-->
 <!--      </div>-->
 
 
@@ -105,8 +108,19 @@
   </div>
 </div>
 
-<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
-</body>
+<script>
+  /* 취소(맛집 메뉴 페이지) */
+  function storeMenuView(frm) {
+    frm.action= '/manage/storeMenuView';
+    frm.submit();
+  }
+
+  /* 메뉴 수정 */
+  function maUpdateMenu(frm) {
+    frm.action= '/manage/maUpdateMenu';
+    frm.submit();
+  }
+</script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>

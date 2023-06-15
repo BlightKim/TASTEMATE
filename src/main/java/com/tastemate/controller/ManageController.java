@@ -199,7 +199,7 @@ public class ManageController {
         List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegOkList);
 
-        String title = "메뉴 등록";
+        String title = "맛집 메뉴";
         model.addAttribute("title", title);
         return "/manage/storeRegOkListMenu";
     }
@@ -267,13 +267,17 @@ public class ManageController {
 ////        storeMenuView(model, manageMenuVO, manageStoreVO);
 ////        return "/manage/storeMenuView";
 //    }
-    public String maDeleteMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
+    public String maDeleteMenu(ManageMenuVO manageMenuVO, RedirectAttributes redirectAttributes) {
         int result = service.maDeleteMenu(manageMenuVO);
 
         log.info(String.valueOf(result));
         log.info(String.valueOf(manageMenuVO));
-        storeMenuView(model, manageMenuVO, manageStoreVO);
-        return "/manage/storeMenuView";
+        //storeMenuView(model, manageMenuVO, manageStoreVO);
+        //return "/manage/storeMenuView";
+
+        String wow = "complete";
+        redirectAttributes.addFlashAttribute("message", wow);
+        return "redirect:/manage/storeRegOkListMenu";
     }
 
 
@@ -332,7 +336,7 @@ public class ManageController {
 
     //리뷰 리스트
     @GetMapping("storeReviewList")
-    public String storeReviewList(Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
+    public String storeReviewList(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
         model.addAttribute("storeRegOkList", storeRegOkList);
 
