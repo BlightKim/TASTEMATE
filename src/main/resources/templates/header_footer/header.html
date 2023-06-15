@@ -127,19 +127,19 @@
                 </span>
                 <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
                     <div class="btn-group" role="group">
-                            <button th:if="${!(session.vo == null)}" type="button"
-                                    class="btn btn-outline-dark dropdown-toggle hover-me"
-                                    data-bs-toggle="dropdown" aria-expanded="false"
-                                    style="width: 167px;">
-                                    <span class="hover-me" th:text="${session.vo.getUserName()}"></span><span>님</span>
-                            </button>
-<!--                        style="color: #9C91B3"-->
-
+                        <button th:if="${!(session.vo == null)}" type="button"
+                                class="btn btn-outline-dark dropdown-toggle hover-me"
+                                data-bs-toggle="dropdown" aria-expanded="false"
+                                style="width: 167px;">
+                            <span class="hover-me" th:text="${session.vo.getUserName()}"></span><span>님</span>
+                        </button>
+                        <!--                        style="color: #9C91B3"-->
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/member/mypage}">개인정보 수정</a></li>
-                            <th:block th:if="${session.vo != null }">
+                            <th:block th:if="${!(session.vo == null)}">
                                 <li><a class="dropdown-item"
-                                       th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a></li>
+                                       th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a>
+                                </li>
                             </th:block>
                             <li><a class="dropdown-item" th:href="@{/member/list}">결제정보</a></li>
                             <li><a class="dropdown-item" th:href="@{/member/list}">북마크 보기</a></li>

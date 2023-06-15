@@ -9,6 +9,11 @@
     <meta charset="UTF-8">
     <title>개인정보 수정</title>
 
+    <!-- 구글 글씨체 적용-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+
     <!-- Alert -->
     <!--  alert 창 꾸미기 -->
     <link rel="stylesheet" href="sweetalert2.min.css">
@@ -40,6 +45,8 @@
         body {
             min-height: 100vh;
             background: #E9DFED;
+            font-family: 'Noto Serif KR', serif;
+
         }
 
         .input-form {
@@ -80,6 +87,8 @@
         <div class="row justify-content-center" style="height: 70%;">
             <div style="margin-left: 550px;"></div>
             <div class="col-12 d-grid gap-2" style="align-self: center; width: 45%;">
+                <h2 class="mb-3">개인정보 수정</h2>
+                <br>
                 <div class="row">
                     <label for="userName" class="form-label">이름</label>
                     <input type="text" class="form-control form-control"

@@ -108,4 +108,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="resetPassword" parameterType="com.tastemate.domain.MemberVO" >
         UPDATE MEMBER SET USER_PWD = #{userPwd} WHERE USER_ID = #{userId} AND USER_EMAIL = #{userEmail}
     </update>
+
+    <update id="createChatRoom">
+        UPDATE MEMBER SET ROOM_IDX = ROOM_SEQ.NEXTVAL WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <update id="joinChatRoom">
+        UPDATE MEMBER SET ROOM_IDX = #{roomIdx} WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <update id="closeChatRoom">
+        UPDATE MEMBER SET ROOM_IDX = null WHERE USER_IDX = #{userIdx}
+    </update>
 </mapper>

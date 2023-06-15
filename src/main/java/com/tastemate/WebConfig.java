@@ -28,10 +28,10 @@ public class WebConfig implements WebMvcConfigurer {
             .excludePathPatterns("/", "/board", "/member/login**", "/member/logout",
                     "/css/**", "/*.ico", "**/js/**", "/error", "/member/register", "/img/**",
                     "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**", "/member/class",
-                    "/member/mbti", "/member/selectFood", "/store/**", "member/list", "/member/simpleregister",
-                    "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/get", "/store/register",
-                    "/store/update", "/store/starComment", "/member/resetPassword", "/member/reset", "/member/checkId",
-                    "/member/resetSuccess", "/member/mailConfirm");
+                    "/member/mbti", "/member/selectFood", "/member/list", "/member/simpleregister",
+                    "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/list", "/store/main",
+                    "/member/resetPassword", "/member/reset", "/member/checkId",
+                    "/member/resetSuccess", "/member/mailConfirm", "/member/sweetalert2.min.css");
 
   }
   private String resourcePath = "/member/**";

@@ -4,20 +4,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
 
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
+    <!-- 구글 글씨체 적용-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+    <title>Title</title>
+
     <meta charset="UTF-8">
     <title>MBTI</title>
     <style>
         /* CSS 스타일은 여기에 작성합니다. */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Noto Serif KR', serif;
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
@@ -186,7 +185,7 @@
             width: 110px;
             height: 50px;
             margin: 0 auto;
-            background: url("resources/static/img/tastemate.jpeg") no-repeat;
+            background: url("/img/tastemate.jpeg") no-repeat;
             line-height: 99em;
         }
 
@@ -204,7 +203,7 @@
         }
 
         .contents .test_list .r4 a {
-            padding-top: 29px;
+            padding-top: 24px;
             box-sizing: border-box;
             font-size: 26px;
             text-decoration: none;
@@ -214,7 +213,7 @@
 <body>
 <form th:action="@{/member/userJoin}" style="height: 850px">
     <div class="contents agr q01">
-        <img id="tastemate" th:src="@{/img/tastemate.jpg}" style="width: 150px; height: 150px;"/>
+        <img id="tastemate" th:src="@{/img/tastemate.jpeg}" style="width: 150px; height: 150px;"/>
         <strong>당신이 선호하는 음식은 ?</strong>
         <div class="test_list q01">
             <ul class="r4 city M1">

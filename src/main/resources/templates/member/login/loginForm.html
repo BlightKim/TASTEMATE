@@ -6,8 +6,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <style>
+
+        .login_btn {
+            background-color: #9C91B3;
+            color: white;
+        }
+
+        .login_btn:hover {
+            background-color: #8E48C7;
+            color: white;
+        }
+    </style>
     <title>TasteMate</title>
-    <!--  <link rel="stylesheet"-->
+
 </head>
 <body>
 <div class="container" style="margin-top: 100px; margin-bottom: 150px;">
@@ -30,7 +42,8 @@
                     </div>
                     <form action="" method="post" style="width: 100%">
                         <div class="mb-3">
-                            <input class="form-control" id="userId" name="userId" value="" type="text" placeholder="아이디">
+                            <input class="form-control" id="userId" name="userId" value="" type="text"
+                                   placeholder="아이디">
                         </div>
                         <div class="mb-3">
                             <input class="form-control" id="userPwd" name="userPwd" type="password" placeholder="비밀번호">
@@ -39,30 +52,26 @@
                             <span style="color: red;">아이디 비밀번호를 다시 한번 확인해주세요.</span>
                         </div>
                         <div class="mb-3">
-                            <button id="login_btn" class="btn d-block w-100" type="submit"
-                                    style="background-color: #8E48C7; color: white";>Log in
+                            <button id="login_btn" class="btn d-block w-100 login_btn" type="submit"
+                                    >Log in
                             </button>
                         </div>
                     </form>
-                    <form action="findId" method="post" style="width: 100%">
-                        <div class="mb-3">
-                            <button id="find_btn" class="btn d-block w-60" type="submit" onclick=""
-                                    style="background-color: #8E48C7; color: white;">아이디 찾기
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                        <form action="findId" method="post">
+                            <button id="find_btn" class="btn" type="submit" style="color: #666666">아이디 찾기
                             </button>
-                        </div>
-                    </form>
-                    <form action="resetPassword" method="post" style="width: 100%">
-                        <div class="mb-3">
-                            <button id="findPwd_btn" class="btn d-block w-60" type="submit"
-                                    style="background-color: #8E48C7; color: white;">비밀번호 찾기
+                        </form>
+                        <form action="resetPassword" method="post">
+                            <button id="findPwd_btn" class="btn" type="submit" style="color: #666666">비밀번호 찾기
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
 
-                        <!--              <div class="form-check text-center"><input name="rememberId" class="form-check-input" type="checkbox" id="rememberId"-->
-                        <!--                                                         value="true" ${empty cookie.id.value ? '' : 'checked'}>-->
-                        <!--                <label class="form-check-label" for="rememberId">아이디 기억</label>-->
-                        <!--              </div>-->
+                    <!--              <div class="form-check text-center"><input name="rememberId" class="form-check-input" type="checkbox" id="rememberId"-->
+                    <!--                                                         value="true" ${empty cookie.id.value ? '' : 'checked'}>-->
+                    <!--                <label class="form-check-label" for="rememberId">아이디 기억</label>-->
+                    <!--              </div>-->
 
                 </div>
             </div>
@@ -90,11 +99,11 @@
 
     function loginCheck() {
         if ($("#userId").val() == "") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: '아이디를 입력해주세요.',
-                })
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '아이디를 입력해주세요.',
+            })
             $("#userId").focus();
             return false;
         }
@@ -107,7 +116,7 @@
             $("#userPwd").focus();
             return false;
         }
-            return true;
+        return true;
         // const id = $("#userId").val();
         // const pwd = $("#userPwd").val();
         //
@@ -140,14 +149,13 @@
 
     }
 
-        function openModal() {
-            $("#findPwdModal").show();
-        }
+    function openModal() {
+        $("#findPwdModal").show();
+    }
 
-        function closeModal() {
-            $("#findPwdModal").hide();
-        }
-
+    function closeModal() {
+        $("#findPwdModal").hide();
+    }
 
 
 </script>

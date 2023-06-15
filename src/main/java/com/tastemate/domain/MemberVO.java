@@ -27,6 +27,7 @@ public class MemberVO {
         private String userBirth;
         private String userAddressSi;
         private String userAddressGu;
+        private int roomIdx;
 
 
         private StarVO starVO;
