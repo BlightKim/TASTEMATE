@@ -9,10 +9,7 @@ import com.tastemate.service.StoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +20,9 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 
 @Controller
@@ -56,7 +55,136 @@ public class BookingController {
         model.addAttribute("userId", userId);
         model.addAttribute("userName", userName);
     }
+    //ajax 예약 날짜별 가능 시간
+    @RequestMapping(value = "/insertAjax.do", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Integer> insert(Model model, HttpSession session, HttpServletRequest request,
+                                      @RequestParam("storeIdx") int storeIdx,
+                                      @RequestParam("selectedDate") String selectedDate) {
+        //,
+        //                                      @RequestParam("selectedTime") String selectedTime
+        System.out.println("model = " + model);
+        System.out.println("storeIdx : " + storeIdx);
+        System.out.println("selectedDate = " + selectedDate);
+        //System.out.println("selectedTime = " + selectedTime);
+        BookingVO bookingVO = new BookingVO();
+        //StoreVO storeVO = storeService.store_get(Integer.parseInt(((StoreVO) model.getAttribute("storeVO")).getStoreIdx()));
+        StoreVO storeVO = storeService.store_get(storeIdx);
+        bookingVO.setStoreIdx(storeIdx);
+        bookingVO.setStoreName(storeVO.getStoreName());
+        Map<Integer, String> timeMap = new HashMap<>();
+        timeMap.put(1, "12:30:00");
+        timeMap.put(2, "12:45:00");
+        timeMap.put(3, "13:00:00");
+        timeMap.put(4, "13:15:00");
+        timeMap.put(5, "13:30:00");
+        timeMap.put(6, "13:45:00");
+        timeMap.put(7, "14:00:00");
 
+        //로그인 정보 받아오기
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        System.out.println("memberVO = " + memberVO);
+        Map<String, String> msg = new HashMap<String, String>();
+
+            int userIdx = memberVO.getUserIdx();
+            String userId = memberVO.getUserId();
+            String userName = memberVO.getUserName();
+
+            bookingVO.setUserIdx(userIdx);
+            bookingVO.setUserId(userId);
+            bookingVO.setUserName(userName);
+
+
+            Map<String, Integer> resultMap = new HashMap<>();
+            int result = 0;
+            for (int j = 1; j < 8; j++) {
+
+                String dateStr = selectedDate + " " + timeMap.get(j);
+                System.out.println("dateStr = " + dateStr);
+                bookingVO.setBookingTime(dateStr);
+                result = 0;
+                for (int i = 1; i <4; i++ ) {
+                    bookingVO.setTableNo(i);
+                    System.out.println("bookingVO : " + bookingVO);
+                    result += bookingService.bookingTableCheck(bookingVO);
+                }
+                System.out.println("result = " + result);
+                switch (j) {
+                    case 1 : resultMap.put("a", result);
+                    case 2 : resultMap.put("b", result);
+                    case 3 : resultMap.put("c", result);
+                    case 4 : resultMap.put("d", result);
+                    case 5 : resultMap.put("e", result);
+                    case 6 : resultMap.put("f", result);
+                    case 7 : resultMap.put("g", result);
+                }
+
+            }
+
+            System.out.println("resultMap = " + resultMap.toString());
+
+            return resultMap;
+
+    }
+
+    //ajax 예약 날짜별 가능 시간
+    @RequestMapping(value = "/insert_Ajax.do", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Integer> insertAjax (Model model, HttpSession session, HttpServletRequest request,
+                                       @RequestParam("storeIdx") int storeIdx,
+                                       @RequestParam("selectedDate") String selectedDate,
+                                       @RequestParam("selectedTime") String selectedTime) {
+
+        System.out.println("model = " + model);
+        System.out.println("storeIdx : " + storeIdx);
+        System.out.println("selectedDate = " + selectedDate);
+        //System.out.println("selectedTime = " + selectedTime);
+        BookingVO bookingVO = new BookingVO();
+        //StoreVO storeVO = storeService.store_get(Integer.parseInt(((StoreVO) model.getAttribute("storeVO")).getStoreIdx()));
+        StoreVO storeVO = storeService.store_get(storeIdx);
+        bookingVO.setStoreIdx(storeIdx);
+        bookingVO.setStoreName(storeVO.getStoreName());
+
+        //로그인 정보 받아오기
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        System.out.println("memberVO = " + memberVO);
+        Map<String, String> msg = new HashMap<String, String>();
+
+        int userIdx = memberVO.getUserIdx();
+        String userId = memberVO.getUserId();
+        String userName = memberVO.getUserName();
+
+        bookingVO.setUserIdx(userIdx);
+        bookingVO.setUserId(userId);
+        bookingVO.setUserName(userName);
+
+
+        Map<String, Integer> resultMap = new HashMap<>();
+        int result = 0;
+
+        String dateStr = selectedDate + " " + selectedTime;
+        System.out.println("dateStr = " + dateStr);
+        bookingVO.setBookingTime(dateStr);
+
+        for (int i = 1; i < 4; i++ ) {
+            bookingVO.setTableNo(i);
+            System.out.println("bookingVO : " + bookingVO);
+            result = bookingService.bookingTableCheck(bookingVO);
+
+            System.out.println("result = " + result);
+            switch (i) {
+                case 1 : resultMap.put("a", result);
+                case 2 : resultMap.put("b", result);
+                case 3 : resultMap.put("c", result);
+            }
+
+        }
+
+        System.out.println("resultMap = " + resultMap.toString());
+
+        return resultMap;
+
+    }
 
     @PostMapping("/bookingInsert")
 
@@ -66,7 +194,7 @@ public class BookingController {
         System.out.println("date = " + selectDate);
         System.out.println("time = " + time);
         // 문자열
-        String dateStr = selectDate + " " +time;
+        String dateStr = selectDate + " " + time;
         System.out.println("dateStr = " + dateStr);
 
 

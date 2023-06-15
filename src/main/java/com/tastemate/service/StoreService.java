@@ -37,9 +37,9 @@ public class StoreService {
         return  storeList;
     }
 
-    public int store_totalCnt(Criteria cri) {
+    public int store_totalCnt(Map<String, Object> orderMap) {
 
-        return mapper.getTotalCount(cri);
+        return mapper.getTotalCount(orderMap);
     }
 
     public StoreVO store_get(int storeIdx) {
@@ -60,6 +60,12 @@ public class StoreService {
     public StoreVO store_getWithComment(int storeIdx) {
 
         StoreVO storeVO = mapper.getStoreWithComment(storeIdx);
+
+        return storeVO;
+    }
+    public StoreVO getStoreHighestStar() {
+        List<StoreVO> list = mapper.getStoreHighestStar();
+        StoreVO storeVO = list.get(0);
 
         return storeVO;
     }

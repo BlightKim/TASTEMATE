@@ -34,12 +34,11 @@ public class ClassController {
 
 
     @GetMapping("/get")
-    public String get_class(Model model, HttpServletRequest request, HttpSession session,
-                            @RequestParam int userClass) {
+    public String get_class(Model model, HttpServletRequest request, HttpSession session) {
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
         String userMbti = memberVO.getUserMbti();
         MemberMbti memberMbti = MemberMbti.valueOf(userMbti);
-        //int userClass = memberVO.getUserClass();
+        int userClass = memberVO.getUserClass();
 
         //List<MemberVO> classList = classService.getClassList(userClass);
         //System.out.println("classList = " + classList);
@@ -47,18 +46,55 @@ public class ClassController {
         List<MemberVO> userStar = classService.user_getWithStar(userClass);
         //List<Map<Integer, Integer>> matchNumber = new ArrayList<>();
         Map<Integer, Integer> idxAndMatch = new HashMap<>();
-
+        System.out.println("userStar.size() = " + userStar.size());
         for (int i = 0; i < userStar.size(); i++) {
             idxAndMatch.put(userStar.get(i).getUserIdx(), memberMbti.matchMbti(userMbti, userStar.get(i).getUserMbti()));
         }
         System.out.println(idxAndMatch.toString());
 
-        model.addAttribute("userStar", userStar);
+        List<MemberVO> userStar3 = sortBySelectionSort(userStar, memberVO.getUserLikeFood(), memberVO);
+        List<MemberVO> userStar2 = sortBySelectionSort(userStar3, idxAndMatch);
+
+
+
+        model.addAttribute("userStar", userStar2);
         model.addAttribute("idxAndMatch", idxAndMatch);
 
 
         //redirect.addAttribute("userClass", userClass);
 
         return "/class/myClass";
+    }
+
+    // 멤버 리스트를 정렬해주는 메소드
+    public static void swap(List<MemberVO> userStar, int idx1, int idx2) {
+        MemberVO tmp = userStar.get(idx1);
+        userStar.set(idx1, userStar.get(idx2));
+        userStar.set(idx2, tmp);
+    }
+    public static List<MemberVO> sortBySelectionSort(List<MemberVO> userStar, Map<Integer, Integer> idxAndMatch) {
+        for (int i = 0; i < userStar.size() - 1; i++) {
+            int minIdx = i;
+            for (int j = i + 1; j < userStar.size(); j++) {
+                if (idxAndMatch.get(userStar.get(j).getUserIdx()) > idxAndMatch.get(userStar.get(minIdx).getUserIdx())) {
+                    minIdx = j;
+                }
+            }
+            swap(userStar, i, minIdx);
+        }
+        return userStar;
+    }
+
+    public static List<MemberVO> sortBySelectionSort(List<MemberVO> userStar, String userLikeFood, MemberVO memberVO) {
+        for (int i = 0; i < userStar.size() - 1; i++) {
+            int minIdx = i;
+            for (int j = i + 1; j < userStar.size(); j++) {
+                if (memberVO.getUserLikeFood().equals(userStar.get(j).getUserLikeFood())) {
+                    minIdx = j;
+                }
+            }
+            swap(userStar, i, minIdx);
+        }
+        return userStar;
     }
 }

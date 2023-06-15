@@ -24,6 +24,13 @@ public class Criteria {
     /* 검색 키워드 */
     private String keyword;
 
+
+    private String cuisineSelect;
+    private String storeStar;
+    private String storeCount;
+    private String storeDistance;
+
+
     /* Criteria 생성자 */
     public Criteria(int pageNum, int amount) {
         this.pageNum = pageNum;
@@ -58,6 +65,10 @@ public class Criteria {
                 .queryParam("amount", amount)
                 .queryParam("searchType", type)
                 .queryParam("keyword", keyword)
+                .queryParam("cuisineSelect", cuisineSelect)
+                .queryParam("storeStar", storeStar)
+                .queryParam("storeCount", storeCount)
+                .queryParam("storeDistance", storeDistance)
                 .build()
                 .encode();
 

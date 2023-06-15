@@ -52,6 +52,11 @@
         where BOOKMARK_IDX = #{bookmarkIdx}
     </delete>
 
+    <delete id="bookmark_deleteAjax" parameterType="BookmarkVO">
+        delete from BOOKMARK
+        where USER_IDX = #{userIdx} AND STORE_IDX = #{storeIdx}
+    </delete>
+
     <insert id="bookmark_insert" parameterType="BookmarkVO">
         INSERT INTO BOOKMARK (BOOKMARK_IDX, USER_IDX, STORE_IDX, USER_NAME, USER_ID, STORE_NAME)
         VALUES (BOOKMARK_SEQ.nextval, #{userIdx}, #{storeIdx}, #{userName}, #{userId}, #{storeName})

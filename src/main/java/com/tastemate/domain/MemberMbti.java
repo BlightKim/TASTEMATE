@@ -43,7 +43,7 @@ public enum MemberMbti {
         Boolean isfp = otherMbti.equals(ISFP);
         Boolean esfp = otherMbti.equals(ESFP);
         Boolean isfj = otherMbti.equals(ISFJ);
-        Boolean estj = otherMbti.equals(ESFJ);
+        Boolean estj = otherMbti.equals(ESTJ);
         Boolean istj = otherMbti.equals(ISTJ);
         Boolean estp = otherMbti.equals(ESTP);
         Boolean istp = otherMbti.equals(ISTP);

@@ -46,4 +46,31 @@ public class BookmarkService {
         }
 
     }
+
+    public int bookmark_deleteAjax(BookmarkVO bookmarkVO) {
+        int storeIdx = bookmarkVO.getStoreIdx();
+        int userIdx = bookmarkVO.getUserIdx();
+        System.out.println("userIdx = " + userIdx);
+        System.out.println("storeIdx = " + storeIdx);
+        System.out.println("bookmarkVO = " + bookmarkVO);
+        int result = bookmarkMapper.bookmark_deleteAjax(bookmarkVO);
+
+        return result;
+
+    }
+
+    public int bookmarkValidate(String userId, int storeIdx) {
+        int result = 0;
+        BookmarkVO bookmarkVO = new BookmarkVO();
+        bookmarkVO.setUserId(userId);
+        bookmarkVO.setStoreIdx(storeIdx);
+        BookmarkVO bookmarkVO1 = bookmarkMapper.bookmarkValidate(bookmarkVO);
+        if (bookmarkVO1 != null ) {
+            result = 1;
+            return result;
+        } else {
+            result = 0;
+            return result;
+        }
+    }
 }

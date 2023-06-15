@@ -16,6 +16,7 @@ public interface BookmarkMapper {
 
 
     public int bookmark_insert(BookmarkVO bookmarkVO);
+    public int bookmark_deleteAjax(BookmarkVO bookmarkVO);
 
     public BookmarkVO bookmarkValidate(BookmarkVO bookmarkVO);
 }
