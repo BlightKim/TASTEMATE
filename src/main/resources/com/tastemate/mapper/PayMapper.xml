@@ -76,9 +76,9 @@
     <!-- 여기부터 이니시스 -->
     <insert id="insert_inicis">
         INSERT INTO INICIS(INICIS_IDX, USER_IDX, STORE_IDX, BOOKING_IDX, IMP_UID, TOKEN,
-                           MERCHANT_UID, NAME, AMOUNT, BUYER_NAME, CARD_NO, PAY_DATE)
+                           MERCHANT_UID, NAME, AMOUNT, BUYER_NAME, CARD_NO, PAY_DATE, STATUS)
         VALUES (INICIS_SEQ.nextval, #{userIdx},#{storeIdx},#{bookingIdx},#{imp_uid},#{token},
-                #{merchant_uid},#{name},#{amount},#{buyer_name},#{card_no},#{pay_date})
+                #{merchant_uid},#{name},#{amount},#{buyer_name},#{card_no},#{pay_date}, 0)
 
     </insert>
 
@@ -86,12 +86,13 @@
         select *
         from INICIS
         where user_idx = #{userIdx}
+        and status = 0
     </select>
 
     <update id="cancel_inicis">
         update INICIS
         set status = 1
-        where token #{token}
+        where merchant_uid = #{merchant_uid}
     </update>
 
 

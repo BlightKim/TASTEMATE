@@ -40,10 +40,8 @@ public class PaymentService {
     private PayMapper payMapper;
 
     // IAMPORT API 인증 정보 설정
-    //String impKey = "3085212137161101";
-    String impKey = "6605686173750148";
-    //String impSecret = "hIvzsAXLBTySTTX2RPyr3KFfDWu4WBfvkGQb8mvCts3DBB4SsQ8pQ4uhEetSNdF5R0RaymFVBbrG2EbC";
-    String impSecret = "NKk4ASKxmOC9x0NvLUMy5qxOZ7QXCwGdfpGkoyR4aC2MwZdmfLjjksZJceYW3jJ0SmYY4c1ffnTm3M8W";
+    String impKey = "3085212137161101";
+    String impSecret = "hIvzsAXLBTySTTX2RPyr3KFfDWu4WBfvkGQb8mvCts3DBB4SsQ8pQ4uhEetSNdF5R0RaymFVBbrG2EbC";
 
     public String getToken() throws ParseException {
 
@@ -155,8 +153,7 @@ public class PaymentService {
         if (responseEntity.getStatusCode().is2xxSuccessful()) {
             String responseData = responseEntity.getBody();
             log.info("responseData?"+responseData);
-            //JSONObject responseJson = new JSONObject();
-           // JSONObject response = responseJson.getJSONObject("response");
+
             // 처리 결과에 대한 작업 수행
         } else {
             // 요청 실패에 대한 작업 수행
@@ -175,9 +172,9 @@ public class PaymentService {
         return payMapper.get_inicis(userIdx);
     }
 
-    public int cancel_inicis(String token) {
+    public int cancel_inicis(String merchant_uid) {
 
-        return payMapper.cancel_inicis(token);
+        return payMapper.cancel_inicis(merchant_uid);
     }
 }
 

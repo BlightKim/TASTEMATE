@@ -1,25 +1,27 @@
 package com.tastemate.controller;
 
+import com.tastemate.domain.BookingVO;
 import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.StarVO;
 import com.tastemate.domain.StoreVO;
 import com.tastemate.domain.paging.Criteria;
 import com.tastemate.domain.paging.PageDTO;
+import com.tastemate.service.BookingService;
 import com.tastemate.service.BookmarkService;
 import com.tastemate.mapper.MemberMapper;
 import com.tastemate.service.StoreService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +39,9 @@ public class StoreController {
 
     @Autowired
     private MemberMapper memberMapper;
+    
+    @Autowired
+    private BookingService bookingService;
 
     @GetMapping("/list")
     public void get(Model model
@@ -161,8 +166,71 @@ public class StoreController {
         return "redirect:/store/list";
     }
 
+
+    @RequestMapping(value = "/starComment", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Integer> starComment(Model model, HttpSession session, HttpServletRequest request,
+                            @RequestParam("bookingIdx") int bookingIdx,
+                            @RequestParam("nowDate") String nowDate,
+                            @RequestParam("nowTime") String nowTime){
+        
+        BookingVO bookingVO = bookingService.bookingToPayShow(bookingIdx);
+        System.out.println("bookingVO = " + bookingVO);
+        String bookingTime = bookingVO.getBookingTime();
+        System.out.println("bookingTime = " + bookingTime);
+        System.out.println("nowDate = " + nowDate);
+        System.out.println("nowTime = " + nowTime);
+
+        String[] bookingT = bookingTime.split(" ");
+        int result = 0;
+        for (int i = 0; i < bookingT.length; i++) {
+            if (i == 0) {
+                String[] str2 = bookingT[i].split("-");
+                String[] str3 = nowDate.split("-");
+                System.out.println("str2[0] = " + str2[0]);
+                System.out.println("str3[0] = " + str3[0]);
+
+                System.out.println("str2[1] = " + str2[1]);
+                System.out.println("str3[1] = " + str3[1]);
+
+                System.out.println("str2[2] = " + str2[2]);
+                System.out.println("str3[2] = " + str3[2]);
+                if (Integer.parseInt(str2[0]) <= Integer.parseInt(str3[0]) &&
+                    Integer.parseInt(str2[1]) <= Integer.parseInt(str3[1]) &&
+                    Integer.parseInt(str2[2]) <= Integer.parseInt(str3[2]) ) {
+                    result++;
+                }
+            }
+            if (i == 1) {
+                String[] str4 = bookingT[i].split(":");
+                String[] str5 = nowTime.split(":");
+
+                System.out.println("str4[0] = " + str4[0]);
+                System.out.println("str5[0] = " + str5[0]);
+
+                System.out.println("str4[1] = " + str4[1]);
+                System.out.println("str5[1] = " + str5[1]);
+
+                System.out.println("str4[2] = " + str4[2]);
+                System.out.println("str5[2] = " + str5[2]);
+                if (Integer.parseInt(str4[0]) <= Integer.parseInt(str5[0]) &&
+                        Integer.parseInt(str4[1]) <= Integer.parseInt(str5[1]) &&
+                        Integer.parseInt(str4[2]) <= Integer.parseInt(str5[2]) ) {
+                    result++;
+                }
+            }
+        }
+
+        System.out.println("result = " + result);
+
+        Map<String, Integer> resultMap = new HashMap<String, Integer>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
     @GetMapping("/starComment")
-    public void starComment(){
+    public void starComment() {
 
     }
 

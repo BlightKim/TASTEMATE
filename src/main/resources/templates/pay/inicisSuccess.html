@@ -9,6 +9,38 @@
     <meta charset="UTF-8">
     <title>Insert title here</title>
 <style>
+    #main {
+        /*min-height: 100vh;*/
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: -webkit-gradient(linear, left bottom, right top, from(#E2E2E2), to(#E2E2E2));
+        background: -webkit-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+        background: -moz-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+        background: -o-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+        background: linear-gradient(to top right, #E2E2E2 0%, #E2E2E2 100%);
+    }
+    .input-form {
+        max-width: 100%;
+
+        margin-top: 80px;
+        margin-bottom: 80px;
+        padding: 32px;
+
+        background: #fff;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+
+    .yellow{
+        color : #FFA500;
+    }
+
     .iamport{
         background-color: #8E48C7;
         padding: 7px 10px;
@@ -17,52 +49,161 @@
         border-radius: 10px;
     }
 </style>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 
 
-이니시스 결제 성공
-카카오success 화면참고하자
-일단은 바로 별점주는 화면으로 넘어가게하자 (예약 시간 후로 시간제한도 걸어야해)
+<div class="text-center" id="main">
+    <div class="input-form-backgroud">
+        <form class="input-form">
+            <h4 class="yellow"><strong>이니시스 결제가 완료되었습니다.</strong></h4><br>
 
-<h2>[[${inicisVO}]]</h2>
+            <hr>
+            <div class="row">
+                <div class="col text-left">결제일시:</div>
+                <div class="col text-right">
+                    <div th:text="${#dates.format(inicisVO.pay_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-left">주문번호:</div>
+                <div class="col text-right">[[${inicisVO.card_no}]]</div>
+            </div>
+            <div class="row">
+                <div class="col text-left">상품명:</div>
+                <div class="col text-right">[[${inicisVO.name}]]</div>
+            </div>
+            <div class="row">
+                <div class="col text-left">결제방법:</div>
+                <div class="col text-right">CARD</div>
+            </div>
+            <div class="row mb-5">
+                <div class="col text-left">결제금액:</div>
+                <div class="col text-right">
+                    <strong>
+                        <div data-th-text="${#numbers.formatInteger(inicisVO.amount, 3, 'COMMA') + '원'}"></div>
+                    </strong>
+                </div>
+            </div>
 
 
-<br><button onClick="cancelPay()" class="iamport">iamport 환불</button>
+
+            <button type="button" class="btn btn-warning purple3" onclick="starInsert()">별점주러가기
+            </button>
+            <br><button type="button" onClick="cancelPay()" class="iamport">결제 취소</button>
+
+        </form>
+        <input id="bookingIdx" type="hidden" th:value="${inicisVO.getBookingIdx()}">
+        <input id="storeIdx" type="hidden" th:value="${inicisVO.getStoreIdx()}">
+        <br>진짜취소하시겠습니까 묻고 취소
+        <br>(예약 시간 후로 시간제한도 걸어야해)
+    </div>
+</div>
+<h6>[[${inicisVO}]]</h6>
 
 
-<a class="btn btn-warning purple3"
-   th:href="@{/store/starComment(storeIdx=${inicisVO.storeIdx})}">별점주러가기
-</a>
 
-
-
-
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
     function cancelPay() {
         $.ajax({
-            "url": "/pay/inicisCancel",
-            "type": "POST",
-            "contentType": "application/json",
-            "data": JSON.stringify({
+            url: "/pay/inicisCancel",
+            type: "POST",
+            contentType: "application/json; charset=UTF-8",
+            data: JSON.stringify({
                 "merchant_uid": '[[${inicisVO.merchant_uid}]]',  //실제 데이터로 변경하기
                 "cancel_request_amount": [[${inicisVO.amount}]], // 환불금액
                 "reason": "테스트 결제 환불", // 환불사유
                 "token" : '[[${inicisVO.token}]]',
                 "imp_uid" : '[[${inicisVO.imp_uid}]]'
             }),
-            "dataType": "json",
-            success : function(readyResponse) {
+            /* dataType: "json",*/
+            dataType: "json",
+            async: false,
+            success : function(data) {
                 console.log("inicis 환불 성공!");
-                location.href = '/pay/kakaoPayRefund';
-            },
-            error: function(xhr, status, error) {
+                console.log(data.a);
+                if ( data.a == "환불성공") {
+                    location.href="/store/list";
+                }
+                //location.href = "/pay/mykakaoPayNothing";
+                //window.location.href = '/pay/inicisRefund';
+            }, error: function(xhr, status, error) {
                 console.log("에러 발생");
                 console.log(xhr);
             }
         });
+        return false;
     }
+</script>
+
+
+<script>
+    //접속시 현재 시간을 yyyy-mm-dd hh:mi:ss 형태로 뽑아주는 js 함수
+    function dateFormat(date) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
+
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+    }
+    function starInsert() {
+        //카카오 결제 후 별점 입력하러 가기 시간 제한 용도의 ajax
+
+        let today = new Date();
+        //현재 시간 확인
+        console.log(today);
+        console.log(dateFormat(today));
+
+        var todayDate = dateFormat(today).split(' ')[0];
+        var nowTime = dateFormat(today).split(' ')[1];
+
+        console.log(dateFormat(today).split(' ')[0]);
+        console.log(dateFormat(today).split(' ')[1]);
+
+        var bookingIdx = $('#bookingIdx').val();
+        var storeIdx = $('#storeIdx').val();
+        console.log(todayDate + ' ' + nowTime);
+        console.log(bookingIdx);
+
+
+        $.ajax({
+          url: "/store/starComment",
+          type: "GET",
+          data: { bookingIdx: bookingIdx,
+            nowDate: todayDate,
+            nowTime : nowTime },
+          contextType: "application/json; charset=UTF-8",
+          dataType : "json",
+            async: false,
+          success: function(data){
+            console.log('통신결과 : ' + data.status);
+            if (data.result == 2 ) {
+                location.href="/store/starComment?storeIdx=" + storeIdx;
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '별점 남기기 불가',
+                    text: '예약시간 이전이므로 별점 남기기가 불가능합니다.'
+                })
+            }
+          },
+          error: function(error){
+            console.log(error.responseText);
+            alert("신규등록 error");  }
+        });
+        return false;
+    }
+
 </script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>

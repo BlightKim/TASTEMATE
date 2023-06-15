@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 @Controller
@@ -98,18 +99,22 @@ public class PayController {
             log.info("mykakaoPaySuccess 에러발생");
         }
 
+        return "/pay/mykakaoPaySuccess";
+    }
 
-        //이거 DB에 저장? approval
+    @GetMapping("/mykakaoPayNothing")
+    public void mykakaoPayNothing(){
+
     }
 
 
     // 카카오페이
     @PostMapping("/refund")
-    public String refund(Model model) {
+    public String refund(Model model, String tid) {
 
         log.info("controller refund............................................");
 
-        KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel();
+        KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel(tid);
 
         log.info("kakaoCancelResponse : " + kakaoCancelResponse);
 
@@ -129,14 +134,14 @@ public class PayController {
     /*===================== 이니시스 ============================*/
     @PostMapping("/inicisComplete")
     @ResponseBody
-    public int paymentComplete(@RequestBody InicisVO inicisVO, HttpServletResponse response) throws IOException, ParseException {
+    public int paymentComplete(@RequestBody InicisVO inicisVO) throws IOException, ParseException {
 
         log.info("inicisComplete!!!!!!!!!!!!!!! : " + inicisVO);
 
         String token = paymentService.getToken();
         log.info("token : " + token);
 
-
+        
         // DB 넣기
         inicisVO.setToken(token);
         int result = paymentService.insert_inicis(inicisVO);
@@ -150,9 +155,9 @@ public class PayController {
         return result;
     }
 
-    @PostMapping("/inicisCancel")
+    @RequestMapping(value = "/inicisCancel", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
-    public void inicisCancel(@RequestBody InicisRefundVO inicisRefundVO) throws IOException {
+    public Map<String, String> inicisCancel(@RequestBody InicisRefundVO inicisRefundVO) throws IOException {
 
         log.info("inicisCancel!!!!!!!!!!!!!!! : " + inicisRefundVO);
 
@@ -161,26 +166,44 @@ public class PayController {
 
         paymentService.inicisRefund(inicisRefundVO);
 
-        //DB에서 status 1로 변경하기. 하 테이블 또 만들어야할까 그럼 status 기존꺼는 필요없겠네
-        //야매로할까...기존 테이블에 status만 바꿀까(토큰받아와서)
-        int result = paymentService.cancel_inicis(token);
-        log.info("inicisCancel result" + result);
+        int result = paymentService.cancel_inicis(inicisRefundVO.getMerchant_uid());
+        log.info("inicisCancel result : " + result);
 
         log.info("controller 환불 완료!!!");
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("a", "환불성공");
 
-
+        return resultMap;
     }
 
 
     @GetMapping("/inicisSuccess")
-    public void inicisSuccess(HttpSession session, Model model){
+    public String inicisSuccess(HttpSession session, Model model){
 
-        //여기서 DB에서 가져와야하나?
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("memberVO : " + memberVO);
 
-        InicisVO inicisVO = paymentService.get_inicis(memberVO.getUserIdx());
+        try {
+            log.info("try catch 시작");
+            InicisVO inicisVO = paymentService.get_inicis(memberVO.getUserIdx());
+            log.info("inicisSuccess : " + inicisVO);
 
-        model.addAttribute("inicisVO",inicisVO);
+            if (inicisVO == null) {
+                return "redirect:/pay/mykakaoPayNothing";
+            }
+
+            model.addAttribute("inicisVO", inicisVO);
+
+        } catch (Exception e){
+            log.info("inicisSuccess 에러발생");
+        }
+
+        return "/pay/inicisSuccess";
+    }
+
+    @GetMapping("/inicisRefund")
+    public void inicisRefund(){
+
     }
 
 

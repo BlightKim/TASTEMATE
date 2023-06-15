@@ -78,10 +78,10 @@
         <div class="col text-left">상품명:</div>
         <div class="col text-right">[[${info.item_name}]]</div>
       </div>
-      <div class="row">
+<!--      <div class="row">
         <div class="col text-left">상품수량:</div>
         <div class="col text-right">[[${info.quantity}]]</div>
-      </div>
+      </div>-->
       <div class="row">
         <div class="col text-left">결제방법:</div>
         <div class="col text-right">[[${info.payment_method_type}]]</div>
@@ -96,20 +96,16 @@
         </div>
       </div>
 
-      <a class="btn btn-warning" th:href="@{/store/starComment(storeIdx=${info.storeIdx})}">별점주러가기</a>
-
-
-<!--      <a class="btn btn-warning" th:href="@{/pay/refund(tid=${info.tid})}"
-         style="background-color: #8E48C7; border: none;">결제 취소</a>-->
-
-
-
+      <button type="button" class="btn btn-warning purple3" onclick="starInsert()">별점주러가기
+      </button>
+      <input id="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
+      <input id="storeIdx" type="hidden" th:value="${info.getStoreIdx()}">
 
     </form>
 
 
     <form method="post" th:action="@{/pay/refund(tid=${info.tid})}">
-      <button class="kakaoBtn2">카카오페이 결제 취소</button>
+      <button class="kakaoBtn2">결제 취소</button>
     </form>
     <br>진짜취소하시겠습니까 묻고 취소
 
@@ -117,18 +113,76 @@
 </div>
 
 
-
-
-
-
-<br><br><br><br><br><br><br><br>
+<br><br><br><br>
 일단은 바로 별점주는 화면으로 넘어가게하자 <br>
 (예약 시간 후로 시간제한도 걸어야해)<br>
-<br>이때 파라미터로 storeIdx 넘겨줘야한다!!!!!
 <h2>[[${info}]]</h2>
 
+<script>
+  //접속시 현재 시간을 yyyy-mm-dd hh:mi:ss 형태로 뽑아주는 js 함수
+  function dateFormat(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+    hour = hour >= 10 ? hour : '0' + hour;
+    minute = minute >= 10 ? minute : '0' + minute;
+    second = second >= 10 ? second : '0' + second;
+
+    return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+  }
+  function starInsert() {
+      //카카오 결제 후 별점 입력하러 가기 시간 제한 용도의 ajax
+
+      let today = new Date();
+      //현재 시간 확인
+      console.log(today);
+      console.log(dateFormat(today));
+
+      var todayDate = dateFormat(today).split(' ')[0];
+      var nowTime = dateFormat(today).split(' ')[1];
+
+      console.log(dateFormat(today).split(' ')[0]);
+      console.log(dateFormat(today).split(' ')[1]);
+
+      var bookingIdx = $('#bookingIdx').val();
+      var storeIdx = $('#storeIdx').val();
+      console.log(todayDate + ' ' + nowTime);
+      console.log(bookingIdx);
 
 
+      $.ajax({
+        url: "/store/starComment",
+        type: "GET",
+        data: { bookingIdx: bookingIdx,
+          nowDate: todayDate,
+          nowTime : nowTime },
+        contextType: "application/json; charset=UTF-8",
+        dataType : "json",
+        success: function(data){
+          console.log('통신결과 : ' + data.status);
+          if (data.result == 2 ) {
+            location.href="/store/starComment?storeIdx=" + storeIdx;
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: '별점 남기기 불가',
+              text: '예약시간 이전이므로 별점 남기기가 불가능합니다.'
+            })
+          }
+        },
+        error: function(error){
+          console.log(error.responseText);
+          alert("신규등록 error");  }
+      });
+      return false;
+  }
+
+</script>
 
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>

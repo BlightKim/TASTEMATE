@@ -122,6 +122,19 @@
         <div class="col text-left">예약 일자:</div>
         <div class="col text-right">[[${bookingVO.bookingTime}]]</div>
       </div>
+          <hr>
+          <div class="row mb-5">
+            <div class="col text-left">결제금액:</div>
+            <div class="col text-right">
+              <strong>
+                <div data-th-text="${#numbers.formatInteger(bookingVO.price, 3, 'COMMA') + '원'}"></div>
+              </strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <div class="col-md-6">
         <div class="h-100 p-5 bg-light border rounded-3">
           <h2>유의사항</h2>
@@ -205,6 +218,7 @@
     var IMP = window.IMP;
     //가맹점 식별코드
     IMP.init('imp71427334');
+    //IMP.init('imp40866160'); //채정 식별코드
     IMP.request_pay({
       //name과 amout만있어도 결제 진행가능
       pg : 'html5_inicis',

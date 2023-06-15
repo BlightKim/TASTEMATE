@@ -47,7 +47,7 @@ public class ClassController {
         List<MemberVO> userStar = classService.user_getWithStar(userClass);
         //List<Map<Integer, Integer>> matchNumber = new ArrayList<>();
         Map<Integer, Integer> idxAndMatch = new HashMap<>();
-
+        System.out.println("userStar.size() = " + userStar.size());
         for (int i = 0; i < userStar.size(); i++) {
             idxAndMatch.put(userStar.get(i).getUserIdx(), memberMbti.matchMbti(userMbti, userStar.get(i).getUserMbti()));
         }
