@@ -36,5 +36,7 @@ public class InicisVO {
     private int bookingIdx;
     private int status;
 
+    /*join추가*/
+    private BookingVO bookingVO;
 
 }

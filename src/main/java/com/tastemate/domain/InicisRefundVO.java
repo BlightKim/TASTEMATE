@@ -14,6 +14,10 @@ public class InicisRefundVO {
     private String reason;
     private String token;
 
+    private int bookingIdx;
+    private String nowDate;
+    private String nowTime;
+
 
 
 }

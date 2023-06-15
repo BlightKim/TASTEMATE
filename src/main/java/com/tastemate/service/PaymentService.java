@@ -39,6 +39,7 @@ public class PaymentService {
     @Autowired
     private PayMapper payMapper;
 
+
     // IAMPORT API 인증 정보 설정
     String impKey = "3085212137161101";
     String impSecret = "hIvzsAXLBTySTTX2RPyr3KFfDWu4WBfvkGQb8mvCts3DBB4SsQ8pQ4uhEetSNdF5R0RaymFVBbrG2EbC";
@@ -115,6 +116,7 @@ public class PaymentService {
 
                 br.close();
                 String paymentStatus = response.get("status").getAsString();
+
                 return "iamport update 완료";
             }
         } catch (Exception e) {

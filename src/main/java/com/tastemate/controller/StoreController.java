@@ -195,10 +195,14 @@ public class StoreController {
 
                 System.out.println("str2[2] = " + str2[2]);
                 System.out.println("str3[2] = " + str3[2]);
-                if (Integer.parseInt(str2[0]) <= Integer.parseInt(str3[0]) &&
-                    Integer.parseInt(str2[1]) <= Integer.parseInt(str3[1]) &&
-                    Integer.parseInt(str2[2]) <= Integer.parseInt(str3[2]) ) {
+                if (Integer.parseInt(str2[0]) == Integer.parseInt(str3[0]) &&
+                    Integer.parseInt(str2[1]) == Integer.parseInt(str3[1]) &&
+                    Integer.parseInt(str2[2]) == Integer.parseInt(str3[2]) ) {
                     result++;
+                } else if (Integer.parseInt(str2[0]) < Integer.parseInt(str3[0]) ||
+                        Integer.parseInt(str2[1]) < Integer.parseInt(str3[1]) ||
+                        Integer.parseInt(str2[2]) < Integer.parseInt(str3[2])) {
+                    result = 2;
                 }
             }
             if (i == 1) {
@@ -230,7 +234,10 @@ public class StoreController {
     }
 
     @GetMapping("/starComment")
-    public void starComment() {
+    public void starComment(String storeIdx, Model model){
+
+        log.info("storeIdx : "+ storeIdx);
+        model.addAttribute("storeIdx",storeIdx);
 
     }
 
@@ -241,7 +248,29 @@ public class StoreController {
         int result = service.store_starComment(starVO);
         log.info("starVO result : " + result);
 
-        return "redirect:/store/main";  //추후 수정 필요!
+        // 별점 완료하면 바뀔 것들 (결제 / 예약 / roomIdx)
+        // 결제 status 2로 변경
+//        if (starVO.getInicisIdx() != 0){
+//            //inicisIdx 이용해서 INICIS 테이블 status 변경하기
+//            int inicisUpdate = paymentService.updateStatus(starVO.getInicisIdx());
+//            log.info("inicis update : " + inicisUpdate);
+//
+//        } else if (starVO.getKakaoApprovalIdx() != 0){
+//            //getKakaoApprovalIdx 이용해서 KAKAOPAYAPPROVAL status 변경하기
+//            int kakaoUpdate = paymentService.updateStatus2(starVO.getKakaoApprovalIdx());
+//            log.info("kakao update : " + kakaoUpdate);
+//
+//        }
+
+
+        // 예약 status 변경
+        bookingService.bookingPayAndStarComplete(2);
+
+        // roomIdx 변경
+
+
+
+        return "redirect:/store/main";
     }
 
     @GetMapping("/main")

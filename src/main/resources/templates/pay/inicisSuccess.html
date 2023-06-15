@@ -48,6 +48,19 @@
         outline: none;
         border-radius: 10px;
     }
+    .gray{
+        color : gray;
+    }
+    .purple{
+        color : #8E48C7;
+    }
+    .kakaoBtn2{
+        background-color: #F7E600;
+        padding: 7px 10px;
+        border: none;
+        outline: none;
+        border-radius: 7px;
+    }
 </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
@@ -61,42 +74,108 @@
 
             <hr>
             <div class="row">
-                <div class="col text-left">결제일시:</div>
+                <div class="col text-left">이름 :</div>
+                <div class="col text-right">
+                    [[${inicisVO.bookingVO.userName}]]
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">맛집 :</div>
+                <div class="col text-right">[[${inicisVO.bookingVO.storeName}]]</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">메뉴 :</div>
+                <div class="col text-right">[[${inicisVO.name}]]</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">테이블 :</div>
+                <div class="col text-right">
+                    [[${inicisVO.bookingVO.tableNo}]]번
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">예약일 :</div>
+                <div class="col text-right">
+                    [[${inicisVO.bookingVO.bookingTime}]]
+                </div>
+            </div>
+
+
+            <br>
+            <div class="row gray">
+                <div class="col text-left">주문번호 :</div>
+                <div class="col text-right">[[${inicisVO.card_no}]]</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">결제방법 :</div>
+                <div class="col text-right">CARD</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">결제일시 :</div>
                 <div class="col text-right">
                     <div th:text="${#dates.format(inicisVO.pay_date, 'yyyy-MM-dd HH:mm:ss')}"></div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col text-left">주문번호:</div>
-                <div class="col text-right">[[${inicisVO.card_no}]]</div>
-            </div>
-            <div class="row">
-                <div class="col text-left">상품명:</div>
-                <div class="col text-right">[[${inicisVO.name}]]</div>
-            </div>
-            <div class="row">
-                <div class="col text-left">결제방법:</div>
-                <div class="col text-right">CARD</div>
-            </div>
-            <div class="row mb-5">
-                <div class="col text-left">결제금액:</div>
+
+            <hr>
+            <div class="row mb-5 purple">
+                <div class="col text-left">결제금액 :</div>
                 <div class="col text-right">
-                    <strong>
-                        <div data-th-text="${#numbers.formatInteger(inicisVO.amount, 3, 'COMMA') + '원'}"></div>
-                    </strong>
+                    <div data-th-text="${#numbers.formatInteger(inicisVO.bookingVO.price, 3, 'COMMA') + '원'}"></div>
                 </div>
             </div>
 
 
 
-            <button type="button" class="btn btn-warning purple3" onclick="starInsert()">별점주러가기
+
+
+<!--            <a class="btn btn-warning purple3"-->
+<!--               th:href="@{/store/starComment(storeIdx=${inicisVO.storeIdx})}"-->
+<!--               style="background-color: #9C91B3; border: none;">별점주러가기-->
+<!--            </a>-->
+            <button type="button" class="btn btn-warning purple3" onclick="starInsert()"
+                    style="background-color: #9C91B3; border: none;">별점주러가기
             </button>
-            <br><button type="button" onClick="cancelPay()" class="iamport">결제 취소</button>
+
+
+            <!--
+                        <button type="button" onClick="cancelPay()" class="iamport kakaoBtn2">결제 취소</button>
+            -->
+            <button type="button" onClick="openCancelModal()" class="iamport kakaoBtn2">결제 취소</button>
+
+
+            <!-- 결제 취소 확인 모달 -->
+            <div id="cancelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="cancelModalLabel">환불</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            결제를 정말 취소하시겠습니까?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-danger" onClick="cancelPay()">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input id="bookingIdx" type="hidden" th:value="${inicisVO.getBookingIdx()}">
+            <input id="storeIdx" type="hidden" th:value="${inicisVO.getStoreIdx()}">
 
         </form>
-        <input id="bookingIdx" type="hidden" th:value="${inicisVO.getBookingIdx()}">
-        <input id="storeIdx" type="hidden" th:value="${inicisVO.getStoreIdx()}">
-        <br>진짜취소하시겠습니까 묻고 취소
+
         <br>(예약 시간 후로 시간제한도 걸어야해)
     </div>
 </div>
@@ -104,9 +183,37 @@
 
 
 
+
+
+
+
+
+
 <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script>
+
+    function openCancelModal() {
+        $('#cancelModal').modal('show');
+    }
     function cancelPay() {
+        var msg = 'complete'
+
+        let today = new Date();
+        //현재 시간 확인
+        console.log(today);
+        console.log(dateFormat(today));
+
+        var todayDate2 = dateFormat(today).split(' ')[0];
+        var nowTime2 = dateFormat(today).split(' ')[1];
+
+        console.log(dateFormat(today).split(' ')[0]);
+        console.log(dateFormat(today).split(' ')[1]);
+
+        var bookingIdx2 = $('#bookingIdx').val();
+        var storeIdx2 = $('#storeIdx').val();
+        console.log(todayDate2 + ' ' + nowTime2);
+        console.log(bookingIdx2);
+
         $.ajax({
             url: "/pay/inicisCancel",
             type: "POST",
@@ -116,7 +223,10 @@
                 "cancel_request_amount": [[${inicisVO.amount}]], // 환불금액
                 "reason": "테스트 결제 환불", // 환불사유
                 "token" : '[[${inicisVO.token}]]',
-                "imp_uid" : '[[${inicisVO.imp_uid}]]'
+                "imp_uid" : '[[${inicisVO.imp_uid}]]',
+                "nowDate" : dateFormat(today).split(' ')[0],
+                "nowTime" : dateFormat(today).split(' ')[1],
+                "bookingIdx" : $('#bookingIdx').val()
             }),
             /* dataType: "json",*/
             dataType: "json",
@@ -125,10 +235,17 @@
                 console.log("inicis 환불 성공!");
                 console.log(data.a);
                 if ( data.a == "환불성공") {
-                    location.href="/store/list";
+                    window.location.href = '/pay/payNothing?message=' + msg;
+                    // location.href='/pay/payNothing?message=' + msg;
                 }
-                //location.href = "/pay/mykakaoPayNothing";
-                //window.location.href = '/pay/inicisRefund';
+                if (data.a == "시간지남") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '결제 취소 불가',
+                        text: '예약시간이 도래하여 결제 취소가 불가능합니다.'
+                    })
+                    $('#cancelModal').modal('hide');
+                }
             }, error: function(xhr, status, error) {
                 console.log("에러 발생");
                 console.log(xhr);
@@ -187,8 +304,8 @@
             async: false,
           success: function(data){
             console.log('통신결과 : ' + data.status);
-            if (data.result == 2 ) {
-                location.href="/store/starComment?storeIdx=" + storeIdx;
+            if (data.result >= 2 ) {
+                location.href="/store/starComment?storeIdx=" + storeIdx +'';
             } else {
                 Swal.fire({
                     icon: 'error',

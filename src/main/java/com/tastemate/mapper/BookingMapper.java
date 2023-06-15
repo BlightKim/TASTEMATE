@@ -16,4 +16,7 @@ public interface BookingMapper {
 
     public int bookingTableCheck(BookingVO bookingVO);
 
+    public int bookingPayAndStarComplete(int bookingIdx);
+    public int bookingPayCancel(int bookingIdx);
+
 }

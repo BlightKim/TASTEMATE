@@ -10,7 +10,6 @@
   <title>Insert title here</title>
   <link rel="stylesheet" th:href="@{/css/store_css.css}">
 <style>
-
   #main {
     /*min-height: 100vh;*/
     display: flex;
@@ -50,6 +49,13 @@
     border-radius: 7px;
   }
 
+  .gray{
+    color : gray;
+  }
+  .purple{
+    color : #8E48C7;
+  }
+
 
 </style>
 </head>
@@ -59,64 +65,111 @@
 
 <div class="text-center" id="main">
   <div class="input-form-backgroud">
-    <form class="input-form">
+    <div class="input-form">
 
       <h4 class="yellow"><strong>카카오페이 결제가 완료되었습니다.</strong></h4><br>
 
       <hr>
       <div class="row">
-        <div class="col text-left">결제일시:</div>
+        <div class="col text-left">이름 :</div>
+        <div class="col text-right">
+          [[${info.bookingVO[0].userName}]]
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col text-left">맛집 :</div>
+        <div class="col text-right">
+          [[${info.bookingVO[0].storeName}]]
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col text-left">메뉴 :</div>
+        <div class="col text-right">[[${info.item_name}]]</div>
+      </div>
+
+      <div class="row">
+        <div class="col text-left">테이블 :</div>
+        <div class="col text-right">
+          [[${info.bookingVO[0].tableNo}]]번
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col text-left">예약일 :</div>
+        <div class="col text-right">
+          [[${info.bookingVO[0].bookingTime}]]
+        </div>
+      </div>
+      <br>
+
+      <div class="row gray">
+        <div class="col text-left">주문번호 :</div>
+        <div class="col text-right">[[${info.partner_order_id}]]</div>
+      </div>
+
+      <div class="row">
+        <div class="col text-left">결제방법 :</div>
+        <!--        <div class="col text-right">[[${info.payment_method_type}]]</div>-->
+        <div class="col text-right">KAKAOPAY</div>
+      </div>
+
+      <div class="row">
+        <div class="col text-left">결제일시 :</div>
         <div class="col text-right">
           <div th:text="${#dates.format(info.approved_at, 'yyyy-MM-dd HH:mm:ss')}"></div>
         </div>
       </div>
-      <div class="row">
-        <div class="col text-left">주문번호:</div>
-        <div class="col text-right">[[${info.partner_order_id}]]</div>
-      </div>
-      <div class="row">
-        <div class="col text-left">상품명:</div>
-        <div class="col text-right">[[${info.item_name}]]</div>
-      </div>
-<!--      <div class="row">
-        <div class="col text-left">상품수량:</div>
-        <div class="col text-right">[[${info.quantity}]]</div>
-      </div>-->
-      <div class="row">
-        <div class="col text-left">결제방법:</div>
-        <div class="col text-right">[[${info.payment_method_type}]]</div>
-      </div>
+
       <hr>
-      <div class="row mb-5">
-        <div class="col text-left">결제금액:</div>
+      <div class="row mb-5 purple">
+        <div class="col text-left">결제금액 :</div>
         <div class="col text-right">
-          <strong>
-            <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
-          </strong>
+          <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
         </div>
       </div>
 
-      <button type="button" class="btn btn-warning purple3" onclick="starInsert()">별점주러가기
-      </button>
-      <input id="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
-      <input id="storeIdx" type="hidden" th:value="${info.getStoreIdx()}">
+      <div class="row justify-content-center">
+        <button type="button" class="btn btn-warning purple3 mx-2" onclick="starInsert()"
+                style="background-color: #9C91B3; border: none;">별점주러가기
+        </button>
+        <input id="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
+        <input id="storeIdx" type="hidden" th:value="${info.getStoreIdx()}">
 
-    </form>
+        <!-- HTML 코드 -->
+        <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid})}">
+          <button class="kakaoBtn2" type="button" data-toggle="modal" data-target="#cancelModal">결제 취소</button>
+        </form>
 
+        <!-- 모달 창 -->
+        <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="cancelModalLabel">환불</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                결제를 정말 취소하시겠습니까?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" id="confirmCancelBtn">확인</button>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <form method="post" th:action="@{/pay/refund(tid=${info.tid})}">
-      <button class="kakaoBtn2">결제 취소</button>
-    </form>
-    <br>진짜취소하시겠습니까 묻고 취소
+      </div>
+
+    </div>
 
   </div>
 </div>
 
-
-<br><br><br><br>
-일단은 바로 별점주는 화면으로 넘어가게하자 <br>
-(예약 시간 후로 시간제한도 걸어야해)<br>
-<h2>[[${info}]]</h2>
 
 <script>
   //접속시 현재 시간을 yyyy-mm-dd hh:mi:ss 형태로 뽑아주는 js 함수
@@ -165,7 +218,7 @@
         dataType : "json",
         success: function(data){
           console.log('통신결과 : ' + data.status);
-          if (data.result == 2 ) {
+          if (data.result >= 2 ) {
             location.href="/store/starComment?storeIdx=" + storeIdx;
           } else {
             Swal.fire({
@@ -183,7 +236,51 @@
   }
 
 </script>
+<script>
+  document.getElementById("confirmCancelBtn").addEventListener("click", function() {
+    let today = new Date();
+    //현재 시간 확인
+    console.log(today);
+    console.log(dateFormat(today));
 
+    var todayDate = dateFormat(today).split(' ')[0];
+    var nowTime = dateFormat(today).split(' ')[1];
+
+    console.log(dateFormat(today).split(' ')[0]);
+    console.log(dateFormat(today).split(' ')[1]);
+
+    var bookingIdx = $('#bookingIdx').val();
+    var storeIdx2 = $('#storeIdx').val();
+    console.log(todayDate + ' ' + nowTime);
+    console.log(bookingIdx);
+    $.ajax({
+      url: "/pay/timeCheck",
+      type: "POST",
+      data: { bookingIdx: bookingIdx,
+        nowDate: todayDate,
+        nowTime : nowTime },
+      contextType: "application/json; charset=UTF-8",
+      dataType : "json",
+      success: function(data){
+        console.log('통신결과 : ' + data.status);
+        if (data.a >= 2 ) {
+          document.getElementById("cancelForm").submit();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: '결제 취소 불가',
+            text: '예약시간이 도래하여 결제 취소가 불가능합니다.'
+          })
+          $('#cancelModal').modal('hide');
+        }
+      },
+      error: function(error){
+        console.log(error.responseText);
+        alert("신규등록 error");  }
+    });
+    return false;
+  });
+</script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 
