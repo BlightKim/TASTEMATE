@@ -34,11 +34,36 @@ public class PayController {
     private PaymentService paymentService;
 
 
+    @GetMapping("/myPay")
+    public String myPay(HttpSession session){
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("세션 memberVO 확인!"+memberVO);
 
-    @GetMapping("/kakaoPay")
-    public void kakaoPayGet() {
-        log.info("kakaoPay get............................................");
+
+        // 2개의 결제테이블에서 userIdx와 status가 0인것을 찾기
+        // null값이 아니면 그거에따라 리턴값을 주소로 주자
+        //둘다 null이면 payNothing으로 가자
+
+        InicisVO inicisVO = paymentService.findInicis(memberVO.getUserIdx());
+        KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.findKakao(memberVO.getUserIdx());
+
+        log.info("inicisVO 확인 : " + inicisVO);
+        log.info("kakaoPayApprovalVO 확인 : " + kakaoPayApprovalVO);
+
+        if (inicisVO != null){
+            log.info("redirect:/pay/inicisSuccess");
+            return "redirect:/pay/inicisSuccess";
+        } else if (kakaoPayApprovalVO != null){
+            log.info("redirect:/pay/mykakaoPaySuccess");
+            return "redirect:/pay/mykakaoPaySuccess";
+        }
+
+
+
+
+        return "redirect:/pay/payNothing";
     }
+
 
     //카카오페이 결제 요청 (ajax)
     @GetMapping ("/kakaoPayGo")

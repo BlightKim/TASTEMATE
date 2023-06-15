@@ -1,25 +1,24 @@
 package com.tastemate.controller;
 
+import com.tastemate.domain.BookingVO;
 import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.StarVO;
 import com.tastemate.domain.StoreVO;
 import com.tastemate.domain.paging.Criteria;
 import com.tastemate.domain.paging.PageDTO;
-import com.tastemate.service.BookmarkService;
+import com.tastemate.service.*;
 import com.tastemate.mapper.MemberMapper;
-import com.tastemate.service.StoreService;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +37,14 @@ public class StoreController {
 
     @Autowired
     private MemberMapper memberMapper;
+
+    @Autowired
+    private BookingService bookingService;
+
+    @Autowired
+    private PaymentService paymentService;
+
+
 
     @GetMapping("/list")
     public void get(Model model
@@ -162,11 +169,80 @@ public class StoreController {
         return "redirect:/store/list";
     }
 
+    @RequestMapping(value = "/starComment", produces = "application/json; charset=UTF-8", method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Integer> starComment(Model model, HttpSession session, HttpServletRequest request,
+                                            @RequestParam("bookingIdx") int bookingIdx,
+                                            @RequestParam("nowDate") String nowDate,
+                                            @RequestParam("nowTime") String nowTime){
+
+
+        BookingVO bookingVO = bookingService.bookingToPayShow(bookingIdx);
+        System.out.println("bookingVO = " + bookingVO);
+        String bookingTime = bookingVO.getBookingTime();
+        System.out.println("bookingTime = " + bookingTime);
+        System.out.println("nowDate = " + nowDate);
+        System.out.println("nowTime = " + nowTime);
+
+        String[] bookingT = bookingTime.split(" ");
+        int result = 0;
+        for (int i = 0; i < bookingT.length; i++) {
+            if (i == 0) {
+                String[] str2 = bookingT[i].split("-");
+                String[] str3 = nowDate.split("-");
+                System.out.println("str2[0] = " + str2[0]);
+                System.out.println("str3[0] = " + str3[0]);
+
+                System.out.println("str2[1] = " + str2[1]);
+                System.out.println("str3[1] = " + str3[1]);
+
+                System.out.println("str2[2] = " + str2[2]);
+                System.out.println("str3[2] = " + str3[2]);
+                if (Integer.parseInt(str2[0]) <= Integer.parseInt(str3[0]) &&
+                        Integer.parseInt(str2[1]) <= Integer.parseInt(str3[1]) &&
+                        Integer.parseInt(str2[2]) <= Integer.parseInt(str3[2]) ) {
+                    result++;
+                }
+            }
+            if (i == 1) {
+                String[] str4 = bookingT[i].split(":");
+                String[] str5 = nowTime.split(":");
+
+                System.out.println("str4[0] = " + str4[0]);
+                System.out.println("str5[0] = " + str5[0]);
+
+                System.out.println("str4[1] = " + str4[1]);
+                System.out.println("str5[1] = " + str5[1]);
+
+                System.out.println("str4[2] = " + str4[2]);
+                System.out.println("str5[2] = " + str5[2]);
+                if (Integer.parseInt(str4[0]) <= Integer.parseInt(str5[0]) &&
+                        Integer.parseInt(str4[1]) <= Integer.parseInt(str5[1]) &&
+                        Integer.parseInt(str4[2]) <= Integer.parseInt(str5[2]) ) {
+                    result++;
+                }
+            }
+        }
+
+        System.out.println("result = " + result);
+
+        Map<String, Integer> resultMap = new HashMap<String, Integer>();
+        resultMap.put("result", result);
+
+        return resultMap;
+    }
+
     @GetMapping("/starComment")
-    public void starComment(String storeIdx, Model model){
+    public void starComment(String storeIdx, String inicisIdx,
+                            String kakaoApprovalIdx, Model model){
 
         log.info("storeIdx : "+ storeIdx);
+        log.info("inicisIdx : "+ inicisIdx);
+        log.info("kakaoApprovalIdx : "+ kakaoApprovalIdx);
+
         model.addAttribute("storeIdx",storeIdx);
+        model.addAttribute("inicisIdx",inicisIdx);
+        model.addAttribute("kakaoApprovalIdx",kakaoApprovalIdx);
 
     }
 
@@ -177,9 +253,29 @@ public class StoreController {
         int result = service.store_starComment(starVO);
         log.info("starVO result : " + result);
 
+        // 별점 완료하면 바뀔 것들 (결제 / 예약 / roomIdx)
+        // 결제 status 2로 변경
+        if (starVO.getInicisIdx() != 0){
+            //inicisIdx 이용해서 INICIS 테이블 status 변경하기
+            int inicisUpdate = paymentService.updateStatus(starVO.getInicisIdx());
+            log.info("inicis update : " + inicisUpdate);
+
+        } else if (starVO.getKakaoApprovalIdx() != 0){
+            //getKakaoApprovalIdx 이용해서 KAKAOPAYAPPROVAL status 변경하기
+            int kakaoUpdate = paymentService.updateStatus2(starVO.getKakaoApprovalIdx());
+            log.info("kakao update : " + kakaoUpdate);
+
+        }
 
 
-        return "redirect:/store/main";  //추후 수정 필요!
+        // 예약 status 변경
+
+
+        // roomIdx 변경
+
+
+
+        return "redirect:/store/main";
     }
 
     @GetMapping("/main")

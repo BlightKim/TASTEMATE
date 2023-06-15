@@ -6,185 +6,240 @@
 <th:block th:replace="header_footer/header :: headerFragment"></th:block>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Insert title here</title>
-  <link rel="stylesheet" th:href="@{/css/store_css.css}">
-<style>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <style>
+        #main {
+            /*min-height: 100vh;*/
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-  #main {
-    /*min-height: 100vh;*/
-    display: flex;
-    align-items: center;
-    justify-content: center;
+            background: -webkit-gradient(linear, left bottom, right top, from(#E2E2E2), to(#E2E2E2));
+            background: -webkit-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+            background: -moz-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+            background: -o-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+            background: linear-gradient(to top right, #E2E2E2 0%, #E2E2E2 100%);
+        }
+        .input-form {
+            max-width: 100%;
 
-    background: -webkit-gradient(linear, left bottom, right top, from(#E2E2E2), to(#E2E2E2));
-    background: -webkit-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
-    background: -moz-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
-    background: -o-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
-    background: linear-gradient(to top right, #E2E2E2 0%, #E2E2E2 100%);
-  }
-  .input-form {
-    max-width: 100%;
+            margin-top: 80px;
+            margin-bottom: 80px;
+            padding: 32px;
 
-    margin-top: 80px;
-    margin-bottom: 80px;
-    padding: 32px;
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
 
-    background: #fff;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-    -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-  }
+        .yellow{
+            color : #FFA500;
+        }
+        .kakaoBtn2{
+            background-color: #F7E600;
+            padding: 7px 10px;
+            border: none;
+            outline: none;
+            border-radius: 7px;
+        }
 
-  .yellow{
-    color : #FFA500;
-  }
-  .kakaoBtn2{
-    background-color: #F7E600;
-    padding: 7px 10px;
-    border: none;
-    outline: none;
-    border-radius: 7px;
-  }
+        .gray{
+            color : gray;
+        }
+        .purple{
+            color : #8E48C7;
+        }
 
-  .gray{
-      color : gray;
-  }
-  .purple{
-      color : #8E48C7;
-  }
 
-</style>
+    </style>
 </head>
 <body>
 
 
 
-
 <div class="text-center" id="main">
-  <div class="input-form-backgroud">
-    <div class="input-form">
+    <div class="input-form-backgroud">
+        <div class="input-form">
 
-      <h4 class="yellow"><strong>카카오페이 결제가 완료되었습니다.</strong></h4><br>
+            <h4 class="yellow"><strong>카카오페이 결제가 완료되었습니다.</strong></h4><br>
 
-      <hr>
-      <div class="row">
-        <div class="col text-left">이름 :</div>
-        <div class="col text-right">
-          [[${info.bookingVO[0].userName}]]
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col text-left">맛집 :</div>
-        <div class="col text-right">
-          [[${info.bookingVO[0].storeName}]]
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col text-left">메뉴 :</div>
-        <div class="col text-right">[[${info.item_name}]]</div>
-      </div>
-
-      <div class="row">
-        <div class="col text-left">테이블 :</div>
-        <div class="col text-right">
-          [[${info.bookingVO[0].tableNo}]]번
-        </div>
-      </div>
-
-        <div class="row">
-            <div class="col text-left">예약일 :</div>
-            <div class="col text-right">
-                [[${info.bookingVO[0].bookingTime}]]
-            </div>
-        </div>
-<br>
-
-        <div class="row gray">
-            <div class="col text-left">주문번호 :</div>
-            <div class="col text-right">[[${info.partner_order_id}]]</div>
-        </div>
-
-      <div class="row">
-        <div class="col text-left">결제방법 :</div>
-<!--        <div class="col text-right">[[${info.payment_method_type}]]</div>-->
-        <div class="col text-right">KAKAOPAY</div>
-      </div>
-
-      <div class="row">
-        <div class="col text-left">결제일시 :</div>
-        <div class="col text-right">
-          <div th:text="${#dates.format(info.approved_at, 'yyyy-MM-dd HH:mm:ss')}"></div>
-        </div>
-      </div>
-
-      <hr>
-      <div class="row mb-5 purple">
-        <div class="col text-left">결제금액 :</div>
-        <div class="col text-right">
-            <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
-        </div>
-      </div>
-
-        <div class="row justify-content-center">
-            <a class="btn btn-warning mx-2" th:href="@{/store/starComment(storeIdx=${info.storeIdx})}"
-             style="background-color: #9C91B3; border: none;">별점주러가기</a>
-
-<!--            <form method="post" th:action="@{/pay/refund(tid=${info.tid})}">
-                <button class="kakaoBtn2">결제 취소</button>
-            </form>-->
-
-            <!-- HTML 코드 -->
-            <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid})}">
-                <button class="kakaoBtn2" type="button" data-toggle="modal" data-target="#cancelModal">결제 취소</button>
-            </form>
-
-            <!-- 모달 창 -->
-            <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="cancelModalLabel">환불</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            결제를 정말 취소하시겠습니까?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-                            <button type="button" class="btn btn-primary" id="confirmCancelBtn">확인</button>
-                        </div>
-                    </div>
+            <hr>
+            <div class="row">
+                <div class="col text-left">이름 :</div>
+                <div class="col text-right">
+                    [[${info.bookingVO[0].userName}]]
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col text-left">맛집 :</div>
+                <div class="col text-right">
+                    [[${info.bookingVO[0].storeName}]]
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">메뉴 :</div>
+                <div class="col text-right">[[${info.item_name}]]</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">테이블 :</div>
+                <div class="col text-right">
+                    [[${info.bookingVO[0].tableNo}]]번
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">예약일 :</div>
+                <div class="col text-right">
+                    [[${info.bookingVO[0].bookingTime}]]
+                </div>
+            </div>
+            <br>
+
+            <div class="row gray">
+                <div class="col text-left">주문번호 :</div>
+                <div class="col text-right">[[${info.partner_order_id}]]</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">결제방법 :</div>
+                <!--        <div class="col text-right">[[${info.payment_method_type}]]</div>-->
+                <div class="col text-right">KAKAOPAY</div>
+            </div>
+
+            <div class="row">
+                <div class="col text-left">결제일시 :</div>
+                <div class="col text-right">
+                    <div th:text="${#dates.format(info.approved_at, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row mb-5 purple">
+                <div class="col text-left">결제금액 :</div>
+                <div class="col text-right">
+                    <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn-warning purple3 mx-2" onclick="starInsert()"
+                        style="background-color: #9C91B3; border: none;">별점주러가기
+                </button>
+                <input id="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
+                <input id="storeIdx" type="hidden" th:value="${info.getStoreIdx()}">
+                <input id="kakaoApprovalIdx" type="hidden" th:value="${info.getKakaoApprovalIdx()}">
 
 
+                <!-- HTML 코드 -->
+                <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid})}">
+                    <button class="kakaoBtn2" type="button" data-toggle="modal" data-target="#cancelModal">결제 취소</button>
+                </form>
 
+                <!-- 모달 창 -->
+                <div class="modal fade" id="cancelModal" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="cancelModalLabel">환불</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                결제를 정말 취소하시겠습니까?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                                <button type="button" class="btn btn-primary" id="confirmCancelBtn">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
+            </div>
 
         </div>
 
     </div>
-
-
-  </div>
 </div>
 
 
-<br><br><br><br>
-일단은 바로 별점주는 화면으로 넘어가게하자 <br>
-(예약 시간 후로 시간제한도 걸어야해)<br>
+<script>
+    //접속시 현재 시간을 yyyy-mm-dd hh:mi:ss 형태로 뽑아주는 js 함수
+    function dateFormat(date) {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+
+        month = month >= 10 ? month : '0' + month;
+        day = day >= 10 ? day : '0' + day;
+        hour = hour >= 10 ? hour : '0' + hour;
+        minute = minute >= 10 ? minute : '0' + minute;
+        second = second >= 10 ? second : '0' + second;
+
+        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+    }
+    function starInsert() {
+        //카카오 결제 후 별점 입력하러 가기 시간 제한 용도의 ajax
+
+        let today = new Date();
+        //현재 시간 확인
+        console.log(today);
+        console.log(dateFormat(today));
+
+        var todayDate = dateFormat(today).split(' ')[0];
+        var nowTime = dateFormat(today).split(' ')[1];
+
+        console.log(dateFormat(today).split(' ')[0]);
+        console.log(dateFormat(today).split(' ')[1]);
+
+        var bookingIdx = $('#bookingIdx').val();
+        var storeIdx = $('#storeIdx').val();
+        var kakaoApprovalIdx = $('#kakaoApprovalIdx').val();
+        console.log(todayDate + ' ' + nowTime);
+        console.log(bookingIdx);
 
 
+        $.ajax({
+            url: "/store/starComment",
+            type: "GET",
+            data: { bookingIdx: bookingIdx,
+                nowDate: todayDate,
+                nowTime : nowTime },
+            contextType: "application/json; charset=UTF-8",
+            dataType : "json",
+            success: function(data){
+                console.log('통신결과 : ' + data.status);
+                if (data.result == 2 ) {
+                    location.href="/store/starComment?storeIdx=" + storeIdx
+                        + "&kakaoApprovalIdx=" + kakaoApprovalIdx;
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '별점 남기기 불가',
+                        text: '예약시간 이전이므로 별점 남기기가 불가능합니다.'
+                    })
+                }
+            },
+            error: function(error){
+                console.log(error.responseText);
+                alert("신규등록 error");  }
+        });
+        return false;
+    }
+
+</script>
 <script>
     document.getElementById("confirmCancelBtn").addEventListener("click", function() {
         document.getElementById("cancelForm").submit();
