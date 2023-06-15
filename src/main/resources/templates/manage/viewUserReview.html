@@ -83,16 +83,17 @@
                 <label>맛집 평가</label>
                 <div>
                     <fieldset id="star">
-                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="5" id="rate1"><label
+                        <input type="radio" name="storeStar" value="5" id="rate1"><label
                             for="rate1" >★</label>
-                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="4" id="rate2"><label
+                        <input type="radio" name="storeStar" value="4" id="rate2"><label
                             for="rate2" >★</label>
-                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="3" id="rate3"><label
+                        <input type="radio" name="storeStar" value="3" id="rate3"><label
                             for="rate3" >★</label>
-                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="2" id="rate4"><label
+                        <input type="radio" name="storeStar" value="2" id="rate4"><label
                             for="rate4" >★</label>
-                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="1" id="rate5"><label
+                        <input type="radio" name="storeStar" value="1" id="rate5"><label
                             for="rate5" >★</label>
+                        <input type="hidden" name="storeStar" th:value="${viewUserReview.storeStar}">
                     </fieldset>
                 </div>
             </div>
@@ -122,7 +123,7 @@
 
         <div class="text-center mt-5 mb-3">
             <button type="submit" class="btn text-white" style="background-color: #8E48C7">수정</button>
-            <a th:href="@{|/manage/storeRegOkView?storeIdx=${viewUserReview.storeIdx}|}" class="btn text-white" style="background-color: #9C91B3">목록</a>
+            <a th:href="@{|/manage/storeReview?storeIdx=${viewUserReview.storeIdx}|}" class="btn text-white" style="background-color: #9C91B3">목록</a>
         </div>
       </form>
 

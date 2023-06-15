@@ -299,9 +299,9 @@ public class ManageController {
     public String updateUserReview(Model model, ManageStarVO manageStarVO, ManageStoreVO manageStoreVO) {
         int result = service.updateUserReview(manageStarVO);
 
-        //맛집 상세보기(승인)
-        storeRegOkView(model, manageStoreVO, manageStarVO);
-        return "/manage/storeRegOkView";
+        //리뷰 상세
+        storeReviewList(model, manageStarVO, manageStoreVO);
+        return "/manage/storeReview";
     }
 
     //리뷰 삭제
@@ -315,10 +315,41 @@ public class ManageController {
 
         String wow = "complete";
         redirectAttributes.addFlashAttribute("message", wow);
-        //맛집 상세보기(승인)
-        //storeRegOkView(model, manageStoreVO, manageStarVO);
-        return "redirect:/manage/storeRegOkList";
+        return "redirect:/manage/storeReviewList";
     }
+
+    //리뷰 상세
+    @RequestMapping("storeReview")
+    public String storeReviewList(Model model, ManageStarVO manageStarVO, ManageStoreVO manageStoreVO) {
+        //맛집 상세보기
+        ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
+        model.addAttribute("storeRegView", storeRegOkView);
+
+        //리뷰 조회
+        selectUserReview(model, manageStarVO);
+        return "/manage/storeReview";
+    }
+
+    //리뷰 리스트
+    @GetMapping("storeReviewList")
+    public String storeReviewList(Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
+        List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
+        model.addAttribute("storeRegOkList", storeRegOkList);
+
+        String title = "맛집 평가";
+        model.addAttribute("title", title);
+
+        return "/manage/storeReviewList";
+    }
+
+//    public String storeReview (Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
+//        ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
+//        model.addAttribute("storeRegView", storeRegOkView);
+//
+//        //리뷰 조회
+//        selectUserReview(model, manageStarVO);
+//        return "/manage/storeRegOkView";
+//    }
 
 
 
