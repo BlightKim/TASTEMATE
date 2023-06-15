@@ -27,10 +27,12 @@ public class ManageController {
 
     //메인 페이지(관리자)
     @GetMapping("main")
-    public String manageMain(Model model) {
+    public String manageMain(Model model, RedirectAttributes redirectAttributes) {
+        service.inCheck();
         String title = "관리자 페이지";
         model.addAttribute("title", title);
-        return "/manage/main";
+
+       return "/manage/main";
     }
 
 
@@ -67,12 +69,12 @@ public class ManageController {
 
     //맛집 상세보기(관리자)
     @RequestMapping("storeView")
-    public String storeView(Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
+    public String storeView(Model model, ManageStoreVO manageStoreVO) {
         ManageStoreVO storeView = service.manageStoreView(manageStoreVO);
         model.addAttribute("storeView", storeView);
 
         //리뷰 조회
-        selectUserReview(model, manageStarVO);
+        //selectUserReview(model, manageStarVO);
         return "/manage/storeView";
     }
 
@@ -142,7 +144,7 @@ public class ManageController {
     }
 
     //맛집 상세보기(승인)
-    @GetMapping("storeRegOkView")
+    @RequestMapping("storeRegOkView")
     public String storeRegOkView (Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
         ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
         model.addAttribute("storeRegView", storeRegOkView);
@@ -297,20 +299,25 @@ public class ManageController {
     public String updateUserReview(Model model, ManageStarVO manageStarVO, ManageStoreVO manageStoreVO) {
         int result = service.updateUserReview(manageStarVO);
 
-        //맛집 상세보기(관리자)
-        storeView(model, manageStoreVO, manageStarVO);
-        return "/manage/storeView";
+        //맛집 상세보기(승인)
+        storeRegOkView(model, manageStoreVO, manageStarVO);
+        return "/manage/storeRegOkView";
     }
 
     //리뷰 삭제
 //    @GetMapping("deleteUserReview")
     @PostMapping("deleteUserReview")
-    public String deleteUserReview(Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
-        int result = service.deleteUserReview(manageStarVO);
+    public String deleteUserReview(ManageStarVO manageStarVO,
+       RedirectAttributes redirectAttributes) {
 
-        //맛집 상세보기(관리자)
-        storeView(model, manageStoreVO, manageStarVO);
-        return "/manage/storeView";
+        int result = service.deleteUserReview(manageStarVO);
+        log.info(String.valueOf(manageStarVO));
+
+        String wow = "complete";
+        redirectAttributes.addFlashAttribute("message", wow);
+        //맛집 상세보기(승인)
+        //storeRegOkView(model, manageStoreVO, manageStarVO);
+        return "redirect:/manage/storeRegOkList";
     }
 
 

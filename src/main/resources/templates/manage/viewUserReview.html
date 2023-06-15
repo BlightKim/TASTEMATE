@@ -83,15 +83,15 @@
                 <label>맛집 평가</label>
                 <div>
                     <fieldset id="star">
-                        <input type="radio" name="storeStar" value="5" id="rate1"><label
+                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="5" id="rate1"><label
                             for="rate1" >★</label>
-                        <input type="radio" name="storeStar" value="4" id="rate2"><label
+                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="4" id="rate2"><label
                             for="rate2" >★</label>
-                        <input type="radio" name="storeStar" value="3" id="rate3"><label
+                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="3" id="rate3"><label
                             for="rate3" >★</label>
-                        <input type="radio" name="storeStar" value="2" id="rate4"><label
+                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="2" id="rate4"><label
                             for="rate4" >★</label>
-                        <input type="radio" name="storeStar" value="1" id="rate5"><label
+                        <input th:if="${viewUserReview.storeStar != 0}" type="radio" name="storeStar" value="1" id="rate5"><label
                             for="rate5" >★</label>
                     </fieldset>
                 </div>
