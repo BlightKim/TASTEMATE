@@ -6,26 +6,26 @@ import java.util.List;
 import java.util.Map;
 
 public interface BoardDao {
-    public int insertOne(BoardVO board);
-    public List<BoardVO> selectAllBoard(SearchCondition sc);
+  public int insertOne(BoardVO board);
+  public List<BoardVO> selectAllBoard(SearchCondition sc);
 
-    Integer selectResultCnt(SearchCondition sc);
+  Integer selectResultCnt(SearchCondition sc);
 
-    BoardVO selectOneBoardByBoardIdx(Integer boardIdx);
-    Integer increaseHit(Integer boardIdx);
-    Integer increaseCommentCount(Integer boardIdx);
+  BoardVO selectOneBoardByBoardIdx(Integer boardIdx);
+  Integer increaseHit(Integer boardIdx);
+  Integer increaseCommentCount(Integer boardIdx);
 
-    Integer updateBoard(BoardVO board); // 메서드 추가
+  Integer updateBoard(BoardVO board); // 메서드 추가
 
-    boolean checkForLike(Map<String, Integer> map);
+  boolean checkForLike(Map<String, Integer> map);
 
-    Integer increaseLike(Integer boardIdx);
+  Integer increaseLike(Integer boardIdx);
 
-    Integer decreaseLike(Integer boardIdx);
-    Integer deleteBoard(Integer boardIdx);
+  Integer decreaseLike(Integer boardIdx);
+  Integer deleteBoard(Integer boardIdx);
 
-    Integer insertLike(Map map);
-    Integer deleteLike(Map map);
+  Integer insertLike(Map map);
+  Integer deleteLike(Map map);
 
-    Integer decreaseCommentCount(Integer boardIdx);
+  Integer decreaseCommentCount(Integer boardIdx);
 }

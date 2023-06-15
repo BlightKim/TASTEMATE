@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-TasteMateApplication<TasteMate>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.tastemate.TasteMateApplication",
+      "projectName": "TasteMate",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
