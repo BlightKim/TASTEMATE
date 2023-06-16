@@ -311,6 +311,7 @@ oriFilename-->
         selectedDate: selectedDate },
       contextType: "application/json; charset=UTF-8",
       dataType : "json",
+      async: false,
       success: function(data){
         console.log('통신결과 : ' + data.status);
         let today = new Date();
@@ -409,6 +410,7 @@ oriFilename-->
               selectedTime : selectedTime },
       contextType: "application/json; charset=UTF-8",
       dataType : "json",
+      async: false,
       success: function(data){
         console.log('통신결과 : ' + data.status);
         if (data.a >= 2 ) {
