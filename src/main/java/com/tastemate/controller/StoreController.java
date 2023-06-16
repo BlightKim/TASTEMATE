@@ -1,14 +1,13 @@
 package com.tastemate.controller;
 
-import com.tastemate.domain.BookingVO;
-import com.tastemate.domain.MemberVO;
-import com.tastemate.domain.StarVO;
-import com.tastemate.domain.StoreVO;
+import com.tastemate.domain.*;
 import com.tastemate.domain.paging.Criteria;
 import com.tastemate.domain.paging.PageDTO;
 import com.tastemate.service.BookingService;
 import com.tastemate.service.BookmarkService;
 import com.tastemate.mapper.MemberMapper;
+import com.tastemate.service.PaymentService;
+import com.tastemate.service.StoreService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

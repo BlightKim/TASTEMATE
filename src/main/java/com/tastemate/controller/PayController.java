@@ -15,10 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,17 +32,17 @@ public class PayController {
     private KakaoPay kakaopay;
 
 
-   @Autowired
+    @Autowired
     private PaymentService paymentService;
 
-   @Autowired
-   private BookingService bookingService;
+    @Autowired
+    private BookingService bookingService;
 
 
     @GetMapping("/myPay")
-    public String myPay(HttpSession session){
+    public String myPay(HttpSession session) {
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
-        log.info("세션 memberVO 확인!"+memberVO);
+        log.info("세션 memberVO 확인!" + memberVO);
 
 
         // 2개의 결제테이블에서 userIdx와 status가 0인것을 찾기
@@ -55,40 +55,38 @@ public class PayController {
         log.info("inicisVO 확인 : " + inicisVO);
         log.info("kakaoPayApprovalVO 확인 : " + kakaoPayApprovalVO);
 
-        if (inicisVO != null){
+        if (inicisVO != null) {
             log.info("redirect:/pay/inicisSuccess");
             return "redirect:/pay/inicisSuccess";
-        } else if (kakaoPayApprovalVO != null){
+        } else if (kakaoPayApprovalVO != null) {
             log.info("redirect:/pay/mykakaoPaySuccess");
             return "redirect:/pay/mykakaoPaySuccess";
         }
-
-
 
 
         return "redirect:/pay/payNothing";
     }
 
     //카카오페이 결제 요청 (ajax)
-    @GetMapping ("/kakaoPayGo")
+    @GetMapping("/kakaoPayGo")
     @ResponseBody
     public KakaoPayReadyVO kakaoPay(int total_amount, String item_name,
                                     Model model, HttpServletRequest request
-                                    , int userIdx, int storeIdx, int bookingIdx
-                                    ) {
+            , int userIdx, int storeIdx, int bookingIdx
+    ) {
         log.info("kakaoPay post............................................");
         log.info("total_amount : " + total_amount);
 
 
         KakaoPayReadyVO readyResponse = kakaopay.kakaoPayReady(total_amount, item_name
-                                        ,userIdx, storeIdx, bookingIdx);
+                , userIdx, storeIdx, bookingIdx);
 
 
         model.addAttribute("tid", readyResponse.getTid());
         log.info("tid : " + readyResponse.getTid());
         log.info("readyResponse : " + readyResponse);
 
-        request.getSession().setAttribute("total_amount",total_amount);
+        request.getSession().setAttribute("total_amount", total_amount);
 
         return readyResponse;
     }
@@ -109,23 +107,23 @@ public class PayController {
     }
 
     @GetMapping("/mykakaoPaySuccess")
-    public String mykakaoPaySuccess(HttpSession session, Model model){
+    public String mykakaoPaySuccess(HttpSession session, Model model) {
         log.info("mykakaoPaySuccess 도착!");
 
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
-        log.info("세션 memberVO 확인!"+memberVO);
+        log.info("세션 memberVO 확인!" + memberVO);
 
         try {
             KakaoPayApprovalVO info = kakaopay.getKakaoApproval(memberVO.getUserIdx());
             log.info("mykakaoPaySuccess info : " + info);
 
-            if(info == null){
+            if (info == null) {
                 return "redirect:/pay/payNothing";
             }
 
             model.addAttribute("info", info);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             log.info("mykakaoPaySuccess 에러발생");
         }
 
@@ -133,25 +131,26 @@ public class PayController {
     }
 
     @GetMapping("/payNothing")
-    public void payNothing(@RequestParam(value="message", required = false) String message,
-                           RedirectAttributes rttr){
+    public void payNothing(@RequestParam(value = "message", required = false) String message,
+                           RedirectAttributes rttr) {
 
         log.info("payNothing 도착");
-        log.info("message : "+ message);
+        log.info("message : " + message);
 
-        if (message != null){
+        if (message != null) {
             rttr.addFlashAttribute("message", message);
             log.info("rttr");
         }
 
     }
+
     //카카오페이 취소 관련 시간 제한 aiax 처리 단
     @RequestMapping(value = "/timeCheck", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Integer> timeCheck(Model model, HttpSession session, HttpServletRequest request,
-                                            @RequestParam("bookingIdx") int bookingIdx,
-                                            @RequestParam("nowDate") String nowDate,
-                                            @RequestParam("nowTime") String nowTime){
+                                          @RequestParam("bookingIdx") int bookingIdx,
+                                          @RequestParam("nowDate") String nowDate,
+                                          @RequestParam("nowTime") String nowTime) {
         Map<String, Integer> resultMap = new HashMap<>();
         BookingVO bookingVO = bookingService.bookingToPayShow(bookingIdx);
         System.out.println("bookingVO = " + bookingVO);
@@ -174,13 +173,23 @@ public class PayController {
                 System.out.println("str3[2] = " + str3[2]);
                 if (Integer.parseInt(str2[0]) == Integer.parseInt(str3[0]) &&
                         Integer.parseInt(str2[1]) == Integer.parseInt(str3[1]) &&
-                        Integer.parseInt(str2[2]) == Integer.parseInt(str3[2]) ) {
+                        Integer.parseInt(str2[2]) == Integer.parseInt(str3[2])) {
                     timeResult++;
                 } else if (Integer.parseInt(str2[0]) >= Integer.parseInt(str3[0]) &&
                         Integer.parseInt(str2[1]) >= Integer.parseInt(str3[1]) &&
-                        Integer.parseInt(str2[2]) > Integer.parseInt(str3[2]) ) {
+                        Integer.parseInt(str2[2]) > Integer.parseInt(str3[2])) {
                     timeResult = 2;
 
+                }
+            }
+
+        }
+
+        resultMap.put("a", timeResult);
+        resultMap.put("bookingIdx", bookingIdx);
+        model.addAttribute("bookingIdx", bookingIdx);
+        return  resultMap;
+    }
 
     // 카카오페이
     @PostMapping("/refund")
@@ -204,8 +213,6 @@ public class PayController {
     }
 
 
-
-
     /*===================== 이니시스 ============================*/
     @PostMapping("/inicisComplete")
     @ResponseBody
@@ -216,7 +223,7 @@ public class PayController {
         String token = paymentService.getToken();
         log.info("token : " + token);
 
-        
+
         // DB 넣기
         inicisVO.setToken(token);
         int result = paymentService.insert_inicis(inicisVO);
@@ -233,8 +240,8 @@ public class PayController {
     @RequestMapping(value = "/inicisCancel", produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, String> inicisCancel(
-                                            @RequestBody InicisRefundVO inicisRefundVO,
-                                            RedirectAttributes rttr) throws IOException {
+            @RequestBody InicisRefundVO inicisRefundVO,
+            RedirectAttributes rttr) throws IOException {
 
         int bookingIdx = inicisRefundVO.getBookingIdx();
         String nowDate = inicisRefundVO.getNowDate();
@@ -263,11 +270,11 @@ public class PayController {
                 System.out.println("str3[2] = " + str3[2]);
                 if (Integer.parseInt(str2[0]) == Integer.parseInt(str3[0]) &&
                         Integer.parseInt(str2[1]) == Integer.parseInt(str3[1]) &&
-                        Integer.parseInt(str2[2]) == Integer.parseInt(str3[2]) ) {
+                        Integer.parseInt(str2[2]) == Integer.parseInt(str3[2])) {
                     timeResult++;
                 } else if (Integer.parseInt(str2[0]) >= Integer.parseInt(str3[0]) &&
                         Integer.parseInt(str2[1]) >= Integer.parseInt(str3[1]) &&
-                        Integer.parseInt(str2[2]) > Integer.parseInt(str3[2]) ) {
+                        Integer.parseInt(str2[2]) > Integer.parseInt(str3[2])) {
                     timeResult = 2;
 
                 }
@@ -284,12 +291,12 @@ public class PayController {
 
                 System.out.println("str4[2] = " + str4[2]);
                 System.out.println("str5[2] = " + str5[2]);
-                    if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) ||
-                        (Integer.parseInt(str4[0])-1 == Integer.parseInt(str5[0]) && Integer.parseInt(str4[1]) >= Integer.parseInt(str5[1]) ) ) {
-                        timeResult++;
-                    }
+                if (Integer.parseInt(str4[0]) - 1 > Integer.parseInt(str5[0]) ||
+                        (Integer.parseInt(str4[0]) - 1 == Integer.parseInt(str5[0]) && Integer.parseInt(str4[1]) >= Integer.parseInt(str5[1]))) {
+                    timeResult++;
                 }
             }
+        }
 
         System.out.println("timeResult = " + timeResult);
 
@@ -306,7 +313,6 @@ public class PayController {
 
 
             log.info("controller 환불 완료!!!");
-            Map<String, String> resultMap = new HashMap<>();
             resultMap.put("a", "환불성공");
 
             String msg = "complete";
@@ -320,7 +326,7 @@ public class PayController {
 
 
     @GetMapping("/inicisSuccess")
-    public String inicisSuccess(HttpSession session, Model model){
+    public String inicisSuccess(HttpSession session, Model model) {
 
         MemberVO memberVO = (MemberVO) session.getAttribute("vo");
         log.info("memberVO : " + memberVO);
@@ -336,7 +342,7 @@ public class PayController {
 
             model.addAttribute("inicisVO", inicisVO);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             log.info("inicisSuccess 에러발생");
         }
 
@@ -344,11 +350,9 @@ public class PayController {
     }
 
     @GetMapping("/inicisRefund")
-    public void inicisRefund(){
+    public void inicisRefund() {
 
     }
-
-
 
 
 }
