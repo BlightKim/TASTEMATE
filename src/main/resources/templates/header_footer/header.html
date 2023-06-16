@@ -108,12 +108,7 @@
 
             <div class="ml-auto">
 
-                <span th:if="${session.vo != null}">
-                <button class="btn btn-outline-dark ml-2" type="button"
-                        th:onclick="|location.href='@{/member/logout}'|">
-                로그아웃
-                </button>
-                </span>
+
 
                 <span th:unless="${session.vo != null}">
                 <button class="btn btn-outline-dark ml-2" type="button"
@@ -167,6 +162,12 @@
                         </ul>
                     </div>
                 </div>
+                <span th:if="${session.vo != null}">
+                <button class="btn btn-outline-dark ml-2" type="button"
+                        th:onclick="|location.href='@{/member/logout}'|">
+                로그아웃
+                </button>
+                </span>
             </div>
         </ul>
     </header>
