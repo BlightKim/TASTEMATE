@@ -205,7 +205,7 @@ public class MemberController {
         return "member/mbti";
     }
 
-    @GetMapping("member/class")
+    @GetMapping("tastemate")
     public String classesGet() {
 
         return "member/class";
