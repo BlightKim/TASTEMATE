@@ -142,12 +142,14 @@
             <div class="row g-0 no-gutters">
                 <div class="col-auto mx-1">
                     <span class="border" th:if="${bookmarkValidate == 0 }">
+                        <input type="hidden" name="bookmark" value="0">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                              class="bi bi-heart" viewBox="0 0 16 16">
                             <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
                         </svg>
                     </span>
                     <span class="border" th:if="${bookmarkValidate == 1 }">
+                        <input type="hidden" name="bookmark" value="1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-heart-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
@@ -325,34 +327,34 @@
 
 
 <!-- 북마크 ajax -->
-    <script>
-        var storeIdx2 = $("#storeIdx").val();
-        var urlInsert = "/bookmark/insertAjax.do";
-        var urlDelete = "/bookmark/deleteAjax.do";
-        //console.log(bookmark);
-        $(document).ready(function(){
-            let bookmark = $('input[name=bookmark]').val();
-            console.log(bookmark);
-            $('.border').on('click', function(){
-                //document.write("버튼 클릭 인식함!");
-                $.ajax({
-                    url: (bookmark == 0) ? urlInsert : urlDelete ,
-                    type: "POST",
-                    data: {storeIdx: storeIdx2 },
-                    contextType: "application/json; charset=UTF-8",
-                    dataType : "json",
-                    async: false,
-                    success: function(data){
+<script>
+    var storeIdx2 = $("#storeIdx").val();
+    var urlInsert = "/bookmark/insertAjax.do";
+    var urlDelete = "/bookmark/deleteAjax.do";
+    //console.log(bookmark);
+    $(document).ready(function(){
+        let bookmark = $('input[name=bookmark]').val();
+        console.log(bookmark);
+        $('.border').on('click', function(){
+            //document.write("버튼 클릭 인식함!");
+            $.ajax({
+                url: (bookmark == 0) ? urlInsert : urlDelete ,
+                type: "POST",
+                data: {storeIdx: storeIdx2 },
+                contextType: "application/json; charset=UTF-8",
+                dataType : "json",
+                async: false,
+                success: function(data){
                     //console.log('통신결과 : ' + data.status);
                     location.href="/store/get?storeIdx=" + storeIdx2;
                 },
                 error: function(error){
                     console.log(error.responseText);
-                    alert("신규등록 error");
-                }
+                    alert("신규등록 error");  }
             });
         });
     });
+</script>
 </script>
 
 <script>

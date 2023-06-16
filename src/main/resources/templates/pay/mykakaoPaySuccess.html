@@ -127,6 +127,7 @@
                 <div class="col text-left">결제금액 :</div>
                 <div class="col text-right">
                     <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
+                    <input id="bookingIdx" name="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
                 </div>
             </div>
 
@@ -134,13 +135,12 @@
                 <button type="button" class="btn btn-warning purple3 mx-2" onclick="starInsert()"
                         style="background-color: #9C91B3; border: none;">별점주러가기
                 </button>
-                <input id="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
                 <input id="storeIdx" type="hidden" th:value="${info.getStoreIdx()}">
                 <input id="kakaoApprovalIdx" type="hidden" th:value="${info.getKakaoApprovalIdx()}">
 
 
                 <!-- HTML 코드 -->
-                <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid})}">
+                <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid}, bookingIdx=${info.getBookingIdx()})}">
                     <button class="kakaoBtn2" type="button" data-toggle="modal" data-target="#cancelModal">결제 취소</button>
                 </form>
 
@@ -220,6 +220,7 @@
           nowTime : nowTime },
         contextType: "application/json; charset=UTF-8",
         dataType : "json",
+        async: false,
         success: function(data){
           console.log('통신결과 : ' + data.status);
           if (data.result >= 2 ) {
@@ -242,59 +243,59 @@
 
 </script>
 <script>
-  document.getElementById("confirmCancelBtn").addEventListener("click", function() {
-    let today = new Date();
-    //현재 시간 확인
-    console.log(today);
-    console.log(dateFormat(today));
-
-    var todayDate = dateFormat(today).split(' ')[0];
-    var nowTime = dateFormat(today).split(' ')[1];
-
-    console.log(dateFormat(today).split(' ')[0]);
-    console.log(dateFormat(today).split(' ')[1]);
-
-    var bookingIdx = $('#bookingIdx').val();
-    var storeIdx2 = $('#storeIdx').val();
-    var bookingIdx2 = $('#bookingIdx2').val();
-    console.log(todayDate + ' ' + nowTime);
-    console.log(bookingIdx);
-    $.ajax({
-      url: "/pay/timeCheck",
-      type: "POST",
-      data: { bookingIdx: bookingIdx,
-        nowDate: todayDate,
-        nowTime : nowTime },
-      contextType: "application/json; charset=UTF-8",
-      dataType : "json",
-      success: function(data){
-        console.log('통신결과 : ' + data.status);
-        if (data.a >= 2 ) {
-
-          document.getElementById("cancelForm").submit();
-        } else {
-          Swal.fire({
-            icon: 'error',
-            title: '결제 취소 불가',
-            text: '예약시간이 도래하여 결제 취소가 불가능합니다.'
-          })
-          $('#cancelModal').modal('hide');
-        }
-      },
-      error: function(error){
-        console.log(error.responseText);
-        alert("신규등록 error");  }
-    });
-    return false;
-  });
-
-
-</script>
-<script>
     document.getElementById("confirmCancelBtn").addEventListener("click", function() {
-        document.getElementById("cancelForm").submit();
+        let today = new Date();
+        //현재 시간 확인
+        console.log(today);
+        console.log(dateFormat(today));
+
+        var todayDate = dateFormat(today).split(' ')[0];
+        var nowTime = dateFormat(today).split(' ')[1];
+
+        console.log(dateFormat(today).split(' ')[0]);
+        console.log(dateFormat(today).split(' ')[1]);
+
+        var bookingIdx = $('#bookingIdx').val();
+        var storeIdx2 = $('#storeIdx').val();
+        var bookingIdx2 = $('#bookingIdx2').val();
+        console.log(todayDate + ' ' + nowTime);
+        console.log(bookingIdx);
+        $.ajax({
+            url: "/pay/timeCheck",
+            type: "POST",
+            data: { bookingIdx: bookingIdx,
+                nowDate: todayDate,
+                nowTime : nowTime },
+            contextType: "application/json; charset=UTF-8",
+            dataType : "json",
+            success: function(data){
+                console.log('통신결과 : ' + data.status);
+                if (data.a >= 2 ) {
+
+                    document.getElementById("cancelForm").submit();
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '결제 취소 불가',
+                        text: '예약시간이 도래하여 결제 취소가 불가능합니다.'
+                    })
+                    $('#cancelModal').modal('hide');
+                }
+            },
+            error: function(error){
+                console.log(error.responseText);
+                alert("신규등록 error");  }
+        });
+        return false;
     });
+
+
 </script>
+<!--<script>-->
+<!--    document.getElementById("confirmCancelBtn").addEventListener("click", function() {-->
+<!--        document.getElementById("cancelForm").submit();-->
+<!--    });-->
+<!--</script>-->
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 

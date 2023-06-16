@@ -150,7 +150,7 @@ public class PayController {
     public Map<String, Integer> timeCheck(Model model, HttpSession session, HttpServletRequest request,
                                           @RequestParam("bookingIdx") int bookingIdx,
                                           @RequestParam("nowDate") String nowDate,
-                                          @RequestParam("nowTime") String nowTime) {
+                                          @RequestParam("nowTime") String nowTime){
         Map<String, Integer> resultMap = new HashMap<>();
         BookingVO bookingVO = bookingService.bookingToPayShow(bookingIdx);
         System.out.println("bookingVO = " + bookingVO);
@@ -173,35 +173,51 @@ public class PayController {
                 System.out.println("str3[2] = " + str3[2]);
                 if (Integer.parseInt(str2[0]) == Integer.parseInt(str3[0]) &&
                         Integer.parseInt(str2[1]) == Integer.parseInt(str3[1]) &&
-                        Integer.parseInt(str2[2]) == Integer.parseInt(str3[2])) {
+                        Integer.parseInt(str2[2]) == Integer.parseInt(str3[2]) ) {
                     timeResult++;
                 } else if (Integer.parseInt(str2[0]) >= Integer.parseInt(str3[0]) &&
                         Integer.parseInt(str2[1]) >= Integer.parseInt(str3[1]) &&
-                        Integer.parseInt(str2[2]) > Integer.parseInt(str3[2])) {
+                        Integer.parseInt(str2[2]) > Integer.parseInt(str3[2]) ) {
                     timeResult = 2;
 
                 }
             }
+            if (i == 1) {
+                String[] str4 = bookingT[i].split(":");
+                String[] str5 = nowTime.split(":");
 
+                System.out.println("str4[0] = " + str4[0]);
+                System.out.println("str5[0] = " + str5[0]);
+
+                System.out.println("str4[1] = " + str4[1]);
+                System.out.println("str5[1] = " + str5[1]);
+
+                System.out.println("str4[2] = " + str4[2]);
+                System.out.println("str5[2] = " + str5[2]);
+                if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) ||
+                        (Integer.parseInt(str4[0])-1 == Integer.parseInt(str5[0]) && Integer.parseInt(str4[1]) >= Integer.parseInt(str5[1]) ) ) {
+                    timeResult++;
+                }
+            }
         }
-
         resultMap.put("a", timeResult);
         resultMap.put("bookingIdx", bookingIdx);
         model.addAttribute("bookingIdx", bookingIdx);
         return  resultMap;
     }
 
+
     // 카카오페이
     @PostMapping("/refund")
     public String refund(Model model, String tid, int bookingIdx, RedirectAttributes rttr) {
-
+        System.out.println("bookingIdx = " + bookingIdx);
         log.info("controller refund............................................");
         bookingService.bookingPayCancel(bookingIdx);
 
 
         KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel(tid);
-
         log.info("kakaoCancelResponse : " + kakaoCancelResponse);
+
 
         model.addAttribute("kakaoRefund", kakaoCancelResponse);
 
