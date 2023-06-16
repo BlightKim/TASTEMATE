@@ -23,4 +23,12 @@ public interface PayMapper {
     InicisVO get_inicis(int userIdx);
 
     int cancel_inicis(String merchant_uid);
+
+    int updateStatus(int inicisIdx);
+
+    int updateStatus2(int kakaoApprovalIdx);
+
+    InicisVO findInicis(int userIdx);
+
+    KakaoPayApprovalVO findKakao(int userIdx);
 }

@@ -9,10 +9,10 @@ import com.tastemate.domain.paging.PageDTO;
 import com.tastemate.service.BookingService;
 import com.tastemate.service.BookmarkService;
 import com.tastemate.mapper.MemberMapper;
-import com.tastemate.service.StoreService;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,9 +39,14 @@ public class StoreController {
 
     @Autowired
     private MemberMapper memberMapper;
-    
+
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private PaymentService paymentService;
+
+
 
     @GetMapping("/list")
     public void get(Model model
@@ -173,7 +178,7 @@ public class StoreController {
                             @RequestParam("bookingIdx") int bookingIdx,
                             @RequestParam("nowDate") String nowDate,
                             @RequestParam("nowTime") String nowTime){
-        
+
         BookingVO bookingVO = bookingService.bookingToPayShow(bookingIdx);
         System.out.println("bookingVO = " + bookingVO);
         String bookingTime = bookingVO.getBookingTime();
@@ -234,11 +239,17 @@ public class StoreController {
     }
 
     @GetMapping("/starComment")
-    public void starComment(String storeIdx, Model model, int bookingIdx){
+    public void starComment(String storeIdx, String inicisIdx,
+                            String kakaoApprovalIdx, Model model, int bookingIdx){
 
         log.info("storeIdx : "+ storeIdx);
+        log.info("inicisIdx : "+ inicisIdx);
+        log.info("kakaoApprovalIdx : "+ kakaoApprovalIdx);
+
         model.addAttribute("storeIdx",storeIdx);
+        model.addAttribute("inicisIdx",inicisIdx);
         model.addAttribute("bookingIdx", bookingIdx);
+        model.addAttribute("kakaoApprovalIdx",kakaoApprovalIdx);
 
     }
 
@@ -251,17 +262,17 @@ public class StoreController {
 
         // 별점 완료하면 바뀔 것들 (결제 / 예약 / roomIdx)
         // 결제 status 2로 변경
-//        if (starVO.getInicisIdx() != 0){
-//            //inicisIdx 이용해서 INICIS 테이블 status 변경하기
-//            int inicisUpdate = paymentService.updateStatus(starVO.getInicisIdx());
-//            log.info("inicis update : " + inicisUpdate);
-//
-//        } else if (starVO.getKakaoApprovalIdx() != 0){
-//            //getKakaoApprovalIdx 이용해서 KAKAOPAYAPPROVAL status 변경하기
-//            int kakaoUpdate = paymentService.updateStatus2(starVO.getKakaoApprovalIdx());
-//            log.info("kakao update : " + kakaoUpdate);
-//
-//        }
+        if (starVO.getInicisIdx() != 0){
+            //inicisIdx 이용해서 INICIS 테이블 status 변경하기
+            int inicisUpdate = paymentService.updateStatus(starVO.getInicisIdx());
+            log.info("inicis update : " + inicisUpdate);
+
+        } else if (starVO.getKakaoApprovalIdx() != 0){
+            //getKakaoApprovalIdx 이용해서 KAKAOPAYAPPROVAL status 변경하기
+            int kakaoUpdate = paymentService.updateStatus2(starVO.getKakaoApprovalIdx());
+            log.info("kakao update : " + kakaoUpdate);
+
+        }
 
 
         // 예약 status 변경
@@ -278,6 +289,48 @@ public class StoreController {
     public void main(Model model){
         StoreVO storeVO = service.getStoreHighestStar();
         model.addAttribute("storeVO", storeVO);
+    }
+
+
+
+    @RequestMapping(value = "/payCheckAjax" , produces = "application/json; charset=UTF-8", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Integer> payCheckAjax(HttpSession session, String storeIdx){
+
+        log.info("payCheckAjax Controller 도착");
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("payCheckAjax memberVO 확인 : " + memberVO);
+        log.info("payCheckAjax storeIdx 확인 : " + storeIdx);
+
+
+        Map<String, Integer> resultMap = new HashMap<>();
+
+        resultMap.put("userIdx", memberVO.getUserIdx());
+        resultMap.put("storeIdx", Integer.parseInt(storeIdx));
+
+        log.info("payCheckAjax resultMap 확인 : " + resultMap);
+
+        // 확인
+        InicisVO inicisVO = paymentService.findInicis(memberVO.getUserIdx());
+        KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.findKakao(memberVO.getUserIdx());
+
+        log.info("inicisVO 확인 : " + inicisVO);
+        log.info("kakaoPayApprovalVO 확인 : " + kakaoPayApprovalVO);
+
+        if (inicisVO != null){
+            log.info("inicisSuccess 값 확인");
+            resultMap.put("inicis", 1);
+
+            return resultMap;
+
+        } else if (kakaoPayApprovalVO != null){
+            log.info("mykakaoPaySuccess 값 확인");
+            resultMap.put("kakao", 1);
+            return resultMap;
+        }
+
+
+        return resultMap;
     }
 
 

@@ -42,4 +42,13 @@ public class KakaoPayApprovalVO {
 
     private List<BookingVO> bookingVO;
 
+
+    /*booking join*/
+
+    private List<BookingVO> bookingVO;
+
+
+
+
+
 }

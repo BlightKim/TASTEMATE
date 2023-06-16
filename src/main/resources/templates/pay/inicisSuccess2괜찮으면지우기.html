@@ -62,7 +62,7 @@
         border-radius: 7px;
     }
 </style>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 </head>
 <body>
 
@@ -100,7 +100,7 @@
             <div class="row">
                 <div class="col text-left">예약일 :</div>
                 <div class="col text-right">
-                    [[${inicisVO.bookingVO.bookingTime}]]
+                   [[${inicisVO.bookingVO.bookingTime}]]
                 </div>
             </div>
 
@@ -133,12 +133,19 @@
 
 
 
-            <button type="button" class="btn btn-warning purple3" onclick="starInsert()"
-                    style="background-color: #9C91B3; border: none;">별점주러가기
-            </button>
 
 
+            <a class="btn btn-warning purple3"
+               th:href="@{/store/starComment(storeIdx=${inicisVO.storeIdx})}"
+               style="background-color: #9C91B3; border: none;">별점주러가기
+            </a>
+
+
+<!--
+            <button type="button" onClick="cancelPay()" class="iamport kakaoBtn2">결제 취소</button>
+-->
             <button type="button" onClick="openCancelModal()" class="iamport kakaoBtn2">결제 취소</button>
+
 
             <!-- 결제 취소 확인 모달 -->
             <div id="cancelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
@@ -161,24 +168,13 @@
                 </div>
             </div>
 
-            <input id="bookingIdx" type="hidden" th:value="${inicisVO.getBookingIdx()}">
-            <input id="storeIdx" type="hidden" th:value="${inicisVO.getStoreIdx()}">
-            <input id="inicisIdx" type="hidden" th:value="${inicisVO.getInicisIdx()}">
 
-
-
-
-
-
-
-
-<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         </form>
 
-        <br>
+        <br>(예약 시간 후로 시간제한도 걸어야해)
     </div>
 </div>
-
+<h6>[[${inicisVO}]]</h6>
 
 
 
@@ -188,25 +184,9 @@
     function openCancelModal() {
         $('#cancelModal').modal('show');
     }
+
+
     function cancelPay() {
-        var msg = 'complete'
-
-        let today = new Date();
-        //현재 시간 확인
-        console.log(today);
-        console.log(dateFormat(today));
-
-        var todayDate2 = dateFormat(today).split(' ')[0];
-        var nowTime2 = dateFormat(today).split(' ')[1];
-
-        console.log(dateFormat(today).split(' ')[0]);
-        console.log(dateFormat(today).split(' ')[1]);
-
-        var bookingIdx2 = $('#bookingIdx').val();
-        var storeIdx2 = $('#storeIdx').val();
-        console.log(todayDate2 + ' ' + nowTime2);
-        console.log(bookingIdx2);
-
         $.ajax({
             url: "/pay/inicisCancel",
             type: "POST",
@@ -216,10 +196,7 @@
                 "cancel_request_amount": [[${inicisVO.amount}]], // 환불금액
                 "reason": "테스트 결제 환불", // 환불사유
                 "token" : '[[${inicisVO.token}]]',
-                "imp_uid" : '[[${inicisVO.imp_uid}]]',
-                "nowDate" : dateFormat(today).split(' ')[0],
-                "nowTime" : dateFormat(today).split(' ')[1],
-                "bookingIdx" : $('#bookingIdx').val()
+                "imp_uid" : '[[${inicisVO.imp_uid}]]'
             }),
             /* dataType: "json",*/
             dataType: "json",
@@ -228,16 +205,7 @@
                 console.log("inicis 환불 성공!");
                 console.log(data.a);
                 if ( data.a == "환불성공") {
-                    window.location.href = '/pay/payNothing?message=' + msg;
-                    // location.href='/pay/payNothing?message=' + msg;
-                }
-                if (data.a == "시간지남") {
-                    Swal.fire({
-                        icon: 'error',
-                        title: '결제 취소 불가',
-                        text: '예약시간이 도래하여 결제 취소가 불가능합니다.'
-                    })
-                    $('#cancelModal').modal('hide');
+                    location.href='/pay/payNothing?message=complete';
                 }
             }, error: function(xhr, status, error) {
                 console.log("에러 발생");
@@ -246,76 +214,6 @@
         });
         return false;
     }
-</script>
-
-
-<script>
-    //접속시 현재 시간을 yyyy-mm-dd hh:mi:ss 형태로 뽑아주는 js 함수
-    function dateFormat(date) {
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
-
-        month = month >= 10 ? month : '0' + month;
-        day = day >= 10 ? day : '0' + day;
-        hour = hour >= 10 ? hour : '0' + hour;
-        minute = minute >= 10 ? minute : '0' + minute;
-        second = second >= 10 ? second : '0' + second;
-
-        return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
-    }
-    function starInsert() {
-        //카카오 결제 후 별점 입력하러 가기 시간 제한 용도의 ajax
-
-        let today = new Date();
-        //현재 시간 확인
-        console.log(today);
-        console.log(dateFormat(today));
-
-        var todayDate = dateFormat(today).split(' ')[0];
-        var nowTime = dateFormat(today).split(' ')[1];
-
-        console.log(dateFormat(today).split(' ')[0]);
-        console.log(dateFormat(today).split(' ')[1]);
-
-        var bookingIdx = $('#bookingIdx').val();
-        var storeIdx = $('#storeIdx').val();
-        var inicisIdx = $('#inicisIdx').val();
-        console.log(todayDate + ' ' + nowTime);
-        console.log(bookingIdx);
-
-
-        $.ajax({
-          url: "/store/starComment",
-          type: "GET",
-          data: { bookingIdx: bookingIdx,
-            nowDate: todayDate,
-            nowTime : nowTime },
-          contextType: "application/json; charset=UTF-8",
-          dataType : "json",
-            async: false,
-          success: function(data){
-            console.log('통신결과 : ' + data.status);
-            if (data.result >= 2 ) {
-                location.href="/store/starComment?storeIdx=" + storeIdx
-                    + '&bookingIdx=' + bookingIdx + "&inicisIdx=" + inicisIdx;
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: '별점 남기기 불가',
-                    text: '예약시간 이전이므로 별점 남기기가 불가능합니다.'
-                })
-            }
-          },
-          error: function(error){
-            console.log(error.responseText);
-            alert("신규등록 error");  }
-        });
-        return false;
-    }
-
 </script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>

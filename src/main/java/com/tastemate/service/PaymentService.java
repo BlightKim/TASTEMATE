@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.tastemate.domain.InicisRefundVO;
 import com.tastemate.domain.InicisVO;
+import com.tastemate.domain.KakaoPayApprovalVO;
 import com.tastemate.domain.TokenVO;
 import com.tastemate.mapper.PayMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,6 @@ public class PaymentService {
 
     @Autowired
     private PayMapper payMapper;
-
 
     // IAMPORT API 인증 정보 설정
     String impKey = "3085212137161101";
@@ -116,7 +116,6 @@ public class PaymentService {
 
                 br.close();
                 String paymentStatus = response.get("status").getAsString();
-
                 return "iamport update 완료";
             }
         } catch (Exception e) {
@@ -177,6 +176,26 @@ public class PaymentService {
     public int cancel_inicis(String merchant_uid) {
 
         return payMapper.cancel_inicis(merchant_uid);
+    }
+
+    public int updateStatus(int inicisIdx) {
+
+        return payMapper.updateStatus(inicisIdx);
+    }
+
+    public int updateStatus2(int kakaoApprovalIdx) {
+
+        return payMapper.updateStatus2(kakaoApprovalIdx);
+    }
+
+    public InicisVO findInicis(int userIdx) {
+
+        return payMapper.findInicis(userIdx);
+    }
+
+    public KakaoPayApprovalVO findKakao(int userIdx) {
+
+        return payMapper.findKakao(userIdx);
     }
 }
 

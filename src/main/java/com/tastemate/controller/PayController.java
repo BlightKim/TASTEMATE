@@ -39,10 +39,34 @@ public class PayController {
    private BookingService bookingService;
 
 
+    @GetMapping("/myPay")
+    public String myPay(HttpSession session){
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("세션 memberVO 확인!"+memberVO);
 
-    @GetMapping("/kakaoPay")
-    public void kakaoPayGet() {
-        log.info("kakaoPay get............................................");
+
+        // 2개의 결제테이블에서 userIdx와 status가 0인것을 찾기
+        // null값이 아니면 그거에따라 리턴값을 주소로 주자
+        //둘다 null이면 payNothing으로 가자
+
+        InicisVO inicisVO = paymentService.findInicis(memberVO.getUserIdx());
+        KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.findKakao(memberVO.getUserIdx());
+
+        log.info("inicisVO 확인 : " + inicisVO);
+        log.info("kakaoPayApprovalVO 확인 : " + kakaoPayApprovalVO);
+
+        if (inicisVO != null){
+            log.info("redirect:/pay/inicisSuccess");
+            return "redirect:/pay/inicisSuccess";
+        } else if (kakaoPayApprovalVO != null){
+            log.info("redirect:/pay/mykakaoPaySuccess");
+            return "redirect:/pay/mykakaoPaySuccess";
+        }
+
+
+
+
+        return "redirect:/pay/payNothing";
     }
 
     //카카오페이 결제 요청 (ajax)
@@ -50,14 +74,14 @@ public class PayController {
     @ResponseBody
     public KakaoPayReadyVO kakaoPay(int total_amount, String item_name,
                                     Model model, HttpServletRequest request
-            , int userIdx, int storeIdx, int bookingIdx
-    ) {
+                                    , int userIdx, int storeIdx, int bookingIdx
+                                    ) {
         log.info("kakaoPay post............................................");
         log.info("total_amount : " + total_amount);
 
 
         KakaoPayReadyVO readyResponse = kakaopay.kakaoPayReady(total_amount, item_name
-                ,userIdx, storeIdx, bookingIdx);
+                                        ,userIdx, storeIdx, bookingIdx);
 
 
         model.addAttribute("tid", readyResponse.getTid());
@@ -157,31 +181,6 @@ public class PayController {
                         Integer.parseInt(str2[2]) > Integer.parseInt(str3[2]) ) {
                     timeResult = 2;
 
-                }
-            }
-            if (i == 1) {
-                String[] str4 = bookingT[i].split(":");
-                String[] str5 = nowTime.split(":");
-
-                System.out.println("str4[0] = " + str4[0]);
-                System.out.println("str5[0] = " + str5[0]);
-
-                System.out.println("str4[1] = " + str4[1]);
-                System.out.println("str5[1] = " + str5[1]);
-
-                System.out.println("str4[2] = " + str4[2]);
-                System.out.println("str5[2] = " + str5[2]);
-                if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) ||
-                        (Integer.parseInt(str4[0])-1 == Integer.parseInt(str5[0]) && Integer.parseInt(str4[1]) >= Integer.parseInt(str5[1]) ) ) {
-                    timeResult++;
-                }
-            }
-        }
-        resultMap.put("a", timeResult);
-        resultMap.put("bookingIdx", bookingIdx);
-        model.addAttribute("bookingIdx", bookingIdx);
-        return  resultMap;
-    }
 
     // 카카오페이
     @PostMapping("/refund")
@@ -192,8 +191,8 @@ public class PayController {
 
 
         KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel(tid);
-        log.info("kakaoCancelResponse : " + kakaoCancelResponse);
 
+        log.info("kakaoCancelResponse : " + kakaoCancelResponse);
 
         model.addAttribute("kakaoRefund", kakaoCancelResponse);
 
@@ -227,8 +226,6 @@ public class PayController {
         //결제상태 iamport에 update
         String iamportUpdate = paymentService.iamportUpdate(inicisVO, token);
         log.info("iamportUpdate : " + iamportUpdate);
-
-
 
         return result;
     }
@@ -303,20 +300,20 @@ public class PayController {
 
             paymentService.inicisRefund(inicisRefundVO);
 
-            int result = paymentService.cancel_inicis(inicisRefundVO.getMerchant_uid());
 
+            int result = paymentService.cancel_inicis(inicisRefundVO.getMerchant_uid());
             log.info("inicisCancel result : " + result);
 
+
             log.info("controller 환불 완료!!!");
+            Map<String, String> resultMap = new HashMap<>();
             resultMap.put("a", "환불성공");
-            bookingService.bookingPayCancel(bookingIdx);
 
             String msg = "complete";
             rttr.addFlashAttribute("message", msg);
         } else {
             resultMap.put("a", "시간지남");
         }
-
 
         return resultMap;
     }

@@ -85,6 +85,21 @@
         where tid = #{tid}
     </update>
 
+    <update id="updateStatus2">
+        update KAKAOPAYAPPROVAL
+        set status = 2
+        where KAKAO_APPROVAL_IDX = #{kakaoApprovalIdx}
+    </update>
+
+    <select id="findKakao" resultType="KakaoPayApprovalVO">
+        select *
+        from KAKAOPAYAPPROVAL
+        where user_idx = #{userIdx}
+        and status = 0
+    </select>
+
+
+
 
     <!-- 여기부터 이니시스 -->
     <insert id="insert_inicis">
@@ -108,6 +123,24 @@
         set status = 1
         where merchant_uid = #{merchant_uid}
     </update>
+
+    <update id="updateStatus">
+        update INICIS
+        set status = 2
+        where inicis_idx = #{inicisIdx}
+    </update>
+
+    <select id="findInicis" resultType="InicisVO">
+        select *
+        from INICIS
+        where user_idx = #{userIdx}
+        and status = 0
+    </select>
+
+
+
+
+
 
 
 
