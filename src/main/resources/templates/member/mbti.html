@@ -2,14 +2,19 @@
 <html lagn="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<th:block th:replace="header_footer/header :: headerFragment"></th:block>
 <head>
     <meta charset="UTF-8">
+
+    <!-- 구글 글씨체 적용-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+
     <title>MBTI</title>
     <style>
         /* CSS 스타일은 여기에 작성합니다. */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Noto Serif KR', serif;
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
@@ -63,6 +68,12 @@
             width: 100%;
         }
 
+        .header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
 
         .content {
             max-width: 960px;
@@ -109,7 +120,14 @@
             margin-top: 20px;
         }
 
-
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
 
         .contents .test_list {
             width: 100%;
@@ -165,7 +183,7 @@
             width: 110px;
             height: 50px;
             margin: 0 auto;
-            background: url("tastemate.jpeg") no-repeat;
+            background: url("/img/tastemate.jpeg") no-repeat;
             line-height: 99em;
         }
 
@@ -183,7 +201,7 @@
         }
 
         .contents .test_list .r4 a {
-            padding-top: 26px;
+            padding-top: 24px;
             box-sizing: border-box;
             font-size: 26px;
             text-decoration: none;
@@ -194,7 +212,7 @@
 <body>
 <form action="" id="userMbti" style="height: 850px" method="post">
     <div class="contents agr q01">
-        <img id="tastemate" th:src="@{/img/tastemate.jpg}" style="width: 150px; height: 150px;"/>
+        <img id="tastemate" th:src="@{/img/tastemate.jpeg}" style="width: 150px; height: 150px;"/>
         <strong>당신의 mbti는
             <a href="javascript:void(window.open('https://www.16personalities.com/ko/%EB%AC%B4%EB%A3%8C-%EC%84%B1%EA%B2%A9-%EC%9C%A0%ED%98%95-%EA%B2%80%EC%82%AC','wow','width=1000, height=1000'))">
                 <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor"
@@ -290,7 +308,7 @@
     </div>
 </form>
 
-<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
 
 </body>
 <script>
