@@ -254,18 +254,6 @@ public class ManageController {
     //@RequestMapping("maDeleteMenu")
     //@GetMapping("maDeleteMenu")
     @PostMapping("maDeleteMenu")
-//    public String maDeleteMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO, RedirectAttributes redirectAttributes) {
-//        int result = service.maDeleteMenu(manageMenuVO);
-//        log.info(String.valueOf(result));
-//        log.info(String.valueOf(manageMenuVO));
-//
-//        String wow = "complete";
-//        redirectAttributes.addAttribute("message", wow);
-//
-//        return "redirect:/manage/storeRegOkListMenu";
-////        storeMenuView(model, manageMenuVO, manageStoreVO);
-////        return "/manage/storeMenuView";
-//    }
     public String maDeleteMenu(ManageMenuVO manageMenuVO, RedirectAttributes redirectAttributes) {
         int result = service.maDeleteMenu(manageMenuVO);
 

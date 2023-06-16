@@ -118,6 +118,11 @@
         SELECT * FROM MEMBER WHERE USER_CLASS = #{userClass}
     </select>
 
+    <!-- 수강생 인원 조회 -->
+    <select id="classMemberCount" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
+        SELECT COUNT(*) FROM MEMBER WHERE USER_CLASS = #{userClass}
+    </select>
+
 
 
     <!-- 수강생 정보 조회 -->

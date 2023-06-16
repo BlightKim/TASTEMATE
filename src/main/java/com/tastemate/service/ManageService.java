@@ -81,14 +81,6 @@ public class ManageService {
     //맛집 삭제(관리자)
     public int deleteManageStore(ManageStoreVO manageStoreVO) {
 
-//        ManageStoreVO deleteInfo = mapper.manageStoreView(manageStoreVO);
-//
-//        String filePath = "C:/upload/" + deleteInfo.getFilename();
-//        File file = new File(filePath);
-//
-//        if (file.exists() && !manageStoreVO.getFilename().equals("tastemate.jpg")){
-//            file.delete();
-//        }
         int result = mapper.deleteManageStore(manageStoreVO);
         return result;
     }
@@ -257,30 +249,6 @@ public class ManageService {
     public int deleteUserInfo(ManageMemberVO memberVO) {
         int result = mapper.deleteUserInfo(memberVO);
         return result;
-    }
-
-
-//    @Autowired
-//    HttpServletResponse response;
-//    @Autowired
-//    HttpServletRequest request;
-
-    //입실 체크
-    @Scheduled(cron = "* 30 18 ? * MON-FRI")
-    public void inCheck() {
-//        try {
-//            ServletWebRequest servletContainer = (ServletWebRequest) RequestContextHolder.getRequestAttributes();
-//
-//
-//            HttpServletResponse response = servletContainer.getResponse();
-//            response.setContentType("text/html; charset=utf-8");
-//            PrintWriter w = response.getWriter();
-//            w.write("<script>alert('강의시간 입니다.\n입실 체크 해주세요!');</script>");
-//            w.flush();
-//            w.close();
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
 }
