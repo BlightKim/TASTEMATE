@@ -145,6 +145,7 @@
                              <!--<input class="form-control" name="userIdx" type="text" th:value="${session.vo.getUserName()}">-->
                              <input class="form-control" placeholder="익명입니다!" readonly="readonly">
                              <input type="hidden" name="userIdx" th:value="${session.vo.getUserIdx()}">
+                             <input type="hidden" id="bookingIdx" name= "bookingIdx" th:value="${bookingIdx}">
                          </div>
                      </div>
 
@@ -152,7 +153,6 @@
 
                  </div>
              </div>
-
             <button class="btn btn-primary">제출하기</button><br>
 
             <!-- 조건 :: 결제 완료 후, 예약시간 지나면 별점 줄 수 있게 storeIDX 값도 전달필요-->

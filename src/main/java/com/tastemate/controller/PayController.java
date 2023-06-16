@@ -171,25 +171,29 @@ public class PayController {
 
                 System.out.println("str4[2] = " + str4[2]);
                 System.out.println("str5[2] = " + str5[2]);
-                if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) &&
+                if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) ||
                         (Integer.parseInt(str4[0])-1 == Integer.parseInt(str5[0]) && Integer.parseInt(str4[1]) >= Integer.parseInt(str5[1]) ) ) {
                     timeResult++;
                 }
             }
         }
         resultMap.put("a", timeResult);
+        resultMap.put("bookingIdx", bookingIdx);
+        model.addAttribute("bookingIdx", bookingIdx);
         return  resultMap;
     }
 
     // 카카오페이
     @PostMapping("/refund")
-    public String refund(Model model, String tid, RedirectAttributes rttr) {
+    public String refund(Model model, String tid, int bookingIdx, RedirectAttributes rttr) {
 
         log.info("controller refund............................................");
+        bookingService.bookingPayCancel(bookingIdx);
+
 
         KakaoCancelResponse kakaoCancelResponse = kakaopay.kakaoCancel(tid);
-
         log.info("kakaoCancelResponse : " + kakaoCancelResponse);
+
 
         model.addAttribute("kakaoRefund", kakaoCancelResponse);
 
@@ -283,7 +287,7 @@ public class PayController {
 
                 System.out.println("str4[2] = " + str4[2]);
                 System.out.println("str5[2] = " + str5[2]);
-                    if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) &&
+                    if ( Integer.parseInt(str4[0])-1 > Integer.parseInt(str5[0]) ||
                         (Integer.parseInt(str4[0])-1 == Integer.parseInt(str5[0]) && Integer.parseInt(str4[1]) >= Integer.parseInt(str5[1]) ) ) {
                         timeResult++;
                     }
@@ -305,6 +309,7 @@ public class PayController {
 
             log.info("controller 환불 완료!!!");
             resultMap.put("a", "환불성공");
+            bookingService.bookingPayCancel(bookingIdx);
 
             String msg = "complete";
             rttr.addFlashAttribute("message", msg);

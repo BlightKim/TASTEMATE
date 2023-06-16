@@ -305,7 +305,7 @@
           success: function(data){
             console.log('통신결과 : ' + data.status);
             if (data.result >= 2 ) {
-                location.href="/store/starComment?storeIdx=" + storeIdx +'';
+                location.href="/store/starComment?storeIdx=" + storeIdx + '&bookingIdx=' + bookingIdx;
             } else {
                 Swal.fire({
                     icon: 'error',

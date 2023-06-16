@@ -127,6 +127,7 @@
         <div class="col text-left">결제금액 :</div>
         <div class="col text-right">
           <div data-th-text="${#numbers.formatInteger(info.amount2, 3, 'COMMA') + '원'}"></div>
+          <input id="bookingIdx" name="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
         </div>
       </div>
 
@@ -134,11 +135,10 @@
         <button type="button" class="btn btn-warning purple3 mx-2" onclick="starInsert()"
                 style="background-color: #9C91B3; border: none;">별점주러가기
         </button>
-        <input id="bookingIdx" type="hidden" th:value="${info.getBookingIdx()}">
         <input id="storeIdx" type="hidden" th:value="${info.getStoreIdx()}">
 
         <!-- HTML 코드 -->
-        <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid})}">
+        <form id="cancelForm" method="post" th:action="@{/pay/refund(tid=${info.tid}, bookingIdx=${info.getBookingIdx()})}">
           <button class="kakaoBtn2" type="button" data-toggle="modal" data-target="#cancelModal">결제 취소</button>
         </form>
 
@@ -158,6 +158,7 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                 <button type="button" class="btn btn-primary" id="confirmCancelBtn">확인</button>
+                <input id="bookingIdx2" name="bookingIdx2" type="hidden" th:value="${info.getBookingIdx()}">
               </div>
             </div>
           </div>
@@ -219,7 +220,7 @@
         success: function(data){
           console.log('통신결과 : ' + data.status);
           if (data.result >= 2 ) {
-            location.href="/store/starComment?storeIdx=" + storeIdx;
+            location.href="/store/starComment?storeIdx=" + storeIdx + '&bookingIdx=' + bookingIdx;
           } else {
             Swal.fire({
               icon: 'error',
@@ -251,6 +252,7 @@
 
     var bookingIdx = $('#bookingIdx').val();
     var storeIdx2 = $('#storeIdx').val();
+    var bookingIdx2 = $('#bookingIdx2').val();
     console.log(todayDate + ' ' + nowTime);
     console.log(bookingIdx);
     $.ajax({
@@ -264,6 +266,7 @@
       success: function(data){
         console.log('통신결과 : ' + data.status);
         if (data.a >= 2 ) {
+
           document.getElementById("cancelForm").submit();
         } else {
           Swal.fire({

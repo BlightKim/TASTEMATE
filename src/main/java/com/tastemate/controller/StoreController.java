@@ -234,15 +234,16 @@ public class StoreController {
     }
 
     @GetMapping("/starComment")
-    public void starComment(String storeIdx, Model model){
+    public void starComment(String storeIdx, Model model, int bookingIdx){
 
         log.info("storeIdx : "+ storeIdx);
         model.addAttribute("storeIdx",storeIdx);
+        model.addAttribute("bookingIdx", bookingIdx);
 
     }
 
     @PostMapping("/starComment")
-    public String starCommentStarVO(StarVO starVO){
+    public String starCommentStarVO(StarVO starVO, int bookingIdx){
         log.info("starVO : " + starVO);
 
         int result = service.store_starComment(starVO);
@@ -264,7 +265,7 @@ public class StoreController {
 
 
         // 예약 status 변경
-        bookingService.bookingPayAndStarComplete(2);
+        bookingService.bookingPayAndStarComplete(bookingIdx);
 
         // roomIdx 변경
 
