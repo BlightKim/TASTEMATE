@@ -91,9 +91,9 @@
 <body>
 
   <div class="text-center" id="main">
-    <div class="input-form-backgroud">
+    <div class="input-form-backgroud inputForm">
 
-      <form class="input-form" th:action="@{/store/starComment}" method="post">
+      <form class="input-form" th:action="@{/store/starComment}" method="post" id="inputForm">
 
         <h2 class="purple2 mt-4" >식사는 즐거우셨나요?</h2>
 
@@ -184,7 +184,9 @@
                   제출하시겠습니까?
               </div>
               <div class="modal-footer">
+<!--
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+-->
                   <button type="button" class="btn btn-primary" id="confirmSubmitBtn">확인</button>
               </div>
           </div>
@@ -204,6 +206,12 @@
           // 모달 확인 버튼 클릭 시 폼 제출
           $('#confirmSubmitBtn').click(function() {
               $('#inputForm').unbind('submit').submit(); // 폼 제출
+          });
+
+          // 닫기 버튼 클릭 이벤트 핸들러
+          document.querySelector("#confirmationModal .close").addEventListener("click", function () {
+              // 모달 닫기
+              $('#confirmationModal').modal('hide');
           });
       });
   </script>
