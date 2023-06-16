@@ -175,11 +175,11 @@
     <insert id="store_register" parameterType="StoreVO">
         INSERT INTO STORE (STORE_IDX, USER_IDX, STORE_NAME, CATEGORY1,
                            STORE_ADDRESS, STORE_LATI, STORE_LONGI, PHONE_NUMBER, STORE_COUNT,
-        FILENAME, DISTANCE
+        FILENAME, DISTANCE, STORE_STAT
                            )
         VALUES (store_seq.NEXTVAL, #{userIdx}, #{storeName}, #{category1},
                 #{storeAddress}, #{storeLati}, #{storeLongi}, #{phoneNumber}, 0,
-        #{filename}, #{distance}
+        #{filename}, #{distance}, 0
                 )
     </insert>
 
