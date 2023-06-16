@@ -11,6 +11,8 @@
     <title>store get</title>
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <style>
         .yellow {
             color: #FFA500;
@@ -367,11 +369,11 @@
                     console.log('payCheckAjax 성공 : ' + data.kakao);
 
                     if(data.inicis == 1){
-                        alert("inicis결제내역이 있어요!");
+                        swal('', "matching이 진행 중이에요!", 'warning');
                         return;
                     }
                     if(data.kakao == 1){
-                        alert("kakao결제내역이 있어요!");
+                        swal('', "matching이 진행 중이에요!", 'warning');
                         return;
                     }
 
