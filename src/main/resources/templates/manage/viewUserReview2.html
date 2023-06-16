@@ -80,26 +80,22 @@
         <div class="row">
 
             <div class="col-md-8 mb-3">
-                <label>코멘트</label>
-                <input type="text" name="storeComment" id="storeComment"
-                       size="70" class="form-control" th:value="${viewUserReview.storeComment}">
-
-<!--                <label>맛집 평가</label>-->
-<!--                <div>-->
-<!--                    <fieldset id="star">-->
-<!--                        <input type="radio" name="storeStar" value="5" id="rate1"><label-->
-<!--                            for="rate1" >★</label>-->
-<!--                        <input type="radio" name="storeStar" value="4" id="rate2"><label-->
-<!--                            for="rate2" >★</label>-->
-<!--                        <input type="radio" name="storeStar" value="3" id="rate3"><label-->
-<!--                            for="rate3" >★</label>-->
-<!--                        <input type="radio" name="storeStar" value="2" id="rate4"><label-->
-<!--                            for="rate4" >★</label>-->
-<!--                        <input type="radio" name="storeStar" value="1" id="rate5"><label-->
-<!--                            for="rate5" >★</label>-->
-<!--                        <input type="hidden" name="storeStar" th:value="${viewUserReview.storeStar}">-->
-<!--                    </fieldset>-->
-<!--                </div>-->
+                <label>맛집 평가</label>
+                <div>
+                    <fieldset id="star">
+                        <input type="radio" name="storeStar" value="5" id="rate1"><label
+                            for="rate1" >★</label>
+                        <input type="radio" name="storeStar" value="4" id="rate2"><label
+                            for="rate2" >★</label>
+                        <input type="radio" name="storeStar" value="3" id="rate3"><label
+                            for="rate3" >★</label>
+                        <input type="radio" name="storeStar" value="2" id="rate4"><label
+                            for="rate4" >★</label>
+                        <input type="radio" name="storeStar" value="1" id="rate5"><label
+                            for="rate5" >★</label>
+                        <input type="hidden" name="storeStar" th:value="${viewUserReview.storeStar}">
+                    </fieldset>
+                </div>
             </div>
 
             <div class="col-md-4 mb-3">
@@ -115,11 +111,11 @@
         </div>
 
 
-<!--        <label>코멘트</label>-->
-<!--        <div class="mb-3">-->
-<!--            <input type="text" name="storeComment" id="storeComment"-->
-<!--                   size="70" class="form-control" th:value="${viewUserReview.storeComment}">-->
-<!--        </div>-->
+        <label>코멘트</label>
+        <div class="mb-3">
+            <input type="text" name="storeComment" id="storeComment"
+                   size="70" class="form-control" th:value="${viewUserReview.storeComment}">
+        </div>
           <div>
               <input type="hidden" name="storeIdx" th:value="${viewUserReview.storeIdx}">
               <input type="hidden" name="starIdx" th:value="${viewUserReview.starIdx}">
@@ -136,6 +132,19 @@
 </div>
 
 
+
+<script>
+  /* 별점구현 */
+  function sendData() {
+    let firstForm = document.forms[0];
+
+    if ($("input[name='star']:checked").val() == undefined) {
+      alert("별점 선택 필수입니다!");
+      return;
+    }
+  }
+  /* 별점 끝 */
+</script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 
