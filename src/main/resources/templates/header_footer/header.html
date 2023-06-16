@@ -61,6 +61,7 @@
         <title>TasteMate</title>
         <script>
             function chatList() {
+                event.preventDefault()
                 $.ajax("/chat/getList", {
                     type: "get",
                     dataType: "json", //서버로 부터 응답받을 데이터 형식
@@ -88,7 +89,29 @@
                 });
             }
 
+            function matching(){
+                event.stopPropagation(); // 부모 요소로의 이벤트 전파 중지
+                event.preventDefault(); // 기본 동작(폼 제출) 방지
+                $.ajax("/chat/matching", {
+                    type: "post",
+                    dataType: "json",
+                    success: function (respData) {
+                        let dispHtml = "<li id='matching'>";
+                            dispHtml += "<form action='' method='post' target='popupWindow'>";
+                            dispHtml += "<input type='hidden' name='roomIdx' value='" + respData.roomIdx + "'>";
+                            dispHtml += "<button type='submit' class='dropdown-item' onclick='getRoom(event)'>" + respData.roomName + "</button>";
+                            dispHtml += "</form>";
+                            dispHtml += "</li>";
+                        $("#matching").html(dispHtml);
+                    },
+                    error: function () {
+                        console.log('>>error!')
+                    }
+                });
 
+
+
+            }
             function getRoom(event) {
                 event.preventDefault();
                 var form = event.target.closest('form');
@@ -103,31 +126,14 @@
                 form.submit();
             }
 
-            function matching(){
-                $.ajax("/chat/matching", {
-                    type: "post",
-                    dataType: "json", //서버로 부터 응답받을 데이터 형식
-                    success: function (respData) {
-                        let dispHtml = "";
-                        if (respData !== null && respData.length > 0) {
-                            $.each(respData, function (index, room) {
-                                dispHtml += "<li>";
-                                dispHtml += "<form action='' method='post' target='popupWindow'>";
-                                dispHtml += "<input type='hidden' name='roomIdx' value='" + room.roomIdx + "'>";
-                                dispHtml += "<button type='submit' class='dropdown-item' onclick='getRoom(event)'>" + room.roomName + "</button>";
-                                dispHtml += "</form>";
-                                dispHtml += "</li>";
-                            });
-                        }
-                        $("#matching").html(dispHtml);
-                    },
-                    error: function () {
-                        console.log('>>error!')
-                    }
-                });
+            var button = document.getElementById("matchingBtn");
+
+            button.addEventListener("click", function() {
+                alert('matchingBtn on')
+                button.style.display = "none";
+            });
 
 
-            }
 
         </script>
     </head>
@@ -178,17 +184,17 @@
                         <button th:if="${!(session.vo == null)}" type="button"
                                 class="btn btn-outline-dark dropdown-toggle"
                                 data-bs-toggle="dropdown" aria-expanded="false"
-                                onclick="chatList(); event.preventDefault()">
+                                onclick="chatList();">
                             채팅방
                         </button>
                         <ul class="dropdown-menu">
                             <li>
                                 <form action="/chat/matching" method="post">
-                                    <button type="submit" class="dropdown-item" style="background-color:#9C91B3" onclick="matching(); event.preventDefault()">
+                                    <button id="matchingBtn" type="submit" class="dropdown-item" style="background-color:#9C91B3" onclick="matching(event);">
                                         친구추천
                                     </button>
                                 </form>
-                            <li id="matching"></li>
+                            <li id="matching">추천 친구 없음</li>
                             <li id="chatList">ajax 채팅리스트</li>
                         </ul>
                     </div>
@@ -213,15 +219,4 @@
     </nav>
     </body>
 </div>
-
 </html>
-
-<!--<div class="dropdown">-->
-<!--    <a th:if="${session.vo != null}" class="btn btn-secondary dropdown-toggle" href="#" role="button"-->
-<!--       data-bs-toggle="dropdown" aria-expanded="false">마이페이지-->
-<!--    </a>-->
-<!--    <ul class="dropdown-menu">-->
-<!--        <li><a class="dropdown-item" href="#">Action</a></li>-->
-<!--        <li><a class="dropdown-item" href="#">Another action</a></li>-->
-<!--        <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-<!--    </ul>-->

@@ -74,10 +74,10 @@ public class ChatController {
     public ChatRoomVO matching(Model model, HttpSession session) {
         MemberVO vo1 = (MemberVO) session.getAttribute("vo");
         MemberVO vo2 = chatService.matchingUser();
-        ChatRoomVO roomName = new ChatRoomVO();
-        roomName.setRoomName(vo1.getUserName() + "," + vo2.getUserName() + " 대화방");
-        System.out.println(">>roomName : " + roomName);
-        int roomIdx = chatService.createRoom(roomName);
+        ChatRoomVO newRoomVO = new ChatRoomVO();
+        newRoomVO.setRoomName(vo1.getUserName() + "," + vo2.getUserName() + " 대화방");
+        System.out.println(">>roomName : " + newRoomVO);
+        int roomIdx = chatService.createRoom(newRoomVO);
         System.out.println(">>roomIdx : " + roomIdx);
         ChatUserVO user1 = new ChatUserVO();
         user1.setRoomIdx(roomIdx);
@@ -85,13 +85,20 @@ public class ChatController {
         chatService.insertChatRoomUser(user1);
         System.out.println("user1 : " + user1);
 
+
+
         ChatUserVO user2 = new ChatUserVO();
         user2.setRoomIdx(roomIdx);
         user2.setUserIdx(vo2.getUserIdx());
         chatService.insertChatRoomUser(user2);
         System.out.println("user2 : " + user2);
+        newRoomVO.setRoomIdx(roomIdx);
+        ChatRoomVO newRoom = chatService.getRoom(newRoomVO);
 
-        return chatService.getRoom(roomName);
+
+        System.out.println("newRoomVO : " + newRoomVO);
+        System.out.println("newRoom : " + newRoom);
+        return newRoom;
     }
 
 }

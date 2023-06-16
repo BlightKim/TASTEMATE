@@ -44,36 +44,20 @@ public class ChatService {
         }
     }
 
-    ;
-
     public List<MemberVO> getChatUserInfo(ChatRoomVO vo) {
         return mapper.getChatUserInfo(vo);
     }
 
-    /*    public HashSet<MemberVO> matchingUser(MemberVO vo) {
-
-            HashSet<MemberVO> user = mapper.matchingUser(vo);
-            HashSet<MemberVO> matchingUser = new HashSet<>();
-            for (int i = 1; i <= 3; i++) {
-                for (MemberVO matching : user) {
-                    matchingUser.add(matching);
-                    System.out.println(matching);
-                }
-
-            }
-            return matchingUser;
-        }*/
     public MemberVO matchingUser() {
         return mapper.matchingUser();
     }
 
-
-
     public void insertChatRoomUser(ChatUserVO vo) {
         mapper.insertChatRoomUser(vo);
     }
-    public int createRoom(ChatRoomVO room){
-          mapper.createRoom(room);
-          return mapper.findLatestRoomIdx();
-    };
+
+    public int createRoom(ChatRoomVO room) {
+        mapper.createRoom(room);
+        return mapper.findLatestRoomIdx();
+    }
 }

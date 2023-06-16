@@ -27,26 +27,13 @@
             border: solid black 1px;
         }
 
-        .head {
-            display: block;
-            width: 98%;
-            height: 70px;
-            /*background-color: #bec2c3;*/
-        }
 
-        h1 {
-            display: inline;
-            text-align: center;
-            padding: 10px;
-            color: #FFBB00;
-        }
-
-        #openbtnContainer {
-            display: inline;
-            float: right;
-            width: auto;
-            height: 100%;
-        }
+        /*        #openbtnContainer {
+                    display: inline;
+                    float: right;
+                    width: auto;
+                    height: 100%;
+                }*/
 
         table {
             border-collapse: collapse;
@@ -61,13 +48,17 @@
             font-size: 20px;
         }
 
-        .time {
+        .rtime {
             font-size: 10px;
+            margin-left: 5px;
         }
-
+        .ltime {
+            font-size: 10px;
+               margin-right: 5px;
+        }
         .messageContent {
             display: inline-block;
-            max-width: 70%;/* ???영어는 안됨*/
+            max-width: 70%;
             background-color: #E9DFED;
             border-radius: 30px;
             padding: 10px;
@@ -146,8 +137,8 @@
             display: block;
             padding: 10px;
             margin: 10px;
-/*            margin-top: 5px;
-            margin-bottom: 5px;*/
+            /*            margin-top: 5px;
+                        margin-bottom: 5px;*/
             /*margin-left: 20px;*/
             border: solid black 0.5px;
             border-radius: 30px 30px 30px 30px;
@@ -159,27 +150,31 @@
         }
 
 
-        .openbtn {
-            /*font-size: 20px;*/
-            /*background-color: #111;*/
-            /* color: white;*/
-            /*padding: 10px 15px;*/
-            cursor: pointer;
-            border: none;
-            width: 30px;
-            height: 100%;
+        .message {
+            margin-left: 20px;
+            text-align: left;
+
         }
 
-        #message {
-            margin-left: 30px;
+        .mymessage {
+            text-align: right;
+            margin-right: 5px;
         }
 
-        .sender {
+        .systemMessage {
+            display: block;
+            margin: auto;
+            text-align: center;
+
+        }
+
+        #sender {
             margin-left: -15px;
             margin-top: 20px;
             margin-bottom: -5px;
             display: block;
         }
+
 
         /*사이드바 내용물*/
 
@@ -275,7 +270,47 @@
 
             .sidebar a {
                 font-size: 18px;
+
             }
+        }
+
+        .head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 55px
+        }
+
+        .openbtn {
+            float: right;
+            cursor: pointer;
+            width: 30px;
+            height: 60px
+        }
+
+        #roomName {
+            color: #FFBB00;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .mymessage .rtime {
+            display: none;
+        }
+        .message .ltime {
+            display: none;
+        }
+        .mymessage .senderName {
+            display: none;
+        }
+        .mymessage .img-message{
+            display: none;
+        }
+        .mymessage .time {
+            float: right;
+        }
+        .message .time {
+            float: left;
         }
     </style>
 </head>
@@ -283,99 +318,80 @@
 <!--방 정보-->
 <div id="chatRoom">
     <div class="head">
-        <h1 th:text="${room.roomName}">대화방 이름</h1>
-        <div id="openbtnContainer">
+        <!--   <div id="openbtnContainer">
+           </div>-->
+        <h1 id="roomName" th:text="${room.roomName}">대화방 이름</h1>
 
-            <img class="openbtn" id="sidebar-toggle" onclick="openNav()"
-                 src="/img/Ham.png" alt="openbtn">
-        </div>
+        <img class="openbtn" id="sidebar-toggle" onclick="openNav()"
+             src="/img/Ham.png" alt="openbtn">
     </div>
-    <!--이전 대화 출력-->
-
     <div id="chating" class="chating">
-        <div id="message" th:each="message : ${message}">
-            <div class="sender">
-                <img class="img-message" th:src="@{'/img/' + ${message.userProfile}}" alt="userProfile">
-                <span class="senderName" th:text="${message.userName}"></span>
+        <div th:each="message : ${message}"
+             th:class="${message.userIdx eq session.vo['userIdx']} ? 'mymessage' : 'message'">
+            <div id="sender">
+                <img th:if="${message.userIdx ne session.vo['userIdx']}" class="img-message"
+                     th:src="@{'/img/' + ${message.userProfile}}" alt="userProfile">
+                <span th:if="${message.userIdx ne session.vo['userIdx']}" class="senderName"
+                      th:text="${message.userName}"></span>
             </div>
+            <span class="ltime" th:text="' ' + ${message.time}"></span>
             <span class="messageContent" th:text="${message.messageContent}"></span>
-            <span class="time" th:text="' ' + ${message.time}"></span>
+            <span class="rtime" th:text="' ' + ${message.time}"></span>
         </div>
     </div>
-    <!--메시지 입력 폼-->
-    <div id="foot">
-        <div class="sendForm">
-            <form id="insertMessage" onsubmit="event.preventDefault(); send();">
-                <input type="text" name="messageContent" id="chatting" placeholder="메세지 입력...">
-                <input type="hidden" name="roomIdx" id="roomIdx" th:value="${room.roomIdx}">
-                <input type="hidden" id="userIdx" name="userIdx" th:value="${session.vo['userIdx']}">
-                <input type="hidden" id="userName" th:value="${session.vo['userName']}">
-                <input type="hidden" id="userProfile" th:value="${session.vo['userProfile']}">
-                <input type="submit" id="sendBtn" value="보내기">
+
+</div>
+
+
+<!--메시지 입력 폼-->
+<div id="foot">
+    <div class="sendForm">
+        <form id="insertMessage" onsubmit="event.preventDefault(); send();">
+            <input type="text" name="messageContent" id="chatting" placeholder="메세지 입력...">
+            <input type="hidden" name="roomIdx" id="roomIdx" th:value="${room.roomIdx}">
+            <input type="hidden" id="userIdx" name="userIdx" th:value="${session.vo['userIdx']}">
+            <input type="hidden" id="userName" th:value="${session.vo['userName']}">
+            <input type="hidden" id="userProfile" th:value="${session.vo['userProfile']}">
+            <input type="submit" id="sendBtn" value="보내기">
+        </form>
+    </div>
+</div>
+<!--사이드바-->
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <div class="sidebar`Main`">
+        <table id="userInfoTable">
+        </table>
+    </div>
+    <div id="sidebarFoot">
+        <div class="sidebarBtn">
+            <form>
+                <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
+                <input type="hidden" name="userIdx" th:value="${session.vo['userIdx']}">
+                <button type="submit" id="shareBtn" onclick="share()" value="예약 공유">
+                    <span>예약 공유</span>
+                    <img src="/img/Share.jpg" alt="shareBtn" class="btnImg" type="submit">
+                </button>
+            </form>
+            <form>
+                <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
+                <input type="hidden" name="userIdx" th:value="${session.vo.userIdx}">
+                <input type="hidden" name="userName" th:value="${session.vo.userName}">
+                <button type="submit" id="exitBtn" value="나가기">
+                    <span>방 나가기</span>
+                    <img src="/img/Exit.png" alt="exitBtn" class="btnImg" type="submit">
+                </button>
             </form>
         </div>
     </div>
-    <!--사이드바-->
-    <div id="mySidebar" class="sidebar">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-        <div class="sidebar`Main`">
-            <table id="userInfoTable">
-<!--                <tbody>
-                <tr>
-                    <td rowspan="4">
-                        <img class="img" th:src="@{'/img/' + ${user.userProfile}}" alt="User Image">
-                    </td>
-                    <td>
-                        <p th:text="'이름 : ' + ${user.userName}">이름</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p th:text="'반 : ' + ${user.userClass}">1반</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p th:text="'선호 음식 : ' + ${user.userLikeFood}">음식</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <p th:text="'MBTI : ' + ${user.userMbti}">엠비티아이</p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>-->
-            </table>
-        </div>
-        <div id="sidebarFoot">
-            <div class="sidebarBtn">
-                <form>
-                    <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
-                    <input type="hidden" name="userIdx" th:value="${session.vo['userIdx']}">
-                    <button type="submit" id="shareBtn" onclick="share()" value="예약 공유">
-                        <span>예약 공유</span>
-                        <img src="/img/Share.jpg" alt="shareBtn" class="btnImg" type="submit">
-                    </button>
-                </form>
-                <form>
-                    <input type="hidden" name="roomIdx" th:value="${room.roomIdx}">
-                    <input type="hidden" name="userIdx" th:value="${session.vo.userIdx}">
-                    <input type="hidden" name="userName" th:value="${session.vo.userName}">
-                    <button type="submit" id="exitBtn" value="나가기">
-                        <span>방 나가기</span>
-                        <img src="/img/Exit.png" alt="exitBtn" class="btnImg" type="submit">
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 </body>
 <script type="text/javascript">
     let ws;
     wsOpen();
     let uN = $("#userName").val()
+    var uI = $("#userIdx").val();
 
     function wsOpen() {
         ws = new WebSocket("ws://" + location.host + "/chating/" + $("#roomIdx").val());
@@ -385,17 +401,35 @@
     function wsEvt() {
         ws.onopen = function () {
             //소켓이 열리면 동작
-            ws.send('<div class="message"><span class="systemMessage" style="color: #0a58ca">' + uN + '님이 입장함' + '</span></div>');
+            ws.send('<div class="systemMessage"><span style="color: #0a58ca">' + uN + '님이 입장함' + '</span></div>');
             scFo();
         };
         ws.onmessage = function (data) {
-            //메시지를 받으면 동작
             var msg = data.data;
-            if (msg != null && msg.trim() != '') {
-                $("#chating").append(msg);
+            if (msg != null && msg.trim() !== '') {
+                var messageElement = $(msg); // 메시지 요소를 jQuery 객체로 변환
+
+                var senderUIElement = messageElement.find('.senderUI');
+                var senderUI = senderUIElement.text().trim();
+
+                if (senderUI === uI) {
+                    // 내 메시지인 경우
+                    messageElement.addClass('mymessage');
+                    //alert(messageElement.text());
+                } else {
+                    // 상대 메시지인 경우
+                    messageElement.addClass('message');
+                    //alert(messageElement.text());
+                }
+
+                $("#chating").append(messageElement);
+/*                alert("uI : " + uI);
+                alert("senderUI : " + senderUI);
+                alert("messageElement.text()" + messageElement.text());*/
                 scFo();
             }
-        }
+        };
+
     }
 
     function send() {
@@ -421,10 +455,14 @@
                 ws.send(
                     '<div id="message" th:each="message : ${message}">' +
                     '<div class="sender">' + '<img class="img-message" src="/img/' + profile + '" alt="userProfile">' +
-                    '<span class="senderName">' + uN + '</span>' + '</div>' +
+                    '<span class="senderName">' + uN + '</span></div>' +
+                    '<span class="ltime">' + getFormattedDate() + '</span>'+
                     '<span class="messageContent"> ' + msg + '</span>' +
-                    '<span class="time">' + getFormattedDate() + '</span></div>'
-                )
+                    '<span class="rtime">' + getFormattedDate() + '</span>' +
+                    '<span class="senderUI" style="display: none">' + uI + '</span></div>'
+
+
+            )
                 $("#chatting").val(''); /*채팅창 초기화*/
             },
 
@@ -460,7 +498,7 @@
             var roomIdx = $("#roomIdx").val();
             var userIdx = $("#userIdx").val();
             var userName = $("#userName").val();
-            ws.send('<div class="message"><span class="systemMessage" style="color: #0a58ca">' + uN + '님이 채팅방에서 나갔습니다.' + '</span></div>');
+            ws.send('<div class="systemMessage"><span style="color: #0a58ca">' + uN + '님이 채팅방에서 나갔습니다.' + '</span></div>');
             location.href = "/chat/roomExit?roomIdx=" + roomIdx + '&userIdx=' + userIdx + '&userName=' + userName
             window.close()
         }
@@ -495,7 +533,7 @@
                     dispHtml += "<td><p>반 : " + user.userClass + "</p></td>";
                     dispHtml += "</tr>";
                     dispHtml += "<tr>";
-                    dispHtml += "<td><p>선호 음식 : " + user.userLikeFood +"</p></td>";
+                    dispHtml += "<td><p>선호 음식 : " + user.userLikeFood + "</p></td>";
                     dispHtml += "</tr>";
                     dispHtml += "<tr>";
                     dispHtml += "<td><p>MBTI : " + user.userMbti + "</p></td>";

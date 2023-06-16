@@ -18,7 +18,7 @@
     <!--YYYY-MM-DD-->
     <select id="getMessage" parameterType="ChatRoomVO" resultType="ChatMessageVO">
         SELECT CM.ROOM_IDX,
-               TO_CHAR(cm.TIME, 'HH24:MI') AS TIME,
+               TO_CHAR(cm.TIME ,'HH24:MI') AS TIME,
                 CM.MESSAGE_CONTENT,
          CM.MESSAGE_IDX, CM.USER_IDX,
          M.USER_NAME,
@@ -41,7 +41,7 @@
     <insert id="insertMessage" parameterType="ChatMessageVO">
         INSERT INTO CHAT_MESSAGE
             (ROOM_IDX, TIME, MESSAGE_CONTENT, MESSAGE_IDX, USER_IDX)
-        VALUES (#{roomIdx}, SYSDATE, #{messageContent}, CHAT_MESSAGE_SEQ.NEXTVAL, #{userIdx})
+        VALUES (#{roomIdx}, SYSDATE +9/24, #{messageContent}, CHAT_MESSAGE_SEQ.NEXTVAL, #{userIdx})
     </insert>
 
     <select id="getRoom" parameterType="ChatRoomVO" resultType="ChatRoomVO">
