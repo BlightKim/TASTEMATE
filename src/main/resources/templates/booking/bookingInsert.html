@@ -63,7 +63,10 @@
       cursor: pointer;
     }
 
-
+    select option:disabled {
+      color: lightgray;
+      text-decoration: line-through;
+    }
 
 
   </style>
@@ -106,7 +109,7 @@ oriFilename-->
             <label for="selectDate">예약일자</label>
             <div class="form-group">
 
-              <select class="form-control" id="selectDate" name="selectDate" required>
+              <select class="form-control" id="selectDate" name="selectDate" onchange="typeFn();" required>
                 <option value="" selected disabled>예약하실 일자를 선택해주세요</option>
                 <option id="date1" name="date1" value=""></option>
                 <option id="date2" name="date2" value=""></option>
@@ -121,7 +124,7 @@ oriFilename-->
           <div class="col-md-6 mb-3">
             <label for="time">예약시간</label>
             <div class="form-group">
-              <select class="form-control" id="time" name="time" required>
+              <select class="form-control" id="time" name="time" onchange="typeTime();" required>
                 <option value="" selected disabled>예약하실 시간을 선택해주세요</option>
                 <option id="time1" name="time1" value="12:30:00">12:30</option>
                 <option id="time2" name="time2" value="12:45:00">12:45</option>
@@ -156,10 +159,9 @@ oriFilename-->
             <div class="form-group">
               <select class="form-control" id="tableNo" name="tableNo" required>
                 <option value="" selected disabled>번호를 선택해주세요</option>
-
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <option id="table1" value="1">1</option>
+                <option id="table2" value="2">2</option>
+                <option id="table3" value="3">3</option>
               </select>
             </div>
           </div>
@@ -198,7 +200,7 @@ oriFilename-->
     var date = new Date(); // 오늘 대입
     var nowWeek = date.getDay(); // 현재 요일 (0~6)
 
-    document.write(nowWeek);
+    // document.write(nowWeek);
     if (nowWeek == 6) {
       date.setDate(date.getDate() + 1); // 오늘이 토요일이면 1일 추가
     }
@@ -237,7 +239,7 @@ oriFilename-->
   // document.write("평일 5일 이후 날짜 : " + (dateAdd(1) + "<br>"));
   // document.date.date1.valueOf(dateAdd(1));
 
-  if (new Date().getDay().toString().valueOf(0) || new Date().getDay().toString().valueOf(6)) {
+  if (new Date().getDay() == 0 || new Date().getDay() == 6 ) {
     for(var i = 1; i < 6; i++) {
       var dd = "date" + (i);
         document.getElementById(dd).innerHTML = dateAdd(i);
@@ -258,6 +260,175 @@ oriFilename-->
 
 </script>
 
+<!-- 예약 시간 ajax -->
+
+<script>
+  function dateFormat(date) {
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
+
+    month = month >= 10 ? month : '0' + month;
+    day = day >= 10 ? day : '0' + day;
+    hour = hour >= 10 ? hour : '0' + hour;
+    minute = minute >= 10 ? minute : '0' + minute;
+    second = second >= 10 ? second : '0' + second;
+
+    return date.getFullYear() + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+  }
+
+  $("#time").prop("disabled",true);
+
+  function typeFn() {
+    var selectedDate = $("select[name=selectDate] > option:selected").val();
+    var storeIdx2 = $("#storeIdx").val();
+    $("select option[id='time1']").prop("disabled",false);
+    $("select option[id='time2']").prop("disabled",false);
+    $("select option[id='time3']").prop("disabled",false);
+    $("select option[id='time4']").prop("disabled",false);
+    $("select option[id='time5']").prop("disabled",false);
+    $("select option[id='time6']").prop("disabled",false);
+    $("select option[id='time7']").prop("disabled",false);
+
+
+    if (selectedDate.length > 1) {
+      $("#time").prop("disabled",false);
+
+    }
+
+
+    console.log(selectedDate);
+
+    //var selectedTime = $("select[name=time] > option:selected").val();
+
+
+    $.ajax({
+      url: "/booking/insertAjax.do",
+      type: "POST",
+      data: { storeIdx: storeIdx2,
+        selectedDate: selectedDate },
+      contextType: "application/json; charset=UTF-8",
+      dataType : "json",
+      success: function(data){
+        console.log('통신결과 : ' + data.status);
+        let today = new Date();
+
+        console.log(today);
+        console.log(dateFormat(today));
+
+        var todayDate = dateFormat(today).split(' ')[0];
+        var nowTime = dateFormat(today).split(' ')[1];
+
+        console.log(dateFormat(today).split(' ')[0]);
+        console.log(dateFormat(today).split(' ')[1]);
+
+        console.log(todayDate + ' ' + nowTime);
+
+        if (selectedDate == todayDate) {
+
+          var hour = nowTime.split(':')[0];
+          var minute = nowTime.split(':')[1];
+          if (hour >= 11 && minute >= 30) {
+            $("select option[id='time1']").prop("disabled", true);
+            $("select option[id='time2']").prop("disabled", true);
+          }
+          if (hour >= 12 && minute <= 30) {
+            $("select option[id='time1']").prop("disabled", true);
+            $("select option[id='time2']").prop("disabled", true);
+            $("select option[id='time3']").prop("disabled", true);
+            $("select option[id='time4']").prop("disabled", true);
+          }
+          if (hour >= 12 && minute > 30) {
+            $("select option[id='time1']").prop("disabled", true);
+            $("select option[id='time2']").prop("disabled", true);
+            $("select option[id='time3']").prop("disabled", true);
+            $("select option[id='time4']").prop("disabled", true);
+            $("select option[id='time5']").prop("disabled", true);
+            $("select option[id='time6']").prop("disabled", true);
+          }
+          if (hour >= 13) {
+            $("select option[id='time1']").prop("disabled", true);
+            $("select option[id='time2']").prop("disabled", true);
+            $("select option[id='time3']").prop("disabled", true);
+            $("select option[id='time4']").prop("disabled", true);
+            $("select option[id='time5']").prop("disabled", true);
+            $("select option[id='time6']").prop("disabled", true);
+            $("select option[id='time7']").prop("disabled", true);
+
+          }
+        }
+
+        if (data.a == 6 ) {
+          $("select option[id='time1']").prop("disabled",true);
+        }
+        if (data.b == 6 ) {
+          $("select option[id='time2']").prop("disabled",true);
+        }
+        if (data.c == 6 ) {
+          $("select option[id='time3']").prop("disabled",true);
+        }
+        if (data.d == 6 ) {
+          $("select option[id='time4']").prop("disabled",true);
+        }
+        if (data.e == 6 ) {
+          $("select option[id='time5']").prop("disabled",true);
+        }
+        if (data.f == 6 ) {
+          $("select option[id='time6']").prop("disabled",true);
+        }
+        if (data.g == 6 ) {
+          $("select option[id='time7']").prop("disabled",true);
+        }
+
+
+        //console.log(data.message);
+        //location.href="/booking/bookingInsert?storeIdx=" + storeIdx2;
+      },
+      error: function(error){
+        console.log(error.responseText);
+        alert("신규등록 error");  }
+    });
+
+  }
+  $("#time").prop("disabled",true);
+  function typeTime() {
+    var selectedDate = $("select[name=selectDate] > option:selected").val();
+    var selectedTime = $("select[name=time] > option:selected").val();
+    var storeIdx2 = $("#storeIdx").val();
+    if (selectedTime.length > 1) {
+      $("#tableNo").prop("disabled",false);
+    }
+
+    $.ajax({
+      url: "/booking/insert_Ajax.do",
+      type: "POST",
+      data: { storeIdx: storeIdx2,
+              selectedDate: selectedDate,
+              selectedTime : selectedTime },
+      contextType: "application/json; charset=UTF-8",
+      dataType : "json",
+      success: function(data){
+        console.log('통신결과 : ' + data.status);
+        if (data.a >= 2 ) {
+          $("select option[id='table1']").prop("disabled",true);
+        }
+        if (data.b >= 2 ) {
+          $("select option[id='table2']").prop("disabled",true);
+        }
+        if (data.c >= 2 ) {
+          $("select option[id='table3']").prop("disabled",true);
+        }
+        console.log(data.message);
+        //location.href="/booking/bookingInsert?storeIdx=" + storeIdx2;
+      },
+      error: function(error){
+        console.log(error.responseText);
+        alert("신규등록 error");  }
+    });
+  }
+</script>
 
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>

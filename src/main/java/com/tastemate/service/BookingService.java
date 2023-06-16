@@ -31,6 +31,22 @@ public class BookingService {
       return bookingVO;
     };
 
+    public int bookingTableCheck(BookingVO bookingVO) {
+        int result = bookingMapper.bookingTableCheck(bookingVO);
+        return result;
+    }
+
+    public int bookingPayAndStarComplete(int bookingIdx) {
+        int result = bookingMapper.bookingPayAndStarComplete(bookingIdx);
+
+        return result;
+    }
+    public int bookingPayCancel(int bookingIdx) {
+        int result = bookingMapper.bookingPayCancel(bookingIdx);
+
+        return result;
+    }
+
 
 
 }

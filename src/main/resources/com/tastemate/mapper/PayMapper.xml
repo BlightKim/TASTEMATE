@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tastemate.mapper.PayMapper">
+
+    <resultMap id="KakaoApproval" type="KakaoPayApprovalVO">
+        <id column="KAKAO_APPROVAL_IDX" property="kakaoApprovalIdx"/>
+        <result column="USER_IDX" property="userIdx"/>
+        <result column="STORE_IDX" property="storeIdx"/>
+        <result column="BOOKING_IDX" property="bookingIdx"/>
+        <result column="STATUS" property="status"/>
+        <result column="PG_TOKEN" property="pgToken"/>
+        <result column="partner_order_id" property="partner_order_id"/>
+        <result column="payment_method_type" property="payment_method_type"/>
+        <result column="item_name" property="item_name"/>
+        <result column="approved_at" property="approved_at"/>
+        <result column="amount" property="amount2"/>
+        <result column="tid" property="tid"/>
+            <collection property="bookingVO" resultMap="bookingVOResultMap"/>
+    </resultMap>
+
+    <resultMap id="bookingVOResultMap" type="BookingVO">
+        <id column="booking_Idx" property="bookingIdx"/>
+        <result column="booking_Time" property="bookingTime"/>
+        <result column="table_No" property="tableNo"/>
+        <result column="store_Name" property="storeName"/>
+        <result column="user_name" property="userName"/>
+        <result column="price" property="price"/>
+    </resultMap>
+
+    <resultMap id="inicis" type="InicisVO">
+        <id column="INICIS_IDX" property="inicisIdx"/>
+        <result column="USER_IDX" property="userIdx"/>
+        <result column="STORE_IDX" property="storeIdx"/>
+        <result column="BOOKING_IDX" property="bookingIdx"/>
+        <result column="STATUS" property="status"/>
+        <result column="token" property="token"/>
+        <result column="imp_uid" property="imp_uid"/>
+        <result column="merchant_uid" property="merchant_uid"/>
+        <result column="name" property="name"/>
+        <result column="amount" property="amount"/>
+        <result column="buyer_name" property="buyer_name"/>
+        <result column="card_no" property="card_no"/>
+        <result column="pay_date" property="pay_date"/>
+        <association property="bookingVO" resultMap="bookingVOResultMap"/>
+    </resultMap>
+
+
+    <!-- 카카오페이 -->
+
+    <insert id="kakaoPayReady_insert" parameterType="KakaoPayReadyVO">
+        insert into KAKAOPAYREADY(KAKAO_READY_IDX, USER_IDX, STORE_IDX, BOOKING_IDX, PARTNER_ORDER_ID, TOTAL_AMOUNT, PG_TOKEN, TID)
+        values (KAKAOREADY_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx}, #{partnerOrderId},#{totalAmount}, #{pgToken}, #{tid})
+    </insert>
+
+    <insert id="kakaoPayApproval_insert" parameterType="KakaoPayApprovalVO">
+        insert into KakaoPayApproval(kakao_approval_idx, user_idx, store_idx, booking_idx,
+        partner_order_id, amount, pg_token, payment_method_type,
+        item_name, quantity, approved_at, tid)
+        values (KAKAOAPPROVAL_SEQ.nextval, #{userIdx}, #{storeIdx}, #{bookingIdx},
+        #{partner_order_id}, #{amount2}, #{pgToken}, #{payment_method_type},
+        #{item_name}, #{quantity}, SYSDATE, #{tid})
+    </insert>
+
+    <select id="get_KakaoApproval" resultMap="KakaoApproval">
+        select *
+        from KAKAOPAYAPPROVAL K left outer join BOOKING B
+        on k.booking_Idx = b.booking_Idx
+        where k.USER_IDX = #{userIdx}
+          and k.status = 0
+    </select>
+
+
+    <select id="get_amount" resultType="int">
+        select amount
+        from KAKAOPAYAPPROVAL
+        where tid = #{tid}
+    </select>
+
+    <update id="delete_update">
+        update KAKAOPAYAPPROVAL
+        set STATUS = 1
+        where tid = #{tid}
+    </update>
+
+    <update id="updateStatus2">
+        update KAKAOPAYAPPROVAL
+        set status = 2
+        where KAKAO_APPROVAL_IDX = #{kakaoApprovalIdx}
+    </update>
+
+    <select id="findKakao" resultType="KakaoPayApprovalVO">
+        select *
+        from KAKAOPAYAPPROVAL
+        where user_idx = #{userIdx}
+        and status = 0
+    </select>
+
+
+
+
+    <!-- 여기부터 이니시스 -->
+    <insert id="insert_inicis">
+        INSERT INTO INICIS(INICIS_IDX, USER_IDX, STORE_IDX, BOOKING_IDX, IMP_UID, TOKEN,
+                           MERCHANT_UID, NAME, AMOUNT, BUYER_NAME, CARD_NO, PAY_DATE, STATUS)
+        VALUES (INICIS_SEQ.nextval, #{userIdx},#{storeIdx},#{bookingIdx},#{imp_uid},#{token},
+                #{merchant_uid},#{name},#{amount},#{buyer_name},#{card_no},#{pay_date}, 0)
+
+    </insert>
+
+    <select id="get_inicis" resultMap="inicis">
+        select *
+        from INICIS I left outer join BOOKING B
+        on I.booking_Idx = B.booking_Idx
+        where I.user_idx = #{userIdx}
+        and I.status = 0
+    </select>
+
+    <update id="cancel_inicis">
+        update INICIS
+        set status = 1
+        where merchant_uid = #{merchant_uid}
+    </update>
+
+    <update id="updateStatus">
+        update INICIS
+        set status = 2
+        where inicis_idx = #{inicisIdx}
+    </update>
+
+    <select id="findInicis" resultType="InicisVO">
+        select *
+        from INICIS
+        where user_idx = #{userIdx}
+        and status = 0
+    </select>
+
+
+
+
+
+
+
+
+
+</mapper>

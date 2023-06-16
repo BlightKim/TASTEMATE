@@ -47,6 +47,8 @@
             <result column="USER_STAR" property="userStar" />
             <result column="STORE_COMMENT" property="storeComment" />
             <result column="USER_NAME" property="userName" />
+            <result column="INICIS_IDX" property="inicisIdx" />
+            <result column="KAKAO_APPROVAL_IDX" property="kakaoApprovalIdx" />
         </collection>
     </resultMap>
 
@@ -221,8 +223,8 @@
 
     <!--별점,코멘트 입력하기-->
     <insert id="store_starComment" parameterType="StarVO">
-        INSERT INTO star(STAR_IDX, STORE_IDX, USER_IDX, STORE_STAR, USER_STAR, STORE_COMMENT)
-        values (star_seq.nextval,#{storeIdx},#{userIdx},#{storeStar},#{userStar},#{storeComment})
+        INSERT INTO star(STAR_IDX, STORE_IDX, USER_IDX, STORE_STAR, USER_STAR, STORE_COMMENT, INICIS_IDX, KAKAO_APPROVAL_IDX)
+        values (star_seq.nextval,#{storeIdx},#{userIdx},#{storeStar},#{userStar},#{storeComment}, #{inicisIdx}, #{kakaoApprovalIdx})
     </insert>
 
 

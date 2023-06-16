@@ -44,35 +44,47 @@ public class MemberController {
 
     // login 홈페이지 들어가기
     @GetMapping("member/login")
-    public String loginGet(Model model) {
+    public String loginGet(Model model, HttpSession session) {
+        MemberVO vo = (MemberVO) session.getAttribute("sessionVo");
+        session.setAttribute("sessionVo", vo);
         return "member/login/loginForm";
     }
 
     // login 홈페이지 POST
     @PostMapping("login")
     public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/store/main") String redirectURL) {
+        MemberVO sessionVo = (MemberVO) session.getAttribute("sessionVo");
+        System.out.println("sessionVo = " + sessionVo);
         String userId = request.getParameter("userId");
         String userPwd = request.getParameter("userPwd");
         System.out.println("userId = " + userId);
         System.out.println("userPwd = " + userPwd);
         MemberVO vo = service.loginId(userId);
         String[] addressSplit = vo.getUserAddress().split(",");
-
-        if (vo.getUserStatus() == 0) {
-            if (passwordEncoder.matches(userPwd, vo.getUserPwd())) {
-                session.setAttribute("vo", vo);
-                session.setAttribute("addressSplit", addressSplit);
-                System.out.println("vo = " + vo);
-                System.out.println(vo.getUserPwd());
-                return "redirect:" + redirectURL;
+        if (sessionVo == null) {
+            if (vo.getUserStatus() == 0) {
+                if (passwordEncoder.matches(userPwd, vo.getUserPwd())) {
+                    session.setAttribute("vo", vo);
+                    session.setAttribute("addressSplit", addressSplit);
+                    System.out.println("vo = " + vo);
+                    System.out.println(vo.getUserPwd());
+                    if (vo.getUserType() == 0) {
+                        return "manage/main";
+                    } else {
+                        return "redirect:" + redirectURL;
+                    }
+                } else {
+                    System.out.println("비밀번호가 다릅니다.");
+                    return "member/login/loginForm";
+                }
             } else {
-                System.out.println("비밀번호가 다릅니다.");
+                System.out.println("휴면상태의 아이디입니다.");
                 return "member/login/loginForm";
             }
         } else {
-            System.out.println("휴면상태의 아이디입니다.");
-            return "member/login/loginForm";
+            return "redirect:" + redirectURL;
         }
+
     }
 
     @GetMapping("member/logout")
@@ -144,7 +156,7 @@ public class MemberController {
         service.reset(vo, request, session);
         session.invalidate();
 
-        return "store/main";
+        return "redirect:/store/main";
     }
 
     // Food에서 href로 넘어오는 곳
@@ -193,7 +205,7 @@ public class MemberController {
         return "member/mbti";
     }
 
-    @GetMapping("member/class")
+    @GetMapping("tastemate")
     public String classesGet() {
 
         return "member/class";

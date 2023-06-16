@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Insert title here</title>
+  <link rel="stylesheet" th:href="@{/css/store_css.css}">
+<style>
+
+  #main {
+    /*min-height: 100vh;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: -webkit-gradient(linear, left bottom, right top, from(#E2E2E2), to(#E2E2E2));
+    background: -webkit-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+    background: -moz-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+    background: -o-linear-gradient(bottom left, #E2E2E2 0%, #E2E2E2 100%);
+    background: linear-gradient(to top right, #E2E2E2 0%, #E2E2E2 100%);
+  }
+  .input-form {
+    max-width: 100%;
+
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding: 32px;
+
+    background: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+  }
+
+  .yellow{
+    color : #FFA500;
+  }
+  .kakaoBtn2{
+    background-color: #F7E600;
+    padding: 7px 10px;
+    border: none;
+    outline: none;
+    border-radius: 7px;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div class="text-center">
+    환불이 완료되었습니다.
+  </div>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+<div class="text-center" id="main">
+  <div class="input-form-backgroud">
+    <form class="input-form" style="height: 300px; width : 400px">
+          <br><br><br><br>결제목록이 없습니다 :)
+    </form>
+  </div>
+</div>
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

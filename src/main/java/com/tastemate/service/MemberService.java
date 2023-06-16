@@ -70,11 +70,11 @@ public class MemberService {
         log.info("service도착");
         String savedName = null;
 
-        if(multipartFile == null){
-            log.info("empty 확인");
+        if(multipartFile.isEmpty()) {
             savedName = "tastemate.jpg";
 
         } else {
+
             String oriFilename = multipartFile.getOriginalFilename();
             String uuid = UUID.randomUUID().toString();
 
@@ -95,7 +95,7 @@ public class MemberService {
             } catch (Exception e) {
                 log.error(e.getMessage());
             }
-            } //else 끝
+        } //else 끝
 
         MemberVO vo1 = new MemberVO();
         String Address = vo.getUserAddress();
@@ -164,6 +164,44 @@ public class MemberService {
         log.info("수정service도착");
 
         MemberVO sessionVO = (MemberVO) session.getAttribute("sessionVO");
+
+        String savedName = null;
+
+
+        if (multipartFile.getOriginalFilename().equals("")){
+            //새 파일 없을때
+            savedName = vo.getUserProfile();
+
+        } else if(multipartFile.getOriginalFilename() != null) {
+
+            File saveFile = new File(vo.getUserProfile());
+
+            if (saveFile.exists()){
+                saveFile.delete();
+            }
+
+            String oriFilename = multipartFile.getOriginalFilename();
+            String uuid = UUID.randomUUID().toString();
+
+            String extension = oriFilename.substring(oriFilename.lastIndexOf("."));
+
+            oriFilename = oriFilename.substring(oriFilename.lastIndexOf("\\")+1);
+
+            savedName = uuid + "_" + oriFilename;
+
+            String savedPath = fileDir + "/" +savedName;
+
+            log.info(savedPath);
+
+            saveFile = new File(savedPath);
+
+            try {
+                multipartFile.transferTo(saveFile);
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+
+        }
 
         String getVoUserAddress = vo.getUserAddress();
         String userProfile = vo.getUserProfile();
@@ -234,6 +272,8 @@ public class MemberService {
         } else {
             vo.setUserMbti(request.getParameter("userMbti"));
         }
+
+        vo.setUserProfile(savedName);
 
         // userProfile 원래 사진 있으면 default 값으로 들어가게 설정해야함!!!!!!!!!
         //!!!!!!!
@@ -308,6 +348,16 @@ public class MemberService {
         int result = mapper.resetPassword(vo);
 
         System.out.println("(reset)vo = " + vo);
+    }
+
+    public void createChatRoom(MemberVO vo, HttpServletRequest request ,HttpSession session) {
+        MemberVO sessionVo = (MemberVO) session.getAttribute("sessionVO");
+
+        vo.setUserIdx(sessionVo.getUserIdx());
+
+        System.out.println("sessionVO = " + sessionVo);
+
+        mapper.createChatRoom(vo);
     }
 
     public MimeMessage createMessage(String to) throws MessagingException, UnsupportedEncodingException {
@@ -389,11 +439,6 @@ public class MemberService {
         return ePw; // 메일로 보냈던 인증 코드를 서버로 반환
     }
 
-
-    public MemberVO matchUser(String userId) {
-
-        return null;
-    }
 
 }
 

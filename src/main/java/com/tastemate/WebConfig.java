@@ -1,10 +1,10 @@
 package com.tastemate;
 
-
 import com.tastemate.interceptor.LogInterceptor;
 import com.tastemate.interceptor.LoginCheckInterceptor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -27,10 +27,10 @@ public class WebConfig implements WebMvcConfigurer {
             .excludePathPatterns("/", "/board", "/member/login**", "/member/logout",
                     "/css/**", "/*.ico", "**/js/**", "/error", "/member/register", "/img/**",
                     "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**", "/member/class",
-                    "/member/mbti", "/member/selectFood", "/store/**", "member/list", "/member/simpleregister",
-                    "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/get", "/store/register",
-                    "/store/update", "/store/starComment", "/member/resetPassword", "/member/reset", "/member/checkId",
-                    "/member/resetSuccess", "/member/mailConfirm");
+                    "/member/mbti", "/member/selectFood", "/member/list", "/member/simpleregister",
+                    "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/list", "/store/main",
+                    "/member/resetPassword", "/member/reset", "/member/checkId", "/tastemate", "/member/tastemate",
+                    "/member/resetSuccess", "/member/mailConfirm", "/member/sweetalert2.min.css", "/bookmark/get");
 
   }
   private String resourcePath = "/member/**";
