@@ -28,7 +28,6 @@ public class ManageController {
     //메인 페이지(관리자)
     @GetMapping("main")
     public String manageMain(Model model, RedirectAttributes redirectAttributes) {
-        service.inCheck();
         String title = "관리자 페이지";
         model.addAttribute("title", title);
 
