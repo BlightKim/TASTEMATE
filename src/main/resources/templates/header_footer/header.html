@@ -127,13 +127,30 @@
                 </span>
                 <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
                     <div class="btn-group" role="group">
+<!--                        <button th:if="${!(session.vo == null)}" type="button"-->
+<!--                                class="btn btn-outline-dark dropdown-toggle"-->
+<!--                                id="chattingRoom"-->
+<!--                                data-bs-toggle="dropdown" aria-expanded="false"-->
+<!--                                onclick="chatList();" style="margin-right: 15px;">-->
+<!--                            채팅방-->
+<!--                        </button>-->
+<!--                        <ul class="dropdown-menu">-->
+<!--                            <li>-->
+<!--                                <form id="matching" action="/chat/matching" method="post">-->
+<!--                                    <button id="matchingBtn" type="submit" class="dropdown-item"-->
+<!--                                            style="background-color:#9C91B3" onclick="matching(event);">-->
+<!--                                        친구추천-->
+<!--                                    </button>-->
+<!--                                </form>-->
+<!--                            <li id="chatList">ajax 채팅리스트</li>-->
+<!--                        </ul>-->
                         <button th:if="${!(session.vo == null)}" type="button"
                                 class="btn btn-outline-dark dropdown-toggle hover-me"
                                 data-bs-toggle="dropdown" aria-expanded="false"
                                 style="width: 167px;">
                             <span class="hover-me" th:text="${session.vo.getUserName()}"></span><span>님</span>
                         </button>
-                        <!--                        style="color: #9C91B3"-->
+                            <!--                        style="color: #9C91B3"-->
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" th:href="@{/member/mypage}">개인정보 수정</a></li>
                             <th:block th:if="${!(session.vo == null)}">
