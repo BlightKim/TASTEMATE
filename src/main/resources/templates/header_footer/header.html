@@ -107,22 +107,14 @@
             <li><a href="/board">게시판</a></li>
 
             <div class="ml-auto">
-
-                <span th:if="${session.vo != null}">
-                <button class="btn btn-outline-dark ml-2" type="button"
-                        th:onclick="|location.href='@{/member/logout}'|">
-                로그아웃
-                </button>
-                </span>
-
                 <span th:unless="${session.vo != null}">
-                <button class="btn btn-outline-dark ml-2" type="button"
-                        th:onclick="|location.href='@{/member/simpleregister}'|">
-                회원가입
-                </button>
                 <button class="btn btn-outline-dark ml-2" type="button"
                         th:onclick="|location.href='@{/member/login}'|">
                 로그인
+                </button>
+                <button class="btn btn-outline-dark ml-2" type="button"
+                        th:onclick="|location.href='@{/member/simpleregister}'|">
+                회원가입
                 </button>
                 </span>
                 <div class="btn-group-vertical ml-2" role="group" aria-label="Vertical button group">
@@ -167,6 +159,12 @@
                         </ul>
                     </div>
                 </div>
+                <span th:if="${session.vo != null}">
+                <button class="btn btn-outline-dark ml-2" type="button"
+                        th:onclick="|location.href='@{/member/logout}'|">
+                로그아웃
+                </button>
+                </span>
             </div>
         </ul>
     </header>

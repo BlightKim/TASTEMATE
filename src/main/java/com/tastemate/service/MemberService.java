@@ -217,7 +217,9 @@ public class MemberService {
         String userAddress1 = request.getParameter("userAddress1");
         System.out.println("request.getParameter(\"userAddress1\") = " + request.getParameter("userAddress1"));
         String userAddress2 = request.getParameter("userAddress2");
+        System.out.println("userAddress2 = " + userAddress2);
         String userAddress3 = request.getParameter("userAddress3");
+        System.out.println("userAddress3 = " + userAddress3);
 
         if(userAddress1.isEmpty()) {
             userAddress1 = nullUserAddress[0];
@@ -281,7 +283,8 @@ public class MemberService {
         //!!!!!!!------------------------------------------------
 
 
-        if (request.getParameter("userAddress1").isEmpty()) {
+        if (request.getParameter("userAddress1").isEmpty() && request.getParameter("userAddress2").isEmpty() &&
+        request.getParameter("userAddress3").isEmpty()) {
             vo.setUserAddress(vo.getUserAddress());
             System.out.println("if문 안에 getVoUserAddress = " + getVoUserAddress);
             vo.setUserAddressSi(addressSplit[0]);
