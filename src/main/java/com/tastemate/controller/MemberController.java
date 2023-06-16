@@ -69,7 +69,7 @@ public class MemberController {
                     System.out.println("vo = " + vo);
                     System.out.println(vo.getUserPwd());
                     if (vo.getUserType() == 0) {
-                        return "manage/main";
+                        return "redirect:/manage/main";
                     } else {
                         return "redirect:" + redirectURL;
                     }

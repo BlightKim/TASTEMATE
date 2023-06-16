@@ -5,6 +5,7 @@ import com.tastemate.domain.ManageStarVO;
 import com.tastemate.domain.ManageStoreVO;
 import com.tastemate.domain.ManageMemberVO;
 import com.tastemate.service.ManageService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/manage/*")
+@Slf4j
 public class ManageController {
 
     @Autowired
@@ -24,8 +27,11 @@ public class ManageController {
 
     //메인 페이지(관리자)
     @GetMapping("main")
-    public String manageMain(){
-        return "/manage/main";
+    public String manageMain(Model model, RedirectAttributes redirectAttributes) {
+        String title = "관리자 페이지";
+        model.addAttribute("title", title);
+
+       return "/manage/main";
     }
 
 
@@ -41,6 +47,9 @@ public class ManageController {
     public String manageStoreList(Model model) {
         List<ManageStoreVO> manageStoreList = service.manageStoreListGet();
         model.addAttribute("manageStoreList", manageStoreList);
+
+        String title = "관리자 추천";
+        model.addAttribute("title", title);
         return "/manage/storeList";
     }
 
@@ -59,12 +68,12 @@ public class ManageController {
 
     //맛집 상세보기(관리자)
     @RequestMapping("storeView")
-    public String storeView(Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
+    public String storeView(Model model, ManageStoreVO manageStoreVO) {
         ManageStoreVO storeView = service.manageStoreView(manageStoreVO);
         model.addAttribute("storeView", storeView);
 
         //리뷰 조회
-        selectUserReview(model, manageStarVO);
+        //selectUserReview(model, manageStarVO);
         return "/manage/storeView";
     }
 
@@ -100,6 +109,9 @@ public class ManageController {
     public String storeRegNotList(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegNotList = service.storeRegNotList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegNotList);
+
+        String title = "승인 대기";
+        model.addAttribute("title", title);
         return "/manage/storeRegNotList";
     }
 
@@ -108,6 +120,9 @@ public class ManageController {
     public String storeRegOkList(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegOkList);
+
+        String title = "승인 완료";
+        model.addAttribute("title", title);
         return "/manage/storeRegOkList";
     }
 
@@ -128,7 +143,7 @@ public class ManageController {
     }
 
     //맛집 상세보기(승인)
-    @GetMapping("storeRegOkView")
+    @RequestMapping("storeRegOkView")
     public String storeRegOkView (Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
         ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
         model.addAttribute("storeRegView", storeRegOkView);
@@ -182,6 +197,9 @@ public class ManageController {
     public String storeRegOkListMenu(Model model, ManageStoreVO manageStoreVO) {
         List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
         model.addAttribute("storeRegList", storeRegOkList);
+
+        String title = "맛집 메뉴";
+        model.addAttribute("title", title);
         return "/manage/storeRegOkListMenu";
     }
 
@@ -193,7 +211,7 @@ public class ManageController {
         model.addAttribute("storeRegView", storeRegOkView);
 
         //맛집 메뉴보기
-        List<ManageMemberVO> storeMenuView = service.storeMenuView(manageMenuVO);
+        List<ManageMenuVO> storeMenuView = service.storeMenuView(manageMenuVO);
         model.addAttribute("storeMenuView", storeMenuView);
         return "/manage/storeMenuView";
     }
@@ -233,11 +251,20 @@ public class ManageController {
     }
 
     //메뉴 삭제
+    //@RequestMapping("maDeleteMenu")
+    //@GetMapping("maDeleteMenu")
     @PostMapping("maDeleteMenu")
-    public String maDeleteMenu(Model model, ManageMenuVO manageMenuVO, ManageStoreVO manageStoreVO) {
-        service.maDeleteMenu(manageMenuVO);
-        storeMenuView(model, manageMenuVO, manageStoreVO);
-        return "/manage/storeMenuView";
+    public String maDeleteMenu(ManageMenuVO manageMenuVO, RedirectAttributes redirectAttributes) {
+        int result = service.maDeleteMenu(manageMenuVO);
+
+        log.info(String.valueOf(result));
+        log.info(String.valueOf(manageMenuVO));
+        //storeMenuView(model, manageMenuVO, manageStoreVO);
+        //return "/manage/storeMenuView";
+
+        String wow = "complete";
+        redirectAttributes.addFlashAttribute("message", wow);
+        return "redirect:/manage/storeRegOkListMenu";
     }
 
 
@@ -263,21 +290,57 @@ public class ManageController {
     public String updateUserReview(Model model, ManageStarVO manageStarVO, ManageStoreVO manageStoreVO) {
         int result = service.updateUserReview(manageStarVO);
 
-        //맛집 상세보기(관리자)
-        storeView(model, manageStoreVO, manageStarVO);
-        return "/manage/storeView";
+        //리뷰 상세
+        storeReviewList(model, manageStarVO, manageStoreVO);
+        return "/manage/storeReview";
     }
 
     //리뷰 삭제
 //    @GetMapping("deleteUserReview")
     @PostMapping("deleteUserReview")
-    public String deleteUserReview(Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
-        int result = service.deleteUserReview(manageStarVO);
+    public String deleteUserReview(ManageStarVO manageStarVO,
+       RedirectAttributes redirectAttributes) {
 
-        //맛집 상세보기(관리자)
-        storeView(model, manageStoreVO, manageStarVO);
-        return "/manage/storeView";
+        int result = service.deleteUserReview(manageStarVO);
+        log.info(String.valueOf(manageStarVO));
+
+        String wow = "complete";
+        redirectAttributes.addFlashAttribute("message", wow);
+        return "redirect:/manage/storeReviewList";
     }
+
+    //리뷰 상세
+    @RequestMapping("storeReview")
+    public String storeReviewList(Model model, ManageStarVO manageStarVO, ManageStoreVO manageStoreVO) {
+        //맛집 상세보기
+        ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
+        model.addAttribute("storeRegView", storeRegOkView);
+
+        //리뷰 조회
+        selectUserReview(model, manageStarVO);
+        return "/manage/storeReview";
+    }
+
+    //리뷰 리스트
+    @GetMapping("storeReviewList")
+    public String storeReviewList(Model model, ManageStoreVO manageStoreVO) {
+        List<ManageStoreVO> storeRegOkList = service.storeRegOkList(manageStoreVO);
+        model.addAttribute("storeRegOkList", storeRegOkList);
+
+        String title = "맛집 평가";
+        model.addAttribute("title", title);
+
+        return "/manage/storeReviewList";
+    }
+
+//    public String storeReview (Model model, ManageStoreVO manageStoreVO, ManageStarVO manageStarVO) {
+//        ManageStoreVO storeRegOkView = service.manageStoreView(manageStoreVO);
+//        model.addAttribute("storeRegView", storeRegOkView);
+//
+//        //리뷰 조회
+//        selectUserReview(model, manageStarVO);
+//        return "/manage/storeRegOkView";
+//    }
 
 
 

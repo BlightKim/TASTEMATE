@@ -103,7 +103,7 @@
     <!-- 리뷰 수정 -->
     <update id="updateUserReview" parameterType="com.tastemate.domain.ManageStarVO">
         UPDATE STAR
-        SET STORE_STAR = #{storeStar}, STORE_COMMENT = #{storeComment} WHERE STAR_IDX = #{starIdx}
+        SET STORE_COMMENT = #{storeComment} WHERE STAR_IDX = #{starIdx}
     </update>
 
     <!-- 리뷰 삭제 -->
@@ -116,6 +116,11 @@
     <!-- 강의실별 수강생 조회 -->
     <select id="manageFindClass" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
         SELECT * FROM MEMBER WHERE USER_CLASS = #{userClass}
+    </select>
+
+    <!-- 수강생 인원 조회 -->
+    <select id="classMemberCount" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
+        SELECT COUNT(*) FROM MEMBER WHERE USER_CLASS = #{userClass}
     </select>
 
 

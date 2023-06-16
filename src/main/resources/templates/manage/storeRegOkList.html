@@ -50,10 +50,22 @@
 </head>
 <body>
 
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="text-center">
+        리뷰가 삭제 되었습니다.
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <div class="container">
     <div class="input-form-background row">
         <div class="input-form col-md-12 mx-auto">
-            <h3 class="mb-3 mb-5 purple2 text-center">승인 완료</h3>
+
+            <!-- 관리자 미니 해더-->
+            <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
+
             <div>
                 <table class="table table-hover">
                     <tr>

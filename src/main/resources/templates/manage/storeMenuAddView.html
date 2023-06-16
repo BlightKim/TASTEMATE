@@ -20,7 +20,7 @@
         }
 
         .input-form {
-            /*max-width: 680px;*/
+            max-width: 800px;
 
             margin-top: 80px;
             margin-bottom: 80px;
@@ -71,7 +71,7 @@
     <div class="input-form-backgroud row">
         <div class="input-form col-md-12 mx-auto">
             <h3 class="mb-3 mb-5 purple2 text-center">메뉴 등록</h3>
-            <form th:action="@{/manage/maAddMenu}" method="post">
+            <form method="post">
 
                 <div>
                     <table class="table table-hover">
@@ -85,11 +85,14 @@
                             <td><input type="text" name="price" class="form-control" required></td>
                             <td>
                                 <input type="hidden" name="storeIdx" th:value="${storeIdx}">
-                                <button type="submit" class="btn text-white btn-sm" style="background-color: #8E48C7">메뉴 추가</button>
+                                <button onclick="maAddMenu(this.form)" class="btn text-white btn-sm" style="background-color: #8E48C7">메뉴 추가</button>
                             </td>
                         </tr>
                     </table>
                 </div>
+<!--                <div class="text-center mt-5 mb-3">-->
+<!--                    <button onclick="storeMenuView(this.form)" class="btn text-white" style="background-color: #9C91B3">취소</button>-->
+<!--                </div>-->
             </form>
 
 
@@ -100,6 +103,20 @@
         </div>
     </div>
 </div>
+
+<script>
+    /* 취소(맛집 메뉴 페이지) */
+    function storeMenuView(frm) {
+        frm.action= '/manage/storeMenuView';
+        frm.submit();
+    }
+
+    /* 메뉴 수정 */
+    function maAddMenu(frm) {
+        frm.action= '/manage/maAddMenu';
+        frm.submit();
+    }
+</script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>
