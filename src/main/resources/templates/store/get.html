@@ -161,16 +161,16 @@
                 </div>
 
 
-<!--  확인용! 지우지마         <td th:text="${storeVO.userIdx}"></td>
-                                <td th:text="${session.vo.getUserIdx()}"></td>-->
+                <!--  확인용! 지우지마         <td th:text="${storeVO.userIdx}"></td>
+                                                <td th:text="${session.vo.getUserIdx()}"></td>-->
 
-<!--로그인한 사람과 등록한 사람이 동일할때만 맛집 수정버튼이 보임!-->
- <th:block th:if="${session.vo.getUserIdx().toString().equals(storeVO.userIdx)}">
-                <div class="col-auto mx-1">
-                    <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark"
-                       style="background-color: #8E48C7; border: none;">맛집 정보 수정</a>
-                </div>
-</th:block>
+                <!--로그인한 사람과 등록한 사람이 동일할때만 맛집 수정버튼이 보임!-->
+                <th:block th:if="${session.vo.getUserIdx().toString().equals(storeVO.userIdx)}">
+                    <div class="col-auto mx-1">
+                        <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark"
+                           style="background-color: #8E48C7; border: none;">맛집 정보 수정</a>
+                    </div>
+                </th:block>
 
                 <div class="col-auto mx-1">
                     <a class="btn btn-success" th:href="@{/store/list}"
