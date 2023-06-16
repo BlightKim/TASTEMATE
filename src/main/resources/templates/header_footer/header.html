@@ -141,8 +141,12 @@
                                        th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a>
                                 </li>
                             </th:block>
-                            <li><a class="dropdown-item" th:href="@{/member/list}">결제정보</a></li>
-                            <li><a class="dropdown-item" th:href="@{/member/list}">북마크 보기</a></li>
+                            <li><a class="dropdown-item" th:href="@{/pay/myPay}">결제정보</a></li>
+                            <th:block th:if="${!(session.vo == null)}">
+                            <li><a class="dropdown-item"
+                                   th:href="@{../bookmark/get(userIdx=${session.vo.getUserIdx()})}">북마크 보기</a>
+                            </li>
+                            </th:block>
                         </ul>
                     </div>
                 </div>
