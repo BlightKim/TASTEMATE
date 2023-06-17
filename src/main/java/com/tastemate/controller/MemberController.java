@@ -52,15 +52,24 @@ public class MemberController {
 
     // login 홈페이지 POST
     @PostMapping("login")
-    public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/store/main") String redirectURL) {
+    public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/store/main") String redirectURL,
+                            RedirectAttributes rttr) {
         MemberVO sessionVo = (MemberVO) session.getAttribute("sessionVo");
         System.out.println("sessionVo = " + sessionVo);
         String userId = request.getParameter("userId");
         String userPwd = request.getParameter("userPwd");
         System.out.println("userId = " + userId);
         System.out.println("userPwd = " + userPwd);
-        MemberVO vo = service.loginId(userId);
+        MemberVO vo = null;
+
+        if (service.loginId(userId) != null) {
+            vo = service.loginId(userId);
+        } else {
+            return "redirect:/member/login/loginForm";
+        }
+
         String[] addressSplit = vo.getUserAddress().split(",");
+
         if (sessionVo == null) {
             if (vo.getUserStatus() == 0) {
                 if (passwordEncoder.matches(userPwd, vo.getUserPwd())) {
@@ -68,6 +77,7 @@ public class MemberController {
                     session.setAttribute("addressSplit", addressSplit);
                     System.out.println("vo = " + vo);
                     System.out.println(vo.getUserPwd());
+
                     if (vo.getUserType() == 0) {
                         return "redirect:/manage/main";
                     } else {
@@ -75,11 +85,11 @@ public class MemberController {
                     }
                 } else {
                     System.out.println("비밀번호가 다릅니다.");
-                    return "member/login/loginForm";
+                    return "redirect:/member/login/loginForm";
                 }
             } else {
                 System.out.println("휴면상태의 아이디입니다.");
-                return "member/login/loginForm";
+                return "redirect:/member/login/loginForm";
             }
         } else {
             return "redirect:" + redirectURL;
@@ -93,10 +103,18 @@ public class MemberController {
         return "redirect:/store/main";
     }
 
+    @GetMapping("member/findId")
+    public String findId2(Model model, HttpServletRequest request, HttpSession session) {
+        String userEmail = request.getParameter("userEmail");
+        System.out.println("(getFindId)userEmail = " + userEmail);
+        session.setAttribute("userEmail", userEmail);
+        return "member/find";
+    }
+
     @PostMapping("member/findId")
     public String findId(Model model, HttpServletRequest request, HttpSession session) {
         String userEmail = request.getParameter("userEmail");
-        System.out.println("(findId)userEmail = " + userEmail);
+        System.out.println("(postFindId)userEmail = " + userEmail);
         session.setAttribute("userEmail", userEmail);
         return "member/find";
     }
@@ -105,7 +123,11 @@ public class MemberController {
     public String findIdByEmail(Model model, HttpServletRequest request, HttpSession session) {
         String userEmail = request.getParameter("userEmail");
         System.out.println("(findIdByEmail)userEmail = " + userEmail);
-        service.findId(userEmail, request, session);
+        MemberVO vo = service.findId(userEmail, request, session);
+        System.out.println("vo = " + vo);
+        if (vo == null) {
+            return "redirect:/member/findId";
+        }
         return "member/findIdByEmail";
     }
 

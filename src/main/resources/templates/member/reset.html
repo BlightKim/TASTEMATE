@@ -23,7 +23,7 @@
                             <input id="userPwd" name="userPwd" class="form-control form-control" type="password"
                                    style="margin-bottom: 10px;" placeholder value required/>
                         </div>
-                        <div class="row">
+                        <div>
                             <div id="password1_warning" style="text-align: center"><span></span>
                             </div>
                         </div>
@@ -32,13 +32,13 @@
                             <input id="userPwd2" class="form-control form-control" type="password" placeholder
                                    style="margin-bottom: 10px;"/>
                         </div>
-                        <div class="row">
+                        <div>
                             <div id="password2_warning" style="text-align: center"><span></span>
                             </div>
                         </div>
                         <div>
                             <button type="submit" class="btn d-block w-100" style="background-color: #8E48C7; color: white;
-                                            margin-bottom: 20px; margin-top: 30px;">Reset Password
+                                            margin-bottom: 20px; margin-top: 30px;" onclick="return check();">Reset Password
                             </button>
                         </div>
                     </form>
@@ -91,6 +91,30 @@
             pwd2Chk = true;
         }
     }
+
+    function check() {
+        if (pwd1Chk === false) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '비밀번호를 확인해주세요.',
+            })
+            $("#userPwd").focus();
+            return false;
+        }
+
+        if (pwd2Chk === false) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '비밀번호가 일치하지 않습니다.',
+            })
+            $("#userPwd").focus();
+            return false;
+        }
+    }
+
+
 </script>
 </body>
 </html>

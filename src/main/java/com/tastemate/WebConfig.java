@@ -30,7 +30,8 @@ public class WebConfig implements WebMvcConfigurer {
                     "/member/mbti", "/member/selectFood", "/member/list", "/member/simpleregister",
                     "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/list", "/store/main",
                     "/member/resetPassword", "/member/reset", "/member/checkId", "/tastemate", "/member/tastemate",
-                    "/member/resetSuccess", "/member/mailConfirm", "/member/sweetalert2.min.css", "/bookmark/get");
+                    "/member/resetSuccess", "/member/mailConfirm", "/member/sweetalert2.min.css", "/bookmark/get",
+                    "/member/sweetalert2.min.js");
 
   }
   private String resourcePath = "/member/**";

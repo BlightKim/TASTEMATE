@@ -316,11 +316,17 @@ public class MemberService {
 
     }
 
-    public void findId(String userEmail, HttpServletRequest request, HttpSession session) {
+    public MemberVO findId(String userEmail, HttpServletRequest request, HttpSession session) {
         userEmail = request.getParameter("userEmail");
         MemberVO vo = mapper.findId(userEmail);
-        session.setAttribute("userId", vo.getUserId());
-        session.setAttribute("userName", vo.getUserName());
+        if (vo != null) {
+            session.setAttribute("userId", vo.getUserId());
+            session.setAttribute("userName", vo.getUserName());
+            return vo;
+
+        } else {
+            return vo;
+        }
     }
 
     public MemberVO userGet(String userId, String userEmail, HttpServletRequest request, HttpSession session) {
