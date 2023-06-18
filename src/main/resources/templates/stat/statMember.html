@@ -7,44 +7,48 @@
 <head>
     <meta charset="UTF-8">
     <title>store list</title>
-<style>
-    table, th, td {
-        margin: auto;
-        padding: 3px 20px;
-    }
-    .space {
-        padding-top: 15px;
-      }
-</style>
-<link rel="stylesheet" th:href="@{/css/store_css.css}">
-<style>
-    body {
-        min-height: 100vh;
+    <style>
+        table, th, td {
+            margin: auto;
+            padding: 3px 20px;
+        }
 
-        background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
-        background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
-        background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
-        background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
-        background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
-    }
+        .space {
+            padding-top: 15px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <style>
+        body {
+            min-height: 100vh;
 
-    .input-form {
-        /*max-width: 680px;*/
+            background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+            background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+        }
 
-        margin-top: 80px;
-        margin-bottom: 80px;
-        padding: 32px;
+        .input-form {
+            /*max-width: 680px;*/
 
-        background: #fff;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-        -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-    }
-    th, td { text-align: center; }
-</style>
+            margin-top: 80px;
+            margin-bottom: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+
+        th, td {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 
@@ -55,99 +59,113 @@
             <!-- 관리자 미니 해더-->
             <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
             <div class="row">
-            <div class="col-8">
-            <div class="chart-div">
-                <canvas id="pieChartCanvas" width="600px" height="600px"></canvas>
+                <div class="col-8">
+                    <div class="chart-div">
+                        <canvas id="pieChartCanvas" width="600px" height="600px"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <table>
+                        <tr>
+                            <td id="mbti1" th:value="${mbtiOrder.get(0)}" th:text="${mbtiOrder.get(0)}">
+                            <td id="mbtiN1" th:value="${mbti.get(mbtiOrder.get(0))}"
+                                th:text="${mbti.get(mbtiOrder.get(0))}">
+                        </tr>
+                        <tr>
+                            <td id="mbti2" th:value="${mbtiOrder.get(1)}" th:text="${mbtiOrder.get(1)}">
+                            <td id="mbtiN2" th:value="${mbti.get(mbtiOrder.get(1))}"
+                                th:text="${mbti.get(mbtiOrder.get(1))}">
+                        </tr>
+
+
+                        <tr>
+                            <td id="mbti3" th:value="${mbtiOrder.get(2)}" th:text="${mbtiOrder.get(2)}">
+                            <td id="mbtiN3" th:value="${mbti.get(mbtiOrder.get(2))}"
+                                th:text="${mbti.get(mbtiOrder.get(2))}">
+                        </tr>
+                        <tr>
+                            <td id="mbti4" th:value="${mbtiOrder.get(3)}" th:text="${mbtiOrder.get(3)}">
+                            <td id="mbtiN4" th:value="${mbti.get(mbtiOrder.get(3))}"
+                                th:text="${mbti.get(mbtiOrder.get(3))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti5" th:value="${mbtiOrder.get(4)}" th:text="${mbtiOrder.get(4)}">
+                            <td id="mbtiN5" th:value="${mbti.get(mbtiOrder.get(4))}"
+                                th:text="${mbti.get(mbtiOrder.get(4))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti6" th:value="${mbtiOrder.get(5)}" th:text="${mbtiOrder.get(5)}">
+                            <td id="mbtiN6" th:value="${mbti.get(mbtiOrder.get(5))}"
+                                th:text="${mbti.get(mbtiOrder.get(5))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti7" th:value="${mbtiOrder.get(6)}" th:text="${mbtiOrder.get(6)}">
+                            <td id="mbtiN7" th:value="${mbti.get(mbtiOrder.get(6))}"
+                                th:text="${mbti.get(mbtiOrder.get(6))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti8" th:value="${mbtiOrder.get(7)}" th:text="${mbtiOrder.get(7)}">
+                            <td id="mbtiN8" th:value="${mbti.get(mbtiOrder.get(7))}"
+                                th:text="${mbti.get(mbtiOrder.get(7))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti9" th:value="${mbtiOrder.get(8)}" th:text="${mbtiOrder.get(8)}">
+                            <td id="mbtiN9" th:value="${mbti.get(mbtiOrder.get(8))}"
+                                th:text="${mbti.get(mbtiOrder.get(8))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti10" th:value="${mbtiOrder.get(9)}" th:text="${mbtiOrder.get(9)}">
+                            <td id="mbtiN10" th:value="${mbti.get(mbtiOrder.get(9))}"
+                                th:text="${mbti.get(mbtiOrder.get(9))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti11" th:value="${mbtiOrder.get(10)}" th:text="${mbtiOrder.get(10)}">
+                            <td id="mbtiN11" th:value="${mbti.get(mbtiOrder.get(10))}"
+                                th:text="${mbti.get(mbtiOrder.get(10))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti12" th:value="${mbtiOrder.get(11)}" th:text="${mbtiOrder.get(11)}">
+                            <td id="mbtiN12" th:value="${mbti.get(mbtiOrder.get(11))}"
+                                th:text="${mbti.get(mbtiOrder.get(11))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti13" th:value="${mbtiOrder.get(12)}" th:text="${mbtiOrder.get(12)}">
+                            <td id="mbtiN13" th:value="${mbti.get(mbtiOrder.get(12))}"
+                                th:text="${mbti.get(mbtiOrder.get(12))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti14" th:value="${mbtiOrder.get(13)}" th:text="${mbtiOrder.get(13)}">
+                            <td id="mbtiN14" th:value="${mbti.get(mbtiOrder.get(13))}"
+                                th:text="${mbti.get(mbtiOrder.get(13))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti15" th:value="${mbtiOrder.get(14)}" th:text="${mbtiOrder.get(14)}">
+                            <td id="mbtiN15" th:value="${mbti.get(mbtiOrder.get(14))}"
+                                th:text="${mbti.get(mbtiOrder.get(14))}">
+                        </tr>
+
+                        <tr>
+                            <td id="mbti16" th:value="${mbtiOrder.get(15)}" th:text="${mbtiOrder.get(15)}">
+                            <td id="mbtiN16" th:value="${mbti.get(mbtiOrder.get(15))}"
+                                th:text="${mbti.get(mbtiOrder.get(15))}">
+                        </tr>
+
+                    </table>
+                </div>
+
             </div>
-            </div>
-
-            <div class="col-4">
-                <table>
-                    <tr>
-                        <td id="mbti1" th:value="${mbtiOrder.get(0)}" th:text="${mbtiOrder.get(0)}">
-                        <td id="mbtiN1" th:value="${mbti.get(mbtiOrder.get(0))}" th:text="${mbti.get(mbtiOrder.get(0))}">
-                    </tr>
-                    <tr>
-                        <td id="mbti2" th:value="${mbtiOrder.get(1)}" th:text="${mbtiOrder.get(1)}">
-                        <td id="mbtiN2" th:value="${mbti.get(mbtiOrder.get(1))}" th:text="${mbti.get(mbtiOrder.get(1))}">
-                    </tr>
-
-
-
-                    <tr>
-                    <td id="mbti3" th:value="${mbtiOrder.get(2)}" th:text="${mbtiOrder.get(2)}">
-                    <td id="mbtiN3" th:value="${mbti.get(mbtiOrder.get(2))}" th:text="${mbti.get(mbtiOrder.get(2))}">
-                    </tr>
-                    <tr>
-                    <td id="mbti4" th:value="${mbtiOrder.get(3)}" th:text="${mbtiOrder.get(3)}">
-                    <td id="mbtiN4" th:value="${mbti.get(mbtiOrder.get(3))}" th:text="${mbti.get(mbtiOrder.get(3))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti5" th:value="${mbtiOrder.get(4)}" th:text="${mbtiOrder.get(4)}">
-                    <td id="mbtiN5" th:value="${mbti.get(mbtiOrder.get(4))}" th:text="${mbti.get(mbtiOrder.get(4))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti6" th:value="${mbtiOrder.get(5)}" th:text="${mbtiOrder.get(5)}">
-                    <td id="mbtiN6" th:value="${mbti.get(mbtiOrder.get(5))}" th:text="${mbti.get(mbtiOrder.get(5))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti7" th:value="${mbtiOrder.get(6)}" th:text="${mbtiOrder.get(6)}">
-                    <td id="mbtiN7" th:value="${mbti.get(mbtiOrder.get(6))}" th:text="${mbti.get(mbtiOrder.get(6))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti8" th:value="${mbtiOrder.get(7)}" th:text="${mbtiOrder.get(7)}">
-                    <td id="mbtiN8" th:value="${mbti.get(mbtiOrder.get(7))}" th:text="${mbti.get(mbtiOrder.get(7))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti9" th:value="${mbtiOrder.get(8)}" th:text="${mbtiOrder.get(8)}">
-                    <td id="mbtiN9" th:value="${mbti.get(mbtiOrder.get(8))}" th:text="${mbti.get(mbtiOrder.get(8))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti10" th:value="${mbtiOrder.get(9)}" th:text="${mbtiOrder.get(9)}">
-                    <td id="mbtiN10" th:value="${mbti.get(mbtiOrder.get(9))}" th:text="${mbti.get(mbtiOrder.get(9))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti11" th:value="${mbtiOrder.get(10)}" th:text="${mbtiOrder.get(10)}">
-                    <td id="mbtiN11" th:value="${mbti.get(mbtiOrder.get(10))}" th:text="${mbti.get(mbtiOrder.get(10))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti12" th:value="${mbtiOrder.get(11)}" th:text="${mbtiOrder.get(11)}">
-                    <td id="mbtiN12" th:value="${mbti.get(mbtiOrder.get(11))}" th:text="${mbti.get(mbtiOrder.get(11))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti13" th:value="${mbtiOrder.get(12)}" th:text="${mbtiOrder.get(12)}">
-                    <td id="mbtiN13" th:value="${mbti.get(mbtiOrder.get(12))}" th:text="${mbti.get(mbtiOrder.get(12))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti14" th:value="${mbtiOrder.get(13)}" th:text="${mbtiOrder.get(13)}">
-                    <td id="mbtiN14" th:value="${mbti.get(mbtiOrder.get(13))}" th:text="${mbti.get(mbtiOrder.get(13))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti15" th:value="${mbtiOrder.get(14)}" th:text="${mbtiOrder.get(14)}">
-                    <td id="mbtiN15" th:value="${mbti.get(mbtiOrder.get(14))}" th:text="${mbti.get(mbtiOrder.get(14))}">
-                    </tr>
-
-                    <tr>
-                    <td id="mbti16" th:value="${mbtiOrder.get(15)}" th:text="${mbtiOrder.get(15)}">
-                    <td id="mbtiN16" th:value="${mbti.get(mbtiOrder.get(15))}" th:text="${mbti.get(mbtiOrder.get(15))}">
-                    </tr>
-
-                </table>
-            </div>
-
-            </div>
-
 
 
         </div>
@@ -198,8 +216,8 @@
 
     let pieChartData = {
         labels: [
-            mbti1, mbti2, mbti3, mbti4, mbti5, mbti6, mbti7, mbti8, mbti9, mbti10,mbti11, mbti12, mbti13, mbti14, mbti15, mbti16,
-    ],
+            mbti1, mbti2, mbti3, mbti4, mbti5, mbti6, mbti7, mbti8, mbti9, mbti10, mbti11, mbti12, mbti13, mbti14, mbti15, mbti16,
+        ],
         datasets: [{
             data: [
                 mbtiN1, mbtiN2, mbtiN3, mbtiN4, mbtiN5, mbtiN6, mbtiN7, mbtiN8,
