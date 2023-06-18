@@ -1,9 +1,12 @@
 package com.tastemate.service;
 
+import com.tastemate.dao.board.BoardDao;
 import com.tastemate.domain.InicisVO;
 import com.tastemate.domain.KakaoPayApprovalVO;
 import com.tastemate.domain.MemberVO;
+import com.tastemate.domain.board.BoardVO;
 import com.tastemate.mapper.StatMapper;
+import com.tastemate.service.board.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ public class StatService {
 
     @Autowired
     private StatMapper statMapper;
+
 
     public List<InicisVO> priceAmountInicis(int month) {
         System.out.println("month = " + month);
@@ -55,6 +59,23 @@ public class StatService {
 
 
         return memberMbti;
+    }
+
+    public List<BoardVO> adminBoard () {
+        List<BoardVO> admin = statMapper.adminBoard();
+        return admin;
+    }
+
+    public List<BoardVO> bestBoard(){
+        List<BoardVO> bestBoard = statMapper.bestBoard();
+
+        return bestBoard;
+    }
+
+    public List<BoardVO> bestTwenty(){
+        List<BoardVO> bestTwenty = statMapper.bestTwenty();
+
+        return bestTwenty;
     }
 
 

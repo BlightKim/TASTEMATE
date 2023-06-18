@@ -31,6 +31,18 @@
         select user_mbti, count(user_mbti) as user_status from member group by user_mbti order by user_status desc
     </select>
 
+    <select id="adminBoard" resultType="com.tastemate.domain.board.BoardVO">
+        select * from board where user_idx = 20
+    </select>
+
+    <select id="bestBoard" resultType="com.tastemate.domain.board.BoardVO">
+        select * from board where board_like = (select max(board_like) from board)
+    </select>
+
+    <select id="bestTwenty" resultType="com.tastemate.domain.board.BoardVO">
+        select * from (select * from board  order by board_like desc ) board where rownum <![CDATA[<= 20]]>
+    </select>
+
 
 
 </mapper>

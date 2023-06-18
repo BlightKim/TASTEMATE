@@ -1,13 +1,11 @@
 package com.tastemate.controller;
 
 import com.tastemate.domain.*;
+import com.tastemate.domain.board.BoardVO;
 import com.tastemate.domain.paging.Criteria;
 import com.tastemate.domain.paging.PageDTO;
-import com.tastemate.service.BookingService;
-import com.tastemate.service.BookmarkService;
+import com.tastemate.service.*;
 import com.tastemate.mapper.MemberMapper;
-import com.tastemate.service.PaymentService;
-import com.tastemate.service.StoreService;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +42,9 @@ public class StoreController {
 
     @Autowired
     private PaymentService paymentService;
+
+    @Autowired
+    private StatService statService;
 
 
 
@@ -302,6 +303,11 @@ public class StoreController {
     @GetMapping("/main")
     public void main(Model model){
         StoreVO storeVO = service.getStoreHighestStar();
+        List<BoardVO> adminBoard = statService.adminBoard();
+        List<BoardVO> bestBoard = statService.bestBoard();
+
+        model.addAttribute("bestBoard", bestBoard);
+        model.addAttribute("adminBoard", adminBoard);
         model.addAttribute("storeVO", storeVO);
     }
 
