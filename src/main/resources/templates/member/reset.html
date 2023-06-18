@@ -86,6 +86,7 @@
             $('#password2_warning').removeAttr('hidden', 'hidden');
             $('#password2_warning').html(
                 '<b style="font-size: 14px; color:red">[입력한 비밀번호가 일치하지 않습니다.]</b>');
+            pwd2Chk = false;
         } else {
             $('#password2_warning').attr('hidden', 'hidden');
             pwd2Chk = true;
@@ -103,7 +104,7 @@
             return false;
         }
 
-        if (pwd2Chk === false) {
+        if ($("#userPwd").val() != $("#userPwd2").val()) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',

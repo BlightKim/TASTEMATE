@@ -52,25 +52,18 @@ public class MemberController {
 
     // login 홈페이지 POST
     @PostMapping("login")
-    public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/store/main") String redirectURL,
-                            RedirectAttributes rttr) {
+    public String loginPost(Model model, HttpServletRequest request, HttpSession session, @RequestParam(name = "redirectURL", defaultValue = "/store/main") String redirectURL) {
+        System.out.println("redirectURL = " + redirectURL);
         MemberVO sessionVo = (MemberVO) session.getAttribute("sessionVo");
         System.out.println("sessionVo = " + sessionVo);
         String userId = request.getParameter("userId");
         String userPwd = request.getParameter("userPwd");
         System.out.println("userId = " + userId);
         System.out.println("userPwd = " + userPwd);
-        MemberVO vo = null;
-
-        if (service.loginId(userId) != null) {
-            vo = service.loginId(userId);
-        } else {
-            return "redirect:/member/login/loginForm";
-        }
+        MemberVO vo = service.loginId(userId);
 
         String[] addressSplit = vo.getUserAddress().split(",");
 
-        if (sessionVo == null) {
             if (vo.getUserStatus() == 0) {
                 if (passwordEncoder.matches(userPwd, vo.getUserPwd())) {
                     session.setAttribute("vo", vo);
@@ -79,21 +72,19 @@ public class MemberController {
                     System.out.println(vo.getUserPwd());
 
                     if (vo.getUserType() == 0) {
-                        return "redirect:/manage/main";
+                        return "/manage/main";
                     } else {
+                        System.out.println("redirectURL = " + redirectURL);
                         return "redirect:" + redirectURL;
                     }
                 } else {
                     System.out.println("비밀번호가 다릅니다.");
-                    return "redirect:/member/login/loginForm";
+                    return "/member/login/loginForm";
                 }
             } else {
                 System.out.println("휴면상태의 아이디입니다.");
-                return "redirect:/member/login/loginForm";
+                return "/member/login/loginForm";
             }
-        } else {
-            return "redirect:" + redirectURL;
-        }
 
     }
 
@@ -311,7 +302,7 @@ public class MemberController {
         session.setAttribute("addressSplit", addressSplit);
 
         session.setAttribute("vo", vo);
-        return "member/login/mypage";
+        return "member/login/myPage";
     }
 
     @PostMapping("modify")
