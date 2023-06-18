@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>store list</title>
+    <style>
+        table, th, td {
+            margin: auto;
+            padding: 3px 20px;
+        }
+
+        .space {
+            padding-top: 15px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+            background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+        }
+
+        .input-form {
+            /*max-width: 680px;*/
+
+            margin-top: 80px;
+            margin-bottom: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+
+        th, td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+
+            <!-- 관리자 미니 해더-->
+            <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
+
+
+            <div style="width: 900px; height: 500px;">
+                <!--차트가 그려질 부분-->
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <h3>이번 달 매출</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>맛집</th>
+                    <th>매출액</th>
+                    <th>결제건수</th>
+                </tr>
+                <tr th:each="kakao : ${statMonthKakao.get(thisMonth)}">
+                    <th:block th:each="inicis : ${statMonthInicisKakao.get(thisMonth)}">
+                        <td>[[${kakao.storeName}]]</td>
+                        <td th:text="${inicis.storeName == kakao.storeName ? kakao.amount + inicis.amount : kakao.amount}"></td>
+                        <td th:text="${inicis.storeName == kakao.storeName ? kakao.count + inicis.count : kakao.count}"></td>
+                    </th:block>
+                </tr>
+                <tr th:each="inicis : ${statMonthInicis.get(thisMonth)}">
+                    <td>[[${inicis.storeName}]]</td>
+                    <td>[[${inicis.amount}]]</td>
+                    <td>[[${inicis.count}]]</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script type="text/javascript">
+    var context = document
+        .getElementById('myChart')
+        .getContext('2d');
+    var myChart = new Chart(context, {
+        type: 'bar', // 차트의 형태
+        data: { // 차트에 들어갈 데이터
+            labels: [
+                //x 축
+                '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'
+            ],
+            datasets: [
+                { //데이터
+                    label: '월별 매출', //차트 제목
+                    fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                    data: [
+                        [[${monthTotalAmount.get(1)}]],
+                        [[${monthTotalAmount.get(2)}]],
+                        [[${monthTotalAmount.get(3)}]],
+                        [[${monthTotalAmount.get(4)}]],
+                        [[${monthTotalAmount.get(5)}]],
+                        [[${monthTotalAmount.get(6)}]],
+                        [[${monthTotalAmount.get(7)}]],
+                        [[${monthTotalAmount.get(8)}]],
+                        [[${monthTotalAmount.get(9)}]],
+                        [[${monthTotalAmount.get(10)}]],
+                        [[${monthTotalAmount.get(11)}]],
+                        [[${monthTotalAmount.get(12)}]]    //x축 label에 대응되는 데이터 값
+                    ],
+                    backgroundColor: [
+                        //색상
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        //경계선 색상
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1 //경계선 굵기
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }
+                ]
+            }
+        }
+    });
+</script>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

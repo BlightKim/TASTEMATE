@@ -120,4 +120,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="closeChatRoom">
         UPDATE MEMBER SET ROOM_IDX = null WHERE USER_IDX = #{userIdx}
     </update>
+
+    <!--별점주기 위해 추가-->
+    <select id="findRoomIdx" parameterType="int" resultType="int">
+        SELECT ROOM_IDX
+        FROM Member
+        where USER_IDX = #{userIdx}
+    </select>
+
+    <select id="findMatchingUserIdx" parameterType="int" resultType="int">
+        SELECT USER_IDX
+        FROM Member
+        where ROOM_IDX = #{roomIdx}
+        AND USER_IDX != #{userIdx}
+    </select>
+
+
 </mapper>
