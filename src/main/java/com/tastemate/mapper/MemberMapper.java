@@ -40,4 +40,8 @@ public interface MemberMapper {
         public List<MemberVO> user_getWithStar(int userClass);
 
 
-    }
+        //별점주기 위해 추가
+        int findRoomIdx(int userIdx);
+
+        int findMatchingUserIdx(int roomIdx, int userIdx);
+}
