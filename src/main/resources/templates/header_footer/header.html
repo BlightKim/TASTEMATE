@@ -107,10 +107,11 @@
             <li><a href="/board">게시판</a></li>
 
             <div class="ml-auto">
-
-
-
                 <span th:unless="${session.vo != null}">
+                <button class="btn btn-outline-dark ml-2" type="button"
+                        th:onclick="|location.href='@{/member/login}'|">
+                로그인
+                </button>
                 <button class="btn btn-outline-dark ml-2" type="button"
                         th:onclick="|location.href='@{/member/simpleregister}'|">
                 회원가입

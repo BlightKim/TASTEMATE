@@ -142,9 +142,8 @@
                              <input class="form-control" name="storeComment" type="text" placeholder="댓글 입력..." required>
                          </div>
                          <div class="form-group col-sm-3">
-                             <!--<input class="form-control" name="userIdx" type="text" th:value="${session.vo.getUserName()}">-->
                              <input class="form-control" placeholder="익명입니다!" readonly="readonly">
-                             <input type="hidden" name="userIdx" th:value="${session.vo.getUserIdx()}">
+                             <input type="hidden" name="userIdx" th:value="${matchingUserIdx}">
                             <!--  실제는 세션값이 아니지!!! 상대방에 대한 값을 넣어야 함!!!-->
                              <input type="hidden" id="bookingIdx" name= "bookingIdx" th:value="${bookingIdx}">
                          </div>

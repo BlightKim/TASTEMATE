@@ -239,7 +239,21 @@ public class StoreController {
 
     @GetMapping("/starComment")
     public void starComment(String storeIdx, String inicisIdx,
-                            String kakaoApprovalIdx, Model model, int bookingIdx){
+                            String kakaoApprovalIdx, Model model, int bookingIdx
+                            , HttpSession session){
+
+
+        /* 상대방 별점주기 위해 추가 */
+        MemberVO memberVO = (MemberVO) session.getAttribute("vo");
+        log.info("memberVO : " + memberVO);
+
+        int roomIdx = memberMapper.findRoomIdx(memberVO.getUserIdx());
+        log.info("roomIdx : " + roomIdx);
+
+        int matchingUserIdx = memberMapper.findMatchingUserIdx(roomIdx, memberVO.getUserIdx());
+        log.info("matchingUserIdx : " + matchingUserIdx);
+
+
 
         log.info("storeIdx : "+ storeIdx);
         log.info("inicisIdx : "+ inicisIdx);
@@ -249,6 +263,7 @@ public class StoreController {
         model.addAttribute("inicisIdx",inicisIdx);
         model.addAttribute("bookingIdx", bookingIdx);
         model.addAttribute("kakaoApprovalIdx",kakaoApprovalIdx);
+        model.addAttribute("matchingUserIdx",matchingUserIdx);
 
     }
 

@@ -132,7 +132,7 @@ public class MemberController {
 
         System.out.println("(userGet)vo = " + vo);
 
-        if (!(vo == null)) {
+        if (vo != null) {
             return "member/reset";
         }
         return "member/resetPassword";
@@ -182,9 +182,9 @@ public class MemberController {
 
     // 회원가입
     @PostMapping("/userJoin")
-    public String registerMember(MemberVO vo, MultipartFile oriProfile) {
+    public String registerMember(MemberVO vo, MultipartFile oriFilename) {
         log.info("userJoin도착");
-        service.user_join(vo, oriProfile);
+        service.user_join(vo, oriFilename);
         return "redirect:/store/main";
     }
 
@@ -293,7 +293,7 @@ public class MemberController {
     }
 
     @PostMapping("modify")
-    public String userModify(MemberVO vo, MultipartFile oriProfile, HttpServletRequest request, HttpSession session,
+    public String userModify(MemberVO vo, MultipartFile oriFilename, HttpServletRequest request, HttpSession session,
                              RedirectAttributes rttr) {
         MemberVO sessionVO = (MemberVO) session.getAttribute("vo");
         session.setAttribute("sessionVO", sessionVO);
@@ -306,7 +306,7 @@ public class MemberController {
         session.setAttribute("addressSplit", addressSplit);
 
         log.info("modify도착");
-        service.userModify(sessionVO, oriProfile, session, request);
+        service.userModify(sessionVO, oriFilename, session, request);
 
         String wow = "complete";
         rttr.addFlashAttribute("message", wow);
