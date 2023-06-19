@@ -98,7 +98,7 @@ oriFilename-->
           <!-- userIdx 세션에서 넣어줘. 등록한 사람만 수정, 삭제할 수 있게 insert 해야함 -->
           <div class="col-md-4 mb-3">
             <label for="userIdx">예약자 성명</label>
-              <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" th:readonly>
+              <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" readonly>
               <input type="hidden" class="form-control" id="userIdx" name="userIdx" th:value="${session.vo.getUserIdx()}">
             <input type="hidden" class="form-control" id="userId" name="userId" th:value="${userId}">
           </div>

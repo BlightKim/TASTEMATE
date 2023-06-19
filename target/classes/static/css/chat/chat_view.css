@@ -1103,3 +1103,7 @@ span.status-circle:before {
 .tk-proxima-nova {
   font-family: "proxima-nova", sans-serif;
 }
+.announcement-area {
+  background-color: #33333329;
+  padding: 15px;
+}

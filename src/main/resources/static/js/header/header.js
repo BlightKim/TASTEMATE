@@ -24,7 +24,7 @@ $(document).ready(function () {
     let receiver = $(this).data("receiver");
     let roomName = `${sender}With${receiver}`;
     let content = `${sender}님이 ${receiver}님과 대화를 하고 싶습니다.`;
-    let url = "http://10.10.15.73:8080/chat/createRoom?roomName=" + roomName;
+    let url = "http://192.168.1.124:8080/chat/createRoom?roomName=" + roomName;
     let data = {
       sender: sender,
       receiver: receiver,

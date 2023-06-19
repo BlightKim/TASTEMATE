@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97104695-087b-4101-8889-d7fb2548d7ad" name="Changes" comment="### 제목&#10;# 커밋 타입: 작업내용 (제목과 본문은 한 줄 띄워주세요)&#10;&#10;&#10;### 본문 - 한 줄에 최대 72 글자까지만 입력하기  &#10;# 무엇을, 왜, 어떻게 했는지&#10;&#10;&#10;# 꼬리말&#10;# (선택) 이슈번호 작성&#10;&#10;#   [커밋 타입]  리스트&#10;#   feat      : 기능 (새로운 기능)&#10;#   fix       : 버그 (버그 수정)&#10;#   design    : CSS 등 사용자 UI 디자인 변경&#10;#   refactor  : 리팩토링&#10;#   style     : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)&#10;#   docs      : 문서 (문서 추가, 수정, 삭제)&#10;#   test      : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#   chore     : 기타 변경사항 (빌드 스크립트 수정 등)&#10;#   post      : 블로그 포스트 추가 (신규 포스트 작성 및 수정)&#10;#   rename    : 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우&#10;#   remove    : 파일을 삭제하는 작업만 수행한 경우&#10;# ------------------&#10;#   [체크리스트]&#10;#     제목 첫 글자는 대문자로 작성했나요?&#10;#     제목은 명령문으로 작성했나요?&#10;#     제목 끝에 마침표(.) 금지&#10;#     제목과 본문을 한 줄 띄워 분리하기&#10;#     본문에 여러줄의 메시지를 작성할 땐 &quot;-&quot;로 구분했나요?&#10;# ------------------">
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/board/board_read.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/board/board_read.html" afterDir="false" />
 
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,8 +26,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitToolBoxStore">
-    <option name="projectConfigVersion" value="5" />
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="recentNewPullRequestHead">
+      <RepoCoordinatesHolder>
+        <option name="owner" value="BlightKim" />
+        <option name="repository" value="TASTEMATE" />
+      </RepoCoordinatesHolder>
+    </option>
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="811121db-20af-41af-a056-8a8d35f1ee7b" />
+        <option name="url" value="https://github.com/BlightKim/TASTEMATE.git" />
+      </UrlAndAccount>
+    </option>
+
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -45,35 +60,35 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;sebin&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/ksebin/IdeaProjects/TASTEMATE&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\ksb96\\AppData\\Roaming\\npm\\node_modules\\prettier&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;85a498ff2d292a3e204b7f6a0155dea4&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "sebin",
+    "last_opened_file_path": "C:/Users/ksb96/IdeaProjects/basicsecurity",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\ksb96\\AppData\\Roaming\\npm\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "85a498ff2d292a3e204b7f6a0155dea4",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect&quot;: [
-      &quot;Oracle&quot;
+  "keyToStringList": {
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "Oracle"
     ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="debugInitializationType" value="HOOKS" />
     <option name="notificationShown" value="true" />
@@ -120,7 +135,6 @@
       <workItem from="1687151427896" duration="174000" />
       <workItem from="1687151618065" duration="982000" />
       <workItem from="1687152766706" duration="3994000" />
-
     </task>
     <task id="LOCAL-00001" summary="2023-06-12">
       <created>1686575200692</created>
@@ -136,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686575523117</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="board_read 수정">
+      <created>1687156876409</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1687156876409</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -146,6 +167,21 @@
     <option name="OPEN_GENERIC_TABS">
       <map>
         <entry key="decb5dc2-0cc7-4bdc-92cf-54b68633d10a" value="TOOL_WINDOW" />
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
       </map>
     </option>
     <option name="TAB_STATES">
@@ -175,6 +211,17 @@
                   <entry key="Show.Git.Branches" value="true" />
                 </map>
               </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="user">
+                    <value>
+                      <list>
+                        <option value="*" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
             </State>
           </value>
         </entry>
@@ -183,7 +230,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="2023-06-12" />
-    <option name="LAST_COMMIT_MESSAGE" value="2023-06-12" />
+    <MESSAGE value="board_read 수정" />
+    <MESSAGE value="### 제목&#10;# 커밋 타입: 작업내용 (제목과 본문은 한 줄 띄워주세요)&#10;&#10;&#10;### 본문 - 한 줄에 최대 72 글자까지만 입력하기  &#10;# 무엇을, 왜, 어떻게 했는지&#10;&#10;&#10;# 꼬리말&#10;# (선택) 이슈번호 작성&#10;&#10;#   [커밋 타입]  리스트&#10;#   feat      : 기능 (새로운 기능)&#10;#   fix       : 버그 (버그 수정)&#10;#   design    : CSS 등 사용자 UI 디자인 변경&#10;#   refactor  : 리팩토링&#10;#   style     : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)&#10;#   docs      : 문서 (문서 추가, 수정, 삭제)&#10;#   test      : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#   chore     : 기타 변경사항 (빌드 스크립트 수정 등)&#10;#   post      : 블로그 포스트 추가 (신규 포스트 작성 및 수정)&#10;#   rename    : 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우&#10;#   remove    : 파일을 삭제하는 작업만 수행한 경우&#10;# ------------------&#10;#   [체크리스트]&#10;#     제목 첫 글자는 대문자로 작성했나요?&#10;#     제목은 명령문으로 작성했나요?&#10;#     제목 끝에 마침표(.) 금지&#10;#     제목과 본문을 한 줄 띄워 분리하기&#10;#     본문에 여러줄의 메시지를 작성할 땐 &quot;-&quot;로 구분했나요?&#10;# ------------------" />
+    <option name="LAST_COMMIT_MESSAGE" value="### 제목&#10;# 커밋 타입: 작업내용 (제목과 본문은 한 줄 띄워주세요)&#10;&#10;&#10;### 본문 - 한 줄에 최대 72 글자까지만 입력하기  &#10;# 무엇을, 왜, 어떻게 했는지&#10;&#10;&#10;# 꼬리말&#10;# (선택) 이슈번호 작성&#10;&#10;#   [커밋 타입]  리스트&#10;#   feat      : 기능 (새로운 기능)&#10;#   fix       : 버그 (버그 수정)&#10;#   design    : CSS 등 사용자 UI 디자인 변경&#10;#   refactor  : 리팩토링&#10;#   style     : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)&#10;#   docs      : 문서 (문서 추가, 수정, 삭제)&#10;#   test      : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#   chore     : 기타 변경사항 (빌드 스크립트 수정 등)&#10;#   post      : 블로그 포스트 추가 (신규 포스트 작성 및 수정)&#10;#   rename    : 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우&#10;#   remove    : 파일을 삭제하는 작업만 수행한 경우&#10;# ------------------&#10;#   [체크리스트]&#10;#     제목 첫 글자는 대문자로 작성했나요?&#10;#     제목은 명령문으로 작성했나요?&#10;#     제목 끝에 마침표(.) 금지&#10;#     제목과 본문을 한 줄 띄워 분리하기&#10;#     본문에 여러줄의 메시지를 작성할 땐 &quot;-&quot;로 구분했나요?&#10;# ------------------" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
