@@ -84,12 +84,11 @@
 <h3>나의 TasteMate 찾기</h3>
   <br>
   <th:block th:if="${session.vo != null}">
-    <a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-lg">TasteMate 찾기</a>
+    <a th:href="@{/chat/showChatRoom}" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-lg">TasteMate 찾기</a>
   </th:block>
   <th:block th:if="${session.vo == null}">
-    <a th:href="@{../member/login}" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-lg">TasteMate 찾기</a>
+    <a th:href="@{/member/login?redirectURL='/chat/showChatRoom'}" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-lg">TasteMate 찾기</a>
   </th:block>
-
   <br><br><br>
 </div>
 
