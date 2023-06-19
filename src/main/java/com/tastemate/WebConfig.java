@@ -33,7 +33,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/list",
             "/store/main", "/stomp/chat/**",
             "/member/resetPassword", "/member/reset", "/member/checkId", "/tastemate",
-            "/member/tastemate",
+            "/member/tastemate", "C:/**", "*/*.png",
             "/member/resetSuccess", "/member/mailConfirm", "/member/sweetalert2.min.css",
             "/bookmark/get",
             "/store/**.jpg", "/store/**.jpeg", "store/**.jpg", "/store/list**", "/chat/joinRoom",

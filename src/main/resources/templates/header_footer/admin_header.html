@@ -96,12 +96,12 @@
   <header class="header">
     <!--        <h1 class="header__logo">TasteMate</h1>-->
     <div>
-      <img th:src="@{/img/headerLogo.png}" class="header__logo" />
+      <a th:href="@{/store/main}"><img th:src="@{/img/headerLogo.png}" class="header__logo"/></a>
       <!--        <img th:src="@{/img/헤더용로고_보라_2단.png}" class="header__logo"/>-->
     </div>
 
     <ul class="header__navigation">
-      <li><a href="/store/list">맛집</a></li>
+<!--      <li><a href="/store/list">맛집</a></li>
       <th:block th:if="${session.vo != null }">
         <li>
           <a
@@ -117,7 +117,7 @@
           >
         </li>
       </th:block>
-      <li><a href="#">꿀팁</a></li>
+      <li><a href="#">꿀팁</a></li>-->
       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">관리자모드</a>
         <div class="dropdown-menu">
           <h5 class="dropdown-header" style="color:#8E48C7;"><i class="fa fa-cloud"></i> 맛집 등록</h5>

@@ -98,7 +98,7 @@ oriFilename-->
           <!-- userIdx 세션에서 넣어줘. 등록한 사람만 수정, 삭제할 수 있게 insert 해야함 -->
           <div class="col-md-4 mb-3">
             <label for="userIdx">예약자 성명</label>
-              <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" th:readonly>
+              <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" readonly>
               <input type="hidden" class="form-control" id="userIdx" name="userIdx" th:value="${session.vo.getUserIdx()}">
             <input type="hidden" class="form-control" id="userId" name="userId" th:value="${userId}">
           </div>
@@ -170,16 +170,9 @@ oriFilename-->
           <div class="mb-3">
 <!--              <label for="onsitePayment">현장결제</label>-->
               <div class="mb-3">
-                  <div class="form-group">
-                    <p id="onsitePayment">현장결제로 결제하시겠습니까?</p>
-                    <label><input type="radio" name="onsitePayment" th:value="1" required> 네 </label>
-                    <label><input type="radio" name="onsitePayment" th:value="0"> 아니요</label>
-<!--                      <select class="form-control" id="onsitePayment" name="onsitePayment">-->
-<!--                          <option selected disabled>현장결제로 결제하시겠습니까?</option>-->
-<!--                          <option value="0">네</option>-->
-<!--                          <option value="1">아니요</option>-->
-<!--                      </select>-->
-                  </div>
+                <div class="form-group">
+                  <input type="hidden" name="onsitePayment" th:value="0">
+                </div>
               </div>
           </div>
 

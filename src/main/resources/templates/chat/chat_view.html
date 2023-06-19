@@ -80,13 +80,29 @@
 <div id="frame">
   <div class="content">
     <div class="contact-profile">
-      <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt=""/>
+      <img src="/img/tastemate.jpeg" alt=""/>
       <p th:text="${yourId}">Harvey Specter</p>
     </div>
     <div class="messages" id="messages">
       <ul th:id="messageList" th:class="messageList">
         <li>
-          asdasasdasdasd
+          <div class="announcement-area">
+            TasteMate의 채팅방은 일회성으로, 대화 내용 및 대화 상대 저장이 되지 않습니다. 매칭이 되어 채팅이 시작된 경우 하단의 사항을 확인하시어 맛집 예약을 해주시길 바랍니다. <br/><br/>
+
+            1. TasteMate의 맛집 목록을 확인하신 후 식사하실 맛집을 상의해주세요.<br/><br/>
+
+            2. 맛집을 고르셨다면 예약하기 버튼을 클릭하여 예약 가능한 날짜/ 시간/ 테이블 번호를 확인하세요.<br/><br/>
+
+            3. 예약 가능한 날짜 / 시간 / 테이블 번호를 채팅을 통해 서로 공유하여 같은 맛집, 같은 시간대, 같은 테이블로 예약해주세요.<br/>
+            (한 테이블에 2명의 사람이 예약 가능하며, 한 분만 테이블 예약에 성공하시고 다른 분은 해당 테이블 예약이 불가능하다면 이미 선점된 테이블이므로 두 분 모두 예약을 취소하시고 다른 테이블로 다시 예약해주세요.)<br/><br/>
+
+            4. 서로 예약 내역을 채팅으로 확인한 후 만날 장소를 정해주세요.<br/>
+            (예 : 강의장에서 같이 맛집으로 가기 / 맛집 앞에서 예약 시간에 만나기 등)<br/><br/>
+
+            5.  예약이 완료되고 만날 장소 등을 정하셨다면 채팅방 이용을 종료해주세요.<br/><br/>
+
+            즐거운 식사 시간이 되시기를 바랍니다. 감사합니다.
+          </div>
         </li>
       </ul>
     </div>
@@ -130,7 +146,7 @@
 
     // Create an 'img' element
     var imgElement = document.createElement("img");
-    imgElement.setAttribute("src", "http://emilcarlsson.se/assets/mikeross.png");
+    imgElement.setAttribute("src", "/img/tastemate.jpeg");
     imgElement.setAttribute("alt", isMe ? myId : yourId); // Added alt based on 'isMe' value
 
     // Create a 'p' element

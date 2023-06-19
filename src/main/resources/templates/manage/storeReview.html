@@ -73,7 +73,7 @@
     }
 
     .padding-left {
-      padding-left: 300px;
+      padding-left: 60px;
     }
 
   </style>
@@ -176,7 +176,7 @@
 
                     <input type="hidden" name="storeIdx" th:value="${storeRegView.storeIdx}">
 
-                    <div class="col-sm padding-left">
+                    <div class="col-sm padding-left" style="display: flex; justify-content: flex-end;">
                         <span>
                         <button onclick="viewUserReview(this.form)" class="btn text-white btn-sm"
                                 style="background-color: #E9DFED">수정</button>
@@ -188,6 +188,8 @@
                 </form>
               </div>
             </div>
+
+
 
 
             <span th:if="${manageStarVOList.size() == 0}">
