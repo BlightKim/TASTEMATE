@@ -48,6 +48,9 @@
         th, td {
             text-align: center;
         }
+        .chart-div {
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
@@ -60,7 +63,6 @@
             <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
             <div class="row">
                 <div class="col-8">
-
                     <div class="chart-div">
                         <canvas id="doughnut-chart" width="600px" height="600px"></canvas>
                     </div>
@@ -165,6 +167,25 @@
                             <td th:value="${mbtiOrder.get(15)}" th:text="${mbtiOrder.get(15)}">
                             <td th:value="${mbti.get(mbtiOrder.get(15))}"
                                 th:text="${mbti.get(mbtiOrder.get(15))}">
+                        </tr>
+                        <tr>
+                            <td>총계</td>
+                            <td th:text="${mbti.get(mbtiOrder.get(0)) +
+                            mbti.get(mbtiOrder.get(1)) +
+                            mbti.get(mbtiOrder.get(2)) +
+                            mbti.get(mbtiOrder.get(3)) +
+                            mbti.get(mbtiOrder.get(4)) +
+                            mbti.get(mbtiOrder.get(5)) +
+                            mbti.get(mbtiOrder.get(6)) +
+                            mbti.get(mbtiOrder.get(7)) +
+                            mbti.get(mbtiOrder.get(8)) +
+                            mbti.get(mbtiOrder.get(9)) +
+                            mbti.get(mbtiOrder.get(10)) +
+                            mbti.get(mbtiOrder.get(11)) +
+                            mbti.get(mbtiOrder.get(12)) +
+                            mbti.get(mbtiOrder.get(13)) +
+                            mbti.get(mbtiOrder.get(14)) +
+                            mbti.get(mbtiOrder.get(15))}">
                         </tr>
 
                     </table>
