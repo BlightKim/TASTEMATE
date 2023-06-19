@@ -180,14 +180,14 @@ $(document).ready(function () {
 
         $.ajax({
           type: "POST",
-          url: "/comments/update/" + $(this).data("comment-Idx"),
+          url: "/comments/update/" + $(this).data("comment-idx"),
           async: true,
           headers: {
             "Content-Type": "application/json",
           },
           dataType: "text",
           data: JSON.stringify({
-            commentIdx: $(this).data("comment-Idx"),
+            commentIdx: $(this).data("comment-idx"),
             commentContent: editedComment,
             boardIdx : boardIdx,
 
