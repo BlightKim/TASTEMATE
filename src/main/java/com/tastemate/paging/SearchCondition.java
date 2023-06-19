@@ -8,12 +8,13 @@ import static java.util.Objects.requireNonNullElse;
 
 @ToString
 public class SearchCondition {
-
+  private String order = "";
   private Integer page = 1;
   private Integer pageSize = DEFAULT_PAGE_SIZE;
   private String option = "";
   private String keyword = "";
   private Integer offset;
+  private String region;
   public static final int MIN_PAGE_SIZE = 5;
   public static final int DEFAULT_PAGE_SIZE = 5;
   public static final int MAX_PAGE_SIZE = 50;
@@ -22,10 +23,12 @@ public class SearchCondition {
   }
 
   public SearchCondition(Integer page, Integer pageSize) {
-    this(page, pageSize, "", "");
+    this("","recommend", page, pageSize, "", "");
   }
 
-  public SearchCondition(Integer page, Integer pageSize, String option, String keyword) {
+  public SearchCondition(String region,String order,Integer page, Integer pageSize, String option, String keyword) {
+    this.region = region;
+    this.order = order;
     this.page = page;
     this.pageSize = pageSize;
     this.option = option;
@@ -39,6 +42,8 @@ public class SearchCondition {
   public String getQueryString(Integer page) {
     // ?page=10&pageSize=10&option=A&keyword=title
     return UriComponentsBuilder.newInstance()
+        .queryParam("region", region)
+        .queryParam("order", order)
         .queryParam("page", page)
         .queryParam("pageSize", pageSize)
         .queryParam("option", option)
@@ -83,5 +88,21 @@ public class SearchCondition {
 
   public Integer getOffset() {
     return (page - 1) * pageSize;
+  }
+
+  public String getOrder() {
+    return order;
+  }
+
+  public String getRegion() {
+    return region;
+  }
+
+  public void setRegion(String region) {
+    this.region = region;
+  }
+
+  public void setOrder(String order) {
+    this.order = order;
   }
 }

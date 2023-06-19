@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>my class</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <style>
+        .yellow {
+            color : #FFA500;
+        }
+
+        .backgroundPurple {
+            background-color: #9C91B3;
+        }
+
+        .center {
+            text-align: center;
+            align-content: center;
+        }
+
+        .padding_left_20 {
+            padding-left: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--<td th:text="${storeVO}"></td>-->
+
+
+<div class="container py-4 mt-5">
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <h1 class="center">[[${userStar.get(0).getUserClass}]] 강의장</h1>
+        <br>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-2">
+            <p class="mb-2">이름</p>
+        </div>
+        <div class="col-2">
+            <p class="mb-2">별점</p>
+        </div>
+        <div class="col-2">
+            <p class="mb-2">좋아하는 음식</p>
+        </div>
+        <div class="col-2">
+            <p class="mb-2">MBTI</p>
+        </div>
+        <div class="col-2">
+            <p class="mb-2">성별</p>
+        </div>
+        <div class="col-1">
+        </div>
+    </div>
+
+
+    <hr>
+    <div th:each="memberVO : ${userStar}">
+        <div class="row">
+            <div class="col-1">
+                <p th:text="${memberVO.getUserProfile()}" class="mb-2"></p>
+            </div>
+            <div class="col-2">
+                <p class="mb-2 purple2">[[${memberVO.getUserName()}]]</p>
+            </div>
+            <div class="col-2">
+                <th:block th:if="${memberVO.getUserIdx() != session.vo.getUserIdx()}" th:with="starCount=${memberVO.starVO.userStar}">
+                    <span  class="yellow" th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}">★</span>
+                </th:block>
+            </div>
+            <div class="col-2">
+                <p th:text="${memberVO.getUserLikeFood()}" class="mb-2"></p>
+            </div>
+
+            <div class="col-2">
+                <div class="row">
+                    <div class="justify-content-start">
+                        <span style="display: inline-block; width: 40px" th:text="${memberVO.getUserMbti()}" class="mb-2"></span>
+                    </div>
+                    <div class="justify-content-end">
+                        <span style="display: inline-block; width: 5px"></span>
+                        <th:block th:if="${memberVO.getUserIdx() != session.vo.getUserIdx()}" th:with="heartCount=${idxAndMatch.get(memberVO.getUserIdx())}">
+                            <span class="red" th:if="${heartCount != 0.0}" th:each="i: ${#numbers.sequence(1, heartCount)}">♥</span>
+                        </th:block>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <p th:text="남자" th:if="${memberVO.getUserGender() == 0}" class="mb-2"></p>
+                <p th:text="여자" th:if="${memberVO.getUserGender() != 0}" class="mb-2"></p>
+            </div>
+            <div class="col-1">
+                <th:block th:if="${session.vo.getUserIdx() == memberVO.getUserIdx() }">
+                    <a href="#" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-sm" th:value="${memberVO.getUserIdx()}">매칭</a>
+                </th:block>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

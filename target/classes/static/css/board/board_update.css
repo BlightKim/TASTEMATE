@@ -1,0 +1,14 @@
+.head-border-bottom {
+  border-bottom: 1px solid #E9DFED!important;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 25px;
+}
+.form-container {
+}
+.update-form {
+  border-bottom: 1px solid #E9DFED!important;
+}

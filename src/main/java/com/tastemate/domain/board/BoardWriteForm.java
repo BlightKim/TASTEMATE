@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @ToString
 public class BoardWriteForm {
   private String title;
+  private String writer;
   private String content;
   private String password;
   private MultipartFile multipartFile;

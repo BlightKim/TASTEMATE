@@ -1,0 +1,42 @@
+/*
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+*/
+
+/*body {
+    font-family: 'Noto Serif KR', serif;
+}*/
+
+.image-container {
+    display: inline-block;
+    width: 23%;
+    margin: 10px;
+}
+
+.purple {
+    color: blueviolet;
+}
+
+.purple2 {
+    color : #601599;
+    /*color: blueviolet;*/
+}
+
+
+.gray {
+    color: gray;
+}
+
+.yellow {
+    color : #FFA500;
+}
+
+.red {
+    color : crimson;
+}
+
+/* 등록 폼 */
+
+
+

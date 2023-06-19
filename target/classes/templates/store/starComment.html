@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+
+  <style>
+    #main {
+      /*min-height: 100vh;*/
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+      background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+      background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+      background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+      background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+    }
+    .input-form {
+      max-width: 100%;
+
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+
+
+  .star{
+    display: flex;
+    direction: rtl;
+    border:0;
+
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center; /* 수직 정렬 */
+    margin-top: 1em; /* 상단 여백 조정 */
+
+  }
+  .star label {
+    font-size: 4em;
+    color: transparent;
+    text-shadow: 0 0 0 #f0f0f0;
+    text-align: center; /* 가운데 정렬 */
+    flex: 1;
+  }
+
+  .star legend {
+    text-align: center;
+  }
+  input[type=radio]{
+  display: none;
+  }
+  .star label:hover{
+  text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+  }
+  .star label:hover ~ label{
+  text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+  }
+  .star input[type=radio]:checked ~ label{
+  text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+  }
+  .disable {
+  background-color: darkgray;
+  }
+  .container2 {
+    width: 100%;
+  }
+  .yellow{
+    color : #FFA500;
+  }
+
+
+  </style>
+
+
+</head>
+<body>
+
+  <div class="text-center" id="main">
+    <div class="input-form-backgroud inputForm">
+
+      <form class="input-form" th:action="@{/store/starComment}" method="post" id="inputForm">
+
+        <h2 class="purple2 mt-4" >식사는 즐거우셨나요?</h2>
+
+        <div class="col-md-4 mb-3 mt-5 mx-auto">
+          <h5 class="yellow">맛집은 어땠나요?</h5>
+          <fieldset class="storeStar star">
+            <input type="radio" name="storeStar" value="5" id="storerate1">
+            <label for="storerate1" >★</label>
+            <input type="radio" name="storeStar" value="4" id="storerate2">
+            <label for="storerate2" >★</label>
+            <input type="radio" name="storeStar" value="3" id="storerate3">
+            <label for="storerate3" >★</label>
+            <input type="radio" name="storeStar" value="2" id="storerate4">
+            <label for="storerate4" >★</label>
+            <input type="radio" name="storeStar" value="1" id="storerate5">
+            <label for="storerate5" >★</label>
+          </fieldset>
+        </div>
+
+        <div class="col-md-4 mb-3 mt-5 mx-auto">
+          <h5 class="yellow">Mate는 어땠나요?</h5>
+          <fieldset class="userStar star">
+            <input type="radio" name="userStar" value="5" id="userrate1">
+            <label for="userrate1" >★</label>
+            <input type="radio" name="userStar" value="4" id="userrate2">
+            <label for="userrate2" >★</label>
+            <input type="radio" name="userStar" value="3" id="userrate3">
+            <label for="userrate3" >★</label>
+            <input type="radio" name="userStar" value="2" id="userrate4">
+            <label for="userrate4" >★</label>
+            <input type="radio" name="userStar" value="1" id="userrate5">
+            <label for="userrate5" >★</label>
+          </fieldset>
+        </div>
+
+
+        <div class="container2 mx-auto mt-5 ">
+             <div class="card mb-3">
+               <div class="card-header">
+                 <h7>맛집 평가를 남겨보세요 :)</h7>
+               </div>
+                 <div class="card-body">
+
+                     <div class="row">
+                         <div class="form-group col-sm-9">
+                             <input class="form-control" name="storeComment" type="text" placeholder="댓글 입력..." required>
+                         </div>
+                         <div class="form-group col-sm-3">
+                             <input class="form-control" placeholder="익명입니다!" readonly="readonly">
+                             <input type="hidden" name="userIdx" th:value="${matchingUserIdx}">
+                            <!--  실제는 세션값이 아니지!!! 상대방에 대한 값을 넣어야 함!!!-->
+                             <input type="hidden" id="bookingIdx" name= "bookingIdx" th:value="${bookingIdx}">
+                         </div>
+                     </div>
+
+                             <input type="hidden" name="storeIdx" th:value="${storeIdx}">
+
+
+                             <input type="hidden" name="inicisIdx" th:value="${inicisIdx}" th:if="${inicisIdx}">
+                             <input type="hidden" name="kakaoApprovalIdx" th:value="${kakaoApprovalIdx}" th:if="${kakaoApprovalIdx}">
+
+
+                 </div>
+             </div>
+
+
+            <button class="btn btn-primary" id="submitBtn">제출하기</button><br>
+
+
+        </div>
+
+      </form>
+    </div>
+</div>
+
+  <!-- 제출 확인 모달 -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h6 class="modal-title" id="confirmationModalLabel"></h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div  class="modal-body">
+                  제출하시겠습니까?
+              </div>
+              <div class="modal-footer">
+<!--
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+-->
+                  <button type="button" class="btn btn-primary" id="confirmSubmitBtn">확인</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      $(document).ready(function() {
+          // 제출하기 버튼 클릭 시 모달 표시
+          $('#submitBtn').click(function(e) {
+              e.preventDefault(); // 기본 동작 중지
+
+              // 모달 표시
+              $('#confirmationModal').modal('show');
+          });
+
+          // 모달 확인 버튼 클릭 시 폼 제출
+          $('#confirmSubmitBtn').click(function() {
+              $('#inputForm').unbind('submit').submit(); // 폼 제출
+          });
+
+          // 닫기 버튼 클릭 이벤트 핸들러
+          document.querySelector("#confirmationModal .close").addEventListener("click", function () {
+              // 모달 닫기
+              $('#confirmationModal').modal('hide');
+          });
+      });
+  </script>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>

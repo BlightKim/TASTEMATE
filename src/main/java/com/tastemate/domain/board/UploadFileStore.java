@@ -1,5 +1,7 @@
 package com.tastemate.domain.board;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

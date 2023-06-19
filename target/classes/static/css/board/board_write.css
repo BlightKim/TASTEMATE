@@ -1,0 +1,9 @@
+.write-form {
+  padding: 20px 20px;
+  border: 1px solid #E9DFED;
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+}

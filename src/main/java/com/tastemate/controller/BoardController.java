@@ -1,5 +1,6 @@
 package com.tastemate.controller;
 
+import com.tastemate.S3Uploader;
 import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.board.BoardStatus;
 import com.tastemate.domain.board.BoardUpdateForm;
@@ -25,8 +26,10 @@ import java.util.stream.Stream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
@@ -37,33 +40,39 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriUtils;
 
 @Controller
 @RequestMapping({"/board"})
+@Slf4j
 public class BoardController {
 
-  private static final Logger log = LoggerFactory.getLogger(BoardController.class);
   private final BoardService boardService;
   private final CommentService commentService;
-  private final UploadFileStore fileStore;
+//  private final S3Uploader s3Uploader;
+  private final S3Uploader fileStore;
+
 
   public BoardController(BoardService boardService, CommentService commentService,
-      UploadFileStore fileStore) {
+      S3Uploader fileStore) {
     this.boardService = boardService;
     this.commentService = commentService;
     this.fileStore = fileStore;
   }
 
   @GetMapping
-  public String board(SearchCondition sc, Model model) {
+  public String board(SearchCondition sc, Model model, RedirectAttributes redirectAttributes) {
+    log.info("searchCondition: {}", sc);
     int totalCnt = boardService.getResultCnt(sc);
     PageHandler pageHandler = new PageHandler(totalCnt, sc);
     List<BoardVO> boardList = boardService.getAllBoard(sc);
     model.addAttribute("boardList", boardList);
     model.addAttribute("ph", pageHandler);
+
     return "board/board_list";
   }
 
@@ -78,7 +87,9 @@ public class BoardController {
   public String write(@ModelAttribute(name = "form") BoardWriteForm writeForm,
       @SessionAttribute(name = "vo") MemberVO memberVO) throws IOException {
     Integer userIdx = memberVO.getUserIdx();
-    BoardVO boardVO = writeFormToBoardVO(writeForm, userIdx);
+    String userId = memberVO.getUserId();
+        log.info("boardWriteForm: {}", writeForm);
+    BoardVO boardVO = writeFormToBoardVO(writeForm, userIdx, userId);
     MultipartFile boardAttachedFile = writeForm.getMultipartFile();
     if (boardAttachedFile != null) {
       String storeName = fileStore.saveFile(boardAttachedFile);
@@ -86,7 +97,7 @@ public class BoardController {
       boardVO.setStoreName(storeName);
     }
 
-    this.boardService.saveOneBoard(boardVO);
+    boardService.saveOneBoard(boardVO);
     return "redirect:/board";
   }
 
@@ -106,29 +117,48 @@ public class BoardController {
     return "board/board_read";
   }
 
+  @ResponseBody
   @PostMapping({"/unlike/{boardIdx}"})
   public String unlike(@PathVariable("boardIdx") Integer boardIdx,
       @SessionAttribute(name = "vo") MemberVO memberVO) {
     Integer userIdx = memberVO.getUserIdx();
     log.info("unlike 호출");
-    boardService.decreaseLike(boardIdx, userIdx);
-    return "redirect:/board/read/" + boardIdx;
+    boolean isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if (isLiked) {
+      boardService.decreaseLike(boardIdx, userIdx);
+    }
+
+    isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if(isLiked) {
+      return "fail";
+    } else {
+      return "ok";
+    }
   }
 
+  @ResponseBody
   @PostMapping({"/like/{boardIdx}"})
   public String like(@PathVariable("boardIdx") Integer boardIdx,
       @SessionAttribute(name = "vo") MemberVO memberVO) {
     Integer userIdx = memberVO.getUserIdx();
     log.info("like 호출");
-    boardService.increaseLike(boardIdx, userIdx);
-    return "redirect:/board/read/" + boardIdx;
+    boolean isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if (!isLiked) {
+      boardService.increaseLike(boardIdx, userIdx);
+    }
+
+    isLiked = boardService.checkForLike(boardIdx, userIdx);
+    if(isLiked) {
+      return "ok";
+    } else {
+      return "fail";
+    }
   }
 
   @PostMapping({"/update/{boardIdx}"})
   public String update(@PathVariable("boardIdx") Integer boardIdx,
       @ModelAttribute("board") BoardUpdateForm updateForm) throws IOException {
     BoardVO boardVO = updateFormToBoardVO(boardIdx, updateForm);
-
     Integer integer = boardService.updateBoard(boardVO);
     return "redirect:/board/read/" + boardIdx;
   }
@@ -141,31 +171,46 @@ public class BoardController {
     return "/board/board_update";
   }
 
+  @ResponseBody
   @PostMapping("/delete/{boardIdx}")
   public String delete(@PathVariable("boardIdx") Integer boardIdx) {
-    boardService.deleteBoard(boardIdx);
-    return "redirect:/board";
+    Integer result = boardService.deleteBoard(boardIdx);
+    if(result == 1) {
+      return "success";
+    } else {
+      return "fail";
+    }
   }
 
-  @GetMapping({"/download/{storeFileName}"})
+/*  @GetMapping({"/download/{storeFileName}"})
   public ResponseEntity<Resource> downloadFile(
       @PathVariable(name = "storeFileName") Integer boardIdx, HttpServletRequest request)
       throws MalformedURLException {
     BoardVO findPost = boardService.getOnePost(boardIdx);
     String storeFileName = findPost.getStoreName();
     String oriName = findPost.getOriName();
-    String var10002 = fileStore.getFullPath(storeFileName);
-    UrlResource resource = new UrlResource("file:" + var10002);
+    UrlResource resource = new UrlResource("file:" + storeFileName);
     log.info("uploadFileName={}", oriName);
     String encodedUploadFileName = UriUtils.encode(oriName, StandardCharsets.UTF_8);
     String contentDisposition = "attachment; fileName=\"" + encodedUploadFileName + "\"";
     return ((ResponseEntity.BodyBuilder) ResponseEntity.ok()
         .header("Content-Disposition", new String[]{contentDisposition})).body(resource);
+  }*/
+
+    @GetMapping({"/download/{storeFileName}"})
+  public ResponseEntity<byte[]> downloadFile(
+      @PathVariable(name = "storeFileName") Integer boardIdx, HttpServletRequest request)
+        throws IOException {
+    BoardVO findPost = boardService.getOnePost(boardIdx);
+    String storeFileName = findPost.getStoreName();
+      log.info("storeFileName={}", storeFileName);
+    return fileStore.downloadFile(storeFileName,findPost.getOriName());
   }
 
-  private BoardVO writeFormToBoardVO(BoardWriteForm writeForm, Integer userIdx) {
+  private BoardVO writeFormToBoardVO(BoardWriteForm writeForm, Integer userIdx, String userId) {
     BoardVO board = new BoardVO();
     board.setUserIdx(userIdx);
+    board.setWriter(userId);
     board.setTitle(writeForm.getTitle());
     board.setContent(writeForm.getContent());
     board.setBoardPassword(writeForm.getPassword());

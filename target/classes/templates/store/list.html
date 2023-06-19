@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <title>store list</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+
+
+
+    <style>
+        .yellow {
+            color : #FFA500;
+        }
+        .fs20{
+            font-size: 20px;
+        }
+        .img_size{
+            width: 350px;
+            height: 300px;
+            border-radius: 5%;
+        }
+        .red{
+            color: tomato;
+        }
+        .purple {
+            color: #601599;
+        }
+        .purple2{
+            color : #9C91B3;
+        }
+        .purple3{
+            background-color : #9C91B3;
+            color: white;
+            border : none;
+        }
+        .title{
+            font-family: 'Single Day', cursive;
+        }
+
+
+/*페이징*/
+        .pagination-container {
+            margin: 0px auto;
+            text-align: center;
+        }
+
+        .pagination-item {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .pagination-item a {
+            position: relative;
+            display: inline-block;
+            color: #2c3e50;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 8px 16px 10px;
+            transition: all 0.2s;
+        }
+
+        .pagination-item a:before {
+            z-index: -1;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            content: "";
+            top: 0;
+            left: 0;
+            background-color: #E9DFED;
+            border-radius: 24px;
+            transform: scale(0);
+            transition: all 0.2s;
+        }
+
+        .pagination-item a:hover,
+        .pagination-item.active a {
+            color: #fff;
+        }
+
+        .pagination-item a:hover:before,
+        .pagination-item.active a:before {
+            transform: scale(1);
+        }
+
+        .pagination-item.prev,
+        .pagination-item.next {
+            margin: 0 10px;
+        }
+
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 0 80px;
+        }
+
+        .image-container {
+            margin-bottom: 80px;
+        }
+
+        .image-container {
+            display: inline-block;
+            width: 23%;
+            margin: 10px;
+
+        }
+
+
+
+
+    </style>
+</head>
+<body>
+
+
+<!--<td th:text="${storeList}"></td>-->
+
+
+
+
+
+<!-- HTML 코드 -->
+
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="text-center">
+    관리자의 승인 후 게시됩니다 ^^
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+
+
+
+
+
+<!--main-->
+<main class="container">
+    <div class="container">
+        <h1 class="text-center mt-5 mb-5 purple title">이 맛집 어때요?</h1>
+
+            <a class="btn btn-warning purple3"
+                    th:href="@{/store/list(storeStar='star')}">별점순</a>
+            <a class="btn btn-warning purple3"
+                    th:href="@{/store/list(storeCount='popular')}">인기순</a>
+            <a class="btn btn-warning purple3"
+                    th:href="@{/store/list(storeDistance='distance')}">거리순</a>
+
+        <div class="col-md-2 float-right">
+            <div class="form-group">
+                <form id="myForm" method="get">
+                <select class="form-control" name="cuisineSelect" onchange="submitForm()">
+                    <option selected disabled>FOOD STYLE</option>
+                    <option value="한식">한식</option>
+                    <option value="중식">중식</option>
+                    <option value="일식">일식</option>
+                    <option value="양식">양식</option>
+                    <option value="퓨전">퓨전</option>
+                    <option value="푸드코트">푸드코트</option>
+                </select>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<!--    <td th:text="${storeList}"></td>-->
+
+    <div class="container">
+        <div class="row col-xl-12">
+                <div th:each="storeVO : ${storeList}" class="image-container mb-5">
+
+                    <a th:href="@{/store/get(storeIdx=${storeVO.storeIdx})}">
+                        <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size" />
+
+                        </br> </br>
+                        <span th:text="${storeVO.category1}" class="purple2"></span>
+                        <span th:text="${storeVO.storeCount}" class="red"></span><span class="red">번 방문!</span><br>
+
+                        <div class="mb-2">
+                            <span th:text="${storeVO.storeName}" class="fs20" style="color: black"></span>
+                           <!-- ${storeVO.storeIdx} + '. ' +-->
+
+                            <!-- 별점 -->
+
+                           <th:block th:with="starCount=${storeVO.starVO[0].storeStar}">
+                                <span th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}" class="yellow">★</span>
+                            </th:block>
+
+                            <span th:if="${storeVO.starVO[0].storeStar != 0.0}"
+                                  th:text="${storeVO.starVO[0].storeStar}" style="color: #601599"></span>
+
+<!-- 별점 끝-->
+                        </div>
+
+                        <div th:text="${storeVO.storeAddress}" class="purple2"></div>
+                    </a>
+                </div>
+        </div>
+
+        <div class="text-right">
+        <a th:href="@{/store/register}" class="btn btn-danger purple3">
+            나만의 맛집등록
+        </a></div><br>
+
+    </div>
+
+
+    <!--검색시작-->
+
+    <div class="container text-center">
+        <form th:action="@{/store/list}" method="GET">
+            <div class="row justify-content-center mt-2 mb-5">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input name="keyword" type="text" class="form-control rounded-pill" placeholder="맛집 검색!" aria-describedby="button-addon2">
+                            <button type="submit" class="btn btn-warning mx-3">검색</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+<!--페이징시작!!!!-->
+    <!-- 이전 버튼 -->
+    <div class="pagination-container mb-5">
+
+    <th:block th:if="${pageMaker.prev}">
+        <li class="pageMaker_btn prev pagination-item">
+            <a href="javascript:void(0)" th:onclick="movePage([[ ${#request.requestURI} ]], [[ ${pageMaker.cri.makeQueryString(pageMaker.pageStart - 1)} ]])">이전</a>
+        </li>
+    </th:block>
+
+    <!-- 페이지 번호 -->
+    <th:block th:with="pageMaker = ${pageMaker}">
+        <th:block th:each="num : *{#numbers.sequence(pageMaker.pageStart, pageMaker.pageEnd)}">
+            <li class="pageMaker_btn pagination-item" th:classappend="${pageMaker.cri.pageNum == num} ? 'active' : ''">
+                <a href="javascript:void(0)" th:text="${num}"
+                   th:onclick="movePage([[ ${#request.requestURI} ]]
+                ,[[ ${pageMaker.cri.makeQueryString(num)} ]])"></a>
+            </li>
+        </th:block>
+    </th:block>
+
+
+    <!-- 다음 버튼 -->
+    <th:block th:if="${pageMaker.next}">
+        <li class="pageMaker_btn next pagination-item">
+            <a href="javascript:void(0)" th:onclick="movePage(
+            [[ ${#request.requestURI} ]],
+            [[ ${pageMaker.cri.makeQueryString(pageMaker.pageEnd + 1)} ]])">다음</a>
+        </li>
+    </th:block>
+
+
+
+<!--    <p th:text="${pageMaker}"></p>-->
+    </div>
+
+
+</main>
+
+
+<script>
+    function submitForm() {
+        var form = document.getElementById("myForm");
+        var selectedValue = form.querySelector('select[name="cuisineSelect"]').value;
+        form.action = "/store/list?cuisineSelect=" + encodeURIComponent(selectedValue);
+        form.submit();
+    }
+
+    /* ![CDATA[ */
+    function movePage(uri, queryString) {
+        console.log(uri);
+        console.log(queryString);
+
+        location.href = uri + queryString;
+    }
+    /* ]]*/
+</script>
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>
+

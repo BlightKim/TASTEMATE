@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<body>
+<th:block th:each="member : ${currentUserList}">
+  <a th:if="${!member.userId.equals(session.vo.userId)}"
+     th:text="${member.userId}"
+     th:data-myId="${session.vo.userId}"
+     class="chat-btn"
+  ></a>
+</th:block>
+</body>
+<script>
+$('.chat-btn').on('click', function () {
+  let uuid = self.crypto.randomUUID();
+  let myId = $(this).data('myId');
+  let yourId = $(this).text();
+  window.open('/chat/createRoom?roomName=' + uuid + '&myId=' + myId + '&yourId=' + yourId, '_blank', 'width=500, height=500');
+});
+</script>
+</html>

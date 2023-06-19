@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.BookingMapper">
+
+    <select id="bookingList" resultType="BookingVO">
+        SELECT * FROM BOOKING
+    </select>
+
+    <insert id="bookingInsert" parameterType="BookingVO">
+
+        <selectKey keyProperty="bookingIdx" resultType="int" order="BEFORE">
+            select BOOKING_SEQ.nextval FROM dual
+        </selectKey>
+        INSERT INTO BOOKING (BOOKING_IDX, STORE_IDX, STORE_NAME, USER_IDX, USER_ID,
+            USER_NAME, ONSITE_PAYMENT, BOOKING_DATE, BOOKING_TIME, MENU_IDX,
+            FOOD_NAME, PRICE, TABLE_NO ) VALUES (#{bookingIdx}, #{storeIdx}, #{storeName}, #{userIdx}, #{userId},
+            #{userName}, #{onsitePayment}, sysdate, TO_DATE(#{bookingTime},'YYYY-MM-DD HH24:MI:SS') , #{menuIdx},
+            #{foodName}, #{price}, #{tableNo})
+    </insert>
+
+
+    <select id="bookingToPay" parameterType="int" resultType="BookingVO">
+        SELECT * FROM BOOKING WHERE BOOKING_IDX = #{bookingIdx}
+    </select>
+
+    <select id="bookingTableCheck" parameterType="BookingVO" resultType="int">
+        select count(*) from (select * from booking
+                              where booking_time = to_date(#{bookingTime},'yyyy-mm-dd hh24:mi:ss')
+                                and table_no = #{tableNo}
+                                and store_idx = #{storeIdx}
+                                and onsite_payment in (0, 1, 2) ) table_check
+    </select>
+    
+    <update id="bookingPayAndStarComplete" parameterType="int">
+        update booking
+        set onsite_payment = 2
+        where booking_idx = #{bookingIdx}
+    </update>
+
+    <update id="bookingPayCancel" parameterType="int">
+        update booking
+        set onsite_payment = 3
+        where booking_idx = #{bookingIdx}
+    </update>
+
+</mapper>

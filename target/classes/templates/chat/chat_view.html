@@ -1,0 +1,278 @@
+<html
+    class="wf-proximanova-i7-active wf-proximanova-n7-active wf-proximanova-n6-active wf-proximanova-n1-active wf-proximanova-i6-active wf-proximanova-n3-active wf-proximanova-n4-active wf-proximanova-i4-active wf-active"
+    xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+  />
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+
+  <link
+      href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+  />
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+
+  <script
+      src="//production-assets.codepen.io/assets/editor/live/console_runner-079c09a0e3b9ff743e39ee2d5637b9216b3545af0de366d4b9aad9dc87e26bfd.js"></script>
+  <script
+      src="//production-assets.codepen.io/assets/editor/live/events_runner-73716630c22bbc8cff4bd0f07b135f00a0bdc5d14629260c3ec49e5606f98fdd.js"></script>
+  <script
+      src="//production-assets.codepen.io/assets/editor/live/css_live_reload_init-2c0dc5167d60a5af3ee189d570b1835129687ea2a61bee3513dee3a50c115a77.js"></script>
+  <script src="https://use.typekit.net/hoy3lrg.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+  <script>
+    try {
+      Typekit.load({async: true});
+    } catch (e) {
+    }
+  </script>
+  <meta charset="UTF-8"/>
+  <meta name="robots" content="noindex"/>
+  <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="//production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico"
+  />
+  <link
+      rel="mask-icon"
+      type=""
+      href="//production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg"
+      color="#111"
+  />
+  <link
+      rel="canonical"
+      href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&amp;page=74&amp;q=contact+"
+  />
+  <link
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300"
+      rel="stylesheet"
+      type="text/css"
+  />
+
+  <link
+      rel="stylesheet prefetch"
+      href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"
+  />
+  <link
+      rel="stylesheet prefetch"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css"
+  />
+  <link rel="stylesheet" href="/css/chat/chat_view.css"/>
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+    var room = [[${chatRoom}]];
+    var chatRoomId = room.roomId;
+    var myId = [[${myId}]];
+    var yourId = [[${yourId}]];
+    /*]]>*/
+  </script>
+</head>
+<body>
+<div id="frame">
+  <div class="content">
+    <div class="contact-profile">
+      <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt=""/>
+      <p th:text="${yourId}">Harvey Specter</p>
+    </div>
+    <div class="messages" id="messages">
+      <ul th:id="messageList" th:class="messageList">
+      </ul>
+    </div>
+    <div class="message-input">
+      <div class="wrap">
+        <input type="text" placeholder="Write your message..." id="input"/>
+        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+        <button class="submit">
+          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script
+    src="//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script>
+  var socket = new SockJS("/stomp/chat");
+  var stompClient = Stomp.over(socket);
+
+  stompClient.connect({}, function () {
+    console.log("STOMP Connection")
+    stompClient.subscribe("/sub/chat/room/" + chatRoomId, function (stompMessage) {
+      console.log("stompMessage : " + stompMessage);
+      let chat = JSON.parse(stompMessage.body);
+      console.log('chat : ' + chat);
+
+      showMessageOutput(chat.sender === myId, chat.message);
+    });
+
+    stompClient.send("/pub/chat/enter", {}, JSON.stringify({}));
+  });
+
+  function showMessageOutput(isMe, messageOutput) {
+    var messages = document.getElementById("messages");
+    var messageList = document.getElementById("messageList");
+
+    var messageElement = document.createElement("li");
+    messageElement.className = isMe ? "sent" : "replies"; // Added class based on 'isMe' value
+
+    // Create an 'img' element
+    var imgElement = document.createElement("img");
+    imgElement.setAttribute("src", "http://emilcarlsson.se/assets/mikeross.png");
+    imgElement.setAttribute("alt", isMe ? myId : yourId); // Added alt based on 'isMe' value
+
+    // Create a 'p' element
+    var pElement = document.createElement("p");
+    pElement.textContent = messageOutput;
+
+    // Append 'img' and 'p' elements to 'li' element
+    messageElement.appendChild(imgElement);
+    messageElement.appendChild(pElement);
+
+    // Append 'li' element to messages list
+    messageList.appendChild(messageElement);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  $('#input').on('keyup', function (e) { // Changed event from 'click' to 'keyup'
+      if (e.keyCode === 13) { // Check if Enter key is pressed
+        if ($('#input').val() === '') {
+          return false;
+        }
+        let inputMessage = $('#input').val();
+        sendMessage(inputMessage);
+      }
+  });
+
+  function sendMessage(inputMessage) {
+
+    let message = {
+      type: "TALK",
+      roomId: chatRoomId,
+      sender: myId,
+      message:inputMessage,
+      time: new Date()
+    };
+
+    stompClient.send("/pub/chat/message", {}, JSON.stringify(message));
+    $('#input').val('');
+  }
+</script>
+<!--   <script>
+     $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+
+     $("#profile-img").click(function () {
+       $("#status-options").toggleClass("active");
+     });
+
+     $(".expand-button").click(function () {
+       $("#profile").toggleClass("expanded");
+       $("#contacts").toggleClass("expanded");
+     });
+
+     $("#status-options ul li").click(function () {
+       $("#profile-img").removeClass();
+       $("#status-online").removeClass("active");
+       $("#status-away").removeClass("active");
+       $("#status-busy").removeClass("active");
+       $("#status-offline").removeClass("active");
+       $(this).addClass("active");
+
+       if ($("#status-online").hasClass("active")) {
+         $("#profile-img").addClass("online");
+       } else if ($("#status-away").hasClass("active")) {
+         $("#profile-img").addClass("away");
+       } else if ($("#status-busy").hasClass("active")) {
+         $("#profile-img").addClass("busy");
+       } else if ($("#status-offline").hasClass("active")) {
+         $("#profile-img").addClass("offline");
+       } else {
+         $("#profile-img").removeClass();
+       }
+       $("#status-options").removeClass("active");
+     });
+
+     function newMessage() {
+       message = $(".message-input input").val();
+       if ($.trim(message) == "") {
+         return false;
+       }
+       $(
+         '<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' +
+           message +
+           "</p></li>"
+       ).appendTo($(".messages ul"));
+       $(".message-input input").val(null);
+       $(".contact.active .preview").html("<span>You: </span>" + message);
+       $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+     }
+
+     $(".submit").click(function () {
+       newMessage();
+     });
+
+     $(window).on("keydown", function (e) {
+       if (e.which == 13) {
+         newMessage();
+         return false;
+       }
+     });
+     //# sourceURL=pen.js
+   </script>-->
+<!--
+    <script>
+      (function () {
+        var ws = new WebSocket(
+          "ws://" +
+            window.location.host +
+            encodeURIComponent(window.location.pathname)
+        );
+        ws.onmessage = function (msg) {
+          if (msg.data === "reload") {
+            window.location.reload();
+          }
+          if (msg.data.startsWith("update-css ")) {
+            var messageId = msg.data.substring(11);
+            var links = document.getElementsByTagName("link");
+            for (var i = 0; i < links.length; i++) {
+              var link = links[i];
+              if (link.rel !== "stylesheet") continue;
+              var clonedLink = link.cloneNode(true);
+              var newHref = link.href.replace(
+                /(&|\?)jbUpdateLinksId=\d+/,
+                "$1jbUpdateLinksId=" + messageId
+              );
+              if (newHref !== link.href) {
+                clonedLink.href = newHref;
+              } else {
+                var indexOfQuest = newHref.indexOf("?");
+                if (indexOfQuest >= 0) {
+                  // to support ?foo#hash
+                  clonedLink.href =
+                    newHref.substring(0, indexOfQuest + 1) +
+                    "jbUpdateLinksId=" +
+                    messageId +
+                    "&" +
+                    newHref.substring(indexOfQuest + 1);
+                } else {
+                  clonedLink.href += "?" + "jbUpdateLinksId=" + messageId;
+                }
+              }
+              link.replaceWith(clonedLink);
+            }
+          }
+        };
+      })();
+    </script>
+-->
+</body>
+</html>

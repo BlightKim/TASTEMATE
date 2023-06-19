@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tastemate.mapper.StoreMapper">
+
+    <resultMap id="storeMenuResultMap" type="com.tastemate.domain.StoreVO">
+        <id column="STORE_IDX" property="storeIdx"/>
+        <result column="STORE_NAME" property="storeName"/>
+        <result column="USER_IDX" property="userIdx"/>
+        <result column="CATEGORY1" property="category1"/>
+        <result column="STORE_ADDRESS" property="storeAddress"/>
+        <result column="STORE_LATI" property="storeLati"/>
+        <result column="STORE_LONGI" property="storeLongi"/>
+        <result column="PHONE_NUMBER" property="phoneNumber"/>
+        <result column="STORE_COUNT" property="storeCount"/>
+        <result column="FILENAME" property="filename"/>
+        <result column="DISTANCE" property="distance"/>
+        <result column="STORE_STAT" property="storeStat"/>
+        <collection property="menuVO" ofType="MenuVO">
+            <id column="MENU_IDX" property="menuIdx" />
+            <result column="STORE_IDX" property="storeIdx" />
+            <result column="FOOD_NAME" property="foodName" />
+            <result column="PRICE" property="price" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="storeStarResultMap" type="com.tastemate.domain.StoreVO">
+        <id column="STORE_IDX" property="storeIdx"/>
+        <result column="STORE_NAME" property="storeName"/>
+        <result column="CATEGORY1" property="category1"/>
+        <result column="STORE_ADDRESS" property="storeAddress"/>
+        <result column="STORE_LATI" property="storeLati"/>
+        <result column="STORE_LONGI" property="storeLongi"/>
+        <result column="PHONE_NUMBER" property="phoneNumber"/>
+        <result column="STORE_COUNT" property="storeCount"/>
+        <result column="FILENAME" property="filename"/>
+        <result column="DISTANCE" property="distance"/>
+        <result column="STORE_STAT" property="storeStat"/>
+
+        <collection property="starVO" ofType="StarVO" javaType="java.util.List">
+            <id column="STAR_IDX" property="starIdx" />
+            <result column="STORE_IDX" property="storeIdx" />
+            <result column="USER_IDX" property="userIdx" />
+            <result column="STORE_STAR" property="storeStar" />
+            <result column="USER_STAR" property="userStar" />
+            <result column="STORE_COMMENT" property="storeComment" />
+            <result column="USER_NAME" property="userName" />
+            <result column="INICIS_IDX" property="inicisIdx" />
+            <result column="KAKAO_APPROVAL_IDX" property="kakaoApprovalIdx" />
+        </collection>
+    </resultMap>
+
+
+<!-- 상세보기 화면에서 메뉴랑 가게정보 같이 받기-->
+    <select id="getStoreWithMenu" resultMap="storeMenuResultMap">
+        SELECT s.store_idx, s.user_idx, s.store_name, s.user_idx,
+        s.category1, s.store_address, s.store_lati, s.store_longi, s.phone_number,
+        s.store_count, s.filename, m.menu_idx, m.food_name, m.price
+        FROM STORE s
+        LEFT OUTER JOIN MENU m ON s.store_idx = m.store_idx
+        WHERE s.store_idx = #{storeIdx}
+    </select>
+
+<!-- 상세보기 화면에서 별점 평균만 받기 -->
+    <select id="getStoreWithStar" resultMap="storeStarResultMap">
+        SELECT s.store_idx, s.user_idx, s.store_name, avg_star.store_star
+        FROM STORE s
+        LEFT OUTER JOIN (
+        SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+        FROM STAR
+        GROUP BY store_idx
+        ) avg_star ON s.store_idx = avg_star.store_idx
+        WHERE s.store_idx = #{storeIdx}
+    </select>
+
+<!-- 메인 화면에서 별점이 가장 높은 가게 하나 받기 -->
+    <select id="getStoreHighestStar" resultMap="storeStarResultMap">
+        SELECT s.store_idx, s.store_address, s.store_name, s.filename, avg_star.store_star
+        FROM STORE s
+                 LEFT OUTER JOIN (
+            SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+            FROM STAR
+            GROUP BY store_idx
+        ) avg_star ON s.store_idx = avg_star.store_idx
+        WHERE avg_star.store_star = (SELECT MAX(avg_star.store_star) from ( SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+                                                                              FROM STAR
+                                                                              GROUP BY store_idx
+                                                                          ) avg_star)
+    </select>
+
+
+
+
+
+<!-- 메인 맛집 전체보기 화면에서 별점과 같이 받기 -->
+    <select id="store_getList_withStar_withPaging" resultMap="storeStarResultMap"
+            parameterType="Map">
+
+        SELECT *
+        FROM (
+        SELECT s.*,
+        ROWNUM AS RNUM
+        FROM (
+        SELECT store.store_idx, store.user_idx, store.store_name, store.category1, store.store_address,
+        store.store_lati, store.store_longi, store.phone_number, store.store_count, store.filename, store.distance,
+        ROUND(AVG(store_star), 1)  AS STORE_STAR
+        FROM STORE store
+        LEFT JOIN STAR star ON store.store_idx = star.store_idx
+        WHERE store.STORE_STAT = 1
+        <if test="cri.getKeyword != 'none'">
+        AND store.store_name LIKE '%' || #{cri.keyword} || '%'
+        </if>
+
+        <if test="cuisineSelect != 'none'">
+            and category1 = #{cuisineSelect}
+        </if>
+        GROUP BY store.store_idx, store.user_idx, store.store_name, store.category1, store.store_address,
+        store.store_lati, store.store_longi, store.phone_number, store.store_count, store.filename, store.distance
+
+        <choose>
+            <when test="storeStar != 'none'">
+                order by STORE_STAR DESC NULLS LAST
+                        </when>
+            <when test="storeCount != 'none'">
+                order by store_count DESC NULLS LAST
+            </when>
+            <when test="storeDistance != 'none'">
+                order by distance ASC NULLS LAST
+            </when>
+            <otherwise>
+                /*ORDER BY store_idx ASC*/
+                order by STORE_STAR DESC NULLS LAST
+            </otherwise>
+        </choose>
+
+        ) s
+        )
+
+        <![CDATA[
+        WHERE RNUM > ((#{cri.pageNum} - 1) * #{cri.amount}) -- 페이지 번호에 따라 수정
+        AND RNUM <= #{cri.pageNum} * #{cri.amount} -- 페이지 번호에 따라 수정;
+        ]]>
+
+    </select>
+
+
+
+
+
+
+
+
+    <!--페이징 처리시 전체 글수 확인-->
+    <select id="getTotalCount"  parameterType="Map" resultType="integer">
+        SELECT count(*)
+        FROM store
+        WHERE STORE_STAT = 1
+        <if test="cuisineSelect != 'none'">
+            and category1 = #{cuisineSelect}
+        </if>
+        <if test="cri.getKeyword != 'none'">
+            AND store.store_name LIKE '%' || #{cri.keyword} || '%'
+        </if>
+    </select>
+
+    <!--상세보기-->
+    <select id="store_get" resultType="StoreVO">
+        select * from store
+        where store_idx = #{storeIdx}
+    </select>
+
+    <!-- 맛집 등록하기 -->
+    <insert id="store_register" parameterType="StoreVO">
+        INSERT INTO STORE (STORE_IDX, USER_IDX, STORE_NAME, CATEGORY1,
+                           STORE_ADDRESS, STORE_LATI, STORE_LONGI, PHONE_NUMBER, STORE_COUNT,
+        FILENAME, DISTANCE, STORE_STAT
+                           )
+        VALUES (store_seq.NEXTVAL, #{userIdx}, #{storeName}, #{category1},
+                #{storeAddress}, #{storeLati}, #{storeLongi}, #{phoneNumber}, 0,
+        #{filename}, #{distance}, 0
+                )
+    </insert>
+
+    <!-- 맛집 평가 조회하기 -->
+    <select id="getStoreWithComment" resultMap="storeStarResultMap">
+        select s.store_idx, s.user_idx, s.store_name, r.star_idx,
+        r.store_comment, r.store_star
+        ,m.user_idx, m.user_name
+        from store s
+        LEFT OUTER JOIN
+        star r on s.store_idx = r.store_idx
+        left outer join
+        member m on m.user_idx = r.user_idx
+        WHERE s.store_idx = #{storeIdx}
+    </select>
+
+    <!-- 맛집 삭제 -->
+    <delete id="store_delete">
+        delete from store
+        where store_idx = #{storeIdx}
+    </delete>
+
+    <!-- 맛집 업데이트 -->
+    <update id="store_update" parameterType="StoreVO">
+        UPDATE store
+        SET
+        STORE_NAME = #{storeName},
+        CATEGORY1 = #{category1},
+        STORE_ADDRESS = #{storeAddress},
+        STORE_LATI = #{storeLati},
+        STORE_LONGI = #{storeLongi},
+        PHONE_NUMBER = #{phoneNumber},
+        FILENAME = #{filename},
+        DISTANCE = #{distance},
+        STORE_STAT = '0'
+
+        WHERE store_idx = #{storeIdx}
+
+
+    </update>
+
+    <!--별점,코멘트 입력하기-->
+    <insert id="store_starComment" parameterType="StarVO">
+        INSERT INTO star(STAR_IDX, STORE_IDX, USER_IDX, STORE_STAR, USER_STAR, STORE_COMMENT, INICIS_IDX, KAKAO_APPROVAL_IDX)
+        values (star_seq.nextval,#{storeIdx},#{userIdx},#{storeStar},#{userStar},#{storeComment}, #{inicisIdx}, #{kakaoApprovalIdx})
+    </insert>
+
+
+</mapper>

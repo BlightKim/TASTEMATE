@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.BookmarkMapper">
+
+    <resultMap id="bookmarkjoin" type="BookmarkVO">
+        <id column="BOOKMARK_IDX" property="bookmarkIdx"/>
+        <result column="USER_IDX" property="userIdx"/>
+        <result column="STORE_IDX" property="storeIdx"/>
+        <result column="USER_NAME" property="userName"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="STORE_NAME" property="storeName"/>
+
+        <association javaType="com.tastemate.domain.StoreVO" property="storeVO">
+            <id column="STORE_IDX" property="storeIdx"/>
+            <result column="CATEGORY1" property="category1"/>
+            <result column="STORE_ADDRESS" property="storeAddress"/>
+            <result column="STORE_LATI" property="storeLati"/>
+            <result column="STORE_LONGI" property="storeLongi"/>
+            <result column="PHONE_NUMBER" property="phoneNumber"/>
+            <result column="STORE_COUNT" property="storeCount"/>
+        </association>
+    </resultMap>
+
+    <select id="bookmarkList" parameterType="int" resultMap="bookmarkjoin">
+        SELECT B.BOOKMARK_IDX,
+               B.USER_IDX,
+               B.STORE_IDX,
+               B.USER_NAME,
+               B.USER_ID,
+               B.STORE_NAME,
+               S.CATEGORY1,
+               S.STORE_ADDRESS,
+               S.STORE_LATI,
+               S.STORE_LONGI,
+               S.PHONE_NUMBER,
+               S.STORE_COUNT
+        FROM BOOKMARK B
+                 INNER JOIN STORE S ON B.STORE_IDX = S.STORE_IDX
+        WHERE B.USER_IDX = #{userIdx}
+    </select>
+    
+    <select id="bookmarkValidate" resultType="BookmarkVO" parameterType="BookmarkVO">
+        SELECT * FROM BOOKMARK
+                 WHERE USER_ID = #{userId} AND STORE_IDX = #{storeIdx}
+
+    </select>
+
+    <delete id="bookmark_delete" parameterType="int">
+        delete from BOOKMARK
+        where BOOKMARK_IDX = #{bookmarkIdx}
+    </delete>
+
+    <delete id="bookmark_deleteAjax" parameterType="BookmarkVO">
+        delete from BOOKMARK
+        where USER_IDX = #{userIdx} AND STORE_IDX = #{storeIdx}
+    </delete>
+
+    <insert id="bookmark_insert" parameterType="BookmarkVO">
+        INSERT INTO BOOKMARK (BOOKMARK_IDX, USER_IDX, STORE_IDX, USER_NAME, USER_ID, STORE_NAME)
+        VALUES (BOOKMARK_SEQ.nextval, #{userIdx}, #{storeIdx}, #{userName}, #{userId}, #{storeName})
+    </insert>
+</mapper>

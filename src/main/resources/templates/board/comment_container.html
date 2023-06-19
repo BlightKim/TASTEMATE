@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+  <div class="comments-container" id="comment-container">
+    <h1>
+      댓글
+    </h1>
+
+    <th:block th:if="${#lists.isEmpty(commentList)}">
+      <div class="no-comment-box">
+        <p>댓글이 없습니다.</p>
+      </div>
+    </th:block>
+    <ul
+        id="comments-list"
+        class="comments-list"
+        th:if="${not #lists.isEmpty(commentList)}"
+    >
+      <li>
+        <th:block th:each="comment : ${commentList}">
+          <div
+              class="comment-main-level"
+              th:if="${comment.commentLevel == 1}"
+          >
+            <!-- Avatar -->
+            <div class="comment-avatar">
+              <img
+                  src="/img/tastemate.jpeg"
+                  alt=""
+              />
+            </div>
+            <!-- Contenedor del Comentario -->
+            <div class="comment-box">
+              <div class="comment-head">
+                <h6 class="comment-name"
+                >
+                  <a
+                      href="http://creaticode.com/blog"
+                      th:text="${comment.commenter}"
+                  >Agustin Ortiz</a
+                  >
+                </h6>
+                <span
+                    th:text="${#dates.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"
+                >hace 20 minutos</span
+                >
+                <i class="fa fa-reply reply_comment_btn"
+                   th:if="${comment.commentStatus.getCommentStatusCode() != '삭제'}"
+                   th:data-comment-idx="${comment.commentIdx}"
+                   th:data-cl="${comment.commentLevel}"
+                ></i>
+                <th:block th:if="${(session.vo.userId.equals(comment.commenter)) and (comment.commentStatus.getCommentStatusCode() != '삭제')}">
+                  <i class="fa fa-trash comment-del-btn" aria-hidden="true"
+                     th:data-comment-idx="${comment.commentIdx}"
+                  ></i>
+                  <i class="fas fa-edit comment-edit-btn"
+                     th:data-comment-idx="${comment.commentIdx}"
+                  ></i>
+                </th:block>
+              </div>
+              <div
+                  class="comment-content"
+                  th:classappend="${comment.commentStatus.getCommentStatusCode() == '삭제'} ? 'deleted' : ''"
+                  th:utext="${comment.commentStatus.getCommentStatusCode() == '삭제'} ? '삭제된 댓글입니다.' : ${comment.commentContent}"
+              >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Velit omnis animi et iure laudantium vitae, praesentium
+                optio, sapiente distinctio illo?
+              </div>
+            </div>
+
+            <div class="comment-area">
+            </div>
+          </div>
+          <!-- 댓글 -->
+          <div
+              class="comment-second-level"
+              th:if="${comment.commentLevel == 2}"
+          >
+            <ul class="comments-list reply-list">
+              <li>
+                <!-- Avatar -->
+                <!-- Avatar -->
+                <div class="comment-avatar">
+                  <img
+                      src="/img/tastemate.jpeg"
+                      alt=""
+                  />
+                </div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                  <div class="comment-head">
+                    <h6 class="comment-name"
+
+                    >
+                      <a
+                          href="http://creaticode.com/blog"
+                          th:text="${comment.commenter}"
+                      >Agustin Ortiz</a
+                      >
+                    </h6>
+                    <span
+                        th:text="${#dates.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"
+                    >hace 20 minutos</span
+                    >
+                    <i class="fa fa-reply reply_comment_btn"
+                       th:if="${comment.commentStatus.getCommentStatusCode() != '삭제'}"
+                       th:data-comment-idx="${comment.commentIdx}"
+                       th:data-cl="${comment.commentLevel}"
+                    ></i>
+                    <th:block th:if="${(session.vo.userId.equals(comment.commenter)) and (comment.commentStatus.getCommentStatusCode() != '삭제')}">
+                      <i class="fa fa-trash comment-del-btn" aria-hidden="true"
+                         th:data-comment-idx="${comment.commentIdx}"
+                      ></i>
+                      <i class="fas fa-edit comment-edit-btn"
+                         th:data-comment-idx="${comment.commentIdx}"
+                      ></i>
+                    </th:block>
+                  </div>
+                  <div
+                      class="comment-content"
+                      th:classappend="${comment.commentStatus.getCommentStatusCode() == '삭제'} ? 'deleted' : ''"
+                      th:utext="${comment.commentStatus.getCommentStatusCode() == '삭제'} ? '삭제된 댓글입니다.' : ${comment.commentContent}"
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Velit omnis animi et iure laudantium vitae, praesentium
+                    optio, sapiente distinctio illo?
+                  </div>
+                </div>
+
+                <div class="comment-area">
+                </div>
+
+              </li>
+            </ul>
+          </div>
+          <div
+              class="comment-third-level"
+              th:if="${comment.commentLevel == 3}"
+          >
+            <ul class="comments-list reply-list reply-reply-list">
+              <li>
+                <!-- Avatar -->
+                <div class="comment-avatar">
+                  <img
+                      src="/img/tastemate.jpeg"
+                      alt=""
+                  />
+                </div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                  <div class="comment-head">
+                    <h6 class="comment-name"
+                    >
+                      <a
+                          href="http://creaticode.com/blog"
+                          th:text="${comment.commenter}"
+                      >Lorena Rojero</a
+                      >
+                    </h6>
+                    <span
+                        th:text="${#dates.format(comment.regDate, 'yyyy-MM-dd HH:mm')}"
+                    >hace 10 minutos</span
+                    >
+                    <i class="fa fa-reply reply_comment_btn"
+                       th:if="${comment.commentStatus.getCommentStatusCode() != '삭제'}"
+                       th:data-comment-idx="${comment.commentIdx}"
+                       th:data-cl="${comment.commentLevel}"
+                    ></i>
+                    <th:block th:if="${(session.vo.userId.equals(comment.commenter)) and (comment.commentStatus.getCommentStatusCode() != '삭제')}">
+                      <i class="fa fa-trash comment-del-btn" aria-hidden="true"
+                         th:data-comment-idx="${comment.commentIdx}"
+                      ></i>
+                      <i class="fas fa-edit comment-edit-btn"
+                         th:data-comment-idx="${comment.commentIdx}"
+                      ></i>
+                    </th:block>
+                  </div>
+                  <div
+                      class="comment-content"
+                      th:classappend="${comment.commentStatus.getCommentStatusCode() == '삭제'} ? 'deleted' : ''"
+                      th:utext="${comment.commentStatus.getCommentStatusCode() == '삭제'} ? '삭제된 댓글입니다.' : ${comment.commentContent}"
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing
+                    elit. Velit omnis animi et iure laudantium vitae,
+                    praesentium optio, sapiente distinctio illo?
+                  </div>
+                </div>
+                <div class="comment-area">
+                </div>
+              </li>
+            </ul>
+          </div>
+        </th:block>
+      </li>
+    </ul>
+  </div>
+  </body>
+</html>

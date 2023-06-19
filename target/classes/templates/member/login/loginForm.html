@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <style>
+
+        .login_btn {
+            background-color: #9C91B3;
+            color: white;
+        }
+
+        .login_btn:hover {
+            background-color: #8E48C7;
+            color: white;
+        }
+    </style>
+    <title>TasteMate</title>
+
+</head>
+<body>
+<th:block>
+<div th:if="${message == 'failId'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+
+    <div class="text-center">
+        아이디와 비밀번호를 확인해주세요.
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+</th:block>
+
+<!-- 로그인 실패 -->
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="text-center">
+        아이디와 비밀번호를 확인해주세요.
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<!-- 탈퇴한 회원 -->
+<!--<div th:if="${message == 'withdraw'}" class="alert alert-warning alert-dismissible fade show" role="alert">-->
+<!--    <div class="text-center">-->
+<!--        탈퇴한 회원입니다.-->
+<!--    </div>-->
+<!--    <button type="button" class="close" data-dismiss="alert" aria-label="Close">-->
+<!--        <span aria-hidden="true">&times;</span>-->
+<!--    </button>-->
+<!--</div>-->
+
+
+<!-- main -->
+<div class="container" style="margin-top: 100px; margin-bottom: 150px;">
+    <div class="row mb-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <h2 class="font-weight-bold">로그인</h2>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-xl-4">
+            <div class="card">
+                <div class="card-body text-center d-flex flex-column align-items-center">
+                    <div class="bs-icon-xl bs-icon-circle bs-icon-primary bs-icon my-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor"
+                             viewBox="0 0 16 16"
+                             class="bi bi-person">
+                            <path
+                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path>
+                        </svg>
+                    </div>
+                    <form action="login" method="post" style="width: 100%">
+                        <div class="mb-3">
+                            <input class="form-control" id="userId" name="userId" value="" type="text"
+                                   placeholder="아이디">
+                        </div>
+                        <div class="mb-3">
+                            <input class="form-control" id="userPwd" name="userPwd" type="password" placeholder="비밀번호">
+                        </div>
+                        <div class="mb-3" id="login_warning" hidden="hidden">
+                            <span style="color: red;">아이디 비밀번호를 다시 한번 확인해주세요.</span>
+                        </div>
+                        <div class="mb-3">
+                            <button id="login_btn" class="btn d-block w-100 login_btn" type="submit">Log in</button>
+                        </div>
+                    </form>
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Small button group">
+                        <form action="findId" method="post">
+                            <button id="find_btn" class="btn" type="submit" style="color: #666666">아이디 찾기
+                            </button>
+                        </form>
+                        <form action="resetPassword" method="post">
+                            <button id="findPwd_btn" class="btn" type="submit" style="color: #666666">비밀번호 찾기
+                            </button>
+                        </form>
+                    </div>
+
+                    <!--              <div class="form-check text-center"><input name="rememberId" class="form-check-input" type="checkbox" id="rememberId"-->
+                    <!--                                                         value="true" ${empty cookie.id.value ? '' : 'checked'}>-->
+                    <!--                <label class="form-check-label" for="rememberId">아이디 기억</label>-->
+                    <!--              </div>-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="findPwdModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h4>비밀번호 찾기</h4>
+        <!-- Add your content for password recovery here -->
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#userId").focus();
+
+        $("#login_btn").click(loginCheck);
+
+    });
+
+    function loginCheck() {
+        if ($("#userId").val() == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '아이디를 입력해주세요.',
+            })
+            $("#userId").focus();
+            return false;
+        }
+        if ($("#userPwd").val() == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '비밀번호를 입력해주세요.',
+            })
+            $("#userPwd").focus();
+            return false;
+        }
+        return true;
+        // const id = $("#userId").val();
+        // const pwd = $("#userPwd").val();
+        //
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/member/check',
+        //     header: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     dataType: 'json',
+        //     data: {
+        //         "id" : id,
+        //         "pwd" : pwd
+        //     },
+        //     success: (data) => {
+        //         console.log(data);
+        //         if(data.check == 0) {
+        //             $('#login_warning').attr('hidden', 'hidden');
+        //             location.href = 'member/list';
+        //         } else {
+        //             $('#login_warning').removeAttr('hidden');
+        //             $('#login_warning').html('<b style="font-size: 14px; color:red">[아이디 비밀번호를 다시 확인해주세요.]</b>');
+        //         }
+        //     },
+        //     error: (status, error) => {
+        //         console.log('통신 실패');
+        //         console.log(status, error);
+        //     }
+        // });
+
+    }
+
+    function openModal() {
+        $("#findPwdModal").show();
+    }
+
+    function closeModal() {
+        $("#findPwdModal").hide();
+    }
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>
