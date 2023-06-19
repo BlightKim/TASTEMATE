@@ -18,7 +18,7 @@
         }
     </style>
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
-    <style>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>    <style>
         body {
             min-height: 100vh;
 
@@ -60,105 +60,110 @@
             <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
             <div class="row">
                 <div class="col-8">
+
                     <div class="chart-div">
-                        <canvas id="pieChartCanvas" width="600px" height="600px"></canvas>
+                        <canvas id="doughnut-chart" width="600px" height="600px"></canvas>
                     </div>
                 </div>
 
                 <div class="col-4">
-                    <table>
+                    <table class="table table-hover">
                         <tr>
-                            <td id="mbti1" th:value="${mbtiOrder.get(0)}" th:text="${mbtiOrder.get(0)}">
-                            <td id="mbtiN1" th:value="${mbti.get(mbtiOrder.get(0))}"
+                            <td>MBTI</td>
+                            <td>인원</td>
+                        </tr>
+                        <tr>
+                            <td th:value="${mbtiOrder.get(0)}" th:text="${mbtiOrder.get(0)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(0))}"
                                 th:text="${mbti.get(mbtiOrder.get(0))}">
                         </tr>
                         <tr>
-                            <td id="mbti2" th:value="${mbtiOrder.get(1)}" th:text="${mbtiOrder.get(1)}">
-                            <td id="mbtiN2" th:value="${mbti.get(mbtiOrder.get(1))}"
+                            <td th:value="${mbtiOrder.get(1)}" th:text="${mbtiOrder.get(1)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(1))}"
                                 th:text="${mbti.get(mbtiOrder.get(1))}">
                         </tr>
 
 
                         <tr>
-                            <td id="mbti3" th:value="${mbtiOrder.get(2)}" th:text="${mbtiOrder.get(2)}">
-                            <td id="mbtiN3" th:value="${mbti.get(mbtiOrder.get(2))}"
+                            <td th:value="${mbtiOrder.get(2)}" th:text="${mbtiOrder.get(2)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(2))}"
                                 th:text="${mbti.get(mbtiOrder.get(2))}">
                         </tr>
                         <tr>
-                            <td id="mbti4" th:value="${mbtiOrder.get(3)}" th:text="${mbtiOrder.get(3)}">
-                            <td id="mbtiN4" th:value="${mbti.get(mbtiOrder.get(3))}"
+                            <td th:value="${mbtiOrder.get(3)}" th:text="${mbtiOrder.get(3)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(3))}"
                                 th:text="${mbti.get(mbtiOrder.get(3))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti5" th:value="${mbtiOrder.get(4)}" th:text="${mbtiOrder.get(4)}">
-                            <td id="mbtiN5" th:value="${mbti.get(mbtiOrder.get(4))}"
+                            <td th:value="${mbtiOrder.get(4)}" th:text="${mbtiOrder.get(4)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(4))}"
                                 th:text="${mbti.get(mbtiOrder.get(4))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti6" th:value="${mbtiOrder.get(5)}" th:text="${mbtiOrder.get(5)}">
-                            <td id="mbtiN6" th:value="${mbti.get(mbtiOrder.get(5))}"
+                            <td th:value="${mbtiOrder.get(5)}" th:text="${mbtiOrder.get(5)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(5))}"
                                 th:text="${mbti.get(mbtiOrder.get(5))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti7" th:value="${mbtiOrder.get(6)}" th:text="${mbtiOrder.get(6)}">
-                            <td id="mbtiN7" th:value="${mbti.get(mbtiOrder.get(6))}"
+                            <td th:value="${mbtiOrder.get(6)}" th:text="${mbtiOrder.get(6)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(6))}"
                                 th:text="${mbti.get(mbtiOrder.get(6))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti8" th:value="${mbtiOrder.get(7)}" th:text="${mbtiOrder.get(7)}">
-                            <td id="mbtiN8" th:value="${mbti.get(mbtiOrder.get(7))}"
+                            <td th:value="${mbtiOrder.get(7)}" th:text="${mbtiOrder.get(7)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(7))}"
                                 th:text="${mbti.get(mbtiOrder.get(7))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti9" th:value="${mbtiOrder.get(8)}" th:text="${mbtiOrder.get(8)}">
-                            <td id="mbtiN9" th:value="${mbti.get(mbtiOrder.get(8))}"
+                            <td th:value="${mbtiOrder.get(8)}" th:text="${mbtiOrder.get(8)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(8))}"
                                 th:text="${mbti.get(mbtiOrder.get(8))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti10" th:value="${mbtiOrder.get(9)}" th:text="${mbtiOrder.get(9)}">
-                            <td id="mbtiN10" th:value="${mbti.get(mbtiOrder.get(9))}"
+                            <td th:value="${mbtiOrder.get(9)}" th:text="${mbtiOrder.get(9)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(9))}"
                                 th:text="${mbti.get(mbtiOrder.get(9))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti11" th:value="${mbtiOrder.get(10)}" th:text="${mbtiOrder.get(10)}">
-                            <td id="mbtiN11" th:value="${mbti.get(mbtiOrder.get(10))}"
+                            <td th:value="${mbtiOrder.get(10)}" th:text="${mbtiOrder.get(10)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(10))}"
                                 th:text="${mbti.get(mbtiOrder.get(10))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti12" th:value="${mbtiOrder.get(11)}" th:text="${mbtiOrder.get(11)}">
-                            <td id="mbtiN12" th:value="${mbti.get(mbtiOrder.get(11))}"
+                            <td th:value="${mbtiOrder.get(11)}" th:text="${mbtiOrder.get(11)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(11))}"
                                 th:text="${mbti.get(mbtiOrder.get(11))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti13" th:value="${mbtiOrder.get(12)}" th:text="${mbtiOrder.get(12)}">
-                            <td id="mbtiN13" th:value="${mbti.get(mbtiOrder.get(12))}"
+                            <td th:value="${mbtiOrder.get(12)}" th:text="${mbtiOrder.get(12)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(12))}"
                                 th:text="${mbti.get(mbtiOrder.get(12))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti14" th:value="${mbtiOrder.get(13)}" th:text="${mbtiOrder.get(13)}">
-                            <td id="mbtiN14" th:value="${mbti.get(mbtiOrder.get(13))}"
+                            <td th:value="${mbtiOrder.get(13)}" th:text="${mbtiOrder.get(13)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(13))}"
                                 th:text="${mbti.get(mbtiOrder.get(13))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti15" th:value="${mbtiOrder.get(14)}" th:text="${mbtiOrder.get(14)}">
-                            <td id="mbtiN15" th:value="${mbti.get(mbtiOrder.get(14))}"
+                            <td th:value="${mbtiOrder.get(14)}" th:text="${mbtiOrder.get(14)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(14))}"
                                 th:text="${mbti.get(mbtiOrder.get(14))}">
                         </tr>
 
                         <tr>
-                            <td id="mbti16" th:value="${mbtiOrder.get(15)}" th:text="${mbtiOrder.get(15)}">
-                            <td id="mbtiN16" th:value="${mbti.get(mbtiOrder.get(15))}"
+                            <td th:value="${mbtiOrder.get(15)}" th:text="${mbtiOrder.get(15)}">
+                            <td th:value="${mbti.get(mbtiOrder.get(15))}"
                                 th:text="${mbti.get(mbtiOrder.get(15))}">
                         </tr>
 
@@ -167,83 +172,132 @@
 
             </div>
 
+                <input type="hidden" id="mbti1" th:value="${mbtiOrder.get(0)}">
+                <input type="hidden" id="mbtiN1" th:value="${mbti.get(mbtiOrder.get(0))}">
+
+                <input type="hidden" id="mbti2" th:value="${mbtiOrder.get(1)}">
+                <input type="hidden" id="mbtiN2" th:value="${mbti.get(mbtiOrder.get(1))}">
+
+                <input type="hidden" id="mbti3" th:value="${mbtiOrder.get(2)}">
+                <input type="hidden" id="mbtiN3" th:value="${mbti.get(mbtiOrder.get(2))}">
+
+                <input type="hidden" id="mbti4" th:value="${mbtiOrder.get(3)}">
+                <input type="hidden" id="mbtiN4" th:value="${mbti.get(mbtiOrder.get(3))}">
+
+                <input type="hidden" id="mbti5" th:value="${mbtiOrder.get(4)}">
+                <input type="hidden" id="mbtiN5" th:value="${mbti.get(mbtiOrder.get(4))}">
+
+                <input type="hidden" id="mbti6" th:value="${mbtiOrder.get(5)}">
+                <input type="hidden" id="mbtiN6" th:value="${mbti.get(mbtiOrder.get(5))}">
+
+                <input type="hidden" id="mbti7" th:value="${mbtiOrder.get(6)}">
+                <input type="hidden" id="mbtiN7" th:value="${mbti.get(mbtiOrder.get(6))}">
+
+                <input type="hidden" id="mbti8" th:value="${mbtiOrder.get(7)}">
+                <input type="hidden" id="mbtiN8" th:value="${mbti.get(mbtiOrder.get(7))}">
+
+                <input type="hidden" id="mbti9" th:value="${mbtiOrder.get(8)}">
+                <input type="hidden" id="mbtiN9" th:value="${mbti.get(mbtiOrder.get(8))}">
+
+                <input type="hidden" id="mbti10" th:value="${mbtiOrder.get(9)}">
+                <input type="hidden" id="mbtiN10" th:value="${mbti.get(mbtiOrder.get(9))}">
+
+                <input type="hidden" id="mbti11" th:value="${mbtiOrder.get(10)}">
+                <input type="hidden" id="mbtiN11" th:value="${mbti.get(mbtiOrder.get(10))}">
+
+                <input type="hidden" id="mbti12" th:value="${mbtiOrder.get(11)}">
+                <input type="hidden" id="mbtiN12" th:value="${mbti.get(mbtiOrder.get(11))}">
+
+                <input type="hidden" id="mbti13" th:value="${mbtiOrder.get(12)}">
+                <input type="hidden" id="mbtiN13" th:value="${mbti.get(mbtiOrder.get(12))}">
+
+                <input type="hidden" id="mbti14" th:value="${mbtiOrder.get(13)}">
+                <input type="hidden" id="mbtiN14" th:value="${mbti.get(mbtiOrder.get(13))}">
+
+                <input type="hidden" id="mbti15" th:value="${mbtiOrder.get(14)}">
+                <input type="hidden" id="mbtiN15" th:value="${mbti.get(mbtiOrder.get(14))}">
+
+                <input type="hidden" id="mbti16" th:value="${mbtiOrder.get(15)}">
+                <input type="hidden" id="mbtiN16" th:value="${mbti.get(mbtiOrder.get(15))}">
+
 
         </div>
     </div>
 </div>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script type="text/javascript">
+    var mbti1 = $('#mbti1').val();
+    var mbti2 = $('#mbti2').val();
+    var mbti3 = $('#mbti3').val();
+    var mbti4 = $('#mbti4').val();
+    var mbti5 = $('#mbti5').val();
+    var mbti6 = $('#mbti6').val();
+    var mbti7 = $('#mbti7').val();
+    var mbti8 = $('#mbti8').val();
+    var mbti9 = $('#mbti9').val();
+    var mbti10 = $('#mbti10').val();
+    var mbti11 = $('#mbti11').val();
+    var mbti12 = $('#mbti12').val();
+    var mbti13 = $('#mbti13').val();
+    var mbti14 = $('#mbti14').val();
+    var mbti15 = $('#mbti15').val();
+    var mbti16 = $('#mbti16').val();
 
-    var mbti1 = $("#mbti1").val();
-    var mbti2 = $("#mbti2").val();
-    var mbti3 = $("#mbti3").val();
-    var mbti4 = $("#mbti4").val();
-    var mbti5 = $("#mbti5").val();
-    var mbti6 = $("#mbti6").val();
-    var mbti7 = $("#mbti7").val();
-    var mbti8 = $("#mbti8").val();
-    var mbti9 = $("#mbti9").val();
-    var mbti10 = $("#mbti10").val();
-    var mbti11 = $("#mbti11").val();
-    var mbti12 = $("#mbti12").val();
-    var mbti13 = $("#mbti13").val();
-    var mbti14 = $("#mbti14").val();
-    var mbti15 = $("#mbti15").val();
-    var mbti16 = $("#mbti16").val();
-
-    var mbtiN1 = $("#mbtiN1").val();
-    var mbtiN2 = $("#mbtiN2").val();
-    var mbtiN3 = $("#mbtiN3").val();
-    var mbtiN4 = $("#mbtiN4").val();
-    var mbtiN5 = $("#mbtiN5").val();
-    var mbtiN6 = $("#mbtiN6").val();
-    var mbtiN7 = $("#mbtiN7").val();
-    var mbtiN8 = $("#mbtiN8").val();
-    var mbtiN9 = $("#mbtiN9").val();
-    var mbtiN10 = $("#mbtiN10").val();
-    var mbtiN11 = $("#mbtiN11").val();
-    var mbtiN12 = $("#mbtiN12").val();
-    var mbtiN13 = $("#mbtiN13").val();
-    var mbtiN14 = $("#mbtiN14").val();
-    var mbtiN15 = $("#mbtiN15").val();
-    var mbtiN16 = $("#mbtiN16").val();
-
-    window.onload = function () {
-        pieChartDraw();
-    }
-
-    let pieChartData = {
-        labels: [
-            mbti1, mbti2, mbti3, mbti4, mbti5, mbti6, mbti7, mbti8, mbti9, mbti10, mbti11, mbti12, mbti13, mbti14, mbti15, mbti16,
-        ],
-        datasets: [{
-            data: [
-                mbtiN1, mbtiN2, mbtiN3, mbtiN4, mbtiN5, mbtiN6, mbtiN7, mbtiN8,
-                mbtiN9, mbtiN10, mbtiN11, mbtiN12, mbtiN13, mbtiN14, mbtiN15, mbtiN16,
-
-            ],
-            backgroundColor: [
-                'rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(255, 99, 132)', 'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)',
-                'rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)',
-            ],
-        }],
-    };
-
-    let pieChartDraw = function () {
-        let ctx = document.getElementById('pieChartCanvas').getContext('2d');
-
-        window.pieChart = new Chart(ctx, {
-            type: 'pie',
-            data: pieChartData,
-            options: {
-                responsive: false
+    var mbtiN1 = $('#mbtiN1').val();
+    var mbtiN2 = $('#mbtiN2').val();
+    var mbtiN3 = $('#mbtiN3').val();
+    var mbtiN4 = $('#mbtiN4').val();
+    var mbtiN5 = $('#mbtiN5').val();
+    var mbtiN6 = $('#mbtiN6').val();
+    var mbtiN7 = $('#mbtiN7').val();
+    var mbtiN8 = $('#mbtiN8').val();
+    var mbtiN9 = $('#mbtiN9').val();
+    var mbtiN10 = $('#mbtiN10').val();
+    var mbtiN11 = $('#mbtiN11').val();
+    var mbtiN12 = $('#mbtiN12').val();
+    var mbtiN13 = $('#mbtiN13').val();
+    var mbtiN14 = $('#mbtiN14').val();
+    var mbtiN15 = $('#mbtiN15').val();
+    var mbtiN16 = $('#mbtiN16').val();
+    new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+            labels: [mbti1, mbti2, mbti3, mbti4, mbti5, mbti6, mbti7, mbti8,
+                mbti9, mbti10, mbti11, mbti12, mbti13, mbti14, mbti15, mbti16],
+            datasets: [
+                {
+                    label: "회원 MBTI 통계",
+                    backgroundColor: [
+                        "#f79546",
+                        "#9bba57",
+                        "#4f81bb",
+                        "#5f497a",
+                        "#a94069",
+                        "#ff5f34",
+                        "#41774e",
+                        "#003663",
+                        "#49acc5",
+                        "#c0504e",
+                        "#f79546",
+                        "#9bba57",
+                        "#4f81bb",
+                        "#5f497a",
+                        "#a94069",
+                        "#ff5f34"
+                    ],
+                    data: [mbtiN1, mbtiN2, mbtiN3, mbtiN4, mbtiN5, mbtiN6, mbtiN7, mbtiN8,
+                        mbtiN9, mbtiN10, mbtiN11, mbtiN12, mbtiN13, mbtiN14, mbtiN15, mbtiN16]
+                }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '현재 수강생 MBTI 통계 현황'
             }
-        });
-    };
+        }
+    });
 </script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
