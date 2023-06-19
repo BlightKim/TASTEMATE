@@ -74,11 +74,11 @@ public class CommentController {
       throw new RuntimeException("오류가 발생했습니다.");
     }
     List<CommentVO> commentList = commentService.getCommentList(commentVO.getBoardIdx());
-    BoardVO boardVO = boardService.getOnePost(commentVO.getBoardIdx());
-    model.addAttribute("boardVO", boardVO);
+    BoardVO board = boardService.getOnePost(commentVO.getBoardIdx());
+    model.addAttribute("board", board);
     model.addAttribute("commentList", commentList);
     log.info("commentList: {}", commentList);
-    log.info("boardVO: {}", boardVO);
+    log.info("boardVO: {}", board);
     return "board/comment_container :: #comment-container";
   }
 }

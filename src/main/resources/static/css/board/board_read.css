@@ -91,15 +91,6 @@ ul {
   display: none;
 }
 
-.reply-reply-list li:before {
-  content: '';
-  width: 180px;
-  height: 2px;
-  background: #601599;
-  position: absolute;
-  top: 25px;
-  left: -182px;
-}
 
 .comments-list li {
   margin-bottom: 15px;

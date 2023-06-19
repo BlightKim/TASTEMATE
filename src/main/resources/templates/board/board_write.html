@@ -47,7 +47,7 @@
                 <input type="text" class="form-control" th:field="*{title}"
                        placeholder="제목을 입력해주세요">
               </div>
-              <input type="text" hidden="hidden" th:field="*{writer}" th:value="${#session.getAttribute('vo').getUserId()}"/>
+              <input type="text" hidden="hidden" th:field="*{writer}" th:value="${#session.getAttribute('vo').userId}"/>
               <div class="mb-3 mt-5">
                 <p>내용</p>
                 <textarea id="summernote" th:field="*{content}"></textarea>

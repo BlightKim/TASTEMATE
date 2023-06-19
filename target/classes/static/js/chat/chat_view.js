@@ -5,9 +5,9 @@ $(document).ready(function () {
 
   function onConnected() {
 
-    stompClient.subscribe(`http://192.168.1.13:8080/sub/chat/room/${roomId}`, onMessageReceived);
+    stompClient.subscribe(`http://10.10.15.73:8080/sub/chat/room/${roomId}`, onMessageReceived);
 
-    stompClient.send(`http://192.168.1.13:8080/pub/chat/enterUser`, {}, JSON.stringify({
+    stompClient.send(`http://10.10.15.73:8080/pub/chat/enterUser`, {}, JSON.stringify({
       "roomId": roomId,
       sender: userName,
       type: 'ENTER'

@@ -98,7 +98,7 @@ public class BoardController {
     }
 
     boardService.saveOneBoard(boardVO);
-    return "/board/board_list";
+    return "redirect:/board";
   }
 
   @GetMapping({"/read/{boardIdx}"})

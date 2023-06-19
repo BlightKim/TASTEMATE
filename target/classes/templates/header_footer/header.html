@@ -7,11 +7,7 @@
   <html lang="ko">
 
   <head>
-    <!-- 구글 글씨체 적용-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
-          rel="stylesheet">
+
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -29,7 +25,11 @@
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           rel="stylesheet">
-
+    <!-- 구글 글씨체 적용-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
+          rel="stylesheet">
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
@@ -150,7 +150,7 @@
       });
 
       function connect() {
-        ws = new WebSocket("ws://192.168.1.13:8080/inviteEcho?userId=" + loginUser);
+        ws = new WebSocket("ws://10.10.15.73:8080/inviteEcho?userId=" + loginUser);
         socket = ws;
 
         ws.onopen = function () {
@@ -169,6 +169,7 @@
             setTimeout(function () {
               window.open('/chat/room/' + chatRoom.roomId + '?myId=' + data.inviteeId + '&yourId='
                   + data.senderId, '_blank', 'width=500, height=500');
+              location.href="/store/list";
             }, 3000);
           } else if (data.type === 'reject') {
             console.log("reject data Type : " + data.type);
@@ -234,6 +235,7 @@
                               '/chat/room/' + chatRoom.roomId + '?myId=' + data.senderId
                               + '&yourId='
                               + data.inviteeId, '_blank', 'width=500, height=500');
+                          location.href="/store/list";
                         }, 3000);
                       } else {
                         Swal.fire({
@@ -306,25 +308,6 @@
         <a href="#" onclick="javascript:notLogined(); return false;">내강의장</a>
       </li>
       </th:block>
-      <div th:if="${session.vo != null}">
-        <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" id="showCurrentUsers"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            현재 접속한 사람
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="showCurrentUsers">
-            <th:block th:each="user : ${@webSessionListener.currentUserList()}"
-                      th:if="${!session.vo.userId.equals(user.userId) && user.userId != null}">
-              <li class="dropdown-item">
-                <a class="chat-btn dropdown-item" href="#" th:data-senderId="${session.vo.userId}"
-                   th:data-inviteeId="${user.userId}" th:data-inviterMbti="${session.vo.userMbti}">
-                  <span th:text="${user.userId}"></span>
-                </a>
-              </li>
-            </th:block>
-          </ul>
-        </div>
-      </div>
       <li><a href="#" th:href="@{/board}">꿀팁</a></li>
       <li><a href="#">관리자모드</a></li>
       <li><a href="#">MY</a></li>

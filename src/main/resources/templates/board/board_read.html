@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8"/>
   <title>Title</title>
+  <link href="/css/board/board_read.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 
@@ -12,15 +13,22 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-  <link href="/css/board/board_read.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
   <script type="text/javascript" src="/js/board/board_read.js"></script>
-
+  <!-- 구글 글씨체 적용-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
+        rel="stylesheet">
 </head>
-
+<style>
+  body {
+    font-family: 'Noto Serif KR', serif;
+  }
+</style>
 <body>
 <div id="wrapper">
   <div class="container" style="height: 1500px; width: 100%">
@@ -200,14 +208,16 @@
               <!-- Avatar -->
               <div class="comment-avatar">
                 <img
-                    src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg"
+                    src="/img/tastemate.jpeg"
                     alt=""
                 />
               </div>
               <!-- Contenedor del Comentario -->
               <div class="comment-box">
                 <div class="comment-head">
-                  <h6 class="comment-name by-author">
+                  <h6 class="comment-name"
+                      th:if="${comment.commenter == board.writer}" th:classappend="by-author"
+                  >
                     <a
                         href="http://creaticode.com/blog"
                         th:text="${comment.commenter}"
@@ -219,10 +229,11 @@
                   >hace 20 minutos</span
                   >
                   <i class="fa fa-reply reply_comment_btn"
+                     th:if="${comment.commentStatus.getCommentStatusCode() == '등록'}"
                      th:data-comment-idx="${comment.commentIdx}"
                      th:data-cl="${comment.commentLevel}"
                   ></i>
-                  <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
+                  <th:block th:if="${(session.vo.userId.equals(comment.commenter)) and (comment.commentStatus.getCommentStatusCode().equals('등록'))}">
                     <i class="fa fa-trash comment-del-btn" aria-hidden="true"
                        th:data-board-idx="${board.boardIdx}"
                        th:data-comment-idx="${comment.commentIdx}"
@@ -258,14 +269,16 @@
                   <!-- Avatar -->
                   <div class="comment-avatar">
                     <img
-                        src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg"
+                        src="/img/tastemate.jpeg"
                         alt=""
                     />
                   </div>
                   <!-- Contenedor del Comentario -->
                   <div class="comment-box">
                     <div class="comment-head">
-                      <h6 class="comment-name by-author">
+                      <h6 class="comment-name"
+                      th:if="${comment.commenter == board.writer}" th:classappend="by-author"
+                      >
                         <a
                             href="http://creaticode.com/blog"
                             th:text="${comment.commenter}"
@@ -277,10 +290,12 @@
                       >hace 20 minutos</span
                       >
                       <i class="fa fa-reply reply_comment_btn"
+                         th:if="${comment.commentStatus.getCommentStatusCode() != '삭제'}"
                          th:data-comment-idx="${comment.commentIdx}"
                          th:data-cl="${comment.commentLevel}"
                       ></i>
-                      <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
+
+                      <th:block th:if="${(session.vo.userId.equals(comment.commenter)) and (comment.commentStatus.getCommentStatusCode() != '삭제')}">
                         <i class="fa fa-trash comment-del-btn" aria-hidden="true"
                            th:data-board-idx="${board.boardIdx}"
                            th:data-comment-idx="${comment.commentIdx}"
@@ -318,14 +333,16 @@
                   <!-- Avatar -->
                   <div class="comment-avatar">
                     <img
-                        src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg"
+                        src="/img/tastemate.jpeg"
                         alt=""
                     />
                   </div>
                   <!-- Contenedor del Comentario -->
                   <div class="comment-box">
                     <div class="comment-head">
-                      <h6 class="comment-name by-author">
+                      <h6 class="comment-name"
+                          th:if="${comment.commenter == board.writer}" th:classappend="by-author"
+                      >
                         <a
                             href="http://creaticode.com/blog"
                             th:text="${comment.commenter}"
@@ -337,10 +354,11 @@
                       >hace 20 minutos</span
                       >
                       <i class="fa fa-reply reply_comment_btn"
+                         th:if="${comment.commentStatus.getCommentStatusCode != '삭제'}"
                          th:data-comment-idx="${comment.commentIdx}"
                          th:data-cl="${comment.commentLevel}"
                       ></i>
-                      <th:block th:if="${session.vo.userId.equals(comment.commenter)}">
+                      <th:block th:if="${(session.vo.userId.equals(comment.commenter)) and (comment.commentStatus.getCommentStatusCode() != '삭제')}">
                         <i class="fa fa-trash comment-del-btn" aria-hidden="true"
                            th:data-board-idx="${board.boardIdx}"
                            th:data-comment-idx="${comment.commentIdx}"
