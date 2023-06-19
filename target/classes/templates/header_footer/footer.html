@@ -1,0 +1,71 @@
+
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<!--footerFragment 선언-->
+<div th:fragment="footerFragment">
+
+    <!-- Footer -->
+    <footer class="fs13 page-footer font-small blue pt-4" style="background-color: #f8f9fa; border-top: 0.5px solid #dee2e6; color :gray;">
+
+        <!-- Footer Links -->
+        <div class="container text-center text-md-left mt-5">
+
+            <!-- Grid row -->
+            <div class="row">
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+
+                </div>
+
+
+                <!-- Grid column -->
+                <div class="col-md-6mx-auto">
+
+                    <h6 class="text-uppercase font-weight-bold text-center">TasteMate</h6>
+                    <div>
+                        <img id="tastemate" th:src="@{/img/TasteMate.jpeg}" style="width: 120px; height: 120px;"/>
+                    </div>
+
+                </div>
+
+                <!-- Grid column -->
+                <div class="col-md-6 mx-auto">
+                    <h6 class="text-uppercase fs13">Contact</h6>
+                    <p>
+                        <i class="fas fa-home mr-1"></i>서울 강남구 테헤란로124 삼원타워</p>
+                    <p>
+                        <i class="fas fa-envelope mr-1"></i> ITWILL@ITWILL.com</p>
+                    <p>
+                        <i class="fas fa-phone mr-1"></i> 0507-1401-8061</p>
+
+                </div>
+
+
+            </div>
+            <!-- Grid row -->
+
+        </div>
+        <!-- Footer Links -->
+
+        <hr>
+
+        <!-- Copyright -->
+        <div class="text-center py-3">
+            © 2023 TasteMate Inc.
+        </div>
+        <!-- Copyright -->
+
+    </footer>
+    <!-- Footer -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+</body>
+
+
+</html>

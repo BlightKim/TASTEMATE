@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tastemate.mapper.ChatMapper">
+  <resultMap id="BASECOLUMN" type="com.tastemate.domain.chatting.ChatRoomVO">
+    <id property="roomIdx" column="CHAT_ROOM_IDX" jdbcType="INTEGER"/>
+    <result property="roomId" column="ROOM_ID" jdbcType="VARCHAR" />
+    <result property="regDate" column="REG_DATE" jdbcType="DATE" />
+  </resultMap>
+
+  <update id="joinRoom" parameterType="map">
+    UPDATE MEMBER
+    SET ROOM_IDX =
+          CASE
+            WHEN USER_ID = #{senderId, jdbcType=VARCHAR} THEN #{roomIdx, jdbcType=INTEGER}
+            WHEN USER_ID = #{inviteeId, jdbcType=VARCHAR} THEN #{roomIdx, jdbcType=INTEGER}
+            ELSE ROOM_IDX
+            END
+    WHERE USER_ID IN (#{senderId, jdbcType=VARCHAR}, #{inviteeId, jdbcType=VARCHAR})
+  </update>
+  <select id="findRoomById" parameterType="string" resultMap="BASECOLUMN">
+    <![CDATA[
+    SELECT *
+    FROM CHAT_ROOM_TEST
+    WHERE ROOM_ID = #{roomId,jdbcType=VARCHAR}
+    ]]>
+  </select>
+  <delete id="deleteRoom" parameterType="string">
+    DELETE FROM CHAT_ROOM_TEST
+    WHERE ROOM_ID = #{roomId, jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertRoom" parameterType="string">
+    INSERT INTO CHAT_ROOM_TEST (CHAT_ROOM_IDX, ROOM_ID, REG_DATE)
+    VALUES (CHAT_TEST_SEQ.NEXTVAL, #{roomId, jdbcType=VARCHAR}, SYSDATE)
+  </insert>
+</mapper>

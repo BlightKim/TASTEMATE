@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>store get</title>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        .yellow {
+            color: #FFA500;
+        }
+
+        .fs35 {
+            font-size: 35px;
+        }
+
+        .img_size {
+            width: 400px;
+            height: 400px;
+        }
+
+        .card-header {
+            background-color: lavender;
+        }
+
+        .purple {
+            color: #601599;
+        }
+
+        .purple2 {
+            color: #9C91B3;
+        }
+
+        .purple3 {
+            background-color: #601599;
+            color: white;
+            border: none;
+        }
+
+        .purple4 {
+            background-color: #8E48C7;
+            color: white;
+            border: none;
+        }
+
+        .purple5 {
+            background-color: #9C91B3;
+            color: white;
+            border: none;
+        }
+
+
+        /*댓글창*/
+        .comment {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .comment .comment-image {
+            flex: 0 0 auto;
+            margin-right: 10px;
+        }
+
+        .comment .comment-body {
+            flex: 1 1 auto;
+        }
+
+        .rounded-img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+        }
+
+        .border {
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 5px;
+            width: 37px;
+            height: 37px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #8E48C7;
+        }
+
+        .border svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<!--
+<td th:text="${storeVO}"></td>
+<td th:text="${storeVO_star}"></td>-->
+<!--<td th:text="${storeVO_comment}"></td>-->
+
+
+<div class="container py-4 mb-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-center align-items-center mt-5">
+                <img th:src="@{|/store/${storeVO.filename}|}" class="img-fluid img_size"/>
+            </div>
+
+        </div>
+        <div class="col-lg-6">
+            <span th:text="${storeVO.category1}" class="mb-4 purple2"></span><br>
+            <span th:text="${storeVO.storeName}" class="mb-4 purple fs35"></span>
+
+            <!--별점-->
+
+            <th:block th:with="starCount=${storeVO_star.starVO[0].storeStar}">
+                <span th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}"
+                      class="yellow fs35">★</span>
+            </th:block>
+            <br><br>
+            <!--별점끝-->
+
+            <p th:text="'주소 : ' + ${storeVO.storeAddress}" class="mb-4"></p>
+            <p th:text="'전화번호 : ' + ${storeVO.phoneNumber}" class="mb-4"></p>
+
+            <a href="#" class="btn btn-danger purple5" id="getMenu">메뉴보기</a><br><br>
+
+            <div id="map" style="width:450px;height:300px;"></div>
+            <br>
+
+
+            <div class="row g-0 no-gutters">
+                <div class="col-auto mx-1">
+                    <span class="border" th:if="${bookmarkValidate == 0 }">
+                        <input type="hidden" name="bookmark" value="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             class="bi bi-heart" viewBox="0 0 16 16">
+                            <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                        </svg>
+                    </span>
+                    <span class="border" th:if="${bookmarkValidate == 1 }">
+                        <input type="hidden" name="bookmark" value="1">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                        </svg>
+                    </span>
+                    <input type="hidden" id="storeIdx" th:value="${storeVO.storeIdx}">
+                    <input type="hidden" id="storeName" th:value="${storeVO.storeName}">
+                </div>
+
+
+                <!--  확인용! 지우지마         <td th:text="${storeVO.userIdx}"></td>
+                                                <td th:text="${session.vo.getUserIdx()}"></td>-->
+
+                <!--로그인한 사람과 등록한 사람이 동일할때만 맛집 수정버튼이 보임!-->
+                <th:block th:if="${session.vo.getUserIdx().toString().equals(storeVO.userIdx)}">
+                    <div class="col-auto mx-1">
+                        <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark"
+                           style="background-color: #8E48C7; border: none;">맛집 정보 수정</a>
+                    </div>
+                </th:block>
+
+                <div class="col-auto mx-1">
+                    <a class="btn btn-success" th:href="@{/store/list}"
+                       style="background-color: #9C91B3; border: none;">목록으로</a>
+                </div>
+
+
+                <div class="mx-1">
+                    <a class="btn btn-warning reserve"
+                       style="border: none;">예약하기</a>
+                </div>
+
+                <!--
+                                <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx}, storeName=${storeVO.storeName})}" class="btn btn-primary">북마크</a>
+                                <a th:href="@{/booking/bookingInsert(storeIdx=${storeVO.storeIdx})}" class="btn btn-warning">예약하기</a>
+                -->
+
+                <!--                    <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx})}" class="btn btn-primary">북마크</a>-->
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Modal-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">
+                    <span th:text="${storeVO.storeName}" class="mb-4 purple"></span>
+                </h5>
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <span th:if="${storeVO.MenuVO[0].menuIdx == 0}">메뉴 등록 중!</span>
+
+                <div th:if="${storeVO.MenuVO[0].menuIdx != 0}"
+                     th:each="MenuVO : ${storeVO.MenuVO}">
+                    <div class="mt-2 mb-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-egg-fried" viewBox="0 0 16 16">
+                            <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                            <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+                        </svg>
+
+                        <span th:text="${MenuVO.foodName}"></span>
+                        <span th:text="${MenuVO.price}"></span>원
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // 메뉴보기 버튼 클릭 이벤트 핸들러
+    document.getElementById("getMenu").addEventListener("click", function () {
+        // 모달 표시
+        $('#myModal').modal('show');
+    });
+
+    // 닫기 버튼 클릭 이벤트 핸들러
+    document.querySelector("#myModal .close").addEventListener("click", function () {
+        // 모달 닫기
+        $('#myModal').modal('hide');
+    });
+
+</script>
+<!--모달끝-->
+
+
+<!--댓글 시작-->
+
+<div class="container">
+    <div class="text-center mb-3 mt-1">
+        <h5 class="card-header mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-egg-fried"
+                 viewBox="0 0 16 16">
+                <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+            </svg>
+            맛집 한줄 평가
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-egg-fried"
+                 viewBox="0 0 16 16">
+                <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+            </svg>
+        </h5>
+    </div>
+    <div class="row mb-5">
+        <div class="col-sm-12">
+            <div class="card mb-3"
+                 th:each="comment : ${storeVO_comment.StarVO}"
+                 th:if="${storeVO_comment.StarVO[0].storeComment != null}">
+
+                <div class="card-body">
+
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                 class="bi bi-person" viewBox="0 0 16 16">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+                            </svg>
+                            Mate
+                            <th:block th:with="starCount=${comment.storeStar}">
+                                <span th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}"
+                                      class="yellow">★</span>
+                            </th:block>
+
+                        </div>
+
+                        <div class="col-sm-9">
+
+                            <span th:text="${comment.storeComment}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <span th:if="${storeVO_comment.StarVO[0].storeComment == null}">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 text-center purple2">
+                            맛집 결제 후, 첫 리뷰를 작성해보세요
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-emoji-smile" viewBox="0 0 16 16">
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                              <path d="M4.285 9.567a.5.5 0 0 1 .683.183A3.498 3.498 0 0 0 8 11.5a3.498 3.498 0 0 0 3.032-1.75.5.5 0 1 1 .866.5A4.498 4.498 0 0 1 8 12.5a4.498 4.498 0 0 1-3.898-2.25.5.5 0 0 1 .183-.683zM7 6.5C7 7.328 6.552 8 6 8s-1-.672-1-1.5S5.448 5 6 5s1 .672 1 1.5zm4 0c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S9.448 5 10 5s1 .672 1 1.5z"/>
+                             </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!-- 북마크 ajax -->
+<script>
+    var storeIdx2 = $("#storeIdx").val();
+    var urlInsert = "/bookmark/insertAjax.do";
+    var urlDelete = "/bookmark/deleteAjax.do";
+    //console.log(bookmark);
+    $(document).ready(function(){
+        let bookmark = $('input[name=bookmark]').val();
+        console.log(bookmark);
+        $('.border').on('click', function(){
+            //document.write("버튼 클릭 인식함!");
+            $.ajax({
+                url: (bookmark == 0) ? urlInsert : urlDelete ,
+                type: "POST",
+                data: {storeIdx: storeIdx2 },
+                contextType: "application/json; charset=UTF-8",
+                dataType : "json",
+                async: false,
+                success: function(data){
+                    //console.log('통신결과 : ' + data.status);
+                    location.href="/store/get?storeIdx=" + storeIdx2;
+                },
+                error: function(error){
+                    console.log(error.responseText);
+                    alert("신규등록 error");  }
+            });
+        });
+    });
+</script>
+
+
+<script>
+    /* 예약하기 (이미 결제 완료되면 불가능하게) */
+    var storeIdx = $("#storeIdx").val();
+
+    $(document).ready(function () {
+        $('.reserve').on('click', function () {
+            console.log("버튼 클릭 인식함!");
+            $.ajax({
+                url: "/store/payCheckAjax",
+                type: "POST",
+                data: {storeIdx: storeIdx},
+                contextType: "application/json; charset=UTF-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    console.log('payCheckAjax 성공 : ' + data.inicis);
+                    console.log('payCheckAjax 성공 : ' + data.kakao);
+
+                    if(data.inicis == 1){
+                        swal('', "matching이 진행 중이에요!", 'warning');
+                        return;
+                    }
+                    if(data.kakao == 1){
+                        swal('', "matching이 진행 중이에요!", 'warning');
+                        return;
+                    }
+
+                    //alert("결제내역이 없어 이동합니다");
+                    location.href = "/booking/bookingInsert?storeIdx=" + storeIdx;
+
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    alert("예약하기버튼 error");
+                }
+            });
+        });
+    });
+
+
+
+</script>
+
+
+<!-- 카카오 지도 -->
+<script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8abceac52f5d250937ec886cf8cd8d21"></script>
+
+<script th:inline="javascript">
+    //카카오 지도 사용하기
+    var container = document.getElementById('map');
+
+
+    var lati = /*[[${storeVO.storeLati}]]*/;
+    var longi = /*[[${storeVO.storeLongi}]]*/;
+
+    console.log(lati);
+    console.log(longi);
+
+
+    var options = {
+        center: new kakao.maps.LatLng(lati, longi),
+        /* https://map.kakao.com/?urlX=523954.0&urlY=1084098.0*/
+        level: 3
+    };
+
+    var map = new kakao.maps.Map(container, options);
+
+
+    //마커찍기
+    // 마커가 표시될 위치입니다
+    var markerPosition = new kakao.maps.LatLng(lati, longi);
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        position: markerPosition
+    });
+
+    // 마커가 지도 위에 표시되도록 설정합니다
+    marker.setMap(map);
+
+    // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+    // marker.setMap(null);
+</script>
+<!-- 카카오 지도 끝 -->
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>
+

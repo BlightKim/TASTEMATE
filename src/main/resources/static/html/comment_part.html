@@ -1,0 +1,300 @@
+<!--<div
+  class="row"
+  id="collapseExample"
+  style="width: 100%; margin-top: 20px"
+>
+  <th:block
+    th:if="${commentList != null || commentList.size() != 0}"
+  >
+    <th:block th:each="comment : ${commentList}">
+      <div
+        th:class="${comment.commentLevel == 1 ? 'col-12 p-4 main-comments' : (comment.commentLevel == 2 ?  'col-12 p-4 sub-comments' : 'col-12 p-4 sub-sub-comments')}"
+        th:data-parentIdx="${comment.parentCommentIdx}"
+        th:data-commentLevel="${comment.commentLevel}"
+        style="
+          width: 80%;
+          height: auto;
+          text-align: justify;
+          position: relative;
+          background-color: #f9f9f9;
+          padding: 10px;
+          border-radius: 8px;
+        "
+        th:id="|comment-${comment.commentIdx}|"
+      >
+        <div class="row align-items-center">
+          <div class="col-auto">
+            &lt;!&ndash; <img src style="width: 30px; height: 30px; border-radius: 50%;"> &ndash;&gt;
+          </div>
+          <div class="col">
+            <span
+              style="font-weight: bold"
+              th:text="${comment.commenter}"
+            ></span>
+          </div>
+          <div class="col-auto">
+            <i class="bi bi-clock"></i>
+            &nbsp; &nbsp; [[${#dates.format(comment.regDate,
+            'yyyy-MM-dd HH:mm')}]]
+          </div>
+          <div class="col-auto ms-auto">
+            <button
+              type="button"
+              class="btn btn-outline-secondary reply_comment_btn"
+              th:data-idx="${comment.commentIdx}"
+              th:data-cl="${comment.commentLevel}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-reply"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.74 8.74 0 0 0-1.921-.306 7.404 7.404 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254a.503.503 0 0 0-.042-.028.147.147 0 0 1 0-.252.499.499 0 0 0 .042-.028l3.984-2.933zM7.8 10.386c.068 0 .143.003.223.006.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.960v-.667z"
+                ></path>
+              </svg>
+              <span class="visually-hidden">댓글 달기</span>
+            </button>
+            <th:block
+              th:if="|${session.vo.userId.equals(comment.commenter)}|"
+            >
+              &lt;!&ndash; 수정 버튼 &ndash;&gt;
+              <button
+                type="button"
+                class="btn btn-success ml-2"
+                id="comment_edit_btn"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pencil-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10Z"
+                  ></path>
+                </svg>
+                수정
+              </button>
+              &lt;!&ndash; 삭제 버튼 &ndash;&gt;
+              <button
+                type="button"
+                class="btn btn-danger ml-2"
+                data-toggle="modal"
+                data-target="#commentDeleteModal"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-trash-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M5.5 5.5a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0v-6a.5.5 0 0 1 .5-.5z"
+                  ></path>
+                  <path
+                    fill-rule="evenodd"
+                    d="M1 2a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2zm14 3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h13z"
+                  ></path>
+                </svg>
+                삭제
+              </button>
+            </th:block>
+          </div>
+        </div>
+        <div class="row no-border">
+          <div
+            class="col-12 p-4 comment-content"
+            style="
+              width: 100%;
+              height: auto;
+              text-align: justify;
+              margin-top: 10px;
+              background-color: #f7f7f7;
+              border: none;
+            "
+            th:classappend="${comment.commentStatus.equals('삭제') ? 'deleted' : ''}"
+            th:utext="${(comment.commentStatus).equals('삭제') ? '삭제된 댓글입니다' : comment.commentContent}"
+          ></div>
+        </div>
+        <div th:id="|comment_${comment.commentIdx}_reply_area|">
+          &lt;!&ndash; 댓글 입력 칸이 들어갈 공간&ndash;&gt;
+        </div>
+      </div>
+    </th:block>
+  </th:block>
+</div>-->
+
+<!--                <div class="row" style="width: 100%; height: 500px">
+  <div
+    class="row"
+    style="width: 100%; padding-top: 10px"
+    id="reply_comment_area"
+  >
+    <div
+      class="col-12 p-4"
+      style="
+        background-color: #fafafa;
+        border-radius: 8px;
+        padding: 10px;
+      "
+    >
+      <div class="row">
+        <div
+          class="col-12 d-flex align-items-center comment-header"
+        >
+          <h5
+            class="mb-0"
+            style="
+              flex: 1;
+              font-size: 20px;
+              font-weight: bold;
+              margin-bottom: 0;
+            "
+          >
+            [[${board.memberVO.userId}]]님의 글에 코멘트 남기기
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 p-4" style="border: none">
+          <div
+            class="row d-flex"
+            style="justify-content: center"
+          >
+            <div id="summernote"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row no-border">
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            th:id="comment_write_btn"
+            style="width: 150px"
+          >
+            코멘트 등록
+          </button>
+        </div>
+      </div>
+      <input
+        type="hidden"
+        id="boardIdx"
+        th:value="${board.boardIdx}"
+      />
+    </div>
+  </div>
+</div>
+<input type="hidden" class="commentIdx" th:value="0" />
+</div>
+</div>
+</div>
+</main>
+</div>-->
+<!--댓글 삭제 확인 modal-->
+<!--
+<div
+    class="modal fade"
+    id="commentDeleteModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="commentDeleteModalLabel"
+    aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="commentDeleteModalLabel">
+          댓글 삭제
+        </h5>
+        <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        댓글 을 정말 삭제하시겠습니까?
+      </div>
+      <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-primary"
+            id="comment_del_btn"
+        >
+          삭제하기
+        </button>
+        <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+        >
+          취소하기
+        </button>
+      </div>
+    </div>
+  </div>
+</div>-->
+
+
+<!--
+<div class="row comment-reply-container">
+  <div
+      class="row"
+      style="padding-top: 10px"
+      id="reply_comment_area"
+  >
+    <div
+        class="col-8 p-4 inside-comment-reply-container"
+    >
+      <div class="row">
+        <div
+            class="col-12 d-flex align-items-center comment-header"
+        >
+          <h5
+          >
+            [[${board.memberVO.userId}]]님의 글에 코멘트 남기기
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 p-4" style="border: none">
+          <div
+              class="row d-flex"
+              style="justify-content: center"
+          >
+            <div id="summernote"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row no-border">
+        <div class="col-12 d-flex justify-content-end">
+          <button
+              type="button"
+              class="btn btn-secondary"
+              th:id="comment_write_btn"
+              style="width: 150px"
+          >
+            코멘트 등록
+          </button>
+        </div>
+      </div>
+      <input
+          type="hidden"
+          id="boardIdx"
+          th:value="${board.boardIdx}"
+      />
+    </div>
+  </div>
+</div>-->
