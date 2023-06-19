@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.tastemate.mapper.MemberMapper">
 
@@ -30,12 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="user_getWithStar" resultMap="userStarResultMap" parameterType="int">
         SELECT s.USER_IDX, s.USER_ID, s.USER_NAME, s.USER_GENDER, s.USER_ADDRESS, s.USER_CLASS, s.USER_LIKE_FOOD, s.USER_MBTI,
-               avg_star.USER_STAR
+        avg_star.USER_STAR
         FROM MEMBER s
-                 LEFT OUTER JOIN (
-            SELECT USER_IDX, ROUND(AVG(USER_STAR), 1) AS USER_STAR
-            FROM STAR
-            GROUP BY USER_IDX
+        LEFT OUTER JOIN (
+        SELECT USER_IDX, ROUND(AVG(USER_STAR), 1) AS USER_STAR
+        FROM STAR
+        GROUP BY USER_IDX
         ) avg_star ON s.USER_IDX = avg_star.USER_IDX
         WHERE USER_CLASS = #{userClass}
         ORDER BY s.USER_IDX
@@ -48,15 +48,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 멤버 추가 -->
     <insert id="user_join" parameterType="com.tastemate.domain.MemberVO">
         INSERT INTO MEMBER(USER_IDX, USER_ID, USER_PWD, USER_NAME, USER_GENDER, USER_PHONE, USER_ADDRESS,
-                           USER_CLASS, USER_LIKE_FOOD, USER_DATE, USER_LOGINTYPE, USER_STATUS, USER_PROFILE,
-                           USER_ORI_PROFILE, USER_TYPE, USER_MBTI, USER_EMAIL, USER_BIRTH, USER_ADDRESS_SI, USER_ADDRESS_GU)
+        USER_CLASS, USER_LIKE_FOOD, USER_DATE, USER_LOGINTYPE, USER_STATUS, USER_PROFILE,
+        USER_ORI_PROFILE, USER_TYPE, USER_MBTI, USER_EMAIL, USER_BIRTH, USER_ADDRESS_SI, USER_ADDRESS_GU)
         VALUES ((SELECT NVL(MAX(USER_IDX), 0) + 1 FROM MEMBER),
-            #{userId}, #{userPwd}, #{userName}, #{userGender}, #{userPhone}, #{userAddress},
-            #{userClass}, #{userLikeFood}, SYSDATE, 1, 0, #{userProfile},
-            null, 1, #{userMbti}, #{userEmail}, #{userBirth}, #{userAddressSi}, #{userAddressGu})
+        #{userId}, #{userPwd}, #{userName}, #{userGender}, #{userPhone}, #{userAddress},
+        #{userClass}, #{userLikeFood}, SYSDATE, 1, 0, #{userProfile},
+        null, 1, #{userMbti}, #{userEmail}, #{userBirth}, #{userAddressSi}, #{userAddressGu})
     </insert>
 
-<!--    #{userAddressSi}, #{userAddressGu}-->
+    <!--    #{userAddressSi}, #{userAddressGu}-->
 
     <!-- 중복 ID 체크 -->
     <select id="checkId" resultType="integer">
@@ -81,13 +81,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="userModify" parameterType="com.tastemate.domain.MemberVO">
         UPDATE MEMBER
         SET USER_NAME = #{userName},
-            USER_EMAIL = #{userEmail},
-            USER_PHONE = #{userPhone},
-            USER_LIKE_FOOD = #{userLikeFood},
-            USER_MBTI = #{userMbti},
-            USER_ADDRESS = #{userAddress},
-            USER_ADDRESS_SI = #{userAddressSi},
-            USER_ADDRESS_GU = #{userAddressGu}
+        USER_EMAIL = #{userEmail},
+        USER_PHONE = #{userPhone},
+        USER_LIKE_FOOD = #{userLikeFood},
+        USER_MBTI = #{userMbti},
+        USER_ADDRESS = #{userAddress},
+        USER_ADDRESS_SI = #{userAddressSi},
+        USER_ADDRESS_GU = #{userAddressGu}
         WHERE USER_IDX = #{userIdx}
     </update>
 

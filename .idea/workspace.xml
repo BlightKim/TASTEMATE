@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="97104695-087b-4101-8889-d7fb2548d7ad" name="Changes" comment="### 제목&#10;# 커밋 타입: 작업내용 (제목과 본문은 한 줄 띄워주세요)&#10;&#10;&#10;### 본문 - 한 줄에 최대 72 글자까지만 입력하기  &#10;# 무엇을, 왜, 어떻게 했는지&#10;&#10;&#10;# 꼬리말&#10;# (선택) 이슈번호 작성&#10;&#10;#   [커밋 타입]  리스트&#10;#   feat      : 기능 (새로운 기능)&#10;#   fix       : 버그 (버그 수정)&#10;#   design    : CSS 등 사용자 UI 디자인 변경&#10;#   refactor  : 리팩토링&#10;#   style     : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)&#10;#   docs      : 문서 (문서 추가, 수정, 삭제)&#10;#   test      : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#   chore     : 기타 변경사항 (빌드 스크립트 수정 등)&#10;#   post      : 블로그 포스트 추가 (신규 포스트 작성 및 수정)&#10;#   rename    : 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우&#10;#   remove    : 파일을 삭제하는 작업만 수행한 경우&#10;# ------------------&#10;#   [체크리스트]&#10;#     제목 첫 글자는 대문자로 작성했나요?&#10;#     제목은 명령문으로 작성했나요?&#10;#     제목 끝에 마침표(.) 금지&#10;#     제목과 본문을 한 줄 띄워 분리하기&#10;#     본문에 여러줄의 메시지를 작성할 땐 &quot;-&quot;로 구분했나요?&#10;# ------------------">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/board/board_read.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/board/board_read.html" afterDir="false" />
+
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,8 +115,12 @@
       <workItem from="1686915011761" duration="3158000" />
       <workItem from="1686987031358" duration="27081000" />
       <workItem from="1687087817459" duration="20716000" />
-      <workItem from="1687133937458" duration="8304000" />
-      <workItem from="1687152577854" duration="4033000" />
+
+      <workItem from="1687133937458" duration="12090000" />
+      <workItem from="1687151427896" duration="174000" />
+      <workItem from="1687151618065" duration="982000" />
+      <workItem from="1687152766706" duration="3994000" />
+
     </task>
     <task id="LOCAL-00001" summary="2023-06-12">
       <created>1686575200692</created>
@@ -139,6 +143,11 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="decb5dc2-0cc7-4bdc-92cf-54b68633d10a" value="TOOL_WINDOW" />
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -153,6 +162,17 @@
                       </list>
                     </value>
                   </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="decb5dc2-0cc7-4bdc-92cf-54b68633d10a">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
                 </map>
               </option>
             </State>

@@ -28,6 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
             "/css/**", "/*.ico", "**/js/**", "/error", "/member/register", "/img/**",
             "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**",
             "/member/class",
+            "/chat/createRoom", "/chat/room",
             "/member/mbti", "/member/selectFood", "/member/list", "/member/simpleregister",
             "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/list",
             "/store/main", "/stomp/chat/**",

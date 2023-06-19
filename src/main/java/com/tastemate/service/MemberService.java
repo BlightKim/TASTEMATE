@@ -2,6 +2,7 @@ package com.tastemate.service;
 
 import com.tastemate.domain.MemberVO;
 import com.tastemate.mapper.MemberMapper;
+import java.lang.reflect.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
