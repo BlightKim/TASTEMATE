@@ -30,15 +30,14 @@
             integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
             crossorigin="anonymous">
     <!-- JavaScript Bundle with Popper -->
-<!--    <script-->
-<!--            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"-->
-<!--            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"-->
-<!--            crossorigin="anonymous"></script>-->
+    <!--    <script-->
+    <!--            src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"-->
+    <!--            integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"-->
+    <!--            crossorigin="anonymous"></script>-->
 
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-
 
 
     <style>
@@ -73,15 +72,14 @@
 
 </head>
 <body>
-<form action="modify" method="post" enctype="multipart/form-data">
-    <div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
-        <div class="text-center">
-            수정 처리되었습니다 ^^
-        </div>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="text-center">
+        수정 처리되었습니다 ^^
     </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 <div class="container-fluid" style="height: 1150px; margin-top: 100px;">
     <div class="col-md-12 mx-auto input-form">
         <div class="row justify-content-center" style="height: 70%;">
@@ -89,119 +87,124 @@
             <div class="col-12 d-grid gap-2" style="align-self: center; width: 45%;">
                 <h2 class="mb-3">개인정보 수정</h2>
                 <br>
-                <div class="row">
-                    <label for="userName" class="form-label">이름</label>
-                    <input type="text" class="form-control form-control"
-                           th:placeholder="${session.vo.getUserName()}"
-                           id="userName" name="userName">
-                </div>
-                <div class="row">
-                    <div id="userName_warning" style="text-align: center" hidden="hidden">
-                        <span></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <label for="userPhone" class="form-label">전화번호</label>
-                    <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
-                           id="userPhone" name="userPhone">
-                </div>
-                <div class="row">
-                    <div id="cellphone_warning" style="text-align: center" hidden="hidden">
-                        <span></span>
+                <form id="" action="modify" method="post" enctype="multipart/form-data">
 
+                    <div class="row">
+                        <label for="userName" class="form-label">이름</label>
+                        <input type="text" class="form-control form-control"
+                               th:placeholder="${session.vo.getUserName()}"
+                               id="userName" name="userName">
                     </div>
-                </div>
-                <div class="row">
-                    <label for="userEmail" class="form-label">이메일</label>
-                    <input type="email" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
-                           id="userEmail" name="userEmail">
-                </div>
-                <div class="row">
-                    <div id="email_warning" style="text-align: center" hidden="hidden">
-                        <span></span>
+                    <div class="row">
+                        <div id="userName_warning" style="text-align: center" hidden="hidden">
+                            <span></span>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <label for="userLikeFood" class="form-label">음식</label>
-                    <select class="form-control" id="userLikeFood" name="userLikeFood">
-                        <option th:selected="${session.vo.getUserLikeFood() == null}" value="" selected disabled>음식을
-                            선택해주세요
-                        </option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '한식'}" value="한식">한식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '중식'}" value="중식">중식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '일식'}" value="일식">일식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '양식'}" value="양식">양식</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '퓨전'}" value="퓨전">퓨전</option>
-                        <option th:selected="${session.vo.getUserLikeFood() == '푸드코트'}" value="푸드코트">푸드코트</option>
-                    </select>
-                </div>
-                <div class="row">
-                    <label for="userMbti" class="form-label">MBTI</label>
-                    <select class="form-control" id="userMbti" name="userMbti">
-                        <option th:selected="${session.vo.getUserMbti() == null}" value="" selected disabled>MBTI를
-                            선택해주세요
-                        </option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISFP'}" value="ISFP">ISFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISFJ'}" value="ISFJ">ISFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISTP'}" value="ISTP">ISTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ISTJ'}" value="ISTJ">ISTJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INFP'}" value="INFP">INFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INFJ'}" value="INFJ">INFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INTP'}" value="INTP">INTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'INTJ'}" value="INTJ">INTJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESFP'}" value="ESFP">ESFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESFJ'}" value="ESFJ">ESFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESTP'}" value="ESTP">ESTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ESTJ'}" value="ESTJ">ESTJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENFP'}" value="ENFP">ENFP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENFJ'}" value="ENFJ">ENFJ</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENTP'}" value="ENTP">ENTP</option>
-                        <option th:selected="${session.vo.getUserMbti() == 'ENTJ'}" value="ENTJ">ENTJ</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                         class="bi bi-card-image" viewBox="0 0 16 16">
-                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
-                    </svg>
-                    <label for="oriFilename">프로필 사진</label>
-                    <input type="file" class="form-control" id="oriFilename" name="oriFilename"
-                           accept="image/png, image/gif, image/jpeg" multiple="multiple">
-                </div>
-                <div class="row">
-                    <label for="userPost">우편번호</label>
-                    <input id="userPost" name="userAddress1" class="form-control form-control" type="text"
-                           th:placeholder="${session.addressSplit[0]}"/>
-                </div>
-                <div class="row">
-                    <label for="userAddr">주소</label>
-                    <input id="userAddr" name="userAddress2" class="form-control form-control" type="text"
-                           th:placeholder="${session.addressSplit[1]}"/>
-                </div>
-                <div class="row" style="margin-bottom: 30px;">
-                    <label>상세주소<span class="text-muted"></span></label>
-                    <input id="userAddrDetail" class="form-control form-control" type="text" name="userAddress3"
-                           th:placeholder="${session.addressSplit[2]}"/>
-                </div>
-                <div class="row" style="margin-bottom: 20px;">
-                    <button class="btn btn-outline-primary active" id="modify_btn"
-                            type="submit">
-                        수정
-                    </button>
-                </div>
+                    <div class="row">
+                        <label for="userPhone" class="form-label">전화번호</label>
+                        <input type="tel" class="form-control" th:placeholder="${session.vo.getUserPhone()}"
+                               id="userPhone" name="userPhone">
+                    </div>
+                    <div class="row">
+                        <div id="cellphone_warning" style="text-align: center" hidden="hidden">
+                            <span></span>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="userEmail" class="form-label">이메일</label>
+                        <input type="email" class="form-control" th:placeholder="${session.vo.getUserEmail()}"
+                               id="userEmail" name="userEmail">
+                    </div>
+                    <div class="row">
+                        <div id="email_warning" style="text-align: center" hidden="hidden">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="userLikeFood" class="form-label">음식</label>
+                        <select class="form-control" id="userLikeFood" name="userLikeFood">
+                            <option th:selected="${session.vo.getUserLikeFood() == null}" value="" selected disabled>음식을
+                                선택해주세요
+                            </option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '한식'}" value="한식">한식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '중식'}" value="중식">중식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '일식'}" value="일식">일식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '양식'}" value="양식">양식</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '퓨전'}" value="퓨전">퓨전</option>
+                            <option th:selected="${session.vo.getUserLikeFood() == '푸드코트'}" value="푸드코트">푸드코트</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label for="userMbti" class="form-label">MBTI</label>
+                        <select class="form-control" id="userMbti" name="userMbti">
+                            <option th:selected="${session.vo.getUserMbti() == null}" value="" selected disabled>MBTI를
+                                선택해주세요
+                            </option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISFP'}" value="ISFP">ISFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISFJ'}" value="ISFJ">ISFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISTP'}" value="ISTP">ISTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ISTJ'}" value="ISTJ">ISTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INFP'}" value="INFP">INFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INFJ'}" value="INFJ">INFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INTP'}" value="INTP">INTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'INTJ'}" value="INTJ">INTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESFP'}" value="ESFP">ESFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESFJ'}" value="ESFJ">ESFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESTP'}" value="ESTP">ESTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ESTJ'}" value="ESTJ">ESTJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENFP'}" value="ENFP">ENFP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENFJ'}" value="ENFJ">ENFJ</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENTP'}" value="ENTP">ENTP</option>
+                            <option th:selected="${session.vo.getUserMbti() == 'ENTJ'}" value="ENTJ">ENTJ</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                             class="bi bi-card-image" viewBox="0 0 16 16">
+                            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                            <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+                        </svg>
+                        <label for="oriFilename">프로필 사진</label>
+                        <input type="file" class="form-control" id="oriFilename" name="oriFilename"
+                               accept="image/png, image/gif, image/jpeg" multiple="multiple">
+                    </div>
+                    <div class="row">
+                        <label for="userPost">우편번호</label>
+                        <input id="userPost" name="userAddress1" class="form-control form-control" type="text"
+                               th:placeholder="${session.addressSplit[0]}"/>
+                    </div>
+                    <div class="row">
+                        <label for="userAddr">주소</label>
+                        <input id="userAddr" name="userAddress2" class="form-control form-control" type="text"
+                               th:placeholder="${session.addressSplit[1]}"/>
+                    </div>
+                    <div class="row" style="margin-bottom: 30px;">
+                        <label>상세주소<span class="text-muted"></span></label>
+                        <input id="userAddrDetail" class="form-control form-control" type="text" name="userAddress3"
+                               th:placeholder="${session.addressSplit[2]}"/>
+                    </div>
+                    <div class="row" style="margin-bottom: 20px;">
+                        <button class="btn btn-outline-primary active" id="modify_btn"
+                                type="submit">
+                            수정
+                        </button>
+                    </div>
+                </form>
+
                 <!--th:formaction="|@{modify}|" type="submit" -->
-                <div class="row">
-                    <button class="btn btn-outline btn-danger" type="submit" id="withDrawl_update_btn"
-                            onclick="deleteOk()" th:formaction="|@{status}|" th:formmethod="post">
-                        탈퇴
-                    </button>
-                </div>
+                <form id="inputForm" action="status" method="post">
+                    <div class="row">
+                        <button class="btn btn-outline btn-danger btn-block" type="submit" id="withDraw_update_btn"
+                                onclick="deleteOk()" th:formaction="|@{status}|" th:formmethod="post" style="width: 100%;">
+                            탈퇴
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-</form>
 
 <!-- Modal -->
 
@@ -267,6 +270,35 @@
 
         });
 
+        $('#withDraw_update_btn').click(function (e) {
+            e.preventDefault();
+
+            Swal.fire({
+                title: '정말로 그렇게 하시겠습니까?',
+                text: '다시 되돌릴 수 없습니다. 신중하세요.',
+                icon: 'warning',
+
+                showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+                confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+                cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+                confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+                cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+
+                reverseButtons: false, // 버튼 순서 거꾸로
+
+            }).then(result => {
+                // 만약 Promise리턴을 받으면,
+                if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+                    $('#inputForm').unbind('submit').submit();
+                }
+            });
+
+            $('#confirmSubmitBtn').click(function () {
+                $('#inputForm').unbind('submit').submit(); // 폼 제출
+            });
+
+        });
+
     });
 
 
@@ -291,7 +323,7 @@
     }
 
     function deleteOk() {
-        alert("삭제하시겠습니까?");
+
 
     }
 
