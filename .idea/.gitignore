@@ -19,6 +19,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+#toSolveConflict
+.idea/workspace.xml
+
 # AWS User-specific
 .idea/**/aws.xml
 
