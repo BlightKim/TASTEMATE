@@ -11,6 +11,7 @@
 
 
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 <body>
@@ -26,7 +27,8 @@
                     <i class="bi bi-bookmark-star"></i> [[${bookmarkVO.storeName}]]</h3>
                 <p th:text="${bookmarkVO.storeVO.storeAddress}" class="mb-2"></p>
                 <a th:href="@{/bookmark/delete(bookmarkIdx=${bookmarkVO.getBookmarkIdx()})}" style="background-color: #8E48C7; border: none; " class="btn btn-primary">삭제</a>
-                <a th:href="@{/booking/bookingInsert(userId='choi', storeIdx=${bookmarkVO.getStoreIdx()})}" style="background-color: #9C91B3; border: none; color: white;" class="btn btn-warning">예약하기</a>
+                <button type="button" th:href="@{/booking/bookingInsert(userId='choi', storeIdx=${bookmarkVO.getStoreIdx()})}" style="background-color: #9C91B3; border: none; color: white;" class="btn btn-warning reserve">예약하기</button>
+                <input type="hidden" id="storeIdx" th:value="${bookmarkVO.getStoreIdx()}">
                 <hr>
             </div>
         </div>
@@ -91,7 +93,50 @@
     /*]]>*/
 </script>
 
+<script>
+    /* 예약하기 (이미 결제 완료되면 불가능하게) */
+    var storeIdx = $("#storeIdx").val();
+    var rtn = true;
 
+    $(document).ready(function () {
+        $('. reserve').on('click', function () {
+            console.log("버튼 클릭 인식함!");
+            $.ajax({
+                url: "/store/payCheckAjax",
+                type: "POST",
+                data: {storeIdx: storeIdx},
+                contextType: "application/json; charset=UTF-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    console.log('payCheckAjax 성공 : ' + data.inicis);
+                    console.log('payCheckAjax 성공 : ' + data.kakao);
+
+                    if(data.inicis == 1){
+                        swal('', "matching이 진행 중이에요!", 'warning');
+                        return;
+                    }
+                    if(data.kakao == 1){
+                        swal('', "matching이 진행 중이에요!", 'warning');
+                        return;;
+                    }
+                        //alert("결제내역이 없어 이동합니다");
+                        location.href = "/booking/bookingInsert?storeIdx=" + storeIdx;
+
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    alert("예약하기버튼 error");
+                }
+            });
+
+
+        });
+    });
+
+
+
+</script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 

@@ -25,6 +25,18 @@
     .yellow {
       color : #FFA500;
     }
+    .adminBoard:hover {
+      background-color: #f5f5f5;
+      color: #8E48C7;
+    }
+    .blog-post {
+      margin-top: 20px;
+      margin-bottom: 100px;
+    }
+    .position-sticky {
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
   </style>
 
 </head>
@@ -112,7 +124,7 @@
         <span class="bi bi-hand-thumbs-up-fill" th:text="${bestBoard.get(0).boardLike}"></span>
         <p class="card-text mb-auto"></p>
         <p class="card-text mb-auto" th:text="${bestBoard.get(0).writer}"><span>작성자 : </span></p>
-        <a th:onclick="|location.href='/board/read/${bestBoard.get(0).boardIdx}'|" class="stretched-link">꿀팁 상세보기</a>
+        <a class="stretched-link" th:href="@{|/board/read/${bestBoard.get(0).boardIdx}|}">꿀팁 상세보기</a>
       </div>
       <div class="col-auto d-none d-lg-block">
         <img th:src="@{/img/tastemate.jpeg}" class="bd-placeholder-img" width="200" height="250"/>
@@ -128,7 +140,7 @@
       <table class="table">
 
         <tr th:each="board : ${adminBoard}">
-          <th th:onclick="|location.href='/board/read/${board.boardIdx}'|" th:text="${board.title}"></th>
+          <th class="adminBoard" th:onclick="|location.href='/board/read/${board.boardIdx}'|" th:text="${board.title}"></th>
         </tr>
 
       </table>
