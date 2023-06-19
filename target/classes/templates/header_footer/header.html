@@ -1,161 +1,352 @@
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org">
 <!--headerFragment 선언-->
 <div th:fragment="headerFragment">
-    <!DOCTYPE html>
-    <html lang="ko">
 
-    <head>
-        <!-- 구글 글씨체 적용 -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet" />
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!doctype html>
+  <html lang="ko">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <head>
+    <!-- 구글 글씨체 적용-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600&display=swap"
+          rel="stylesheet">
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-                crossorigin="anonymous"></script>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Popper.js -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+            crossorigin="anonymous"></script>
 
-        <!-- Bootstrap Icons -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <!-- Popper.js -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-        <!-- 서머노트 -->
-        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          rel="stylesheet">
 
-        <!-- Bootstrap Bundle JS (includes Popper.js) -->
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 
-        <style>
-            body {
-                margin: 0;
-                padding: 0;
-                font-family: "Noto Serif KR", serif;
-            }
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
 
-            .header {
-                background-color: #ffffff;
-                /* 흰색 배경 */
-                color: #601599;
-                /* 글씨 색상 */
-                padding: 20px;
-                display: flex;
-                justify-content: space-between;
-                /* 가운데 정렬을 위한 스타일 */
-                align-items: center;
-                /* 가운데 정렬을 위한 스타일 */
-            }
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
 
-            .header__logo {
-                font-size: 24px;
-                font-weight: bold;
-                margin: 0;
-                width: 120px;
-            }
+    <!-- 서머노트 -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
+          rel="stylesheet"/>
 
-            .header__navigation {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                /* 가운데 정렬을 위한 스타일 */
-                align-items: center;
-                /* 가운데 정렬을 위한 스타일 */
-            }
+    <!-- Bootstrap Bundle JS (includes Popper.js) -->
+    <script
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
-            .header__navigation li {
-                margin-right: 20px;
-            }
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
-            .header__navigation li:last-child {
-                margin-right: 0;
-            }
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Noto Serif KR', serif;
+      }
 
-            .header__navigation a {
-                color: #9c91b3;
-                text-decoration: none;
-                font-size: 16px;
-                font-weight: bold;
-            }
+      .header {
+        background-color: #ffffff; /* 흰색 배경 */
+        color: #601599; /* 글씨 색상 */
+        padding: 20px;
+        display: flex;
+        justify-content: space-between; /* 가운데 정렬을 위한 스타일 */
+        align-items: center; /* 가운데 정렬을 위한 스타일 */
+      }
 
-            .fs13 {
-                font-size: 13px;
-            }
-        </style>
+      .header__logo {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+        width: 120px;
+      }
 
-        <title>TasteMate</title>
-    </head>
+      .header__navigation {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center; /* 가운데 정렬을 위한 스타일 */
+        align-items: center; /* 가운데 정렬을 위한 스타일 */
+      }
 
-    <body>
-    <header class="header">
-        <div class="invite-msg"></div>
-        <!--        <h1 class="header__logo">TasteMate</h1>-->
-        <div>
-            <img th:src="@{/img/headerLogo.png}" class="header__logo" />
-            <!--        <img th:src="@{/img/헤더용로고_보라_2단.png}" class="header__logo"/>-->
+      .header__navigation li {
+        margin-right: 20px;
+      }
+
+      .header__navigation li:last-child {
+        margin-right: 0;
+      }
+
+      .header__navigation a {
+        color: #9C91B3;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .fs13 {
+        font-size: 13px;
+      }
+    </style>
+
+    <title>TasteMate</title>
+  </head>
+
+  <script th:inline="javascript" th:if="${session.vo != null}">
+    $(document).ready(function () {
+      let memberVO = [[${session.vo}]];
+      let loginUser = memberVO.userId;
+      if (memberVO != null) {
+        console.log(memberVO);
+        let socket = null;
+        let ws = null;
+        connect();
+      }
+
+      $("#myCarousel").carousel({
+        interval: 1000, // 이동 간격을 밀리초 단위로 설정합니다 (기본값은 5000 입니다)
+      });
+
+      $('.chat-request-btn').on('click', function (event) {
+        let senderId = $(this).attr("data-myId");
+        let inviteeId = $(this).attr("data-userId");
+
+        $.ajax({
+          url: "/chat/createRoom",
+          type: "GET",
+          async: false,
+          success: function (data) {
+            let chatRoom = data;
+
+            let inviteMessage = {
+              type: 'invite',
+              senderId: senderId,
+              inviteeId: inviteeId,
+              chatRoom: chatRoom,
+              senderMsg: '채팅방에 초대합니다',
+              url: '/chat/room/' + chatRoom.roomId
+            };
+            socket.send(JSON.stringify(inviteMessage));
+          },
+          error: function (e) {
+            console.log(e);
+          }
+        });
+      });
+
+      function connect() {
+        ws = new WebSocket("ws://192.168.1.13:8080/inviteEcho?userId=" + loginUser);
+        socket = ws;
+
+        ws.onopen = function () {
+          console.log("open");
+        };
+
+        ws.onmessage = function (event) {
+          let data = JSON.parse(event.data);
+          let chatRoom = data.chatRoom;
+
+          if (data.type === 'accept') {
+            Swal.fire({
+              title: data.senderId + '님이 채팅방에 참여하였습니다.'
+            });
+
+            setTimeout(function () {
+              window.open('/chat/room/' + chatRoom.roomId + '?myId=' + data.inviteeId + '&yourId='
+                  + data.senderId, '_blank', 'width=500, height=500');
+            }, 3000);
+          } else if (data.type === 'reject') {
+            console.log("reject data Type : " + data.type);
+            Swal.fire({
+              title: data.senderId + '님이 채팅방에 참여를 거절하였습니다.'
+            }).then((result) => {
+              if (result.value) {
+                $.ajax({
+                  url: "/chat/deleteRoom/" + chatRoom.roomId,
+                  type: "GET",
+                  ContentType: "text, charset=utf-8",
+                  async: false,
+                  success: function (result) {
+                    console.log("result data : " + data)
+                    if (result === 'success') {
+                      console.log("result data : " + data)
+                      Swal.fire({
+                        title: '채팅방이 삭제되었습니다.',
+                        icon: 'success'
+                      })
+                    }
+                  },
+                  error: function (e) {
+                    console.log(e);
+                  }
+                });
+              }
+            })
+          } else if (data.type === 'invite') {
+            Swal.fire({
+              title: data.senderId + '님이 채팅방에 초대하였습니다.',
+              text: '채팅방에 참여하시겠습니까?',
+              icon: 'question',
+              showCancelButton: true,
+              confirmButtonText: '수락',
+              cancelButtonText: '거절'
+            }).then((result) => {
+              if (result.value) {
+                {
+                  let acceptMessage = {
+                    type: 'accept',
+                    senderId: data.inviteeId,
+                    inviteeId: data.senderId,
+                    chatRoom: chatRoom,
+                    senderMsg: '채팅방에 참여합니다',
+                    url: '/chat/room/' + chatRoom.roomId
+                  };
+                  $.ajax({
+                    url: "/chat/joinRoom",
+                    type: "POST",
+                    async: false,
+                    contentType: "application/json",
+                    data: JSON.stringify(roomRequest = {
+                      roomIdx: chatRoom.roomIdx,
+                      senderId: acceptMessage.senderId,
+                      inviteeId: acceptMessage.inviteeId
+                    }),
+                    success: function (data) {
+                      if (data.result === 'success') {
+                        socket.send(JSON.stringify(acceptMessage));
+                        setTimeout(function () {
+                          window.open(
+                              '/chat/room/' + chatRoom.roomId + '?myId=' + data.senderId
+                              + '&yourId='
+                              + data.inviteeId, '_blank', 'width=500, height=500');
+                        }, 3000);
+                      } else {
+                        Swal.fire({
+                          title: '채팅방 참여에 실패하였습니다.',
+                          text: '다시 시도해주세요.',
+                          icon: 'error',
+                          confirmButtonText: '확인'
+                        }).then((result) => {
+                          setTimeout(function () {
+                            window.open(
+                                '/chat/room/' + chatRoom.roomId + '?myId=' + data.inviteeId
+                                + '&yourId='
+                                + data.senderId, '_blank', 'width=500, height=500');
+                          }, 3000);
+                        })
+                      }
+                    },
+                    error: function (e) {
+                      console.log(e);
+                    }
+                  });
+
+                }
+              } else {
+                let rejectMessage = {
+                  type: 'reject',
+                  senderId: data.inviteeId,
+                  inviteeId: data.senderId,
+                  chatRoom: chatRoom,
+                  senderMsg: '채팅방에 참여를 거절합니다',
+                  url: '/chat/room/' + chatRoom.roomId
+                };
+                socket.send(JSON.stringify(rejectMessage));
+              }
+            })
+          }
+          event.preventDefault();
+          // window.open('/chat/room/' + chatRoom.roomId + '?myId=' + data.inviteeId + '&yourId=' + data.senderId, '_blank', 'width=500, height=500')
+        };
+
+        ws.onclose = function (event) {
+          console.log("close");
+          setTimeout(function () {
+            connect();
+          }, 1000);
+        }
+      }
+    });
+  </script>
+  <body>
+  <header class="header">
+    <!--        <h1 class="header__logo">TasteMate</h1>-->
+
+    <div>
+      <a th:href="@{/store/main}">
+        <img th:src="@{/img/headerLogo.png}" class="header__logo"/>
+      </a>
+    </div>
+
+    <ul class="header__navigation">
+      <li><a href="/store/list">맛집</a></li>
+      <th:block th:if="${session.vo != null }">
+        <li><a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a></li>
+      </th:block>
+      <th:block th:if="${session.vo == null}">
+        <li><a href="#" onclick="javascript:notLogined(); return false;">내강의장</a></li>
+      </th:block>
+      <li><a href="#">꿀팁</a></li>
+      <li>
+        <a href="#" onclick="javascript:notLogined(); return false;">내강의장</a>
+      </li>
+      </th:block>
+      <div th:if="${session.vo != null}">
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="showCurrentUsers"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            현재 접속한 사람
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="showCurrentUsers">
+            <th:block th:each="user : ${@webSessionListener.currentUserList()}"
+                      th:if="${!session.vo.userId.equals(user.userId) && user.userId != null}">
+              <li class="dropdown-item">
+                <a class="chat-btn dropdown-item" href="#" th:data-senderId="${session.vo.userId}"
+                   th:data-inviteeId="${user.userId}" th:data-inviterMbti="${session.vo.userMbti}">
+                  <span th:text="${user.userId}"></span>
+                </a>
+              </li>
+            </th:block>
+          </ul>
         </div>
+      </div>
+      <li><a href="#" th:href="@{/board}">꿀팁</a></li>
+      <li><a href="#">관리자모드</a></li>
+      <li><a href="#">MY</a></li>
+      <div class="ml-auto">
+        <button th:onclick="|location.href='@{/member/simpleregister}'|"
+                class="btn btn-outline-dark ml-2" type="button">회원가입
+        </button>
+        <button th:onclick="|location.href='@{/member/login}'|" class="btn btn-outline-dark ml-2"
+                type="button">로그인
+        </button>
+      </div>
 
-        <ul class="header__navigation">
-            <li><a href="/store/list">맛집</a></li>
-            <th:block th:if="${session.vo != null }">
-                <li>
-                    <a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}">내강의장</a>
-                </li>
-            </th:block>
-            <th:block th:if="${session.vo == null}">
-                <li>
-                    <a href="#" onclick="javascript:notLogined(); return false;">내강의장</a>
-                </li>
-            </th:block>
-            <div th:if="${session.vo != null}">
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="showCurrentUsers"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        현재 접속한 사람
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="showCurrentUsers">
-                        <th:block th:each="user : ${@webSessionListener.currentUserList()}"
-                                  th:if="${!session.vo.userId.equals(user.userId) && user.userId != null}">
-                            <li class="dropdown-item">
-                                <a class="chat-btn dropdown-item" href="#" th:data-senderId="${session.vo.userId}"
-                                   th:data-inviteeId="${user.userId}" th:data-inviterMbti="${session.vo.userMbti}">
-                                    <span th:text="${user.userId}"></span>
-                                </a>
-                            </li>
-                        </th:block>
-                    </ul>
-                </div>
-            </div>
-            <li><a href="#" th:href="@{/board}">꿀팁</a></li>
-            <li><a href="#">관리자모드</a></li>
-            <li><a href="#">MY</a></li>
-            <div class="ml-auto">
-                <button class="btn btn-outline-dark ml-2" type="button">
-                    회원가입
-                </button>
-                <button th:onclick="|location.href='@{/member/login}'|" class="btn btn-outline-dark ml-2"
-                        type="button">
-                    로그인
-                </button>
-            </div>
-        </ul>
-    </header>
-    <!-- 서머노트 스크립트-->
+      <!--가은잠시추가-->
+      <a th:href="@{/pay/mykakaoPaySuccess}"
+         class="btn btn-outline-dark ml-2" type="button">kakao 결제정보</a>
+      <a th:href="@{/pay/inicisSuccess}"
+         class="btn btn-outline-dark ml-2" type="button">inicis 결제정보</a>
 
-    </body>
 
-    </html>
+    </ul>
+  </header>
+  </body>
+  </html>
 </div>
-
 </html>

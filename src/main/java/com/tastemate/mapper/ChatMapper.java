@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ChatMapper {
 
-  List<ChatRoomVO> findAllRoom();
 
   ChatRoomVO findRoomById(String roomId);
 
-  void insertRoom(ChatRoomVO chatRoomVO);
+  Integer insertRoom(String roomId);
 
-  void deleteRoom(String roomId);
 
-    ChatRoomVO findRoomByName(String roomName);
+  Integer joinRoom(Map<String, Object> map);
+
+  Integer deleteRoom(String roomId);
 }

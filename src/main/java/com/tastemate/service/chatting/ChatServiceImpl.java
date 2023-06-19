@@ -18,46 +18,31 @@ import org.springframework.web.socket.WebSocketSession;
 @RequiredArgsConstructor
 public class ChatServiceImpl implements ChatService{
   private final ChatMapper chatMapper;
-
-  @Override
-  public List<ChatRoomVO> getAllRoom() {
-    return chatMapper.findAllRoom();
-  }
-
   @Override
   public ChatRoomVO getRoomById(String roomId) {
     return chatMapper.findRoomById(roomId);
   }
 
   @Override
-  public ChatRoomVO createChatRoom(String roomName) {
-    String randomId = UUID.randomUUID().toString();
-    ChatRoomVO chatRoomVO = ChatRoomVO.builder()
-        .roomId(randomId)
-        .roomName(roomName)
-        .build();
-    chatMapper.insertRoom(chatRoomVO);
-    return chatRoomVO;
+  public Integer joinRoom(Map<String, Object> map) {
+    return chatMapper.joinRoom(map);
   }
 
   @Override
-  public void deleteChatRoom(String roomId) {
-    chatMapper.deleteRoom(roomId);
-
+  public Integer createChatRoom(String roomId) {
+    return chatMapper.insertRoom(roomId);
   }
 
   @Override
-  public ChatRoomVO getRoomByName(String roomName) {
-    return chatMapper.findRoomByName(roomName);
+  public Integer deleteChatRoom(String roomId) {
+    return chatMapper.deleteRoom(roomId);
   }
 
-  @Override
-  public String getUserName(String roomId, String userUUID) {
+   private Integer quitChatRoom(Integer roomIdx, String userId) {
     return null;
-  }
+   }
 
-  @Override
-  public <T> void sendMessage(WebSocketSession session, T message) {
-
+   private Integer joinRoom(Integer roomIdx, String userId) {
+    return null;
+   }
   }
-}

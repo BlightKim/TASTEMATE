@@ -4,15 +4,153 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="97104695-087b-4101-8889-d7fb2548d7ad" name="Changes" comment="### 제목&#10;# 커밋 타입: 작업내용 (제목과 본문은 한 줄 띄워주세요)&#10;&#10;&#10;### 본문 - 한 줄에 최대 72 글자까지만 입력하기  &#10;# 무엇을, 왜, 어떻게 했는지&#10;&#10;&#10;# 꼬리말&#10;# (선택) 이슈번호 작성&#10;&#10;#   [커밋 타입]  리스트&#10;#   feat      : 기능 (새로운 기능)&#10;#   fix       : 버그 (버그 수정)&#10;#   design    : CSS 등 사용자 UI 디자인 변경&#10;#   refactor  : 리팩토링&#10;#   style     : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)&#10;#   docs      : 문서 (문서 추가, 수정, 삭제)&#10;#   test      : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#   chore     : 기타 변경사항 (빌드 스크립트 수정 등)&#10;#   post      : 블로그 포스트 추가 (신규 포스트 작성 및 수정)&#10;#   rename    : 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우&#10;#   remove    : 파일을 삭제하는 작업만 수행한 경우&#10;# ------------------&#10;#   [체크리스트]&#10;#     제목 첫 글자는 대문자로 작성했나요?&#10;#     제목은 명령문으로 작성했나요?&#10;#     제목 끝에 마침표(.) 금지&#10;#     제목과 본문을 한 줄 띄워 분리하기&#10;#     본문에 여러줄의 메시지를 작성할 땐 &quot;-&quot;로 구분했나요?&#10;# ------------------" />
+    <list default="true" id="97104695-087b-4101-8889-d7fb2548d7ad" name="Changes" comment="### 제목&#10;# 커밋 타입: 작업내용 (제목과 본문은 한 줄 띄워주세요)&#10;&#10;&#10;### 본문 - 한 줄에 최대 72 글자까지만 입력하기  &#10;# 무엇을, 왜, 어떻게 했는지&#10;&#10;&#10;# 꼬리말&#10;# (선택) 이슈번호 작성&#10;&#10;#   [커밋 타입]  리스트&#10;#   feat      : 기능 (새로운 기능)&#10;#   fix       : 버그 (버그 수정)&#10;#   design    : CSS 등 사용자 UI 디자인 변경&#10;#   refactor  : 리팩토링&#10;#   style     : 스타일 (코드 형식, 세미콜론 추가: 비즈니스 로직에 변경 없음)&#10;#   docs      : 문서 (문서 추가, 수정, 삭제)&#10;#   test      : 테스트 (테스트 코드 추가, 수정, 삭제: 비즈니스 로직에 변경 없음)&#10;#   chore     : 기타 변경사항 (빌드 스크립트 수정 등)&#10;#   post      : 블로그 포스트 추가 (신규 포스트 작성 및 수정)&#10;#   rename    : 파일 혹은 폴더명을 수정하거나 옮기는 작업만 하는 경우&#10;#   remove    : 파일을 삭제하는 작업만 수행한 경우&#10;# ------------------&#10;#   [체크리스트]&#10;#     제목 첫 글자는 대문자로 작성했나요?&#10;#     제목은 명령문으로 작성했나요?&#10;#     제목 끝에 마침표(.) 금지&#10;#     제목과 본문을 한 줄 띄워 분리하기&#10;#     본문에 여러줄의 메시지를 작성할 땐 &quot;-&quot;로 구분했나요?&#10;# ------------------">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/domain/chatting/RoomRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/chat/tastemate_matching.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/ChatConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/ChatConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/InviteEchoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/InviteEchoHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/controller/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/controller/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/controller/ChatRoomController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/controller/ChatRoomController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/domain/chatting/ChatRoomVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/domain/chatting/ChatRoomVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/domain/chatting/InviteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/domain/chatting/InviteDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/handlers/EchoHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/handlers/EchoHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/handlers/StompHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/mapper/ChatMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/mapper/ChatMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/paging/SearchCondition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/paging/SearchCondition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/service/chatting/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/service/chatting/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/tastemate/service/chatting/ChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/tastemate/service/chatting/ChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/tastemate/mapper/BoardMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/tastemate/mapper/BoardMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/tastemate/mapper/ChatMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/tastemate/mapper/ChatMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/board/board_list.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/board/board_list.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/board/board_read.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/board/board_read.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/chat/chat_view.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/chat/chat_view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/board/board_list.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/board/board_list.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/board/board_read.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/board/board_read.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/board/board_update.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/board/board_update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/board/board_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/board/board_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/board/board_read.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/board/board_read.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/board/board_update.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/board/board_update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/board/comment_container.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/board/comment_container.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/chat/chat_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/chat/chat_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/header_footer/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/header_footer/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/store/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/store/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/ChatConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/ChatConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/InviteEchoHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/InviteEchoHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/WebConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/WebConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/BoardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/BoardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/BookingController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/BookingController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/BookmarkController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/BookmarkController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/ChatRoomController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/ChatRoomController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/ClassController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/ClassController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/LoginController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/MessageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/MessageController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/PayController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/PayController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/controller/StoreController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/controller/StoreController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/AmountVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/AmountVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/InicisRefundVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/InicisRefundVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/InicisVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/InicisVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/KakaoPayApprovalVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/KakaoPayApprovalVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/KakaoPayReadyVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/KakaoPayReadyVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/MemberMbti.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/MemberMbti.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/StoreVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/StoreVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/chatting/ChatRoomVO$ChatRoomVOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/chatting/ChatRoomVO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/chatting/ChatRoomVO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/chatting/InviteDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/chatting/InviteDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/domain/paging/Criteria.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/domain/paging/Criteria.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/handlers/StompHandler$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/handlers/StompHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookingMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookingMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookingMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookingMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookmarkMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookmarkMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookmarkMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/BookmarkMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/ChatMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/ChatMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/ChatMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/ChatMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/StoreMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/StoreMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/StoreMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/mapper/StoreMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/BookingService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/BookingService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/BookmarkService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/BookmarkService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/KakaoPay.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/KakaoPay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/PaymentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/PaymentService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/StoreService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/StoreService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/chatting/ChatService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/chatting/ChatService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/tastemate/service/chatting/ChatServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/tastemate/service/chatting/ChatServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/board/board_list.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/board/board_list.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/board/board_read.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/board/board_read.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/board/board_update.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/board/board_update.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/board/board_write.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/board/board_write.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/board/input.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/board/input.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/chat/chat_view.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/chat/chat_view.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/store_css.css" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/css/store_css.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ENFJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ENFJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ENFP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ENFP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ENTJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ENTJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ENTP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ENTP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ESFJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ESFJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ESFP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ESFP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ESTJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ESTJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ESTP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ESTP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/INFJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/INFJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/INFP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/INFP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/INTJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/INTJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/INTP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/INTP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ISFJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ISFJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ISFP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ISFP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ISTJ.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ISTJ.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/ISTP.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/ISTP.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/TasteMate.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/TasteMate.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/headerLogo.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/headerLogo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/suksuk.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/suksuk.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/suksuk2.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/suksuk2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/suksuk3.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/suksuk3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/tastemate.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/tastemate.jpeg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/titi_bg_score2.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/titi_bg_score2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/img/헤더용로고_보라_2단.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/img/헤더용로고_보라_2단.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/board/board_update.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/board/board_update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/board/input.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/js/board/input.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/board/board_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/board/board_list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/board/comment_container.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/board/comment_container.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/booking/bookingInsert.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/booking/bookingInsert.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/booking/bookingToPay.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/booking/bookingToPay.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/booking/bookingToPayOnsite.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/booking/bookingToPayOnsite.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/chat/chat_test.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/chat/chat_test.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/chat/chat_view.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/chat/chat_view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/class/myClass.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/class/myClass.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/header_footer/footer.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/header_footer/footer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/header_footer/header.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/header_footer/header.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/member/class.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/member/class.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/member/mbti.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/member/mbti.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/member/selectFood.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/member/selectFood.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/member/tastemate.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/member/titi_bg_score2.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/member/titi_bg_score2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/pay/kakaoPay.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/pay/kakaoPayRefund.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/pay/kakaoPaySuccess.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/store/get.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/store/get.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/store/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/store/list.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/store/main.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/store/main.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/store/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/store/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/store/starComment.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/store/starComment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/store/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/store/update.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -35,28 +173,35 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;sebin&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/ksebin/IdeaProjects/TASTEMATE&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reactor&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;85a498ff2d292a3e204b7f6a0155dea4&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "sebin",
+    "last_opened_file_path": "/Users/ksebin/IdeaProjects/TASTEMATE",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\ksb96\\AppData\\Roaming\\npm\\node_modules\\prettier",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "85a498ff2d292a3e204b7f6a0155dea4",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect": [
+      "Oracle"
+    ]
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="debugInitializationType" value="HOOKS" />
     <option name="notificationShown" value="true" />
@@ -92,6 +237,12 @@
       <workItem from="1686570715094" duration="4531000" />
       <workItem from="1686793744876" duration="22219000" />
       <workItem from="1686829632359" duration="2200000" />
+      <workItem from="1686875697403" duration="19395000" />
+      <workItem from="1686903018085" duration="1295000" />
+      <workItem from="1686905151376" duration="2059000" />
+      <workItem from="1686915011761" duration="3158000" />
+      <workItem from="1686987031358" duration="27081000" />
+      <workItem from="1687087817459" duration="20716000" />
     </task>
     <task id="LOCAL-00001" summary="2023-06-12">
       <created>1686575200692</created>
@@ -118,7 +269,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="chatting" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -129,6 +292,42 @@
     <option name="LAST_COMMIT_MESSAGE" value="2023-06-12" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tastemate/mapper/ChatMapper.java</url>
+          <line>11</line>
+          <properties class="com.tastemate.mapper.ChatMapper">
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tastemate/controller/ChatRoomController.java</url>
+          <line>48</line>
+          <properties class="com.tastemate.controller.ChatRoomController">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tastemate/controller/ChatRoomController.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tastemate/controller/ChatRoomController.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/tastemate/controller/ChatRoomController.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.springframework.web.socket.adapter.standard.StandardWebSocketSession" memberName="attributes" />

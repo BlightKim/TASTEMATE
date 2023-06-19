@@ -6,14 +6,10 @@ import java.util.Map;
 import org.springframework.web.socket.WebSocketSession;
 
 public interface ChatService {
-  public List<ChatRoomVO> getAllRoom();
   public ChatRoomVO getRoomById(String roomId);
 
-  public ChatRoomVO createChatRoom(String roomName);
-  public void deleteChatRoom(String roomId);
-  public String getUserName(String roomId, String userUUID);
+  public Integer createChatRoom(String roomId);
+  public Integer deleteChatRoom(String roomId);
 
-  public <T> void sendMessage(WebSocketSession session, T message);
-
-    ChatRoomVO getRoomByName(String roomName);
+  Integer joinRoom(Map<String, Object> map);
 }

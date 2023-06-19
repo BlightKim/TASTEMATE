@@ -157,106 +157,10 @@
 
 
 
-<script th:inline="javascript">
-  $(document).ready(function () {
-    $("#myCarousel").carousel({
-      interval: 1500, // 이동 간격을 밀리초 단위로 설정합니다 (기본값은 5000 입니다)
-    });
-    let memberVO = [[${ session.vo }]];
-    if (memberVO != null) {
-      let loginUser = memberVO.userId;
-      let socket = null;
-      let ws = null;
-      connect();
-      ws.onmessage = function (event) {
-        event.preventDefault();
-        let message = JSON.parse(event.data);
-        if (message.type === 'invite') {
-          let toast = message.toast;
-          console.log("toast : " + toast);
-          $('.invite-msg').html(toast);
 
-          // Bootstrap Toast 활성화
-          $('.toast').toast('show');
-        }
-      };
+<script>
 
-      ws.onclose = function (event) {
-        console.log("close");
-      }
-
-      $('.chat-btn').on('click', function (event) {
-        event.preventDefault();
-        let senderId = $(this).attr("data-senderId");
-        let inviteeId = $(this).attr("data-inviteeId");
-
-        $.ajax({
-          url: "/chat/createRoom",
-          contentType: "application/json; charset=utf-8",
-          type: "POST",
-          async: false,
-          data: JSON.stringify({
-            roomName: senderId + "님과 " + inviteeId + "님의 채팅방",
-            senderId: senderId
-          }),
-          dataType: "json",
-          success: function (data) {
-            console.log(data);
-            let result = data.result;
-            if (result === "success") {
-              alert("방을 생성했습니다.");
-              let chatRoom = JSON.stringify(data.chatRoom);
-              let inviteMessage = {
-                type: 'invite',
-                senderId: senderId,
-                inviteeId: inviteeId,
-                url: `http://192.168.1.14:8080/chat/room/${chatRoom.roomId}`,
-                toast: `<div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-bs-autohide="false">
-            <div class="toast-header">
-              <img src="..." class="rounded me-2" alt="...">
-              <strong class="me-auto">Bootstrap</strong>
-              <small>11 mins ago</small>
-              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-            <div class="toast-body">
-              Hello, world! This is a toast message.
-            </div>
-          </div>`
-              };
-
-              socket.send(JSON.stringify(inviteMessage));
-
-            } else if (data.result === "alreadyExist") {
-              alert("이미 초대 메시지를 보냈습니다.");
-            }
-          },
-          error: function (e) {
-            console.log(e);
-          }
-        });
-      });
-
-      function connect() {
-        ws = new WebSocket("ws://192.168.1.14:8080/inviteEcho?userId=" + loginUser);
-        socket = ws;
-
-        ws.onopen = function () {
-          console.log("open");
-        };
-
-
-        ws.onclose = function (event) {
-          console.log("close");
-          setTimeout(function () {
-            connect();
-          }, 1000);
-        }
-      }
-    }
-  });
 </script>
-
-
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>
 </html>

@@ -80,7 +80,26 @@
     M.USER_NAME,
     M.USER_GENDER,
     M.USER_PHONE,
-    M.USER_ADDRESS,
+    (SELECT
+       CASE
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '충북') THEN '충청북도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '서울') THEN '서울특별시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '경기') THEN '경기도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '대구') THEN '대구광역시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '인천') THEN '인천광역시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '광주') THEN '광주광역시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '대전') THEN '대전광역시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '울산') THEN '울산광역시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '세종') THEN '세종특별자치시'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '강원') THEN '강원도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '충남') THEN '충청남도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '전북') THEN '전라북도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '전남') THEN '전라남도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '경북') THEN '경상북도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '경남') THEN '경상남도'
+         WHEN REGEXP_LIKE(M.USER_ADDRESS, '제주') THEN '제주특별자치도'
+         END
+     FROM DUAL) USER_ADDRESS,
     M.USER_CLASS,
     M.USER_LIKE_FOOD,
     M.USER_LOGINTYPE,
@@ -124,12 +143,37 @@
     <!--@mbg.generated-->
     select *
     FROM
-    (select row_number() over (order by REG_DATE DESC) AS rnum,
+    (select row_number() over (
+    <choose>
+      <when test="order == 'date'">
+        order by REG_DATE DESC
+      </when>
+      <when test="order == 'recommend'">
+        order by BOARD_LIKE DESC
+      </when>
+      <when test="order == 'hits'">
+        order by HITS DESC
+      </when>
+      <when test="order == 'region'">
+        order by REG_DATE DESC
+      </when>
+      <otherwise>
+        order by REG_DATE DESC
+      </otherwise>
+    </choose>
+    ) AS rnum,
     <include refid="Base_Column_List"/>,
-    <include refid="memberColumnList"/>
+    <include refid="memberColumnList">
+      <property name="USER_ADDRESS" value="M.USER_ADDRESS"/>
+    </include>
     FROM BOARD B
            JOIN MEMBER M on B.USER_IDX = M.USER_IDX
     WHERE BOARD_STATUS LIKE '등록'
+    <choose>
+      <when test="order == 'region'">
+        AND REGEXP_LIKE(M.USER_ADDRESS, #{region,jdbcType=VARCHAR})
+      </when>
+    </choose>
     <include refid="searchCondition"/>
     ) DATA
     <![CDATA[
@@ -137,6 +181,7 @@
       AND rnum <= (#{page} * #{pageSize})
     ]]>
   </select>
+
   <select id="selectResultCnt" parameterType="com.tastemate.paging.SearchCondition"
     resultType="integer">
     SELECT count(*)
@@ -150,7 +195,30 @@
            INNER JOIN BOARD_LIKES bl ON M.user_idx = bl.user_idx
     WHERE bl.board_idx = #{boardIdx}
   </select>
-
+  <select id="selectSpecialCityData" resultType="java.lang.String">
+    <![CDATA[
+    SELECT DISTINCT CASE
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '충북') THEN '충청북도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '서울') THEN '서울특별시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '경기') THEN '경기도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '대구') THEN '대구광역시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '인천') THEN '인천광역시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '광주') THEN '광주광역시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '대전') THEN '대전광역시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '울산') THEN '울산광역시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '세종') THEN '세종특별자치시'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '강원') THEN '강원도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '충남') THEN '충청남도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '전북') THEN '전라북도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '전남') THEN '전라남도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '경북') THEN '경상북도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '경남') THEN '경상남도'
+                      WHEN REGEXP_LIKE(M.USER_ADDRESS, '제주') THEN '제주특별자치도'
+                      END AS city
+    FROM MEMBER M
+    WHERE REGEXP_LIKE(M.USER_ADDRESS, '(충북|서울|경기|대구|인천|광주|대전|울산|세종|강원|충남|전북|전남|경북|경남|제주)')
+    ]]>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="integer">
     <!--@mbg.generated-->
     delete

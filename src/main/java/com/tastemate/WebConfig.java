@@ -19,15 +19,17 @@ public class WebConfig implements WebMvcConfigurer {
     registry.addInterceptor(new LogInterceptor())
         .order(1)
         .addPathPatterns("/**")
-        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**", "/ws/**");
+        .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**", "/ws/**", "**/stomp/chat/**");
 
     registry.addInterceptor(new LoginCheckInterceptor())
             .order(2)
             .addPathPatterns("/**")
             .excludePathPatterns("/", "/board", "/member/login**",
-                    "/css/**", "/*.ico", "**/js/**", "/error", "/register", "/img/**",
+                    "/css/**", "/*.ico", "/js/**", "/error", "/register", "/img/**",
                     "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "/member/simpleregister"
-            ,"/store/**", "/booking/**", "/pay/**", "/store/get", "/bookmark/insertAjax.do");
+            ,"/store/**", "/booking/**", "/pay/**", "/store/get", "/bookmark/insertAjax.do", "/stomp/chat/**", "**/chat/**",
+                "/chat/joinRoom", "/chat/deleteRoom/**", "/board/list"
+                );
 
   }
 

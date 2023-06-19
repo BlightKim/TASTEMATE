@@ -2,6 +2,7 @@ package com.tastemate;
 
 import com.google.gson.Gson;
 import com.tastemate.domain.MemberVO;
+import com.tastemate.domain.chatting.ChatRoomVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.socket.CloseStatus;
@@ -34,37 +35,59 @@ public class InviteEchoHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         log.info("handleTextMessage 실행, message: {}, session: {}", message, session);
         Map<String, Object> attributes = session.getAttributes();
-        String senderId = (String) attributes.get("userId");
 
         // protocol: 초대하는 사람, 초대 받는 사람, 메시지, URL
         String msg = message.getPayload();
         Gson gson = new Gson();  // Gson 객체 생성
 
         // 메시지의 내용을 문자열로 가져와 JSON 객체로 변환
-        Map<String, String> msgMap = gson.fromJson(message.getPayload(), Map.class);
-        String type = msgMap.get("type");
-        if(type.equals("invite")) {
-            invite(msgMap,senderId);
-        }
-    }
+        Map<String, Object> msgMap = gson.fromJson(message.getPayload(), Map.class);
+        String type = (String)msgMap.get("type");
 
-    private void invite(Map<String, String> msgMap, String senderId) {
-        String sender = msgMap.get("sender");
-        String inviteeId = msgMap.get("inviteeId");
-        String url = msgMap.get("url");
-        String toast = msgMap.get("toast");
-        log.info("toast: {}", toast);
-        WebSocketSession inviteeUser = null;
-
-        if (userSessions.containsKey(inviteeId)) {
-            TextMessage tmpMsg = new TextMessage(new Gson().toJson(msgMap));
-            inviteeUser = userSessions.get(inviteeId);
-            try {
-                inviteeUser.sendMessage(tmpMsg);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException(e);
+        if(type.equals("reject")) {
+            log.info("reject 실행");
+            String senderId = (String)msgMap.get("senderId");
+            String inviteeId = (String)msgMap.get("inviteeId");
+            log.info("senderId={}", senderId);
+            log.info("inviteeId={}", inviteeId);
+            WebSocketSession inviteeUser = null;
+            if (userSessions.containsKey(inviteeId)) {
+                TextMessage tmpMsg = new TextMessage(new Gson().toJson(msgMap));
+                inviteeUser = userSessions.get(inviteeId);
+                try {
+                    inviteeUser.sendMessage(tmpMsg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        } else if(type.equals("accept")) {
+            String senderId = (String)msgMap.get("senderId");
+            String inviteeId = (String)msgMap.get("inviteeId");
+            WebSocketSession inviteeUser = null;
+            if (userSessions.containsKey(inviteeId)) {
+                TextMessage tmpMsg = new TextMessage(new Gson().toJson(msgMap));
+                inviteeUser = userSessions.get(inviteeId);
+                try {
+                    inviteeUser.sendMessage(tmpMsg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
+            }
+        } else if(type.equals("invite")) {
+            String senderId = (String)msgMap.get("senderId");
+            String inviteeId = (String)msgMap.get("inviteeId");
+            WebSocketSession inviteeUser = null;
+            if (userSessions.containsKey(inviteeId)) {
+                TextMessage tmpMsg = new TextMessage(new Gson().toJson(msgMap));
+                inviteeUser = userSessions.get(inviteeId);
+                try {
+                    inviteeUser.sendMessage(tmpMsg);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

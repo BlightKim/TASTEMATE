@@ -12,26 +12,13 @@ import org.springframework.web.socket.WebSocketSession;
 @Data
 public class ChatRoomVO {
 
+  private Integer roomIdx;
   private String roomId;
-  private String roomName;
-  private Set<WebSocketSession> sessions = new HashSet<>();
+  private Date regDate;
 
-  @Builder
-  public ChatRoomVO(String roomId, String roomName) {
+  public ChatRoomVO(Integer roomIdx, String roomId, Date regDate) {
+    this.roomIdx = roomIdx;
     this.roomId = roomId;
-    this.roomName = roomName;
-  }
-
-
-  public void handleActions(WebSocketSession session, ChatVO chatVO, ChatService chatService) {
-    if (chatVO.getType().equals(ChatVO.MessageType.ENTER)) {
-      sessions.add(session);
-      chatVO.setMessage(chatVO.getSender() + "님이 입장하셨습니다.");
-    }
-    sendMessage(chatVO, chatService);
-  }
-
-  private <T> void sendMessage(T message, ChatService chatService) {
-    sessions.parallelStream().forEach(session -> chatService.sendMessage(session, message));
+    this.regDate = regDate;
   }
 }

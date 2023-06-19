@@ -19,8 +19,8 @@ $(document).ready(function () {
   });
 
   $(document).on("click", ".comment-del-btn", function () {
-    let commentIdx = $(this).attr("data-idx");
-    console.log(commentIdx);
+    let commentIndex = $(this).data("comment-idx");
+
     Swal.fire({
       title: "댓글을 삭제하시겠습니까?",
       text: "삭제된 댓글은 복구할 수 없습니다.",
@@ -33,10 +33,10 @@ $(document).ready(function () {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: "/comments/delete/" + commentIdx + "?boardIdx=" + boardIdx,
+          url: "/comments/delete/" + commentIndex + "?boardIdx=" + boardIdx,
           type: "POST",
           data: {
-            commentIdx: commentIdx,
+            commentIdx: commentIndex,
             boardIdx: boardIdx,
           },
           success: function (data) {
@@ -74,6 +74,41 @@ $(document).ready(function () {
 
         $("#unlike-button").replaceWith(likeButton);
       },
+    });
+  });
+
+  $(document).on("click", "#del_btn", function () {
+    Swal.fire({
+      title: "게시글을 삭제하시겠습니까?",
+      text: "삭제된 게시글은 복구할 수 없습니다.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "삭제",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: "/board/delete/" + boardIdx,
+          type: "POST",
+          data: {
+            boardIdx: boardIdx,
+          },
+          success: function (data) {
+            if (data === 'success') {
+              Swal.fire("삭제 완료!", "게시글이 삭제되었습니다.", "success").then(
+                  () => {
+                    location.href = "/board";
+                  }
+              );
+            }
+          },
+          error: function (e) {
+            Swal.fire("삭제 실패!", "게시글 삭제에 실패하였습니다.", "error");
+          },
+        });
+      }
     });
   });
 
@@ -117,7 +152,7 @@ $(document).ready(function () {
       target.append(replyContainer);
       $(this).data("clicked", true);
 
-      currentIdx = $(this).data("idx");
+      currentIdx = $(this).data("comment-idx");
       commentLevel = $(this).data("cl") + 1;
 
       console.log("commentLevel : " + commentLevel);
@@ -145,14 +180,14 @@ $(document).ready(function () {
 
         $.ajax({
           type: "POST",
-          url: "/comments/update/" + $(this).data("idx"),
+          url: "/comments/update/" + $(this).data("comment-Idx"),
           async: true,
           headers: {
             "Content-Type": "application/json",
           },
           dataType: "text",
           data: JSON.stringify({
-            commentIdx: $(this).data("idx"),
+            commentIdx: $(this).data("comment-Idx"),
             commentContent: editedComment,
             boardIdx : boardIdx,
 

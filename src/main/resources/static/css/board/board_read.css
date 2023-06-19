@@ -25,12 +25,14 @@ ul {
 
 .comments-container {
   margin: 60px auto 15px;
-  width: 768px;
+  width: 1000px;
   border: 1px solid #E9DFED;
   border-radius: 4px;
 }
 
 .comments-container h1 {
+  margin-top: 20px;
+  margin-left: 45px;
   font-size: 36px;
   color: #283035;
   font-weight: 400;
@@ -49,15 +51,7 @@ ul {
 /**
  * Lineas / Detalles
  -----------------------*/
-.comments-list:before {
-  content: '';
-  width: 2px;
-  height: 100%;
-  background: #601599;
-  position: absolute;
-  left: 32px;
-  top: 0;
-}
+
 
 .comments-list:after {
   content: '';
@@ -73,19 +67,21 @@ ul {
   border-radius: 50%;
 }
 
+.no-comment-box {
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  line-height: 100px;
+  font-size: 20px;
+  color: #999;
+  border-top: 1px solid #E9DFED;
+  border-bottom: 1px solid #E9DFED;
+}
+
 .reply-list:before, .reply-list:after {
   display: none;
 }
 
-.reply-list li:before {
-  content: '';
-  width: 101px;
-  height: 2px;
-  background: #601599;
-  position: absolute;
-  top: 25px;
-  left: -95px;
-}
 
 .reply-reply-list.comment-box {
   width: 570px;
@@ -135,11 +131,11 @@ ul {
  * Avatar
  ---------------------------*/
 .comments-list .comment-avatar {
+  margin-left: 100px;
   width: 65px;
   height: 65px;
   position: relative;
   z-index: 99;
-  float: left;
   border: 3px solid #FFF;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -185,8 +181,9 @@ ul {
  * Caja del Comentario
  ---------------------------*/
 .comments-list .comment-box {
+  margin-left: 140px;
   width: 680px;
-  float: right;
+  display: inline-block;
   position: relative;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -238,6 +235,10 @@ ul {
   width: 610px;
 }
 
+.deleted {
+  color: #999;
+  text-decoration: line-through;
+}
 .reply-reply-list .comment-box {
   width: 523px;
 }

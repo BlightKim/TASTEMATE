@@ -22,7 +22,6 @@ public class EchoHandler extends TextWebSocketHandler {
 
   @Override
   public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-
     users.put(session.getId(), session);
   }
 
@@ -32,21 +31,18 @@ public class EchoHandler extends TextWebSocketHandler {
     String msg = message.getPayload();
 
     if (msg != null) {
-      ObjectMapper objectMapper = new ObjectMapper();
-      Map<String, String> data = objectMapper.readValue(msg,
-          new TypeReference<Map<String, String>>() {
-          });
+      ObjectMapper mapper = new ObjectMapper();
+      Map<String, String> data = (Map<String, String>) mapper.readValue(msg, new TypeReference<Map<String, String>>() {
+      });
+      String senderId = data.get("senderId");
+      String inviteeId = data.get("inviteeId");
+      String roomId = data.get("roomId");
 
-      String sender = data.get("sender");
-      String receiver = data.get("receiver");
-      String content = data.get("content");
-      String url = data.get("url");
-
-      WebSocketSession targetSession = users.get(receiver);
+      WebSocketSession targetSession = users.get(inviteeId);
 
       if (targetSession != null) {
         TextMessage tmpMsg = new TextMessage(
-            "<a target='_blank' href='" + url + "'>[<b>" + sender + "</b>] " + content + "</a>");
+            new ObjectMapper().writeValueAsString(data));
         targetSession.sendMessage(tmpMsg);
       }
     }

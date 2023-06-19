@@ -17,6 +17,7 @@
         <result column="STORE_COUNT" property="storeCount"/>
         <result column="FILENAME" property="filename"/>
         <result column="DISTANCE" property="distance"/>
+        <result column="STORE_STAT" property="storeStat"/>
         <collection property="menuVO" ofType="MenuVO">
             <id column="MENU_IDX" property="menuIdx" />
             <result column="STORE_IDX" property="storeIdx" />
@@ -36,6 +37,8 @@
         <result column="STORE_COUNT" property="storeCount"/>
         <result column="FILENAME" property="filename"/>
         <result column="DISTANCE" property="distance"/>
+        <result column="STORE_STAT" property="storeStat"/>
+
         <collection property="starVO" ofType="StarVO" javaType="java.util.List">
             <id column="STAR_IDX" property="starIdx" />
             <result column="STORE_IDX" property="storeIdx" />
@@ -70,66 +73,94 @@
         WHERE s.store_idx = #{storeIdx}
     </select>
 
+<!-- 메인 화면에서 별점이 가장 높은 가게 하나 받기 -->
+    <select id="getStoreHighestStar" resultMap="storeStarResultMap">
+        SELECT s.store_idx, s.store_address, s.store_name, s.filename, avg_star.store_star
+        FROM STORE s
+                 LEFT OUTER JOIN (
+            SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+            FROM STAR
+            GROUP BY store_idx
+        ) avg_star ON s.store_idx = avg_star.store_idx
+        WHERE avg_star.store_star = (SELECT MAX(avg_star.store_star) from ( SELECT store_idx, ROUND(AVG(store_star), 1) AS store_star
+                                                                              FROM STAR
+                                                                              GROUP BY store_idx
+                                                                          ) avg_star)
+    </select>
+
+
+
+
 
 <!-- 메인 맛집 전체보기 화면에서 별점과 같이 받기 -->
     <select id="store_getList_withStar_withPaging" resultMap="storeStarResultMap"
             parameterType="Map">
-        <![CDATA[
 
-SELECT *
-FROM (
-    SELECT s.store_idx, s.user_idx, s.store_name, s.category1, s.store_address,
-        s.store_lati, s.store_longi, s.phone_number, s.store_count, s.filename, s.distance,
-        avg_star.STORE_STAR,
+        SELECT *
+        FROM (
+        SELECT s.*,
         ROWNUM AS RNUM
-    FROM (
-        SELECT store_idx, user_idx, store_name, category1, store_address,
-            store_lati, store_longi, phone_number, store_count, filename, distance
-        FROM STORE
-        ORDER BY store_idx ASC
-    ) s
-    LEFT OUTER JOIN (
-        SELECT store_idx, ROUND(AVG(store_star), 1) AS STORE_STAR
-        FROM STAR
-        GROUP BY store_idx
-    ) avg_star ON s.store_idx = avg_star.store_idx
-    WHERE ROWNUM <= #{cri.pageNum} * #{cri.amount}
-    ORDER BY store_idx ASC
-)
-WHERE RNUM > ((#{cri.pageNum} - 1) * #{cri.amount})
+        FROM (
+        SELECT store.store_idx, store.user_idx, store.store_name, store.category1, store.store_address,
+        store.store_lati, store.store_longi, store.phone_number, store.store_count, store.filename, store.distance,
+        ROUND(AVG(store_star), 1)  AS STORE_STAR
+        FROM STORE store
+        LEFT JOIN STAR star ON store.store_idx = star.store_idx
+        WHERE store.STORE_STAT = 1
+        <if test="cri.getKeyword != 'none'">
+        AND store.store_name LIKE '%' || #{cri.keyword} || '%'
+        </if>
 
-]]>
-
-
-<if test="cuisineSelect != '없음'">
-and category1 = #{cuisineSelect}
-</if>
+        <if test="cuisineSelect != 'none'">
+            and category1 = #{cuisineSelect}
+        </if>
+        GROUP BY store.store_idx, store.user_idx, store.store_name, store.category1, store.store_address,
+        store.store_lati, store.store_longi, store.phone_number, store.store_count, store.filename, store.distance
 
         <choose>
-            <when test="storeStar != '없음'">
+            <when test="storeStar != 'none'">
                 order by STORE_STAR DESC NULLS LAST
-            </when>
-            <when test="storeCount != '없음'">
+                        </when>
+            <when test="storeCount != 'none'">
                 order by store_count DESC NULLS LAST
             </when>
-            <when test="storeDistance != '없음'">
+            <when test="storeDistance != 'none'">
                 order by distance ASC NULLS LAST
             </when>
             <otherwise>
-                ORDER BY store_idx ASC
+                /*ORDER BY store_idx ASC*/
+                order by STORE_STAR DESC NULLS LAST
             </otherwise>
-
         </choose>
 
+        ) s
+        )
 
+        <![CDATA[
+        WHERE RNUM > ((#{cri.pageNum} - 1) * #{cri.amount}) -- 페이지 번호에 따라 수정
+        AND RNUM <= #{cri.pageNum} * #{cri.amount} -- 페이지 번호에 따라 수정;
+        ]]>
 
     </select>
 
+
+
+
+
+
+
+
     <!--페이징 처리시 전체 글수 확인-->
-    <select id="getTotalCount" parameterType="Criteria"
-            resultType="integer">
+    <select id="getTotalCount"  parameterType="Map" resultType="integer">
         SELECT count(*)
         FROM store
+        WHERE STORE_STAT = 1
+        <if test="cuisineSelect != 'none'">
+            and category1 = #{cuisineSelect}
+        </if>
+        <if test="cri.getKeyword != 'none'">
+            AND store.store_name LIKE '%' || #{cri.keyword} || '%'
+        </if>
     </select>
 
     <!--상세보기-->
@@ -152,11 +183,6 @@ and category1 = #{cuisineSelect}
 
     <!-- 맛집 평가 조회하기 -->
     <select id="getStoreWithComment" resultMap="storeStarResultMap">
-<!--        select s.store_idx, s.user_idx, s.store_name, r.star_idx, r.store_comment, r.store_star
-        from store s
-                 LEFT OUTER JOIN
-             star r on s.store_idx = r.store_idx
-        WHERE s.store_idx = #{storeIdx}-->
         select s.store_idx, s.user_idx, s.store_name, r.star_idx,
         r.store_comment, r.store_star
         ,m.user_idx, m.user_name
@@ -185,9 +211,11 @@ and category1 = #{cuisineSelect}
         STORE_LONGI = #{storeLongi},
         PHONE_NUMBER = #{phoneNumber},
         FILENAME = #{filename},
-        DISTANCE = #{distance}
+        DISTANCE = #{distance},
+        STORE_STAT = '0'
 
         WHERE store_idx = #{storeIdx}
+
 
     </update>
 

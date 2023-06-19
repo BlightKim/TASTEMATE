@@ -9,6 +9,9 @@ $(document).ready(() => {
     deleteFile();
   });
 
+  $("#back-btn").on("click", () => {
+    history.back();
+  });
   //파일 변경 체크
   $("input[type='file']").change(() => {
     let formData = new FormData();

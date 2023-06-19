@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  $('')
   $('.search_btn_color').on('click', function () {
     let keyword = $('input[name="keyword"]').val();
     let option = $('select[name="option"]').val();

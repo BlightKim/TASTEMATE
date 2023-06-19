@@ -26,6 +26,7 @@ import java.util.stream.Stream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
@@ -47,9 +48,9 @@ import org.springframework.web.util.UriUtils;
 
 @Controller
 @RequestMapping({"/board"})
+@Slf4j
 public class BoardController {
 
-  private static final Logger log = LoggerFactory.getLogger(BoardController.class);
   private final BoardService boardService;
   private final CommentService commentService;
 //  private final S3Uploader s3Uploader;
@@ -170,10 +171,15 @@ public class BoardController {
     return "/board/board_update";
   }
 
+  @ResponseBody
   @PostMapping("/delete/{boardIdx}")
   public String delete(@PathVariable("boardIdx") Integer boardIdx) {
-    boardService.deleteBoard(boardIdx);
-    return "redirect:/board";
+    Integer result = boardService.deleteBoard(boardIdx);
+    if(result == 1) {
+      return "success";
+    } else {
+      return "fail";
+    }
   }
 
 /*  @GetMapping({"/download/{storeFileName}"})
