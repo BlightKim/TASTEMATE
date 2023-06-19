@@ -4,10 +4,12 @@ import com.tastemate.domain.InicisVO;
 import com.tastemate.domain.KakaoPayApprovalVO;
 import com.tastemate.domain.MemberVO;
 import com.tastemate.domain.StatVO;
+import com.tastemate.domain.board.BoardVO;
 import com.tastemate.service.StatService;
 import io.lettuce.core.support.caching.ClientSideCaching;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -139,5 +141,14 @@ public class StatController {
         model.addAttribute("mbtiOrder", mbtiOrder);
         model.addAttribute("mbti", mbti);
 
+    }
+
+    @GetMapping("/honeyBoard")
+    public void honeyBoard (Model model){
+        List<BoardVO> bestTwenty = statService.bestTwenty();
+        System.out.println("bestTwenty = " + bestTwenty);
+
+
+        model.addAttribute("bestTwenty", bestTwenty);
     }
 }
