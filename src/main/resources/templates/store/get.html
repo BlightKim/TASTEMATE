@@ -11,6 +11,8 @@
     <title>store get</title>
     <link rel="stylesheet" th:href="@{/css/store_css.css}">
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <style>
         .yellow {
             color: #FFA500;
@@ -131,30 +133,11 @@
             <p th:text="'주소 : ' + ${storeVO.storeAddress}" class="mb-4"></p>
             <p th:text="'전화번호 : ' + ${storeVO.phoneNumber}" class="mb-4"></p>
 
-            <!--
-                                    <p th:text="${storeVO.storeLati}" class="mb-4"></p>
-                                    <p th:text="${storeVO.storeLongi}" class="mb-4"></p>
-             -->
-
             <a href="#" class="btn btn-danger purple5" id="getMenu">메뉴보기</a><br><br>
 
             <div id="map" style="width:450px;height:300px;"></div>
             <br>
 
-            <!--<a href="#" class="btn btn-primary">찜하기</a>-->
-
-
-            <!--
-                            <span class="border">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                                </svg>
-                            </span>
-
-                            <a href="#" class="btn btn-warning purple4">예약하기</a>
-                            <a class="btn btn-success purple4" th:href="@{/store/list}">목록으로</a>
-                            <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark">맛집 정보 수정</a>
-            -->
 
             <div class="row g-0 no-gutters">
                 <div class="col-auto mx-1">
@@ -178,46 +161,41 @@
                 </div>
 
 
-                <!--                <td th:text="${storeVO.userIdx}"></td>
-                                <td th:text="${session.vo.getUserIdx()}"></td>-->
+                <!--  확인용! 지우지마         <td th:text="${storeVO.userIdx}"></td>
+                                                <td th:text="${session.vo.getUserIdx()}"></td>-->
 
-
-                <!--             <th:block th:if="${session.vo.getUserIdx() == storeVO.userIdx}">-->
-                <div class="col-auto mx-1">
-                    <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark"
-                       style="background-color: #8E48C7; border: none;">맛집 정보 수정</a>
-                </div>
-                <!--             </th:block>-->
+                <!--로그인한 사람과 등록한 사람이 동일할때만 맛집 수정버튼이 보임!-->
+                <th:block th:if="${session.vo.getUserIdx().toString().equals(storeVO.userIdx)}">
+                    <div class="col-auto mx-1">
+                        <a th:href="@{/store/update(storeIdx=${storeVO.storeIdx})}" class="btn btn-dark"
+                           style="background-color: #8E48C7; border: none;">맛집 정보 수정</a>
+                    </div>
+                </th:block>
 
                 <div class="col-auto mx-1">
                     <a class="btn btn-success" th:href="@{/store/list}"
                        style="background-color: #9C91B3; border: none;">목록으로</a>
                 </div>
 
+
                 <div class="mx-1">
-                    <a th:href="@{/booking/bookingInsert(storeIdx=${storeVO.storeIdx})}"
-                       class="btn btn-warning"
+                    <a class="btn btn-warning reserve"
                        style="border: none;">예약하기</a>
                 </div>
 
                 <!--
-
                                 <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx}, storeName=${storeVO.storeName})}" class="btn btn-primary">북마크</a>
                                 <a th:href="@{/booking/bookingInsert(storeIdx=${storeVO.storeIdx})}" class="btn btn-warning">예약하기</a>
                 -->
 
-
                 <!--                    <a th:href="@{/bookmark/insert(storeIdx=${storeVO.storeIdx})}" class="btn btn-primary">북마크</a>-->
 
 
-
             </div>
-
         </div>
-
     </div>
 </div>
-로그인한 사람과 등록한 사람이 동일할때만 맛집 수정버튼이 보임!
+
 
 <!--Modal-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -250,14 +228,6 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-
-                <!--
-                                <button class="btn btn-primary" type="button" >Save changes</button>
-                -->
-
-            </div>
         </div>
     </div>
 </div>
@@ -269,10 +239,14 @@
         $('#myModal').modal('show');
     });
 
+    // 닫기 버튼 클릭 이벤트 핸들러
+    document.querySelector("#myModal .close").addEventListener("click", function () {
+        // 모달 닫기
+        $('#myModal').modal('hide');
+    });
+
 </script>
 <!--모달끝-->
-
-
 
 
 <!--댓글 시작-->
@@ -351,23 +325,24 @@
 
 
 <!-- 북마크 ajax -->
-    <script>
-        var storeIdx2 = $("#storeIdx").val();
-        var urlInsert = "/bookmark/insertAjax.do";
-        var urlDelete = "/bookmark/deleteAjax.do";
-        //console.log(bookmark);
-        $(document).ready(function(){
-            let bookmark = $('input[name=bookmark]').val();
-            console.log(bookmark);
-            $('.border').on('click', function(){
-                //document.write("버튼 클릭 인식함!");
-                $.ajax({
-                    url: (bookmark == 0) ? urlInsert : urlDelete ,
-                    type: "POST",
-                    data: {storeIdx: storeIdx2 },
-                    contextType: "application/json; charset=UTF-8",
-                    dataType : "json",
-                    success: function(data){
+<script>
+    var storeIdx2 = $("#storeIdx").val();
+    var urlInsert = "/bookmark/insertAjax.do";
+    var urlDelete = "/bookmark/deleteAjax.do";
+    //console.log(bookmark);
+    $(document).ready(function(){
+        let bookmark = $('input[name=bookmark]').val();
+        console.log(bookmark);
+        $('.border').on('click', function(){
+            //document.write("버튼 클릭 인식함!");
+            $.ajax({
+                url: (bookmark == 0) ? urlInsert : urlDelete ,
+                type: "POST",
+                data: {storeIdx: storeIdx2 },
+                contextType: "application/json; charset=UTF-8",
+                dataType : "json",
+                async: false,
+                success: function(data){
                     //console.log('통신결과 : ' + data.status);
                     location.href="/store/get?storeIdx=" + storeIdx2;
                 },
@@ -375,9 +350,53 @@
                     console.log(error.responseText);
                     alert("신규등록 error");  }
             });
+        });
+    });
+</script>
+
+
+<script>
+    /* 예약하기 (이미 결제 완료되면 불가능하게) */
+    var storeIdx = $("#storeIdx").val();
+
+    $(document).ready(function () {
+        $('.reserve').on('click', function () {
+            console.log("버튼 클릭 인식함!");
+            $.ajax({
+                url: "/store/payCheckAjax",
+                type: "POST",
+                data: {storeIdx: storeIdx},
+                contextType: "application/json; charset=UTF-8",
+                dataType: "json",
+                async: false,
+                success: function (data) {
+                    console.log('payCheckAjax 성공 : ' + data.inicis);
+                    console.log('payCheckAjax 성공 : ' + data.kakao);
+
+                    if(data.inicis == 1){
+                        swal('', "matching이 진행 중이에요!", 'warning');
+                        return;
+                    }
+                    if(data.kakao == 1){
+                        swal('', "matching이 진행 중이에요!", 'warning');
+                        return;
+                    }
+
+                    //alert("결제내역이 없어 이동합니다");
+                    location.href = "/booking/bookingInsert?storeIdx=" + storeIdx;
+
+                },
+                error: function (error) {
+                    console.log(error.responseText);
+                    alert("예약하기버튼 error");
+                }
             });
         });
-    </script>
+    });
+
+
+
+</script>
 
 
 <!-- 카카오 지도 -->

@@ -29,7 +29,8 @@
         select count(*) from (select * from booking
                               where booking_time = to_date(#{bookingTime},'yyyy-mm-dd hh24:mi:ss')
                                 and table_no = #{tableNo}
-                                and store_idx = #{storeIdx}) table_check
+                                and store_idx = #{storeIdx}
+                                and onsite_payment in (0, 1, 2) ) table_check
     </select>
     
     <update id="bookingPayAndStarComplete" parameterType="int">

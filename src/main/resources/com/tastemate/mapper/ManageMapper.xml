@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tastemate.mapper.ManageMapper">
+
+    <!-- 맛집 리스트(관리자) -->
+    <select id="manageStoreListGet" resultType="com.tastemate.domain.ManageStoreVO">
+        SELECT * FROM STORE S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND M.USER_TYPE = 0 ORDER BY S.STORE_IDX DESC
+    </select>
+
+    <!-- 맛집 등록(관리자) -->
+    <insert id="manageSaveStore" parameterType="com.tastemate.domain.ManageStoreVO">
+        INSERT INTO STORE (STORE_IDX, USER_IDX, STORE_NAME, CATEGORY1, STORE_ADDRESS,
+                           STORE_LATI, STORE_LONGI, PHONE_NUMBER, STORE_COUNT, FILENAME, STORE_STAT)
+        VALUES (store_seq.NEXTVAL, #{userIdx}, #{storeName}, #{category1}, #{storeAddress},
+                #{storeLati}, #{storeLongi}, #{phoneNumber}, #{storeCount}, #{filename}, 1)
+    </insert>
+
+    <!-- 맛집 상세보기(관리자, 승인대기, 승인) -->
+    <select id="manageStoreView" parameterType="com.tastemate.domain.ManageStoreVO" resultType="com.tastemate.domain.ManageStoreVO">
+        SELECT * FROM STORE S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND S.STORE_IDX = #{storeIdx}
+    </select>
+
+    <!-- 맛집 삭제(관리자)-->
+    <delete id="deleteManageStore" parameterType="com.tastemate.domain.ManageStoreVO">
+        DELETE STORE WHERE STORE_IDX = #{storeIdx}
+    </delete>
+
+    <!-- 맛집 수정(관리자) -->
+    <update id="updateManageStore" parameterType="com.tastemate.domain.ManageStoreVO">
+        UPDATE STORE
+        SET STORE_NAME = #{storeName}, CATEGORY1 = #{category1}, STORE_ADDRESS = #{storeAddress},
+            STORE_LATI = #{storeLati}, STORE_LONGI = #{storeLongi}, PHONE_NUMBER = #{phoneNumber},
+            STORE_COUNT = #{storeCount}, FILENAME = #{filename}
+        WHERE STORE_IDX = #{storeIdx}
+    </update>
+
+
+
+    <!-- 맛집 리스트(승인 대기) -->
+    <select id="storeRegNotList" resultType="com.tastemate.domain.ManageStoreVO">
+        SELECT * FROM STORE S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND S.STORE_STAT = 0 ORDER BY STORE_IDX DESC
+    </select>
+
+    <!-- 맛집 리스트(승인) -->
+    <select id="storeRegOkList" resultType="com.tastemate.domain.ManageStoreVO">
+        SELECT * FROM STORE S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND S.STORE_STAT = 1 ORDER BY STORE_IDX DESC
+    </select>
+
+    <!-- 맛집 승인 -->
+    <update id="storeRegUpdateOK" parameterType="com.tastemate.domain.ManageStoreVO">
+        UPDATE STORE SET STORE_STAT = 1 WHERE STORE_IDX = #{storeIdx}
+    </update>
+
+    <!-- 맛집 승인 대기(취소) -->
+    <update id="storeRegUpdateNot" parameterType="com.tastemate.domain.ManageStoreVO">
+        UPDATE STORE SET STORE_STAT = 0 WHERE STORE_IDX = #{storeIdx}
+    </update>
+
+
+
+    <!-- 맛집 메뉴 조회 -->
+    <select id="storeMenuView" parameterType="com.tastemate.domain.ManageMenuVO" resultType="com.tastemate.domain.ManageMenuVO">
+        SELECT * FROM MENU WHERE STORE_IDX = #{storeIdx} ORDER BY FOOD_NAME
+    </select>
+
+    <!-- 메뉴 조회(1개) -->
+    <select id="storeMenuUpdateView" parameterType="com.tastemate.domain.ManageMenuVO" resultType="com.tastemate.domain.ManageMenuVO">
+        SELECT * FROM MENU WHERE MENU_IDX = #{menuIdx}
+    </select>
+
+    <!-- 맛집 메뉴 추가 -->
+    <insert id="maAddMenu" parameterType="com.tastemate.domain.ManageMenuVO">
+        INSERT INTO MENU (MENU_IDX, STORE_IDX, FOOD_NAME, PRICE)
+        VALUES (MUNU_SEQ.NEXTVAL,  #{storeIdx}, #{foodName}, #{price})
+    </insert>
+
+    <!-- 맛집 메뉴 수정 -->
+    <update id="maUpdateMenu" parameterType="com.tastemate.domain.ManageMenuVO">
+        UPDATE MENU SET FOOD_NAME = #{foodName}, PRICE = #{price} WHERE MENU_IDX = #{menuIdx}
+    </update>
+
+    <!-- 맛집 메뉴 삭제 -->
+    <delete id="maDeleteMenu" parameterType="com.tastemate.domain.ManageMenuVO">
+        DELETE MENU WHERE MENU_IDX = #{menuIdx}
+    </delete>
+
+
+
+    <!-- 리뷰 리스트 조회(리뷰기준 조인) -->
+    <select id="selectUserReview" parameterType="com.tastemate.domain.ManageStarVO" resultType="com.tastemate.domain.ManageStarVO">
+        SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX(+) AND S.STORE_IDX = #{storeIdx} ORDER BY S.STAR_IDX DESC
+    </select>
+    <!-- SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX AND STORE_IDX = 1 ORDER BY STAR_IDX DESC; -->
+
+    <!-- 리뷰 상세보기(리뷰기준 조인) -->
+    <select id="viewUserReview" parameterType="com.tastemate.domain.ManageStarVO" resultType="com.tastemate.domain.ManageStarVO">
+        SELECT * FROM STAR S, MEMBER M WHERE S.USER_IDX = M.USER_IDX(+) AND S.STAR_IDX = #{starIdx}
+    </select>
+
+    <!-- 리뷰 수정 -->
+    <update id="updateUserReview" parameterType="com.tastemate.domain.ManageStarVO">
+        UPDATE STAR
+        SET STORE_COMMENT = #{storeComment} WHERE STAR_IDX = #{starIdx}
+    </update>
+
+    <!-- 리뷰 삭제 -->
+    <delete id="deleteUserReview" parameterType="com.tastemate.domain.ManageStarVO">
+        DELETE STAR WHERE STAR_IDX = #{starIdx}
+    </delete>
+
+
+
+    <!-- 강의실별 수강생 조회 -->
+    <select id="manageFindClass" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
+        SELECT * FROM MEMBER WHERE USER_CLASS = #{userClass}
+    </select>
+
+    <!-- 수강생 인원 조회 -->
+    <select id="classMemberCount" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
+        SELECT COUNT(*) FROM MEMBER WHERE USER_CLASS = #{userClass}
+    </select>
+
+
+
+    <!-- 수강생 정보 조회 -->
+    <select id="userInfo" parameterType="com.tastemate.domain.ManageMemberVO" resultType="com.tastemate.domain.ManageMemberVO">
+        SELECT * FROM MEMBER WHERE USER_IDX = #{userIdx}
+    </select>
+
+    <!-- 수강생 계정 활성 -->
+    <update id="userInfoActive" parameterType="com.tastemate.domain.ManageMemberVO">
+        UPDATE MEMBER SET USER_STATUS = 0 WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <!-- 수강생 계정 비활성 -->
+    <update id="userInfoInactive" parameterType="com.tastemate.domain.ManageMemberVO">
+        UPDATE MEMBER SET USER_STATUS = 1 WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <!-- 수강생 계정 강퇴 -->
+    <delete id="deleteUserInfo" parameterType="com.tastemate.domain.ManageMemberVO">
+        UPDATE MEMBER SET USER_STATUS = 2 WHERE USER_IDX = #{userIdx}
+    </delete>
+
+</mapper>

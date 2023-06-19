@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>store list</title>
+<style>
+    table, th, td {
+        margin: auto;
+        padding: 3px 20px;
+    }
+    .space {
+        padding-top: 15px;
+      }
+</style>
+<link rel="stylesheet" th:href="@{/css/store_css.css}">
+<style>
+    body {
+        min-height: 100vh;
+
+        background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+        background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+    }
+
+    .input-form {
+        /*max-width: 680px;*/
+
+        margin-top: 80px;
+        margin-bottom: 80px;
+        padding: 32px;
+
+        background: #fff;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+
+    .center { text-align: center; }
+    th, td { text-align: center; }
+</style>
+</head>
+<body>
+
+
+
+<div th:if="${message == 'complete'}" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="text-center">
+        메뉴가 삭제 되었습니다.
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+
+
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+
+            <!-- 관리자 미니 해더-->
+            <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
+
+            <div>
+                <table class="table table-hover">
+                    <tr>
+                        <th>승인정보</th>
+                        <th>카테고리</th>
+                        <th>맛집</th>
+                        <th>연락처</th>
+                        <th>작성자</th>
+                    </tr>
+                    <tr th:if="${storeRegList.size() == 0}">
+                        <td class="center" colspan="5">승인 완료 맛집이 없습니다.</td>
+                    </tr>
+                    <tr th:each="storeRegVO : ${storeRegList}">
+                        <td th:if="${storeRegVO.storeStat == 1}">승인</td>
+                        <td th:if="${storeRegVO.storeStat == 0}">승인 대기</td>
+                        <td>[[${storeRegVO.category1}]]</td>
+                        <td>
+                            <a th:href="@{|/manage/storeMenuView?storeIdx=${storeRegVO.storeIdx}|}">[[${storeRegVO.storeName}]]</a>
+                        </td>
+                        <td>[[${storeRegVO.PhoneNumber}]]</td>
+                        <td>[[${storeRegVO.userName}]]</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

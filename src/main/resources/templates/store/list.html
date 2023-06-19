@@ -12,6 +12,11 @@
     <th:block th:replace="header_footer/header :: headerFragment"></th:block>
 
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
+
+
 
     <style>
         .yellow {
@@ -38,6 +43,9 @@
             background-color : #9C91B3;
             color: white;
             border : none;
+        }
+        .title{
+            font-family: 'Single Day', cursive;
         }
 
 
@@ -144,7 +152,7 @@
 <!--main-->
 <main class="container">
     <div class="container">
-        <h1 class="text-center mt-5 mb-5 purple">이 맛집 어때요?</h1>
+        <h1 class="text-center mt-5 mb-5 purple title">이 맛집 어때요?</h1>
 
             <a class="btn btn-warning purple3"
                     th:href="@{/store/list(storeStar='star')}">별점순</a>
@@ -184,9 +192,10 @@
                         <span th:text="${storeVO.storeCount}" class="red"></span><span class="red">번 방문!</span><br>
 
                         <div class="mb-2">
-                            <span th:text="${storeVO.storeIdx} + '. ' + ${storeVO.storeName}"
-                              class="fs20" style="color: black"></span>
-<!-- 별점 -->
+                            <span th:text="${storeVO.storeName}" class="fs20" style="color: black"></span>
+                           <!-- ${storeVO.storeIdx} + '. ' +-->
+
+                            <!-- 별점 -->
 
                            <th:block th:with="starCount=${storeVO.starVO[0].storeStar}">
                                 <span th:if="${starCount != 0.0}" th:each="i: ${#numbers.sequence(1, starCount)}" class="yellow">★</span>

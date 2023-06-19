@@ -133,22 +133,12 @@
 
 
 
-
-
-<!--            <a class="btn btn-warning purple3"-->
-<!--               th:href="@{/store/starComment(storeIdx=${inicisVO.storeIdx})}"-->
-<!--               style="background-color: #9C91B3; border: none;">별점주러가기-->
-<!--            </a>-->
             <button type="button" class="btn btn-warning purple3" onclick="starInsert()"
                     style="background-color: #9C91B3; border: none;">별점주러가기
             </button>
 
 
-            <!--
-                        <button type="button" onClick="cancelPay()" class="iamport kakaoBtn2">결제 취소</button>
-            -->
             <button type="button" onClick="openCancelModal()" class="iamport kakaoBtn2">결제 취소</button>
-
 
             <!-- 결제 취소 확인 모달 -->
             <div id="cancelModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="cancelModalLabel" aria-hidden="true">
@@ -173,18 +163,21 @@
 
             <input id="bookingIdx" type="hidden" th:value="${inicisVO.getBookingIdx()}">
             <input id="storeIdx" type="hidden" th:value="${inicisVO.getStoreIdx()}">
+            <input id="inicisIdx" type="hidden" th:value="${inicisVO.getInicisIdx()}">
 
+
+
+
+
+
+
+
+<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
         </form>
 
-        <br>(예약 시간 후로 시간제한도 걸어야해)
+        <br>
     </div>
 </div>
-<h6>[[${inicisVO}]]</h6>
-
-
-
-
-
 
 
 
@@ -289,6 +282,7 @@
 
         var bookingIdx = $('#bookingIdx').val();
         var storeIdx = $('#storeIdx').val();
+        var inicisIdx = $('#inicisIdx').val();
         console.log(todayDate + ' ' + nowTime);
         console.log(bookingIdx);
 
@@ -305,7 +299,8 @@
           success: function(data){
             console.log('통신결과 : ' + data.status);
             if (data.result >= 2 ) {
-                location.href="/store/starComment?storeIdx=" + storeIdx +'';
+                location.href="/store/starComment?storeIdx=" + storeIdx
+                    + '&bookingIdx=' + bookingIdx + "&inicisIdx=" + inicisIdx;
             } else {
                 Swal.fire({
                     icon: 'error',

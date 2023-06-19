@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+<head>
+    <meta charset="UTF-8">
+    <title>MBTI</title>
+    <style>
+        /* CSS 스타일은 여기에 작성합니다. */
+        body {
+            /*font-family: Arial, sans-serif;*/
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .contents.q01 .test_list li:first-child {
+            left: 0;
+        }
+
+        .contents .test_list .city li {
+            width: 125px;
+            height: 100px;
+            padding: 5px;
+        }
+
+        .contents .test_list li {
+            padding: 8px;
+            box-sizing: border-box;
+            float: left;
+            width: 120px;
+            height: 120px;
+            border-radius: 25px;
+        }
+
+        html, body, div, span, obect, iframe, h1, h2, h3, h4, h5, h6, p,
+        blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins,
+        kbd, q, samp, small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul,
+        li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead,
+        tr, th, td, article, aside, canvas, details, figcaption, figure,
+        header, hgroup, menu, nav, section, summary, time, mark, audio, video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            text-align: center;
+        }
+        .contents .test_list a .txt_answer {
+            width: 100%;
+            text-align: center;
+            height: 180px;
+            color: #fff;
+            font-size: 23px;
+        }
+
+        .bg_score2 {
+            display: block;
+            background: url("/img/titi_bg_score2.png") no-repeat center center;
+            height: 91px;
+            width: 100%;
+        }
+
+        /*.header {*/
+        /*    background-color: #007bff;*/
+        /*    color: #ffffff;*/
+        /*    padding: 20px;*/
+        /*    text-align: center;*/
+        /*}*/
+
+        .content {
+            max-width: 960px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333333;
+            text-align: center;
+        }
+
+        p {
+            color: #666666;
+            line-height: 1.5;
+        }
+        .contents .test_list li.mr_23 {
+            margin-left: 23px;
+            margin-right: 23px;
+        }
+
+        .contents .test_list li.mr {
+            margin-right: 23px;
+        }
+
+        .green1 {
+            background: #bf70a8;
+        }
+
+        .green2 {
+            background: #8865a0;
+        }
+
+        li {
+            display: list-item;
+            text-align: -webkit-match-parent;
+        }
+        .contents .test_list .line {
+            margin-top: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .contents .test_list {
+            width: 100%;
+            padding-top: 80px;
+        }
+        .contents.agr {
+            height: auto;
+            padding-top: 30px;
+        }
+        .contents {
+            position: relative;
+            width: 600px;
+            height: 100%;
+            margin: 0 auto;
+            padding: 94px 0 150px;
+        }
+        ul, ol {
+            list-style-type: none;
+        }
+        .span .txt_answer {
+            padding: 30px;
+        }
+        ::marker {
+            unicode-bidi: isolate;
+            font-variant-numeric: tabular-nums;
+            text-transform: none;
+            text-indent: 0px !important;
+            text-align: start !important;
+            text-align-last: start !important;
+        }
+        .contents.q01 strong {
+            margin-top: 40px;
+        }
+        .contents strong {
+            display: block;
+            text-align: center;
+            font-size: 36px;
+        }
+        strong {
+            font-weight: bold;
+        }
+        /*.contents.q01 .taste_mate {*/
+        /*    overflow: hidden;*/
+        /*    width: 110px;*/
+        /*    height: 50px;*/
+        /*    margin: 0 auto;*/
+        /*    background: url("tastemate.jpeg") no-repeat;*/
+        /*    line-height: 99em;*/
+        /*}*/
+        p {
+            display: block;
+            margin-block-start: 1em;
+            margin-block-end: 1em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
+        html, body {
+            width: 100%;
+            -webkit-text-size-adjust: none;
+        }
+        .contents .test_list .r4 a {
+            padding-top: 26px;
+            box-sizing: border-box;
+            font-size: 26px;
+        }
+        a:hover { text-decoration : none; }
+    </style>
+</head>
+<body>
+<div style="height: 650px">
+    <div class="contents agr q01">
+        <strong>강의실</strong>
+        <div class="test_list q01">
+            <ul class="r4 city M1">
+                <li class="green1">
+                    <a th:href="@{/manage/findClass?userClass=1}" class="bg_score2">
+                        <span class="txt_answer">1 강의실</span>
+                    </a>
+                </li>
+                <li class="green2 mr_23">
+                    <a th:href="@{/manage/findClass?userClass=2}" class="bg_score2">
+                        <span class="txt_answer">2 강의실</span>
+                    </a>
+                </li>
+                <li class="green1 mr">
+                    <a th:href="@{/manage/findClass?userClass=3}" class="bg_score2">
+                        <span class="txt_answer">3 강의실</span>
+                    </a>
+                </li>
+                <li class="green2">
+                    <a th:href="@{/manage/findClass?userClass=4}" class="bg_score2">
+                        <span class="txt_answer">4 강의실</span>
+                    </a>
+                </li>
+                <li class="green1 line">
+                    <a th:href="@{/manage/findClass?userClass=5}" class="bg_score2">
+                        <span class="txt_answer">5 강의실</span>
+                    </a>
+                </li>
+                <li class="green2 line mr_23">
+                    <a th:href="@{/manage/findClass?userClass=6}" class="bg_score2">
+                        <span class="txt_answer">6 강의실</span>
+                    </a>
+                </li>
+                <li class="green1 mr line">
+                    <a th:href="@{/manage/findClass?userClass=7}" class="bg_score2">
+                        <span class="txt_answer">7 강의실</span>
+                    </a>
+                </li>
+                <li class="green2 line">
+                    <a th:href="@{/manage/findClass?userClass=8}" class="bg_score2">
+                        <span class="txt_answer">8 강의실</span>
+                    </a>
+                </li>
+                <li class="green1 line">
+                    <a th:href="@{/manage/findClass?userClass=9}" class="bg_score2">
+                        <span class="txt_answer">9 강의실</span>
+                    </a>
+                </li>
+                <li class="green2 line mr_23">
+                    <a th:href="@{/manage/findClass?userClass=10}" class="bg_score2">
+                        <span class="txt_answer">10 강의실</span>
+                    </a>
+                </li>
+                <li class="green1 mr line">
+                    <a th:href="@{/manage/findClass?userClass=11}" class="bg_score2">
+                        <span class="txt_answer">11 강의실</span>
+                    </a>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+
+</html>

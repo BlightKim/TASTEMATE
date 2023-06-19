@@ -22,13 +22,21 @@ public class WebConfig implements WebMvcConfigurer {
         .excludePathPatterns("/css/**", "/*.ico", "/error", "/img/**", "/images/**", "/js/**", "/ws/**", "**/stomp/chat/**");
 
     registry.addInterceptor(new LoginCheckInterceptor())
-            .order(2)
-            .addPathPatterns("/**")
-            .excludePathPatterns("/", "/board", "/member/login**",
-                    "/css/**", "/*.ico", "/js/**", "/error", "/register", "/img/**", "/;jsessionid**", "/comments/**", "**/download/**", "/member/simpleregister"
-            ,"/store/**", "/booking/**", "/pay/**", "/store/get", "/bookmark/insertAjax.do", "/stomp/chat/**",
-                "/chat/joinRoom", "/chat/deleteRoom/**", "/board/list"
-                );
+        .order(2)
+        .addPathPatterns("/**")
+        .excludePathPatterns("/", "/board", "/member/login**", "/member/logout",
+            "/css/**", "/*.ico", "**/js/**", "/error", "/member/register", "/img/**",
+            "/board/write/**", "/;jsessionid**", "/comments/**", "**/download/**", "**/js/**",
+            "/member/class",
+            "/member/mbti", "/member/selectFood", "/member/list", "/member/simpleregister",
+            "/member/userJoin", "/member/findId", "/member/findIdByEmail", "/store/list",
+            "/store/main", "/stomp/chat/**",
+            "/member/resetPassword", "/member/reset", "/member/checkId", "/tastemate",
+            "/member/tastemate",
+            "/member/resetSuccess", "/member/mailConfirm", "/member/sweetalert2.min.css",
+            "/bookmark/get",
+            "/store/**.jpg", "/store/**.jpeg", "store/**.jpg", "/store/list**", "/chat/joinRoom",
+            "/chat/deleteRoom/**", "/board/list");
 
   }
 
@@ -41,9 +49,9 @@ public class WebConfig implements WebMvcConfigurer {
   private String storeSavePath = "file:///C:/upload/";
 
   @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry){
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler(storeResourcePath)
-            .addResourceLocations(storeSavePath);
-    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static");
+        .addResourceLocations(storeSavePath);
+//    registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static");
   }
 }

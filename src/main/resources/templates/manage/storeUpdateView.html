@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+  <style>
+    body {
+      min-height: 100vh;
+
+      background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+      background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+      background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+      background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+      background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+    }
+
+    .input-form {
+      max-width: 800px;
+
+      margin-top: 80px;
+      margin-bottom: 80px;
+      padding: 32px;
+
+      background: #fff;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      border-radius: 10px;
+      -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+
+    /* 별점 구현 */
+    #star{
+      display: inline-block;
+      direction: rtl;
+      border:0;
+    }
+    #star legend{
+      text-align: right;
+    }
+    input[type=radio]{
+      display: none;
+    }
+    #star label{
+      font-size: 2em;
+      color: transparent;
+      text-shadow: 0 0 0 #f0f0f0;
+    }
+    #star label:hover{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #star label:hover ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    #star input[type=radio]:checked ~ label{
+      text-shadow: 0 0 0 rgba(250, 208, 0, 0.99);
+    }
+    .disable {
+      background-color: darkgray;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<div class="container">
+  <div class="input-form-backgroud row">
+    <div class="input-form col-md-12 mx-auto">
+      <h3 class="mb-3 mb-5 purple2 text-center">추천 맛집 정보수정</h3>
+      <form th:action="@{/manage/updateManageStore}" method="post" enctype="multipart/form-data">
+
+
+        <div class="row">
+          <div class="col-md-8 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-egg-fried" viewBox="0 0 16 16">
+              <path d="M8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+              <path d="M13.997 5.17a5 5 0 0 0-8.101-4.09A5 5 0 0 0 1.28 9.342a5 5 0 0 0 8.336 5.109 3.5 3.5 0 0 0 5.201-4.065 3.001 3.001 0 0 0-.822-5.216zm-1-.034a1 1 0 0 0 .668.977 2.001 2.001 0 0 1 .547 3.478 1 1 0 0 0-.341 1.113 2.5 2.5 0 0 1-3.715 2.905 1 1 0 0 0-1.262.152 4 4 0 0 1-6.67-4.087 1 1 0 0 0-.2-1 4 4 0 0 1 3.693-6.61 1 1 0 0 0 .8-.2 4 4 0 0 1 6.48 3.273z"/>
+            </svg>
+            <label for="storeName">맛집 이름</label>
+            <input type="text" class="form-control" id="storeName" name="storeName" th:value="${storeUpdateView.storeName}" required>
+            <input type="hidden" name="storeIdx" th:value="${storeUpdateView.storeIdx}">
+          </div>
+
+
+          <div class="col-md-4 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z"/>
+            </svg>
+            <label for="userId">관리자 ID</label>
+            <input type="text" class="form-control" id="userId" name="userId" readonly="readonly" th:value="${storeUpdateView.userId}">
+            <input type="hidden" class="form-control" id="userName" name="userName" th:value="${storeUpdateView.userName}">
+          </div>
+        </div>
+
+        <div class = "row">
+          <div class="col-md-8 mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark-heart" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"/>
+              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"/>
+            </svg>
+            <label for="category1">카테고리</label>
+            <div class="mb-3">
+              <div class="form-group">
+                <select class="form-control" id="category1" name="category1" required>
+                  <option value="" selected disabled>FOOD STYLE</option>
+                  <option th:value="${storeUpdateView.category1 }" selected>[[${storeUpdateView.category1 }]]</option>
+                  <option th:if="${storeUpdateView.category1 != '한식'}" value="한식">한식</option>
+                  <option th:if="${storeUpdateView.category1 != '중식'}" value="중식">중식</option>
+                  <option th:if="${storeUpdateView.category1 != '일식'}" value="일식">일식</option>
+                  <option th:if="${storeUpdateView.category1 != '양식'}" value="양식">양식</option>
+                  <option th:if="${storeUpdateView.category1 != '퓨전'}" value="퓨전">퓨전</option>
+                  <option th:if="${storeUpdateView.category1 != '푸드코트'}" value="푸드코트">푸드코트</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- 카카오 주소 api -->
+        <div class="mb-3">
+          <label for="findAddress">맛집 주소</label>
+          <input type="button" value="우편번호찾기" onclick="kakaopost()" id="findAddress">
+          <input type="text" name="zipcode" id="zipcode" size="7"
+                 class="form-control" readonly>
+
+          <input type="text" name="storeAddress" id="address"
+                 size="70" class="form-control" th:value="${storeUpdateView.storeAddress}">
+
+        </div>
+
+        <!-- 카카오 주소 api 끝 -->
+
+
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="storeLati">위도</label>
+            <!-- <a href="http://www.moamodu.com/develop/daum_map.php">-->
+            <a href="javascript:void(window.open('http://www.moamodu.com/develop/daum_map.php','wow','width=1000, height=1000'))">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-patch-question-fill" viewBox="0 0 16 16">
+                <path d="M5.933.87a2.89 2.89 0 0 1 4.134 0l.622.638.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636zM7.002 11a1 1 0 1 0 2 0 1 1 0 0 0-2 0zm1.602-2.027c.04-.534.198-.815.846-1.26.674-.475 1.05-1.09 1.05-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745.336 0 .504-.24.554-.627z"/>
+              </svg>
+            </a>
+            <input type="text" class="form-control" id="storeLati" name="storeLati" th:value="${storeUpdateView.storeLati}" required>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="storeLongi">경도</label>
+            <a href="http://www.moamodu.com/develop/daum_map.php">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-patch-question-fill" viewBox="0 0 16 16">
+                <path d="M5.933.87a2.89 2.89 0 0 1 4.134 0l.622.638.89-.011a2.89 2.89 0 0 1 2.924 2.924l-.01.89.636.622a2.89 2.89 0 0 1 0 4.134l-.637.622.011.89a2.89 2.89 0 0 1-2.924 2.924l-.89-.01-.622.636a2.89 2.89 0 0 1-4.134 0l-.622-.637-.89.011a2.89 2.89 0 0 1-2.924-2.924l.01-.89-.636-.622a2.89 2.89 0 0 1 0-4.134l.637-.622-.011-.89a2.89 2.89 0 0 1 2.924-2.924l.89.01.622-.636zM7.002 11a1 1 0 1 0 2 0 1 1 0 0 0-2 0zm1.602-2.027c.04-.534.198-.815.846-1.26.674-.475 1.05-1.09 1.05-1.986 0-1.325-.92-2.227-2.262-2.227-1.02 0-1.792.492-2.1 1.29A1.71 1.71 0 0 0 6 5.48c0 .393.203.64.545.64.272 0 .455-.147.564-.51.158-.592.525-.915 1.074-.915.61 0 1.03.446 1.03 1.084 0 .563-.208.885-.822 1.325-.619.433-.926.914-.926 1.64v.111c0 .428.208.745.585.745.336 0 .504-.24.554-.627z"/>
+              </svg>
+            </a>
+            <input type="text" class="form-control" id="storeLongi" name="storeLongi" th:value="${storeUpdateView.storeLongi}" required>
+          </div>
+        </div>
+        <div class="mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.568 17.568 0 0 0 4.168 6.608 17.569 17.569 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.678.678 0 0 0-.58-.122l-2.19.547a1.745 1.745 0 0 1-1.657-.459L5.482 8.062a1.745 1.745 0 0 1-.46-1.657l.548-2.19a.678.678 0 0 0-.122-.58L3.654 1.328zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z"/>
+          </svg>
+          <label for="phoneNumber">맛집 전화번호 ( - 표시 해주세요)</label>
+          <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" th:value="${storeUpdateView.phoneNumber}" required>
+        </div>
+
+        <div class="mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+          </svg>
+
+
+          <label>이미지 파일명</label><br>
+
+
+          <div th:if="${storeUpdateView.filename}">
+            <img th:src="@{|/store/${storeUpdateView.filename}|}" width="300px"/>
+          </div>
+          <input type="file" class="form-control" name="oriFilename" accept="image/png, image/gif, image/jpeg">
+          <input type="hidden" name="filename" th:value="${storeUpdateView.filename}">
+
+
+
+        </div>
+
+        <div class="text-center mt-5 mb-3">
+          <button type="submit" class="btn text-white" style="background-color: #8E48C7">수정</button>
+          <a th:href="@{/manage/storeList}" class="btn text-white" style="background-color: #9C91B3">목록</a>
+        </div>
+      </form>
+
+
+
+    </div>
+  </div>
+</div>
+
+<!-- 카카오 주소 api -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+  function kakaopost() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        document.querySelector("#zipcode").value = data.zonecode;
+        document.querySelector("#address").value = data.address
+      }
+    }).open();
+  }
+</script>
+<!--끝-->
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+</body>
+</html>

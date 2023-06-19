@@ -1,0 +1,59 @@
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<!--footerFragment 선언-->
+<div th:fragment="adminMiniHeader">
+
+    <div class="jumbotron text-center purple2">
+        <h1>[[${title}]]</h1>
+        <!--                <p>관리자를 위한 전용 페이지 입니다!</p>-->
+    </div>
+
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark sticky-top">
+        <!-- 로고 -->
+                        <a class="navbar-brand" href="/manage/main">Admin</a>
+        <ul class="navbar-nav">
+            <!-- 링크 -->
+            <!--                    <li class="nav-item">-->
+            <!--                        <a class="nav-link" href="#">Link</a>-->
+            <!--                    </li>-->
+            <!-- 드롭다운 -->
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
+                    맛집 등록
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/manage/storeList">관리자 추천</a>
+                    <a class="dropdown-item" href="/manage/storeRegNotList">승인 대기</a>
+                    <a class="dropdown-item" href="/manage/storeRegOkList">승인 완료</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
+                    게시물 관리
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/manage/storeRegOkListMenu">맛집 메뉴</a>
+                    <a class="dropdown-item" href="/manage/storeReviewList">맛집 평가</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop3" data-toggle="dropdown">
+                    수강생 관리
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/manage/classList">강의실</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop4" data-toggle="dropdown">
+                    통계
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="/stat/statMain">매출</a>
+                    <a class="dropdown-item" href="/stat/statMember">수강생 현황</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <br><br>
+</div>
+</html>

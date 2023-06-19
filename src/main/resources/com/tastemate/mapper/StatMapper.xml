@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tastemate.mapper.StatMapper">
+
+
+
+
+    <select id="priceAmountInicis" parameterType="String" resultType="com.tastemate.domain.InicisVO">
+    select store_idx, Sum(amount) as amount, count(*) as user_idx from inicis
+                                            where status in (0, 2)
+                                              and (pay_date
+                                                between TO_DATE(#{date},'YYYY-MM-DD') and LAST_DAY(TO_DATE(#{date},'YYYY-MM-DD')) )
+                                            group by store_idx order by amount desc
+    </select>
+
+    <select id="priceAmountKakao" parameterType="String" resultType="com.tastemate.domain.KakaoPayApprovalVO">
+        select store_idx, Sum(amount) as amount2, count(*) as user_idx from kakaopayapproval
+                                                where status in(0, 2)
+                                                  and (approved_at
+                                                      between TO_DATE(#{date},'YYYY-MM-DD') and LAST_DAY(TO_DATE(#{date},'YYYY-MM-DD')) )
+                                                group by store_idx order by amount2 desc
+    </select>
+    <select id="storeName" parameterType="int" resultType="String">
+        select store_name from store where store_idx = #{storeIdx}
+    </select>
+
+    <select id="memberMbti" resultType="com.tastemate.domain.MemberVO">
+        select user_mbti, count(user_mbti) as user_status from member group by user_mbti order by user_status desc
+    </select>
+
+    <select id="adminBoard" resultType="com.tastemate.domain.board.BoardVO">
+        select * from board where user_idx = 20
+    </select>
+
+    <select id="bestBoard" resultType="com.tastemate.domain.board.BoardVO">
+        select * from board where board_like = (select max(board_like) from board)
+    </select>
+
+    <select id="bestTwenty" resultType="com.tastemate.domain.board.BoardVO">
+        select * from (select * from board  order by board_like desc ) board where rownum <![CDATA[<= 20]]>
+    </select>
+
+
+
+</mapper>

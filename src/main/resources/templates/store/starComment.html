@@ -91,9 +91,9 @@
 <body>
 
   <div class="text-center" id="main">
-    <div class="input-form-backgroud">
+    <div class="input-form-backgroud inputForm">
 
-      <form class="input-form" th:action="@{/store/starComment}" method="post">
+      <form class="input-form" th:action="@{/store/starComment}" method="post" id="inputForm">
 
         <h2 class="purple2 mt-4" >식사는 즐거우셨나요?</h2>
 
@@ -139,35 +139,81 @@
 
                      <div class="row">
                          <div class="form-group col-sm-9">
-                             <input class="form-control" name="storeComment" type="text" placeholder="댓글 입력...">
+                             <input class="form-control" name="storeComment" type="text" placeholder="댓글 입력..." required>
                          </div>
                          <div class="form-group col-sm-3">
-                             <!--<input class="form-control" name="userIdx" type="text" th:value="${session.vo.getUserName()}">-->
                              <input class="form-control" placeholder="익명입니다!" readonly="readonly">
-                             <input type="hidden" name="userIdx" th:value="${session.vo.getUserIdx()}">
+                             <input type="hidden" name="userIdx" th:value="${matchingUserIdx}">
+                            <!--  실제는 세션값이 아니지!!! 상대방에 대한 값을 넣어야 함!!!-->
+                             <input type="hidden" id="bookingIdx" name= "bookingIdx" th:value="${bookingIdx}">
                          </div>
                      </div>
 
+                             <input type="hidden" name="storeIdx" th:value="${storeIdx}">
+
+
+                             <input type="hidden" name="inicisIdx" th:value="${inicisIdx}" th:if="${inicisIdx}">
+                             <input type="hidden" name="kakaoApprovalIdx" th:value="${kakaoApprovalIdx}" th:if="${kakaoApprovalIdx}">
 
 
                  </div>
              </div>
 
-            <button class="btn btn-primary">제출하기</button><br>
 
-            <!-- 조건 :: 결제 완료 후, 예약시간 지나면 별점 줄 수 있게 storeIDX 값도 전달필요-->
-           <!-- th:value="${storeVO.storeIdx}"-->
+            <button class="btn btn-primary" id="submitBtn">제출하기</button><br>
+
 
         </div>
 
-
-
       </form>
     </div>
-
-
 </div>
 
+  <!-- 제출 확인 모달 -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h6 class="modal-title" id="confirmationModalLabel"></h6>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                  </button>
+              </div>
+              <div  class="modal-body">
+                  제출하시겠습니까?
+              </div>
+              <div class="modal-footer">
+<!--
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+-->
+                  <button type="button" class="btn btn-primary" id="confirmSubmitBtn">확인</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+      $(document).ready(function() {
+          // 제출하기 버튼 클릭 시 모달 표시
+          $('#submitBtn').click(function(e) {
+              e.preventDefault(); // 기본 동작 중지
+
+              // 모달 표시
+              $('#confirmationModal').modal('show');
+          });
+
+          // 모달 확인 버튼 클릭 시 폼 제출
+          $('#confirmSubmitBtn').click(function() {
+              $('#inputForm').unbind('submit').submit(); // 폼 제출
+          });
+
+          // 닫기 버튼 클릭 이벤트 핸들러
+          document.querySelector("#confirmationModal .close").addEventListener("click", function () {
+              // 모달 닫기
+              $('#confirmationModal').modal('hide');
+          });
+      });
+  </script>
 
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>

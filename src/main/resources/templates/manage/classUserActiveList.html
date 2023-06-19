@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>8클래스 수강생 리스트</title>
+<style>
+    table, th, td {
+        margin: auto;
+        padding: 3px 20px;
+    }
+    .space {
+        padding-top: 15px;
+    }
+</style>
+<link rel="stylesheet" th:href="@{/css/store_css.css}">
+<style>
+    body {
+        min-height: 100vh;
+
+        background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+        background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+    }
+
+    .input-form {
+        /*max-width: 680px;*/
+
+        margin-top: 80px;
+        margin-bottom: 80px;
+        padding: 32px;
+
+        background: #fff;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+            <h3 class="mb-3 mb-5 purple2 text-center">수강생 리스트</h3>
+            <div th:each="memberVO : ${memberVOList}">
+                <span th:text="${memberVO.userName} + ' & ' + ${memberVO.userClass}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+    <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

@@ -47,6 +47,8 @@
             <result column="USER_STAR" property="userStar" />
             <result column="STORE_COMMENT" property="storeComment" />
             <result column="USER_NAME" property="userName" />
+            <result column="INICIS_IDX" property="inicisIdx" />
+            <result column="KAKAO_APPROVAL_IDX" property="kakaoApprovalIdx" />
         </collection>
     </resultMap>
 
@@ -173,11 +175,11 @@
     <insert id="store_register" parameterType="StoreVO">
         INSERT INTO STORE (STORE_IDX, USER_IDX, STORE_NAME, CATEGORY1,
                            STORE_ADDRESS, STORE_LATI, STORE_LONGI, PHONE_NUMBER, STORE_COUNT,
-        FILENAME, DISTANCE
+        FILENAME, DISTANCE, STORE_STAT
                            )
         VALUES (store_seq.NEXTVAL, #{userIdx}, #{storeName}, #{category1},
                 #{storeAddress}, #{storeLati}, #{storeLongi}, #{phoneNumber}, 0,
-        #{filename}, #{distance}
+        #{filename}, #{distance}, 0
                 )
     </insert>
 
@@ -221,8 +223,8 @@
 
     <!--별점,코멘트 입력하기-->
     <insert id="store_starComment" parameterType="StarVO">
-        INSERT INTO star(STAR_IDX, STORE_IDX, USER_IDX, STORE_STAR, USER_STAR, STORE_COMMENT)
-        values (star_seq.nextval,#{storeIdx},#{userIdx},#{storeStar},#{userStar},#{storeComment})
+        INSERT INTO star(STAR_IDX, STORE_IDX, USER_IDX, STORE_STAR, USER_STAR, STORE_COMMENT, INICIS_IDX, KAKAO_APPROVAL_IDX)
+        values (star_seq.nextval,#{storeIdx},#{userIdx},#{storeStar},#{userStar},#{storeComment}, #{inicisIdx}, #{kakaoApprovalIdx})
     </insert>
 
 

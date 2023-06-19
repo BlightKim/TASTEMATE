@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>my class</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/store_css.css}">
+    <style>
+        body {
+            min-height: 100vh;
+
+            background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+            background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+            background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+        }
+
+        .input-form {
+            /*max-width: 680px;*/
+
+            margin-top: 80px;
+            margin-bottom: 80px;
+            padding: 32px;
+
+            background: #fff;
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+            <h3 class="mb-3 mb-5 purple2 text-center">[[${userClass}]] 강의실</h3>
+            <br>
+            <div class="row">
+                <div class="col-lg-2">
+                    <p class="mb-2"></p>
+                </div>
+                <div class="col-lg-2">
+                    <p class="mb-2">아이디</p>
+                </div>
+                <div class="col-lg-2">
+                    <p class="mb-2">이름</p>
+                </div>
+                <div class="col-lg-2">
+                    <p class="mb-2">성별</p>
+                </div>
+                <div class="col-lg-2">
+                    <a th:href="@{/manage/classList}" class="btn text-white btn-sm" style="background-color: #9C91B3">목록</a>
+                </div>
+            </div>
+            <hr>
+
+            <p th:if="${memberVOList.size() == 0}" class="mb-3 mb-5 text-center">수강생이 없습니다.</p>
+            <div th:each="memberVO : ${memberVOList}">
+                <form th:action="@{/manage/userInfo}" method="post">
+                <div class="row">
+                    <div class="col-lg-2">
+                    </div>
+                    <div class="col-lg-2">
+                        <p th:text="${memberVO.userId}" class="mb-2"></p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p class="mb-2 purple2">[[${memberVO.userName}]]</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p th:text="남자" th:if="${memberVO.userGender == 0}" class="mb-2"></p>
+                        <p th:text="여자" th:if="${memberVO.userGender != 0}" class="mb-2"></p>
+                    </div>
+                    <div class="col-lg-2">
+                        <a th:href="@{|/manage/userInfo?userIdx=${memberVO.userIdx}|}" class="btn text-white btn-sm" style="background-color: #8E48C7">수정</a>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

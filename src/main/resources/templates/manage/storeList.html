@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="header_footer/admin_header :: headerFragment"></th:block>
+
+<head>
+    <meta charset="UTF-8">
+    <title>store list</title>
+<style>
+    table, th, td {
+        margin: auto;
+        padding: 3px 20px;
+    }
+    .space {
+        padding-top: 15px;
+      }
+</style>
+<link rel="stylesheet" th:href="@{/css/store_css.css}">
+<style>
+    body {
+        min-height: 100vh;
+
+        background: -webkit-gradient(linear, left bottom, right top, from(#E9DFED), to(#E9DFED));
+        background: -webkit-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -moz-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: -o-linear-gradient(bottom left, #E9DFED 0%, #E9DFED 100%);
+        background: linear-gradient(to top right, #E9DFED 0%, #E9DFED 100%);
+    }
+
+    .input-form {
+        /*max-width: 680px;*/
+
+        margin-top: 80px;
+        margin-bottom: 80px;
+        padding: 32px;
+
+        background: #fff;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        -webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        -moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
+    }
+    th, td { text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form col-md-12 mx-auto">
+
+            <!-- 관리자 미니 해더-->
+            <th:block th:replace="header_footer/adminMiniHeader :: adminMiniHeader"></th:block>
+
+            <table class="table table-hover">
+                    <tr>
+                        <th>카테고리</th>
+                        <th>맛집</th>
+                        <th>연락처</th>
+                    </tr>
+                    <tr th:each="manageStoreVO : ${manageStoreList}">
+                        <td>[[${manageStoreVO.category1}]]</td>
+                        <td>
+                            <a th:href="@{|/manage/storeView?storeIdx=${manageStoreVO.storeIdx}|}">[[${manageStoreVO.storeName}]]</a>
+                        </td>
+                        <td>[[${manageStoreVO.PhoneNumber}]]</td>
+                    </tr>
+                    <tr>
+                        <td class="space" colspan="2"></td>
+                        <td class="space"><a href="/manage/storeSaveView" class="btn text-white" style="background-color: #8E48C7">맛집 등록</a></td>
+                    </tr>
+                </table>
+<!--            </div>-->
+        </div>
+    </div>
+</div>
+
+
+
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+
+</body>
+</html>

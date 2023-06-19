@@ -49,12 +49,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <insert id="user_join" parameterType="com.tastemate.domain.MemberVO">
         INSERT INTO MEMBER(USER_IDX, USER_ID, USER_PWD, USER_NAME, USER_GENDER, USER_PHONE, USER_ADDRESS,
                            USER_CLASS, USER_LIKE_FOOD, USER_DATE, USER_LOGINTYPE, USER_STATUS, USER_PROFILE,
-                           USER_ORI_PROFILE, USER_TYPE, USER_MBTI, USER_EMAIL, USER_BIRTH)
+                           USER_ORI_PROFILE, USER_TYPE, USER_MBTI, USER_EMAIL, USER_BIRTH, USER_ADDRESS_SI, USER_ADDRESS_GU)
         VALUES ((SELECT NVL(MAX(USER_IDX), 0) + 1 FROM MEMBER),
             #{userId}, #{userPwd}, #{userName}, #{userGender}, #{userPhone}, #{userAddress},
             #{userClass}, #{userLikeFood}, SYSDATE, 1, 0, #{userProfile},
-            null, 1, #{userMbti}, #{userEmail}, #{userBirth} )
+            null, 1, #{userMbti}, #{userEmail}, #{userBirth}, #{userAddressSi}, #{userAddressGu})
     </insert>
+
+<!--    #{userAddressSi}, #{userAddressGu}-->
 
     <!-- 중복 ID 체크 -->
     <select id="checkId" resultType="integer">
@@ -65,7 +67,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="loginId" parameterType="String" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_ID = #{userId}
     </select>
-    
+
+    <select id="check" parameterType="String" resultType="com.tastemate.domain.MemberVO">
+        SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_PWD = #{userPwd};
+    </select>
+
+
     <select id="findUserByUserIdx" parameterType="integer" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_IDX = #{userIdx, jdbcType=INTEGER}
     </select>
@@ -78,7 +85,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             USER_PHONE = #{userPhone},
             USER_LIKE_FOOD = #{userLikeFood},
             USER_MBTI = #{userMbti},
-            USER_ADDRESS = #{userAddress}
+            USER_ADDRESS = #{userAddress},
+            USER_ADDRESS_SI = #{userAddressSi},
+            USER_ADDRESS_GU = #{userAddressGu}
         WHERE USER_IDX = #{userIdx}
     </update>
 
@@ -91,4 +100,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="findId" parameterType="String" resultType="com.tastemate.domain.MemberVO">
         SELECT * FROM MEMBER WHERE USER_EMAIL = #{userEmail}
     </select>
+
+    <select id="userGet" parameterType="String" resultType="com.tastemate.domain.MemberVO">
+        SELECT * FROM MEMBER WHERE USER_ID = #{userId} AND USER_EMAIL = #{userEmail}
+    </select>
+
+    <update id="resetPassword" parameterType="com.tastemate.domain.MemberVO" >
+        UPDATE MEMBER SET USER_PWD = #{userPwd} WHERE USER_ID = #{userId} AND USER_EMAIL = #{userEmail}
+    </update>
+
+    <update id="createChatRoom">
+        UPDATE MEMBER SET ROOM_IDX = ROOM_SEQ.NEXTVAL WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <update id="joinChatRoom">
+        UPDATE MEMBER SET ROOM_IDX = #{roomIdx} WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <update id="closeChatRoom">
+        UPDATE MEMBER SET ROOM_IDX = null WHERE USER_IDX = #{userIdx}
+    </update>
+
+    <!--별점주기 위해 추가-->
+    <select id="findRoomIdx" parameterType="int" resultType="int">
+        SELECT ROOM_IDX
+        FROM Member
+        where USER_IDX = #{userIdx}
+    </select>
+
+    <select id="findMatchingUserIdx" parameterType="int" resultType="int">
+        SELECT USER_IDX
+        FROM Member
+        where ROOM_IDX = #{roomIdx}
+        AND USER_IDX != #{userIdx}
+    </select>
+
+
 </mapper>

@@ -9,6 +9,11 @@
 <head>
   <meta charset="UTF-8">
   <title>Title</title>
+
+  <!--  부트스트랩 아이콘 cdn -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
   <style>
     .img_size{
       width: 2500px;
@@ -20,6 +25,18 @@
     }
     .yellow {
       color : #FFA500;
+    }
+    .adminBoard:hover {
+      background-color: #f5f5f5;
+      color: #8E48C7;
+    }
+    .blog-post {
+      margin-top: 20px;
+      margin-bottom: 100px;
+    }
+    .position-sticky {
+      margin-top: 20px;
+      margin-bottom: 30px;
     }
   </style>
 
@@ -62,6 +79,21 @@
 
 
 <br><br>
+<div class="container" style="text-align: center; align-content: center; background-color: #EDE6F5;">
+  <br><br>
+<h3>나의 TasteMate 찾기</h3>
+  <br>
+  <th:block th:if="${session.vo != null}">
+    <a th:href="@{../class/get(userClass=${session.vo.getUserClass()})}" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-lg">TasteMate 찾기</a>
+  </th:block>
+  <th:block th:if="${session.vo == null}">
+    <a th:href="@{../member/login}" style="background-color: #8E48C7; border: none;" class="btn btn-primary btn-lg">TasteMate 찾기</a>
+  </th:block>
+
+  <br><br><br>
+</div>
+
+<hr class="col-3 col-md-2 mb-5">
 
 <!--인기 맛집과 꿀팁 게시물-->
 <div class="container">
@@ -89,18 +121,14 @@
     <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
       <div class="col p-4 d-flex flex-column position-static">
         <strong class="d-inline-block mb-2 text-success">꿀팁</strong>
-        <h3 class="mb-0" th:text="${storeVO.storeName}"></h3>
-        <span class="yellow" th:text="'★★★★★'" th:if="${storeVO.starVO[0].storeStar gt 4 && storeVO.starVO[0].storeStar le 5}"></span>
-        <span class="yellow" th:text="'★★★★'" th:if="${storeVO.starVO[0].storeStar gt 3 && storeVO.starVO[0].storeStar le 4}"></span>
-        <span class="yellow" th:text="'★★★'" th:if="${storeVO.starVO[0].storeStar gt 2 && storeVO.starVO[0].storeStar le 3}"></span>
-        <span class="yellow" th:text="'★★'" th:if="${storeVO.starVO[0].storeStar gt 1 && storeVO.starVO[0].storeStar le 2}"></span>
-        <span class="yellow" th:text="'★'" th:if="${storeVO.starVO[0].storeStar le 1}"></span>
+        <h3 class="mb-0" th:text="${bestBoard.get(0).title}"></h3>
+        <span class="bi bi-hand-thumbs-up-fill" th:text="${bestBoard.get(0).boardLike}"></span>
         <p class="card-text mb-auto"></p>
-        <p class="card-text mb-auto" th:text="${storeVO.storeAddress}"></p>
-        <a th:href="@{/store/get(storeIdx= ${storeVO.storeIdx})}" class="stretched-link">꿀팁 상세보기</a>
+        <p class="card-text mb-auto" th:text="${bestBoard.get(0).writer}"><span>작성자 : </span></p>
+        <a class="stretched-link" th:href="@{|/board/read/${bestBoard.get(0).boardIdx}|}">꿀팁 상세보기</a>
       </div>
       <div class="col-auto d-none d-lg-block">
-        <img th:src="@{|/store/${storeVO.filename}|}" class="bd-placeholder-img" width="200" height="250"/>
+        <img th:src="@{/img/tastemate.jpeg}" class="bd-placeholder-img" width="200" height="250"/>
       </div>
     </div>
   </div>
@@ -111,27 +139,11 @@
     <article class="blog-post">
       <h3>공지사항</h3>
       <table class="table">
-        <thead>
-        <tr>
-          <th>관리자 계정으로</th>
+
+        <tr th:each="board : ${adminBoard}">
+          <th class="adminBoard" th:onclick="|location.href='/board/read/${board.boardIdx}'|" th:text="${board.title}"></th>
         </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td>작성한 게시판 게시물을</td>
-        </tr>
-        <tr>
-          <td>공지사항으로 설정해서</td>
-        </tr>
-        <tr>
-          <td>메인페이지에서 보여주는거</td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-          <td>어떨까요..? :)</td>
-        </tr>
-        </tfoot>
+
       </table>
 
     </article>
@@ -144,8 +156,8 @@
       <div class="p-4 mb-3 bg-light rounded">
         <h4 class="fst-italic">Links</h4>
         <ol class="list-unstyled">
-          <li><a href="#">1. 우리 GitHub</a></li>
-          <li><a href="#">2. 아이티윌 Instagram</a></li>
+          <li><button class="bg-light" style="border: none;" onclick="javascript:void(window.open('https://github.com/BlightKim/TASTEMATE','wow','width=1000, height=1000'))">1. TasteMate GitHub</button></li>
+          <li><button class="bg-light" style="border: none;" onclick="javascript:void(window.open('https://www.instagram.com/itwill.official/','wow','width=1000, height=1000'))">2. ITWILL Instagram</button></li>
         </ol>
       </div>
 

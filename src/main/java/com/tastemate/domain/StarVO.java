@@ -18,4 +18,8 @@ public class StarVO {
     //user도 추가
     private String userName;
 
+    // 결제관련추가
+    private int inicisIdx;
+    private int kakaoApprovalIdx;
+
 }

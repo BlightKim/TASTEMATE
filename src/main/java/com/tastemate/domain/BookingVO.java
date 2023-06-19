@@ -1,10 +1,12 @@
 package com.tastemate.domain;
 
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 import java.sql.Date;
 
 @Data
+@Alias("BookingVO")
 public class BookingVO {
     private int bookingIdx;
     private int storeIdx;

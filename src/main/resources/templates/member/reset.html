@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:replace="header_footer/header :: headerFragment"></th:block>
+<head>
+    <title>Reset Password</title>
+</head>
+<body>
+<div class="container" style="margin-top: 100px; margin-bottom: 150px;">
+    <div class="row mb-5">
+        <div class="col-md-8 col-xl-6 text-center mx-auto">
+            <h2 class="font-weight-bold">비밀번호 재설정</h2>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6 col-xl-4">
+            <div class="card">
+                <div class="card-body text-center d-flex flex-column align-items-center">
+                    <form id="resetPasswordForm" action="resetSuccess" method="post">
+                        <div>
+                            <label for="userPwd">비밀번호</label>
+                            <input id="userPwd" name="userPwd" class="form-control form-control" type="password"
+                                   style="margin-bottom: 10px;" placeholder value required/>
+                        </div>
+                        <div>
+                            <div id="password1_warning" style="text-align: center"><span></span>
+                            </div>
+                        </div>
+                        <div>
+                            <label for="userPwd2">비밀번호 재확인</label>
+                            <input id="userPwd2" class="form-control form-control" type="password" placeholder
+                                   style="margin-bottom: 10px;"/>
+                        </div>
+                        <div>
+                            <div id="password2_warning" style="text-align: center"><span></span>
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit" class="btn d-block w-100" style="background-color: #8E48C7; color: white;
+                                            margin-bottom: 20px; margin-top: 30px;" onclick="return check();">Reset Password
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="header_footer/footer :: footerFragment"></th:block>
+<script>
+
+    const pwdRegExp = RegExp(
+        /([a-zA-Z0-9].*[!,@,#,$,%,^,&,*,?,_,~])|([!,@,#,$,%,^,&,*,?,_,~].*[a-zA-Z0-9])/);
+
+    $(document).ready(() => {
+        $('#userPwd').change(check_pwd1);
+        $('#userPwd').keyup(check_pwd1);
+
+        $('#userPwd2').change(check_pwd2);
+        $('#userPwd2').keyup(check_pwd2);
+    });
+
+    function check_pwd1() {
+        if ($('#userPwd').val() === '') {
+            $('#password1_warning').removeAttr('hidden', 'hidden');
+            $('#password1_warning').html('<b style="font-size: 14px; color:red">[비밀번호는 필수 정보입니다.]</b>');
+            pwd1Chk = false;
+        } else if (!pwdRegExp.test($('#userPwd').val()) || $('#userPwd').val().length < 8) {
+            $('#password1_warning').removeAttr('hidden');
+            $('#password1_warning').html(
+                '<b style="font-size: 14px; color:red">[비밀번호는 특수문자 포함 8자 이상입니다.]</b>');
+            pwd1Chk = false;
+        } else {
+            $('#password1_warning').attr('hidden', 'hidden');
+            pwd1Chk = true;
+        }
+    }
+
+    function check_pwd2() {
+        if ($('#userPwd2').val() === '') {
+            $('#password2_warning').removeAttr('hidden', 'hidden');
+            $('#password2_warning').html('<b style="font-size: 14px; color:red">[비밀번호는 필수 정보입니다.]</b>');
+            pwd2Chk = false;
+        } else if ($('#userPwd2').val() !== $('#userPwd').val()) {
+            $('#password2_warning').removeAttr('hidden', 'hidden');
+            $('#password2_warning').html(
+                '<b style="font-size: 14px; color:red">[입력한 비밀번호가 일치하지 않습니다.]</b>');
+            pwd2Chk = false;
+        } else {
+            $('#password2_warning').attr('hidden', 'hidden');
+            pwd2Chk = true;
+        }
+    }
+
+    function check() {
+        if (pwd1Chk === false) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '비밀번호를 확인해주세요.',
+            })
+            $("#userPwd").focus();
+            return false;
+        }
+
+        if ($("#userPwd").val() != $("#userPwd2").val()) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '비밀번호가 일치하지 않습니다.',
+            })
+            $("#userPwd").focus();
+            return false;
+        }
+    }
+
+
+</script>
+</body>
+</html>
