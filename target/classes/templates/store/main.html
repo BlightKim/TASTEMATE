@@ -170,7 +170,11 @@
 
 
 <script>
-
+  $(document).ready(function(){
+    $('#myCarousel').carousel({
+      interval: 2000 // 이동 간격을 밀리초 단위로 설정합니다 (기본값은 5000 입니다)
+    });
+  });
 </script>
 <th:block th:replace="header_footer/footer :: footerFragment"></th:block>
 </body>

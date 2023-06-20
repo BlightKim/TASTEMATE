@@ -30,7 +30,6 @@ public class StatController {
         String title = "매출";
 
         Map<Integer, List<StatVO>> statMonthInicis = new HashMap<>();
-        List<StatVO> list = new ArrayList<>();
         Map<Integer, Integer> monthTotalAmount = new HashMap<>();
 
         for (int i = 1; i <= 12; i++) {
@@ -38,6 +37,7 @@ public class StatController {
             List<InicisVO> inicisVO = statService.priceAmountInicis(i);
             System.out.println("inicisVO = " + inicisVO);
             Map<Integer, String> inicisStorename = statService.inicisStorename(inicisVO);
+            List<StatVO> list = new ArrayList<>();
             for (int j = 0; j < inicisVO.size(); j++) {
                 StatVO statVO = new StatVO();
                 statVO.setStoreIdx(inicisVO.get(j).getStoreIdx());
@@ -50,31 +50,35 @@ public class StatController {
             }
             monthTotalAmount.put(i, totalAmount);
         }
+        System.out.println("statMonthInicis = " + statMonthInicis);
 
 
         Map<Integer, List<StatVO>> statMonthKakao = new HashMap<>();
-        List<StatVO> list2 = new ArrayList<>();
 
         for (int i = 1; i <= 12; i++) {
             int totalAmount = 0;
             List<KakaoPayApprovalVO> kakaoPayApprovalVO = statService.priceAmountKakao(i);
             Map<Integer, String> kakaoStorename = statService.kakaoStorename(kakaoPayApprovalVO);
+            List<StatVO> list2 = new ArrayList<>();
 
             for (int j = 0; j < kakaoPayApprovalVO.size(); j++) {
                 StatVO statVO = new StatVO();
-
+    
                 statVO.setStoreIdx(kakaoPayApprovalVO.get(j).getStoreIdx());
                 statVO.setStoreName(kakaoStorename.get(kakaoPayApprovalVO.get(j).getStoreIdx()));
                 statVO.setAmount(kakaoPayApprovalVO.get(j).getAmount2());
                 statVO.setCount(kakaoPayApprovalVO.get(j).getUserIdx());
-
+                System.out.println("statVO = " + statVO);
                 list2.add(statVO);
+                System.out.println("list2 = " + list2);
                 totalAmount += statVO.getAmount();
                 statMonthKakao.put(i, list2);
             }
             monthTotalAmount.put(i, (monthTotalAmount.get(i) + totalAmount));
 
         }
+        System.out.println("카카오랑 이니시스까지만 statMonthKakao = " + statMonthKakao);
+
 
         Map<Integer, List<StatVO>> statMonthInicisKakao = new HashMap<>();
         List<Integer> remover;
@@ -104,10 +108,17 @@ public class StatController {
             }
         }
 
-        for (int i = 0; i < lister.size(); i++) {
-            List<StatVO> test = statMonthInicis.get(lister.get(i).get(1));
-            test.remove((int)lister.get(i).get(2));
-            statMonthInicis.put((int)lister.get(i).get(1), test);
+        System.out.println("여기!! statMonthInicis = " + statMonthInicis);
+        System.out.println("여기!! statMonthKakao = " + statMonthKakao);
+
+        System.out.println("lister = " + lister);
+        for (int i = lister.size() -1 ; i >= 0 ; i--) {
+                int month = lister.get(i).get(1);
+                List<StatVO> test2 = statMonthInicis.get(month);
+                int voNum = (int)lister.get(i).get(2);
+                test2.remove(voNum);
+                System.out.println("test2 = " + test2);
+                statMonthInicisKakao.put(month, test2);
         }
 
         System.out.println("여기!! statMonthInicisKakao = " + statMonthInicisKakao);
