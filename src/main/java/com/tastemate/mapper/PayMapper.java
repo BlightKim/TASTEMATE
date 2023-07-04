@@ -1,5 +1,6 @@
 package com.tastemate.mapper;
 
+import com.tastemate.domain.BookingVO;
 import com.tastemate.domain.InicisVO;
 import com.tastemate.domain.KakaoPayApprovalVO;
 import com.tastemate.domain.KakaoPayReadyVO;
@@ -31,4 +32,6 @@ public interface PayMapper {
     InicisVO findInicis(int userIdx);
 
     KakaoPayApprovalVO findKakao(int userIdx);
+
+    BookingVO findBooking(int userIdx);
 }

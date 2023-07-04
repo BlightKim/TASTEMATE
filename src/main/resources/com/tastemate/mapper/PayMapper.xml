@@ -139,7 +139,9 @@
 
 
 
-
+    <select id="findBooking" parameterType="int" resultType="com.tastemate.domain.BookingVO">
+        select * from booking where user_Idx = #{userIdx} and onsite_payment = 0
+    </select>
 
 
 

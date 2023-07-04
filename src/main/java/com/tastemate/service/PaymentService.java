@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.tastemate.domain.InicisRefundVO;
-import com.tastemate.domain.InicisVO;
-import com.tastemate.domain.KakaoPayApprovalVO;
-import com.tastemate.domain.TokenVO;
+import com.tastemate.domain.*;
 import com.tastemate.mapper.PayMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -196,6 +193,11 @@ public class PaymentService {
     public KakaoPayApprovalVO findKakao(int userIdx) {
 
         return payMapper.findKakao(userIdx);
+    }
+
+    public BookingVO findBooking(int userIdx) {
+
+        return payMapper.findBooking(userIdx);
     }
 }
 

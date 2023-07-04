@@ -49,6 +49,7 @@ public class PayController {
         // null값이 아니면 그거에따라 리턴값을 주소로 주자
         //둘다 null이면 payNothing으로 가자
 
+
         InicisVO inicisVO = paymentService.findInicis(memberVO.getUserIdx());
         KakaoPayApprovalVO kakaoPayApprovalVO = paymentService.findKakao(memberVO.getUserIdx());
 
@@ -61,6 +62,12 @@ public class PayController {
         } else if (kakaoPayApprovalVO != null) {
             log.info("redirect:/pay/mykakaoPaySuccess");
             return "redirect:/pay/mykakaoPaySuccess";
+        }
+        //결제 안 한 예약목록이 있으면 그거도 보여주자
+
+        BookingVO bookingVO = paymentService.findBooking(memberVO.getUserIdx());
+        if (bookingVO != null) {
+            return "redirect:/booking/bookingToPay?bookingIdx=" + bookingVO.getBookingIdx();
         }
 
 
